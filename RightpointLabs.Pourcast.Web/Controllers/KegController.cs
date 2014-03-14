@@ -16,13 +16,9 @@ namespace RightpointLabs.Pourcast.Web.Controllers
 
 
         private readonly IKegRepository _kegRepository;
-        public KegController()
-        {
-            _kegRepository = DependencyResolver.Current.GetService<IKegRepository>();
-        }
         public KegController(IKegRepository kegRepository)
         {
-            
+            _kegRepository = kegRepository;
         }
 
         // GET api/<controller>

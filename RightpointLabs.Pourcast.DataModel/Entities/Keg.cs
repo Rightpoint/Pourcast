@@ -6,6 +6,7 @@ namespace RightpointLabs.Pourcast.DataModel.Entities
 {
     public class Keg : IMongoEntity
     {
+        
         [BsonId]
         public ObjectId Id { get; set; }
         public Beer Beer { get; set; }

@@ -13,7 +13,7 @@ namespace RightpointLabs.Pourcast.Web
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
-            UnityConfig.RegisterComponents(); 
+            UnityConfig.RegisterComponents(GlobalConfiguration.Configuration); 
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
         }

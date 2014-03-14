@@ -1,8 +1,10 @@
+using System.Web.Http;
 using System.Web.Mvc;
 using Microsoft.Practices.Unity;
 using RightpointLabs.Pourcast.DataModel;
 using RightpointLabs.Pourcast.Repository.Abstract;
 using RightpointLabs.Pourcast.Repository.Concrete;
+using RightpointLabs.Pourcast.Web.App_Start;
 using RightpointLabs.Pourcast.Web.Controllers;
 using Unity.Mvc5;
 
@@ -10,7 +12,7 @@ namespace RightpointLabs.Pourcast.Web
 {
     public static class UnityConfig
     {
-        public static void RegisterComponents()
+        public static void RegisterComponents(HttpConfiguration config)
         {
 			var container = new UnityContainer();
             var connectionString =
@@ -25,7 +27,7 @@ namespace RightpointLabs.Pourcast.Web
             container.RegisterType<IKegRepository, KegRepository>();
             container.RegisterType<IBeerRepository, BeerRepository>();
             container.RegisterType<IBreweryRepository, BreweryRepository>();
-            DependencyResolver.SetResolver(new UnityDependencyResolver(container));
+            config.DependencyResolver = new UnityResolver(container);
         }
     }
 }
