@@ -46,8 +46,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstract\EntityRepository.cs" />
+    <Compile Include="Abstract\IBeerRepository.cs" />
+    <Compile Include="Abstract\IBreweryRepository.cs" />
     <Compile Include="Abstract\IEntityRepository.cs" />
     <Compile Include="Abstract\IKegRepository.cs" />
+    <Compile Include="Concrete\BeerRepository.cs" />
+    <Compile Include="Concrete\BreweryRepository.cs" />
     <Compile Include="Concrete\KegRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -6,7 +6,7 @@ using RightpointLabs.Pourcast.DataModel.Entities;
 
 namespace RightpointLabs.Pourcast.Repository.Concrete
 {
-    public class KegRepository : EntityRepository<Keg>, IKegRepository
+    public class KegRepository : EntityRepository<Keg>,  IKegRepository
     {
         public KegRepository(IMongoConnectionHandler<Keg> connectionHandler) : base(connectionHandler)
         {
