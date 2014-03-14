@@ -3,23 +3,22 @@ using RightpointLabs.Pourcast.DataModel.Entities;
 
 namespace RightpointLabs.Pourcast.DataModel
 {
-    public class MongoConnectionHandler : IMongoConnectionHandler
+    public class MongoConnectionHandler<T> : IMongoConnectionHandler<T> where T : IMongoEntity
     {
+        protected readonly MongoCollection<T> Collection;
         private MongoServer _server;
         private MongoDatabase _database;
-        private MongoCollection _collection;
 
          public MongoConnectionHandler(string connectionString, string database)
          {
              _server = new MongoClient(connectionString).GetServer();
              _database = _server.GetDatabase(database);
+             Collection = _database.GetCollection<T>(typeof (T).Name.ToLower() + "s");
          }
 
-         public MongoCollection Collection { get { return _collection; }}
-
-        public void SetCollection<T>()
+        public MongoCollection<T> MongoCollection
         {
-            _collection = _database.GetCollection<T>(typeof(T).Name.ToLower() + "s");
+            get { return Collection; }
         }
     }
 }

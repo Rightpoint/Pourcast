@@ -17,7 +17,7 @@ namespace RightpointLabs.Pourcast.Web
             // it is NOT necessary to register your controllers
             
             // e.g. container.RegisterType<ITestService, TestService>();
-            container.RegisterType<IMongoConnectionHandler, MongoConnectionHandler>(
+            container.RegisterType(typeof(IMongoConnectionHandler<>), typeof(MongoConnectionHandler<>),
                 new InjectionConstructor(connectionString, database));
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }

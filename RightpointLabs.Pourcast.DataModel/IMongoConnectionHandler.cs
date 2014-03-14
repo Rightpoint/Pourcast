@@ -1,10 +1,10 @@
 ﻿using MongoDB.Driver;
+using RightpointLabs.Pourcast.DataModel.Entities;
 
 namespace RightpointLabs.Pourcast.DataModel
 {
-    public interface IMongoConnectionHandler
+    public interface IMongoConnectionHandler<T> where T : IMongoEntity
     {
-        MongoCollection Collection { get; }
-        void SetCollection<T>();
+        MongoCollection<T> MongoCollection { get; }
     }
 }
