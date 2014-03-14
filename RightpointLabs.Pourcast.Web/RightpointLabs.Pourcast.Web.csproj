@@ -104,7 +104,9 @@
   <ItemGroup>
     <Content Include="Views\web.config" />
     <Content Include="packages.config" />
-    <Content Include="ConnectionStrings.config" />
+    <Content Include="ConnectionStrings.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="ConnectionStrings.Template.config" />
     <Content Include="AppSettings.config" />
     <Content Include="AppSettings.Template.config" />
@@ -119,6 +121,16 @@
     <Folder Include="App_Data\" />
     <Folder Include="Controllers\" />
     <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RightpointLabs.Pourcast.DataModel\RightpointLabs.Pourcast.DataModel.csproj">
+      <Project>{6fd2722b-02d5-439b-b509-fe61faa77c12}</Project>
+      <Name>RightpointLabs.Pourcast.DataModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RightpointLabs.Pourcast.Repository\RightpointLabs.Pourcast.Repository.csproj">
+      <Project>{6c430de8-726b-49c3-b3ee-bd1500e205a3}</Project>
+      <Name>RightpointLabs.Pourcast.Repository</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
