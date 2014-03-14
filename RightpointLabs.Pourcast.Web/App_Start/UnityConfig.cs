@@ -3,6 +3,7 @@ using Microsoft.Practices.Unity;
 using RightpointLabs.Pourcast.DataModel;
 using RightpointLabs.Pourcast.Repository.Abstract;
 using RightpointLabs.Pourcast.Repository.Concrete;
+using RightpointLabs.Pourcast.Web.Controllers;
 using Unity.Mvc5;
 
 namespace RightpointLabs.Pourcast.Web
