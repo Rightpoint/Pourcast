@@ -1,6 +1,8 @@
 using System.Web.Mvc;
 using Microsoft.Practices.Unity;
 using RightpointLabs.Pourcast.DataModel;
+using RightpointLabs.Pourcast.Repository.Abstract;
+using RightpointLabs.Pourcast.Repository.Concrete;
 using Unity.Mvc5;
 
 namespace RightpointLabs.Pourcast.Web
@@ -19,6 +21,7 @@ namespace RightpointLabs.Pourcast.Web
             // e.g. container.RegisterType<ITestService, TestService>();
             container.RegisterType(typeof(IMongoConnectionHandler<>), typeof(MongoConnectionHandler<>),
                 new InjectionConstructor(connectionString, database));
+            container.RegisterType<IKegRepository, KegRepository>();
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }
     }
