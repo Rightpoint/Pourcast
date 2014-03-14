@@ -22,6 +22,8 @@ namespace RightpointLabs.Pourcast.Web
             container.RegisterType(typeof(IMongoConnectionHandler<>), typeof(MongoConnectionHandler<>),
                 new InjectionConstructor(connectionString, database));
             container.RegisterType<IKegRepository, KegRepository>();
+            container.RegisterType<IBeerRepository, BeerRepository>();
+            container.RegisterType<IBreweryRepository, BreweryRepository>();
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }
     }
