@@ -5,7 +5,8 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Mvc;
-using RightpointLabs.Pourcast.DataModel.Entities;
+using RighpointLabs.Pourcast.Orchestrator.Abstract;
+using RighpointLabs.Pourcast.Orchestrator.Models;
 using RightpointLabs.Pourcast.Repository.Abstract;
 
 namespace RightpointLabs.Pourcast.Web.Controllers
@@ -16,16 +17,18 @@ namespace RightpointLabs.Pourcast.Web.Controllers
 
 
         private readonly IKegRepository _kegRepository;
-        public KegController(IKegRepository kegRepository)
+        private readonly IBreweryOrchestrator _brewery;
+        public KegController(IKegRepository kegRepository, IBreweryOrchestrator breweryRepository)
         {
             _kegRepository = kegRepository;
+            _brewery = breweryRepository;
         }
 
         // GET api/<controller>
 
-        public IEnumerable<Keg> Get()
+        public List<Brewery> Get()
         {
-            return _kegRepository.GetAll();
+            return _brewery.GetBreweries();
         }
 
         // GET api/<controller>/5

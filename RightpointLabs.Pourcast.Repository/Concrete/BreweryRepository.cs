@@ -1,4 +1,6 @@
-﻿using RightpointLabs.Pourcast.DataModel;
+﻿using System.Collections.Generic;
+using System.Linq;
+using RightpointLabs.Pourcast.DataModel;
 using RightpointLabs.Pourcast.DataModel.Entities;
 using RightpointLabs.Pourcast.Repository.Abstract;
 using Slugify;
@@ -23,6 +25,11 @@ namespace RightpointLabs.Pourcast.Repository.Concrete
         public override void Update(Brewery entity)
         {
             throw new System.NotImplementedException();
+        }
+
+        public IEnumerable<Brewery> GetAll()
+        {
+            return MongoConnectionHandler.MongoCollection.FindAllAs<Brewery>().AsEnumerable();
         }
     }
 }

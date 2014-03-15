@@ -1,6 +1,8 @@
 using System.Web.Http;
 using System.Web.Mvc;
 using Microsoft.Practices.Unity;
+using RighpointLabs.Pourcast.Orchestrator.Abstract;
+using RighpointLabs.Pourcast.Orchestrator.Concrete;
 using RightpointLabs.Pourcast.DataModel;
 using RightpointLabs.Pourcast.Repository.Abstract;
 using RightpointLabs.Pourcast.Repository.Concrete;
@@ -27,6 +29,7 @@ namespace RightpointLabs.Pourcast.Web
             container.RegisterType<IKegRepository, KegRepository>();
             container.RegisterType<IBeerRepository, BeerRepository>();
             container.RegisterType<IBreweryRepository, BreweryRepository>();
+            container.RegisterType<IBreweryOrchestrator, BreweryOrchestrator>();
             config.DependencyResolver = new UnityResolver(container);
         }
     }
