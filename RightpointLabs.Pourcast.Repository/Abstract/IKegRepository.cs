@@ -5,11 +5,11 @@ namespace RightpointLabs.Pourcast.Repository.Abstract
 {
     public interface IKegRepository : IEntityRepository<Keg>
     {
-        List<Keg> GetAll();
+        IEnumerable<Keg> GetAll();
         /// <summary>
         /// Gets all kegs currently on tap
         /// </summary>
         /// <returns></returns>
-        List<Keg> OnTap();
+        IEnumerable<Keg> OnTap();
     }
 }

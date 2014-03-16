@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using RightpointLabs.Pourcast.DataModel;
 using RightpointLabs.Pourcast.DataModel.Entities;
@@ -16,10 +17,10 @@ namespace RightpointLabs.Pourcast.Tests
             var repo = new KegRepository(new MongoConnectionHandler<Keg>("mongodb://localhost", "test"));
 
             // Act
-            var kegs = repo.GetAll();
+            var kegs = repo.GetAll().ToList();
 
             // Assert
-            Assert.AreNotEqual(0, kegs.Count);
+            Assert.AreNotEqual(0, kegs);
         }
     }
 }

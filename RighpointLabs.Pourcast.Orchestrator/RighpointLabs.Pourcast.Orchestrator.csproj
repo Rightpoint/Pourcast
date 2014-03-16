@@ -47,8 +47,16 @@
   <ItemGroup>
     <Compile Include="Abstract\BaseOrchestrator.cs" />
     <Compile Include="Abstract\IBreweryOrchestrator.cs" />
+    <Compile Include="Abstract\IKegOrchestrator.cs" />
     <Compile Include="Concrete\BreweryOrchestrator.cs" />
+    <Compile Include="Concrete\KegOrchestrator.cs" />
+    <Compile Include="Models\Beer.cs" />
     <Compile Include="Models\Brewery.cs" />
+    <Compile Include="Models\Keg.cs" />
+    <Compile Include="Models\Pour.cs" />
+    <Compile Include="Models\Status.cs" />
+    <Compile Include="Models\Tap.cs" />
+    <Compile Include="Models\TapName.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

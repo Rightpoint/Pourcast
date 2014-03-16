@@ -61,6 +61,10 @@
     <Compile Include="KegRepositoryTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\RighpointLabs.Pourcast.Orchestrator\RighpointLabs.Pourcast.Orchestrator.csproj">
+      <Project>{3be9c0b2-526b-4527-8cb6-62f4b4ec06b6}</Project>
+      <Name>RighpointLabs.Pourcast.Orchestrator</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RightpointLabs.Pourcast.DataModel\RightpointLabs.Pourcast.DataModel.csproj">
       <Project>{6fd2722b-02d5-439b-b509-fe61faa77c12}</Project>
       <Name>RightpointLabs.Pourcast.DataModel</Name>

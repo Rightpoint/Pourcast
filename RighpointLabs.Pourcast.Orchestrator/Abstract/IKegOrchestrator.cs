@@ -3,8 +3,9 @@ using RighpointLabs.Pourcast.Orchestrator.Models;
 
 namespace RighpointLabs.Pourcast.Orchestrator.Abstract
 {
-    public interface IBreweryOrchestrator
+    public interface IKegOrchestrator
     {
-        IEnumerable<Brewery> GetBreweries();
+        IEnumerable<Keg> GetAll();
+        IEnumerable<Keg> GetOnTap();
     }
 }

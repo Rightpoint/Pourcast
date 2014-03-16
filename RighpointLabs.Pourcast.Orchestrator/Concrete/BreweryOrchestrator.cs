@@ -15,10 +15,10 @@ namespace RighpointLabs.Pourcast.Orchestrator.Concrete
             _breweryRepository = breweryRepository;
         }
 
-        public List<Brewery> GetBreweries()
+        public IEnumerable<Brewery> GetBreweries()
         {
             var results = _breweryRepository.GetAll();
-            return Mapper.Map<List<Models.Brewery>>(results);
+            return Mapper.Map<IEnumerable<Models.Brewery>>(results);
         }
     }
 }

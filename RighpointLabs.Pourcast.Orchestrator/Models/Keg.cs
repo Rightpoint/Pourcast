@@ -1,18 +1,15 @@
 ﻿using System.Collections.Generic;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
+using RightpointLabs.Pourcast.DataModel.Entities;
 
-namespace RightpointLabs.Pourcast.DataModel.Entities
+namespace RighpointLabs.Pourcast.Orchestrator.Models
 {
-    public class Keg : IMongoEntity
+    public class Keg
     {
-        
-        [BsonId]
-        public ObjectId Id { get; set; }
+        public string Id { get; set; }
         public Beer Beer { get; set; }
         public Status Status { get; set; }
         public Tap Tap { get; set; }
         public IEnumerable<Pour> Pours { get; set; }
-
+ 
     }
 }

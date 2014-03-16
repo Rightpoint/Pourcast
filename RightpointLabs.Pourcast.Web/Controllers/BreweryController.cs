@@ -4,36 +4,30 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using System.Web.Mvc;
 using RighpointLabs.Pourcast.Orchestrator.Abstract;
 using RighpointLabs.Pourcast.Orchestrator.Models;
-using RightpointLabs.Pourcast.Repository.Abstract;
 
 namespace RightpointLabs.Pourcast.Web.Controllers
 {
-    [System.Web.Http.RoutePrefix("api/keg")]
-    public class KegController : ApiController
+    public class BreweryController : ApiController
     {
+        private readonly IBreweryOrchestrator _breweryOrchestrator;
 
-
-        private readonly IKegOrchestrator _kegOrchestrator;
-        
-        public KegController(IKegOrchestrator kegOrchestrator)
+        public BreweryController(IBreweryOrchestrator breweryOrchestrator)
         {
-            _kegOrchestrator = kegOrchestrator;
+            _breweryOrchestrator = breweryOrchestrator;
         }
-
+        
         // GET api/<controller>
-
-        public IEnumerable<Keg> Get()
+        public IEnumerable<Brewery> Get()
         {
-            return _kegOrchestrator.GetAll();
+            return _breweryOrchestrator.GetBreweries();
         }
 
         // GET api/<controller>/5
-        public IEnumerable<Keg> Get(bool ontap)
+        public string Get(int id)
         {
-            return ontap ? _kegOrchestrator.GetOnTap() : _kegOrchestrator.GetAll();
+            return "value";
         }
 
         // POST api/<controller>

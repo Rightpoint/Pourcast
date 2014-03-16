@@ -14,16 +14,16 @@ namespace RightpointLabs.Pourcast.Repository.Concrete
         {
         }
 
-        public List<Keg> GetAll()
+        public IEnumerable<Keg> GetAll()
         {
-            var result = MongoConnectionHandler.MongoCollection.FindAllAs<Keg>().ToList();
+            var result = MongoConnectionHandler.MongoCollection.FindAllAs<Keg>().AsEnumerable();
             return result;
         }
 
-        public List<Keg> OnTap()
+        public IEnumerable<Keg> OnTap()
         {
             var query = Query<Keg>.NotIn(e => e.Tap.TapId, new[] {0});
-            return MongoConnectionHandler.MongoCollection.FindAs<Keg>(query).ToList();
+            return MongoConnectionHandler.MongoCollection.FindAs<Keg>(query).AsEnumerable();
         }
 
         public override void Update(Keg entity)
