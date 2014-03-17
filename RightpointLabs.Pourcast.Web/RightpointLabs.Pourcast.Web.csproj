@@ -197,6 +197,7 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\toastr.less" />
+    <Content Include="Scripts\app\pourcast.beer.js" />
     <Content Include="Scripts\app\pourcast.brewery.js" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\app\pourcast.js" />

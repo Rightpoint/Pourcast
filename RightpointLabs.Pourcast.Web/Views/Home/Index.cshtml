@@ -6,5 +6,11 @@
     <h1>Pourcast</h1>
     <h2 data-bind="text: brewery.name"></h2>
     <p data-bind="text : brewery.location"></p>
+    <ul data-bind="foreach: brewery.beers">
+        <li>
+            <span data-bind="text: name"></span>
+            <img data-bind="attr: { src: logo }" />
+        </li>
+    </ul>
 </header>
 
