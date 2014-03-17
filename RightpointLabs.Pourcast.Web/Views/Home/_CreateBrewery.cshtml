@@ -1,0 +1,7 @@
+﻿<div id="createBrewery" data-bind="with: brewery, visible: brewery.createVisible">
+    <div data-bind="with: newBrewery">
+        <label for="createBrewery_name">Name</label>
+        <input id="createBrewery_name" type="text" data-bind="value: name"/>
+        <input type="button" data-bind="click: $parent.save" value="Save"/>
+    </div>
+</div>

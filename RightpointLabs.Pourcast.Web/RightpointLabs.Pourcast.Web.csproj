@@ -200,6 +200,7 @@
     <Content Include="Scripts\app\pourcast.beer.js" />
     <Content Include="Scripts\app\pourcast.brewery.js" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
+    <Content Include="Scripts\app\pourcast.breweryvm.js" />
     <Content Include="Scripts\app\pourcast.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -259,6 +260,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\toastr.min.js.map" />
+    <Content Include="Views\Home\_CreateBrewery.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
