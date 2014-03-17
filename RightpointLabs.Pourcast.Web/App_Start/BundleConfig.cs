@@ -17,12 +17,15 @@ namespace RightpointLabs.Pourcast.Web.App_Start
             bundles.Add(new ScriptBundle("~/bundles/bootstrap", bootstrap).Include("~/Scripts/bootstrap.js"));
             bundles.Add(new ScriptBundle("~/bundles/knockout").Include("~/Scripts/knockout-{version}.debug.js"));
             bundles.Add(new ScriptBundle("~/bundles/modernizer").Include("~/Scripts/modernizer-{version}.js"));
-
+            bundles.Add(new ScriptBundle("~/bundles/toastr").Include("~/Scripts/toastr.js"));
+            bundles.Add(new ScriptBundle("~/bundles/moment").Include("~/Scripts/moment.js"));
+            bundles.Add(new ScriptBundle("~/bundles/app").Include("~/Scripts/app/pourcast.brewery.js", "~/Scripts/app/pourcast.js"));
             bundles.Add(new StyleBundle("~/Content/themes/base/css")
                 .Include("~/Content/bootstrap.css",
                 "~/Content/bootstrap-theme.css",
                 "~/Content/Site.css",
-                "~/Content/themes/base/*.css"));
+                "~/Content/themes/base/*.css",
+                "~/Content/toastr.css"));
         }
     }
 }

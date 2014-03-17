@@ -36,6 +36,15 @@
         </footer>
     </div>
     
-    @Scripts.Render("~/bundles/jquery", "~/bundles/bootstrap", "~/bundles/jqueryUI", "~/bundles/knockout")
+    @Scripts.Render("~/bundles/jquery", "~/bundles/bootstrap", "~/bundles/jqueryUI", "~/bundles/knockout", "~/bundles/toastr", "~/bundles/moment")
+    @Scripts.Render("~/bundles/app")
+    
+    <script type="text/javascript">
+        $(function() {
+            if (window.pourcast) {
+                window.pourcast.init();
+            }
+        });
+    </script>
 </body>
 </html>
