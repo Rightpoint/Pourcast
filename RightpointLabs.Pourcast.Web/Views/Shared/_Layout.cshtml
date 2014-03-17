@@ -1,0 +1,41 @@
+﻿@using RightpointLabs.Pourcast.Web.Properties
+@using System.Web.Optimization
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@Html.Raw(string.Format("{0} - {1}", Resources.Application, Resources.Description))</title>
+    @Styles.Render("~/Content/themes/base/css")
+    @Scripts.Render("~/bundles/modernizer");
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink(Resources.Application, "Index", "Home", null, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>@Html.Raw(string.Format("&copy; {0} - {1} {2} <br /> {3}", DateTime.Now.Year, Resources.Company, Resources.Application, Resources.Made))</p>
+        </footer>
+    </div>
+    
+    @Scripts.Render("~/bundles/jquery", "~/bundles/bootstrap", "~/bundles/jqueryUI", "~/bundles/knockout")
+</body>
+</html>

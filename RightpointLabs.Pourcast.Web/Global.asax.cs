@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
+using System.Web.Optimization;
+using RightpointLabs.Pourcast.Web.App_Start;
 
 namespace RightpointLabs.Pourcast.Web
 {
@@ -16,6 +18,7 @@ namespace RightpointLabs.Pourcast.Web
             UnityConfig.RegisterComponents(GlobalConfiguration.Configuration); 
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
     }
 }
