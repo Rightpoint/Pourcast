@@ -7,6 +7,7 @@
 
     app.init = function() {
         ko.applyBindings(vm);
+        toast.success(vm.title);
     };
 
 }(window.pourcast = window.pourcast || {}, jQuery, ko, toastr, moment));
