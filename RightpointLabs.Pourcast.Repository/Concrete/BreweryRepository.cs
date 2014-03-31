@@ -26,10 +26,5 @@ namespace RightpointLabs.Pourcast.Repository.Concrete
         {
             throw new System.NotImplementedException();
         }
-
-        public IEnumerable<Brewery> GetAll()
-        {
-            return MongoConnectionHandler.MongoCollection.FindAllAs<Brewery>().AsEnumerable();
-        }
     }
 }

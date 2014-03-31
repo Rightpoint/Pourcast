@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RightpointLabs.Pourcast.Web", "RightpointLabs.Pourcast.Web\RightpointLabs.Pourcast.Web.csproj", "{F114F2A6-3380-41E8-B957-5FA4A5CC4762}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RightpointLabs.Pourcast.Repository", "RightpointLabs.Pourcast.Repository\RightpointLabs.Pourcast.Repository.csproj", "{6C430DE8-726B-49C3-B3EE-BD1500E205A3}"
@@ -10,6 +12,13 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RightpointLabs.Pourcast.Tests", "RightpointLabs.Pourcast.Tests\RightpointLabs.Pourcast.Tests.csproj", "{85E756AA-2F6A-49D9-B024-C866020B4119}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RighpointLabs.Pourcast.Orchestrator", "RighpointLabs.Pourcast.Orchestrator\RighpointLabs.Pourcast.Orchestrator.csproj", "{3BE9C0B2-526B-4527-8CB6-62F4B4EC06B6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{F4C9301C-CC77-475E-A457-7B14636A5A1C}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
