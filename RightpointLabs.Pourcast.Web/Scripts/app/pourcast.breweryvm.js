@@ -20,6 +20,7 @@
                 self.breweries.push(brewery);
                 toast.success("Created " + brewery.name());
                 self.newBrewery(null);
+                self.createVisible(false);
             }
         };
 
