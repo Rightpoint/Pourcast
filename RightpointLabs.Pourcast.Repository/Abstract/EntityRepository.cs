@@ -7,6 +7,9 @@ using RightpointLabs.Pourcast.DataModel.Entities;
 
 namespace RightpointLabs.Pourcast.Repository.Abstract
 {
+    using System.Collections.Generic;
+    using System.Linq;
+
     public abstract class EntityRepository<T> : IEntityRepository<T> where T : IMongoEntity
     {
         protected readonly IMongoConnectionHandler<T> MongoConnectionHandler; 
@@ -46,5 +49,10 @@ namespace RightpointLabs.Pourcast.Repository.Abstract
 
         public abstract void Update(T entity);
 
+        public IEnumerable<T> GetAll()
+        {
+            var result = MongoConnectionHandler.MongoCollection.FindAllAs<T>().AsEnumerable();
+            return result;
+        }
     }
 }

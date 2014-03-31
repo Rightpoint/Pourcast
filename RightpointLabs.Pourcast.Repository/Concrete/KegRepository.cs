@@ -14,12 +14,6 @@ namespace RightpointLabs.Pourcast.Repository.Concrete
         {
         }
 
-        public IEnumerable<Keg> GetAll()
-        {
-            var result = MongoConnectionHandler.MongoCollection.FindAllAs<Keg>().AsEnumerable();
-            return result;
-        }
-
         public IEnumerable<Keg> OnTap()
         {
             var query = Query<Keg>.NotIn(e => e.Tap.TapId, new[] {0});
