@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using System.Collections.Generic;
 using System.Web.Http;
-using System.Web.Mvc;
-using RighpointLabs.Pourcast.Orchestrator.Abstract;
-using RighpointLabs.Pourcast.Orchestrator.Models;
-using RightpointLabs.Pourcast.Repository.Abstract;
 
 namespace RightpointLabs.Pourcast.Web.Controllers
 {
+    using RightpointLabs.Pourcast.Application.Orchestrators.Abstract;
+    using RightpointLabs.Pourcast.Domain.Models;
+
     [System.Web.Http.RoutePrefix("api/keg")]
     public class KegController : ApiController
     {

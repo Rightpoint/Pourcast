@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using System.Collections.Generic;
 using System.Web.Http;
-using RighpointLabs.Pourcast.Orchestrator.Abstract;
-using RighpointLabs.Pourcast.Orchestrator.Models;
 
 namespace RightpointLabs.Pourcast.Web.Controllers
 {
+    using RightpointLabs.Pourcast.Application.Orchestrators.Abstract;
+    using RightpointLabs.Pourcast.Domain.Models;
+
     public class BreweryController : ApiController
     {
         private readonly IBreweryOrchestrator _breweryOrchestrator;

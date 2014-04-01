@@ -1,12 +1,12 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using RightpointLabs.Pourcast.DataModel;
-using RightpointLabs.Pourcast.DataModel.Entities;
-using RightpointLabs.Pourcast.Repository.Concrete;
 
 namespace RightpointLabs.Pourcast.Tests
 {
+    using RightpointLabs.Pourcast.Infrastructure.Data;
+    using RightpointLabs.Pourcast.Infrastructure.Data.Entities;
+    using RightpointLabs.Pourcast.Infrastructure.Data.Repositories;
+
     [TestClass]
     public class KegRepositoryTests
     {

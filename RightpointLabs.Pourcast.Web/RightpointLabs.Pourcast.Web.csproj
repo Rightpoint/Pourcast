@@ -276,17 +276,17 @@
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RighpointLabs.Pourcast.Orchestrator\RighpointLabs.Pourcast.Orchestrator.csproj">
-      <Project>{3be9c0b2-526b-4527-8cb6-62f4b4ec06b6}</Project>
-      <Name>RighpointLabs.Pourcast.Orchestrator</Name>
+    <ProjectReference Include="..\RightpointLabs.Pourcast.Application\RightpointLabs.Pourcast.Application.csproj">
+      <Project>{15f3381d-cf8b-46e5-a323-6454a4e7d2c3}</Project>
+      <Name>RightpointLabs.Pourcast.Application</Name>
     </ProjectReference>
-    <ProjectReference Include="..\RightpointLabs.Pourcast.DataModel\RightpointLabs.Pourcast.DataModel.csproj">
-      <Project>{6fd2722b-02d5-439b-b509-fe61faa77c12}</Project>
-      <Name>RightpointLabs.Pourcast.DataModel</Name>
+    <ProjectReference Include="..\RightpointLabs.Pourcast.Domain\RightpointLabs.Pourcast.Domain.csproj">
+      <Project>{86a90834-4fda-40e7-810f-f1ab0ade8fe0}</Project>
+      <Name>RightpointLabs.Pourcast.Domain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\RightpointLabs.Pourcast.Repository\RightpointLabs.Pourcast.Repository.csproj">
-      <Project>{6c430de8-726b-49c3-b3ee-bd1500e205a3}</Project>
-      <Name>RightpointLabs.Pourcast.Repository</Name>
+    <ProjectReference Include="..\RightpointLabs.Pourcast.Infrastructure\RightpointLabs.Pourcast.Infrastructure.csproj">
+      <Project>{d0b87dd1-9300-4d6f-be99-75386826cbbd}</Project>
+      <Name>RightpointLabs.Pourcast.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

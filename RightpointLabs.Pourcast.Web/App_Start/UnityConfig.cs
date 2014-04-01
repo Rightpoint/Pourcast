@@ -1,17 +1,17 @@
 using System.Web.Http;
-using System.Web.Mvc;
+
 using Microsoft.Practices.Unity;
-using RighpointLabs.Pourcast.Orchestrator.Abstract;
-using RighpointLabs.Pourcast.Orchestrator.Concrete;
-using RightpointLabs.Pourcast.DataModel;
-using RightpointLabs.Pourcast.Repository.Abstract;
-using RightpointLabs.Pourcast.Repository.Concrete;
+
 using RightpointLabs.Pourcast.Web.App_Start;
-using RightpointLabs.Pourcast.Web.Controllers;
-using Unity.Mvc5;
 
 namespace RightpointLabs.Pourcast.Web
 {
+    using RightpointLabs.Pourcast.Application.Orchestrators.Abstract;
+    using RightpointLabs.Pourcast.Application.Orchestrators.Concrete;
+    using RightpointLabs.Pourcast.Domain.Repositories;
+    using RightpointLabs.Pourcast.Infrastructure.Data;
+    using RightpointLabs.Pourcast.Infrastructure.Data.Repositories;
+
     public static class UnityConfig
     {
         public static void RegisterComponents(HttpConfiguration config)

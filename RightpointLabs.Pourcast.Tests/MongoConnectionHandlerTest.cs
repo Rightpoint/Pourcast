@@ -1,10 +1,10 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using RightpointLabs.Pourcast.DataModel;
-using RightpointLabs.Pourcast.DataModel.Entities;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace RightpointLabs.Pourcast.Tests
 {
+    using RightpointLabs.Pourcast.Infrastructure.Data;
+    using RightpointLabs.Pourcast.Infrastructure.Data.Entities;
+
     [TestClass]
     public class MongoConnectionHandlerTest
     {
