@@ -6,6 +6,8 @@ using RightpointLabs.Pourcast.Web.App_Start;
 
 namespace RightpointLabs.Pourcast.Web
 {
+    using System.Web.Mvc;
+
     using RightpointLabs.Pourcast.Application.Orchestrators.Abstract;
     using RightpointLabs.Pourcast.Application.Orchestrators.Concrete;
     using RightpointLabs.Pourcast.Domain.Repositories;
@@ -31,7 +33,7 @@ namespace RightpointLabs.Pourcast.Web
             container.RegisterType<IBreweryRepository, BreweryRepository>();
             container.RegisterType<IBreweryOrchestrator, BreweryOrchestrator>();
             container.RegisterType<IKegOrchestrator, KegOrchestrator>();
-            config.DependencyResolver = new UnityResolver(container);
+            DependencyResolver.SetResolver(new UnityResolver(container));
         }
     }
 }
