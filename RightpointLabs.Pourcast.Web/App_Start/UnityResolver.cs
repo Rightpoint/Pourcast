@@ -1,10 +1,11 @@
 ﻿using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
-using System.Web.Http.Dependencies;
 
 namespace RightpointLabs.Pourcast.Web.App_Start
 {
+    using IDependencyResolver = System.Web.Mvc.IDependencyResolver;
+
     public class UnityResolver : IDependencyResolver
     {
         protected IUnityContainer container;
@@ -40,12 +41,6 @@ namespace RightpointLabs.Pourcast.Web.App_Start
             {
                 return new List<object>();
             }
-        }
-
-        public IDependencyScope BeginScope()
-        {
-            var child = container.CreateChildContainer();
-            return new UnityResolver(child);
         }
 
         public void Dispose()
