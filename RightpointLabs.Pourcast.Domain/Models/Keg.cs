@@ -20,7 +20,7 @@
         public Status Status { get; set; }
         public Tap Tap { get; set; }
         public DateTime? TapDateTime { get; set; }
-        public IEnumerable<Pour> Pours { get; set; }
+        public ICollection<Pour> Pours { get; set; }
         public double Capacity { get; set; }
 
         public double BeerPoured

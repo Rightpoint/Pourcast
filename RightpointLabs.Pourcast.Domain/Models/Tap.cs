@@ -9,5 +9,6 @@
 
         public int TapId { get; set; }
         public TapName Name { get; set; }
+        public Keg Keg { get; set; }
     }
 }

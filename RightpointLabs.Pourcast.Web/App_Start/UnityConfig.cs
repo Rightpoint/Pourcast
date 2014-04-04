@@ -11,8 +11,10 @@ namespace RightpointLabs.Pourcast.Web
     using RightpointLabs.Pourcast.Application.Orchestrators.Abstract;
     using RightpointLabs.Pourcast.Application.Orchestrators.Concrete;
     using RightpointLabs.Pourcast.Domain.Repositories;
+    using RightpointLabs.Pourcast.Domain.Services;
     using RightpointLabs.Pourcast.Infrastructure.Data;
     using RightpointLabs.Pourcast.Infrastructure.Data.Repositories;
+    using RightpointLabs.Pourcast.Infrastructure.Services;
 
     public static class UnityConfig
     {
@@ -22,8 +24,8 @@ namespace RightpointLabs.Pourcast.Web
             var connectionString =
                 System.Web.Configuration.WebConfigurationManager.ConnectionStrings["Mongo"].ConnectionString;
             var database = System.Web.Configuration.WebConfigurationManager.ConnectionStrings["Mongo"].ProviderName;
-            // register all your components with the container here
-            // it is NOT necessary to register your controllers
+
+            container.RegisterType<IDateTimeProvider, CurrentDateTimeProvider>(new ContainerControlledLifetimeManager());
             
             // e.g. container.RegisterType<ITestService, TestService>();
             container.RegisterType(typeof(IMongoConnectionHandler<>), typeof(MongoConnectionHandler<>),
