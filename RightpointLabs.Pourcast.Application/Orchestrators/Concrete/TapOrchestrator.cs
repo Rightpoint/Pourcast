@@ -9,25 +9,25 @@
 
     public class TapOrchestrator : ITapOrchestrator
     {
-        private readonly IKegRepository _kegRepository;
+        private readonly ITapRepository _tapRepository;
 
         private readonly IDateTimeProvider _dateTimeProvider;
 
-        public TapOrchestrator(IKegRepository kegRepository, IDateTimeProvider dateTimeProvider)
+        public TapOrchestrator(ITapRepository tapRepository, IDateTimeProvider dateTimeProvider)
         {
-            if (kegRepository == null) throw new ArgumentNullException("kegRepository");
+            if (tapRepository == null) throw new ArgumentNullException("tapRepository");
             if (dateTimeProvider == null) throw new ArgumentNullException("dateTimeProvider");
 
-            _kegRepository = kegRepository;
+            _tapRepository = tapRepository;
             _dateTimeProvider = dateTimeProvider;
         }
 
-        public void PourBeerFromTap(int tapId, double volume)
+        public void PourBeerFromTap(string tapId, double volume)
         {
-            var newPour = new Pour(_dateTimeProvider.GetCurrentDateTime(), volume);
-            var keg = _kegRepository.OnTap(tapId);
-
-            keg.Pours.Add(newPour);
+            var tap = _tapRepository.GetById(tapId);
+            var currentTime = _dateTimeProvider.GetCurrentDateTime();
+            
+            tap.PourBeer(currentTime, volume);
 
             // TODO : save it?
         }

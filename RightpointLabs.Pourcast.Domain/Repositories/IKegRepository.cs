@@ -15,6 +15,6 @@
         /// <returns></returns>
         IEnumerable<Keg> OnTap();
 
-        Keg OnTap(int id);
+        Keg OnTap(string tapId);
     }
 }

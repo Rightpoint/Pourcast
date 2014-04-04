@@ -1,13 +1,16 @@
 ﻿namespace RightpointLabs.Pourcast.Infrastructure.Data.Entities
 {
+    using MongoDB.Bson;
     using MongoDB.Bson.Serialization.Attributes;
 
-    public class Tap
+    public class Tap : IMongoEntity
     {
-        [BsonElement("TapId")]
-        public int TapId { get; set; }
+        [BsonId]
+        public ObjectId Id { get; set; }
 
         [BsonElement("Name")]
-        public TapName Name { get; set; } 
+        public TapName Name { get; set; }
+
+        public Keg Keg { get; set; }
     }
 }

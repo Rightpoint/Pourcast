@@ -50,6 +50,7 @@
     <Compile Include="Models\Tap.cs" />
     <Compile Include="Models\TapName.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\ITapRepository.cs" />
     <Compile Include="Services\IDateTimeProvider.cs" />
   </ItemGroup>
   <ItemGroup>

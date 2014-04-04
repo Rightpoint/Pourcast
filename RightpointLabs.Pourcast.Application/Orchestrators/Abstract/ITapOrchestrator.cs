@@ -2,6 +2,6 @@
 {
     public interface ITapOrchestrator
     {
-        void PourBeerFromTap(int tapId, double volume);
+        void PourBeerFromTap(string tapId, double volume);
     }
 }
