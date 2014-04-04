@@ -2,7 +2,7 @@
 {
     public enum Status
     {
-        Current,
+        OnTap,
         Paused,
         Empty
     }
