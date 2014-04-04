@@ -2,6 +2,11 @@
 {
     public class Beer
     {
+        public Beer(string name)
+        {
+            Name = name;
+        }
+
         public string Id { get; set; }
         public string Name { get; set; }
         public Brewery Brewer { get; set; }
@@ -11,6 +16,5 @@
         public string Style { get; set; }
         public string Color { get; set; }
         public string Glass { get; set; }
-        public string Slug { get; set; } 
     }
 }

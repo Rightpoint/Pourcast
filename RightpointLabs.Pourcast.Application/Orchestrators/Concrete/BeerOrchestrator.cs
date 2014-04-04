@@ -1,5 +1,6 @@
 ﻿namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
 {
+    using System;
     using System.Collections.Generic;
 
     using RightpointLabs.Pourcast.Application.Orchestrators.Abstract;
@@ -10,12 +11,19 @@
     {
         private readonly IBeerRepository _beerRepository;
 
-        public IEnumerable<Beer> GetAll()
+        public BeerOrchestrator(IBeerRepository beerRepository)
         {
-            throw new System.NotImplementedException();
+            if (beerRepository == null) throw new ArgumentNullException("beerRepository");
+
+            _beerRepository = beerRepository;
         }
 
-        public IEnumerable<Beer> GetAllByBrewer(Brewery brewery)
+        public IEnumerable<Beer> GetAll()
+        {
+            return _beerRepository.GetAll();
+        }
+
+        public IEnumerable<Beer> GetAllByBrewer(int breweryId)
         {
             throw new System.NotImplementedException();
         }
