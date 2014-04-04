@@ -33,6 +33,9 @@ namespace RightpointLabs.Pourcast.Web
             container.RegisterType<IBreweryRepository, BreweryRepository>();
             container.RegisterType<IBreweryOrchestrator, BreweryOrchestrator>();
             container.RegisterType<IKegOrchestrator, KegOrchestrator>();
+
+
+            config.DependencyResolver = new UnityResolver(container);
             DependencyResolver.SetResolver(new UnityResolver(container));
         }
     }
