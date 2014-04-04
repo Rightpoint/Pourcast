@@ -32,9 +32,4 @@
             // TODO : save it?
         }
     }
-
-    public interface ITapRepository
-    {
-        Tap GetById(int id);
-    }
 }
