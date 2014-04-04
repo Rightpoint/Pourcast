@@ -1,11 +1,12 @@
 ﻿using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
-using System.Web.Http.Dependencies;
 
 namespace RightpointLabs.Pourcast.Web.App_Start
 {
-    public class UnityResolver : IDependencyResolver
+    using System.Web.Http.Dependencies;
+
+    public class UnityResolver : System.Web.Mvc.IDependencyResolver, System.Web.Http.Dependencies.IDependencyResolver
     {
         protected IUnityContainer container;
 

@@ -250,11 +250,7 @@
   <ItemGroup>
     <Content Include="Views\web.config" />
     <Content Include="packages.config" />
-    <Content Include="ConnectionStrings.config">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="ConnectionStrings.Template.config" />
-    <Content Include="AppSettings.config" />
     <Content Include="AppSettings.Template.config" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
