@@ -14,6 +14,6 @@
         public Status Status { get; set; }
         public Tap Tap { get; set; }
         public IEnumerable<Pour> Pours { get; set; }
-
+        public double Capacity { get; set; }
     }
 }

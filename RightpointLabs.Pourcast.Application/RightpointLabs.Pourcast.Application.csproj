@@ -48,7 +48,9 @@
     <Compile Include="Orchestrators\Concrete\KegOrchestrator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Commands\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RightpointLabs.Pourcast.Domain\RightpointLabs.Pourcast.Domain.csproj">
       <Project>{86a90834-4fda-40e7-810f-f1ab0ade8fe0}</Project>

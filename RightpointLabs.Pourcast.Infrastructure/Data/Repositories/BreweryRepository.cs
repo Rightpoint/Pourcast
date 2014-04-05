@@ -1,5 +1,7 @@
 ﻿namespace RightpointLabs.Pourcast.Infrastructure.Data.Repositories
 {
+    using AutoMapper;
+
     using RightpointLabs.Pourcast.Domain.Repositories;
     using RightpointLabs.Pourcast.Domain.Models;
 
@@ -8,8 +10,10 @@
         public BreweryRepository(IMongoConnectionHandler<Entities.Brewery> connectionHandler)
             : base(connectionHandler)
         {
-            AutoMapper.Mapper.CreateMap<Entities.Brewery, Brewery>();
-            AutoMapper.Mapper.CreateMap<Brewery, Entities.Brewery>();
+            Mapper.CreateMap<Entities.Brewery, Brewery>()
+                .ConstructUsing(b => new Brewery(b.Name));
+
+            Mapper.CreateMap<Brewery, Entities.Brewery>();
         }
     }
 }
