@@ -16,6 +16,8 @@
         public KegRepository(IMongoConnectionHandler<Entities.Keg> connectionHandler)
             : base(connectionHandler)
         {
+            AutoMapper.Mapper.CreateMap<Entities.Keg, Keg>();
+            AutoMapper.Mapper.CreateMap<Keg, Entities.Keg>();
         }
 
         public IEnumerable<Keg> OnTap()

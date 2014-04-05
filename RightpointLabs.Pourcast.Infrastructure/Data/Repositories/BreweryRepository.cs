@@ -8,6 +8,8 @@
         public BreweryRepository(IMongoConnectionHandler<Entities.Brewery> connectionHandler)
             : base(connectionHandler)
         {
+            AutoMapper.Mapper.CreateMap<Entities.Brewery, Brewery>();
+            AutoMapper.Mapper.CreateMap<Brewery, Entities.Brewery>();
         }
     }
 }

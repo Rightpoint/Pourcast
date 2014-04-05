@@ -52,7 +52,6 @@
                 
                 orch.PourBeerFromTap("0", 10);
 
-                Assert.IsTrue(SomeKeg.Pours.Any());
                 Assert.IsTrue(SomeKeg.Pours.Count() == 1);
                 Assert.AreEqual(SomeKeg.Pours.Single().Volume, 10);
                 Assert.AreEqual(SomeKeg.Pours.Single().PouredDateTime, SomeTime);
