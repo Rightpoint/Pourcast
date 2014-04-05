@@ -5,7 +5,6 @@
 
     using AutoMapper;
 
-    using MongoDB.Bson;
     using MongoDB.Driver.Builders;
 
     using RightpointLabs.Pourcast.Domain.Repositories;
@@ -24,17 +23,16 @@
 
         public IEnumerable<Keg> OnTap()
         {
-            var taps = MongoConnectionHandler.MongoCollection.FindAllAs<Entities.Tap>().AsEnumerable();
-            var kegs = taps.Select(x => x.Keg);
+            var query = Query<Entities.Keg>.NotIn(e => e.Tap.Id, new [] { "0" });
+            var kegs = MongoConnectionHandler.MongoCollection.FindAs<Entities.Keg>(query).AsEnumerable();
 
             return Mapper.Map<IEnumerable<Entities.Keg>, IEnumerable<Keg>>(kegs);
         }
 
         public Keg OnTap(string tapId)
         {
-            var query = Query<Entities.Tap>.EQ(x => x.Id, new ObjectId(tapId));
-            var tap = MongoConnectionHandler.MongoCollection.FindOneAs<Entities.Tap>(query);
-            var keg = tap.Keg;
+            var query = Query<Entities.Keg>.EQ(x => x.Tap.Id, tapId);
+            var keg = MongoConnectionHandler.MongoCollection.FindOne(query);
 
             return Mapper.Map<Entities.Keg, Keg>(keg);
         }
