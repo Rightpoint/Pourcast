@@ -35,7 +35,11 @@
 
         public void PourBeerFromTap(string tapId, double volume)
         {
+            if (volume <= 0) throw new ArgumentOutOfRangeException("volume", "Volume must be greater than zero.");
+
             var keg = _kegRepository.OnTap(tapId);
+            if (keg == null) throw new ArgumentException("TapId does not exist.", "tapId");
+
             var now = _dateTimeProvider.GetCurrentDateTime();
             
             keg.PourBeer(now, volume);
