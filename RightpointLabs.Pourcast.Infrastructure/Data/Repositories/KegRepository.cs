@@ -34,10 +34,5 @@
 
             return Mapper.Map<Entities.Keg, Keg>(keg);
         }
-
-        public override void Update(Keg entity)
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }

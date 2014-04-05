@@ -9,8 +9,6 @@ namespace RightpointLabs.Pourcast.Web.Controllers
     [System.Web.Http.RoutePrefix("api/keg")]
     public class KegController : ApiController
     {
-
-
         private readonly IKegOrchestrator _kegOrchestrator;
         
         public KegController(IKegOrchestrator kegOrchestrator)
@@ -22,13 +20,13 @@ namespace RightpointLabs.Pourcast.Web.Controllers
 
         public IEnumerable<Keg> Get()
         {
-            return _kegOrchestrator.GetAll();
+            return _kegOrchestrator.GetKegs();
         }
 
         // GET api/<controller>/5
         public IEnumerable<Keg> Get(bool ontap)
         {
-            return ontap ? _kegOrchestrator.GetOnTap() : _kegOrchestrator.GetAll();
+            return ontap ? _kegOrchestrator.GetKegsOnTap() : _kegOrchestrator.GetKegs();
         }
 
         // POST api/<controller>

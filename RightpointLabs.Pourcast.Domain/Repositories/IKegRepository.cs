@@ -16,5 +16,7 @@
         IEnumerable<Keg> OnTap();
 
         Keg OnTap(string tapId);
+
+        void Update(Keg keg);
     }
 }

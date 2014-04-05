@@ -23,12 +23,12 @@
             _dateTimeProvider = dateTimeProvider;
         }
 
-        public IEnumerable<Keg> GetAll()
+        public IEnumerable<Keg> GetKegs()
         {
             return _kegRepository.GetAll();
         }
 
-        public IEnumerable<Keg> GetOnTap()
+        public IEnumerable<Keg> GetKegsOnTap()
         {
             return _kegRepository.OnTap();
         }
@@ -39,6 +39,8 @@
             var now = _dateTimeProvider.GetCurrentDateTime();
             
             keg.PourBeer(now, volume);
+
+            _kegRepository.Update(keg);
         }
     }
 }

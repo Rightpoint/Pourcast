@@ -6,7 +6,7 @@
 
     public class Keg
     {
-        private List<Pour> _pours;
+        private readonly List<Pour> _pours;
 
         public Keg(Beer beer, Status status, double capacity)
         {

@@ -18,12 +18,12 @@
             _beerRepository = beerRepository;
         }
 
-        public IEnumerable<Beer> GetAll()
+        public IEnumerable<Beer> GetBeers()
         {
             return _beerRepository.GetAll();
         }
 
-        public IEnumerable<Beer> GetAllByBrewer(int breweryId)
+        public IEnumerable<Beer> GetBeersByBrewery(int breweryId)
         {
             throw new System.NotImplementedException();
         }

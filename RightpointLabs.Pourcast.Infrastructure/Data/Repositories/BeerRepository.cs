@@ -9,10 +9,5 @@
             : base(connectionHandler)
         {
         }
-
-        public override void Update(Beer entity)
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }

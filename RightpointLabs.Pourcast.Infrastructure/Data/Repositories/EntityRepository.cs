@@ -51,9 +51,17 @@
             return Mapper.Map<TEntity, TModel>(entity);
         }
 
-        public abstract void Update(TModel entity);
+        public virtual void Update(TModel entity)
+        {
+            var result = MongoConnectionHandler.MongoCollection.Save(entity, WriteConcern.Acknowledged);
 
-        public IEnumerable<TModel> GetAll()
+            if (!result.Ok)
+            {
+                throw new Exception(result.ErrorMessage);
+            }
+        }
+
+        public virtual IEnumerable<TModel> GetAll()
         {
             var result = MongoConnectionHandler.MongoCollection.FindAllAs<TEntity>().AsEnumerable();
 
