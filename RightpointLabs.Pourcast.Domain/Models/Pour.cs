@@ -6,6 +6,9 @@
     {
         public Pour(DateTime pouredDateTime, double volume)
         {
+            if (volume <= 0) 
+                throw new ArgumentOutOfRangeException("volume", "Volume must be greater than zero.");
+
             PouredDateTime = pouredDateTime;
             Volume = volume;
         }

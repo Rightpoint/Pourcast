@@ -58,24 +58,6 @@
                 Assert.AreEqual(Keg.Pours.Single().PouredDateTime, Now);
                 KegRepository.Verify(x => x.Update(Keg));
             }
-
-            [TestMethod]
-            [ExpectedException(typeof(ArgumentOutOfRangeException))]
-            public void NegativeVolumeThrowsException()
-            {
-                var orch = new KegOrchestrator(KegRepository.Object, DateTimeProvider.Object);
-
-                orch.PourBeerFromTap("0", -1);
-            }
-
-            [TestMethod]
-            [ExpectedException(typeof(ArgumentOutOfRangeException))]
-            public void ZeroVolumeThrowsException()
-            {
-                var orch = new KegOrchestrator(KegRepository.Object, DateTimeProvider.Object);
-
-                orch.PourBeerFromTap("0", 0);
-            }
         }
     }
 }

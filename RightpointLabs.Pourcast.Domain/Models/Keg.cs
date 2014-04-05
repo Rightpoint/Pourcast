@@ -60,10 +60,8 @@
 
         public void PourBeer(DateTime pouredDateTime, double volume)
         {
-            if (AmountOfBeerRemaining - volume < 0)
-            {
+            if (AmountOfBeerRemaining - volume < 0) 
                 throw new Exception("Volume exceeds amount of beer remaining.");
-            }
 
             var newPour = new Pour(pouredDateTime, volume);
             _pours.Add(newPour);
