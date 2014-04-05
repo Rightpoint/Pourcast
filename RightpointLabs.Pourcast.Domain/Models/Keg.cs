@@ -8,10 +8,13 @@
     {
         private readonly List<Pour> _pours;
 
-        public Keg(Beer beer, Status status, double capacity)
+        public Keg(Beer beer, double capacity)
         {
+            if (beer == null) throw new ArgumentNullException("beer");
+            if (capacity <= 0) throw new ArgumentOutOfRangeException("capacity", "Capacity must be greater than zero.");
+
             Beer = beer;
-            Status = status;
+            Status = Status.InQueue;
             Capacity = capacity;
 
             _pours = new List<Pour>();

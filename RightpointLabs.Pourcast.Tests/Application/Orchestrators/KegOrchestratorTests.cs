@@ -21,42 +21,42 @@
 
         protected Mock<IDateTimeProvider> DateTimeProvider;
 
-        protected Keg Keg;
+        protected Keg SomeKeg;
 
-        protected DateTime Now;
+        protected DateTime SomeTime;
 
         [TestInitialize]
         public void Initialize()
         {
             var fixture = new Fixture();
 
-            Keg = fixture.Create<Keg>();
-            Now = DateTime.Now;
+            SomeKeg = fixture.Create<Keg>();
+            SomeTime = DateTime.Now;
 
             KegRepository = new Mock<IKegRepository>();
             KegRepository.Setup(k => k.OnTap(It.IsAny<String>()))
-                .Returns(Keg);
+                .Returns(SomeKeg);
             KegRepository.Setup(k => k.Update(It.IsAny<Keg>()));
 
             DateTimeProvider = new Mock<IDateTimeProvider>();
-            DateTimeProvider.Setup(d => d.GetCurrentDateTime()).Returns(Now);
+            DateTimeProvider.Setup(d => d.GetCurrentDateTime()).Returns(SomeTime);
         }
 
         [TestClass]
         public class PourBeerFromTapMethod : KegOrchestratorTests
         {
             [TestMethod]
-            public void AddsPourToKeg()
+            public void CreatesPourAndAddsToKeg()
             {
                 var orch = new KegOrchestrator(KegRepository.Object, DateTimeProvider.Object);
                 
                 orch.PourBeerFromTap("0", 10);
 
-                Assert.IsTrue(Keg.Pours.Any());
-                Assert.IsTrue(Keg.Pours.Count() == 1);
-                Assert.AreEqual(Keg.Pours.Single().Volume, 10);
-                Assert.AreEqual(Keg.Pours.Single().PouredDateTime, Now);
-                KegRepository.Verify(x => x.Update(Keg));
+                Assert.IsTrue(SomeKeg.Pours.Any());
+                Assert.IsTrue(SomeKeg.Pours.Count() == 1);
+                Assert.AreEqual(SomeKeg.Pours.Single().Volume, 10);
+                Assert.AreEqual(SomeKeg.Pours.Single().PouredDateTime, SomeTime);
+                KegRepository.Verify(x => x.Update(SomeKeg));
             }
         }
     }

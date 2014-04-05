@@ -2,6 +2,7 @@
 {
     public enum Status
     {
+        InQueue,
         OnTap,
         Paused,
         Empty
