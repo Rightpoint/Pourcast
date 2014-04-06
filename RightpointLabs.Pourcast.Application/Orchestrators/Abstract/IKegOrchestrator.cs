@@ -6,7 +6,7 @@
 
     public interface IKegOrchestrator
     {
-        IEnumerable<Keg> GetAll();
-        IEnumerable<Keg> GetOnTap();
+        IEnumerable<Keg> GetKegs();
+        IEnumerable<Keg> GetKegsOnTap();
     }
 }

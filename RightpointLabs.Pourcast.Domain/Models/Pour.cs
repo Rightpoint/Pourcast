@@ -4,7 +4,16 @@
 
     public class Pour
     {
-        public DateTime PourDateTime { get; set; }
-        public double Volume { get; set; }  
+        public Pour(DateTime pouredDateTime, double volume)
+        {
+            if (volume <= 0) 
+                throw new ArgumentOutOfRangeException("volume", "Volume must be greater than zero.");
+
+            PouredDateTime = pouredDateTime;
+            Volume = volume;
+        }
+
+        public DateTime PouredDateTime { get; set; }
+        public double Volume { get; set; }
     }
 }

@@ -3,6 +3,8 @@
     using System.Collections.Generic;
     using System.Linq;
 
+    using AutoMapper;
+
     using MongoDB.Driver.Builders;
 
     using RightpointLabs.Pourcast.Domain.Repositories;
@@ -13,17 +15,26 @@
         public KegRepository(IMongoConnectionHandler<Entities.Keg> connectionHandler)
             : base(connectionHandler)
         {
+            Mapper.CreateMap<Entities.Keg, Keg>()
+                .ConstructUsing(k => new Keg(k.Capacity));
+
+            Mapper.CreateMap<Keg, Entities.Keg>();
         }
 
         public IEnumerable<Keg> OnTap()
         {
-            var query = Query<Keg>.NotIn(e => e.Tap.TapId, new[] {0});
-            return MongoConnectionHandler.MongoCollection.FindAs<Keg>(query).AsEnumerable();
+            var query = Query<Entities.Keg>.NotIn(e => e.Tap.Id, new [] { "0" });
+            var kegs = MongoConnectionHandler.MongoCollection.FindAs<Entities.Keg>(query).AsEnumerable();
+
+            return Mapper.Map<IEnumerable<Entities.Keg>, IEnumerable<Keg>>(kegs);
         }
 
-        public override void Update(Keg entity)
+        public Keg OnTap(string tapId)
         {
-            throw new System.NotImplementedException();
+            var query = Query<Entities.Keg>.EQ(x => x.Tap.Id, tapId);
+            var keg = MongoConnectionHandler.MongoCollection.FindOne(query);
+
+            return Mapper.Map<Entities.Keg, Keg>(keg);
         }
     }
 }

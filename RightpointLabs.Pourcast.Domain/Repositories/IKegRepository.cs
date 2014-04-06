@@ -8,10 +8,15 @@
     {
         Keg GetById(string id);
         IEnumerable<Keg> GetAll();
+
         /// <summary>
         /// Gets all kegs currently on tap
         /// </summary>
         /// <returns></returns>
         IEnumerable<Keg> OnTap();
+
+        Keg OnTap(string tapId);
+
+        void Update(Keg keg);
     }
 }

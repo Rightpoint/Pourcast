@@ -43,6 +43,12 @@
     <Reference Include="MongoDB.Driver">
       <HintPath>..\packages\mongocsharpdriver.1.8.3\lib\net35\MongoDB.Driver.dll</HintPath>
     </Reference>
+    <Reference Include="Moq">
+      <HintPath>..\packages\Moq.4.2.1402.2112\lib\net40\Moq.dll</HintPath>
+    </Reference>
+    <Reference Include="Ploeh.AutoFixture">
+      <HintPath>..\packages\AutoFixture.3.18.1\lib\net40\Ploeh.AutoFixture.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <Choose>
@@ -58,6 +64,9 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Application\Orchestrators\KegOrchestratorTests.cs" />
+    <Compile Include="Domain\Models\KegTests.cs" />
+    <Compile Include="Domain\Models\PourTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MongoConnectionHandlerTest.cs" />
     <Compile Include="KegRepositoryTests.cs" />
@@ -67,6 +76,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\RightpointLabs.Pourcast.Application\RightpointLabs.Pourcast.Application.csproj">
+      <Project>{15F3381D-CF8B-46E5-A323-6454A4E7D2C3}</Project>
+      <Name>RightpointLabs.Pourcast.Application</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RightpointLabs.Pourcast.Domain\RightpointLabs.Pourcast.Domain.csproj">
       <Project>{86a90834-4fda-40e7-810f-f1ab0ade8fe0}</Project>
       <Name>RightpointLabs.Pourcast.Domain</Name>

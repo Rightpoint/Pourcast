@@ -4,10 +4,10 @@
 
     public class Tap
     {
-        [BsonElement("TapId")]
-        public int TapId { get; set; }
+        [BsonElement("Id")]
+        public string Id { get; set; }
 
         [BsonElement("Name")]
-        public TapName Name { get; set; } 
+        public TapName Name { get; set; }
     }
 }
