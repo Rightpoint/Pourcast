@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
 
+    using MongoDB.Bson;
     using MongoDB.Driver;
     using MongoDB.Driver.Builders;
 
@@ -62,6 +63,11 @@
         public virtual IEnumerable<TModel> GetAll()
         {
             return MongoConnectionHandler.MongoCollection.FindAllAs<TModel>().AsEnumerable();
+        }
+
+        public virtual string NextIdentity()
+        {
+            return new ObjectId().ToString();
         }
     }
 }

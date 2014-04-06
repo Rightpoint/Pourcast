@@ -12,7 +12,8 @@
         {
         }
 
-        public Keg(double capacity)
+        public Keg(string id, double capacity)
+            : base(id)
         {
             if (capacity <= 0) throw new ArgumentOutOfRangeException("capacity", "Capacity must be greater than zero.");
 

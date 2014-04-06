@@ -6,7 +6,8 @@
         {
         }
 
-        public Brewery(string name)
+        public Brewery(string id, string name)
+            :base(id)
         {
             Name = name;
         }

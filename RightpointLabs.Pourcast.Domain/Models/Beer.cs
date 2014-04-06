@@ -6,7 +6,8 @@
         {
         }
 
-        public Beer(string name)
+        public Beer(string id, string name)
+            : base(id)
         {
             Name = name;
         }

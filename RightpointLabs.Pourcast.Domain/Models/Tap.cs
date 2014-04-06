@@ -2,7 +2,8 @@
 {
     public class Tap : Entity
     {
-        public Tap(TapName name)
+        public Tap(string id, TapName name)
+            : base(id)
         {
             Name = name;
         }
