@@ -4,9 +4,13 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    public class Keg
+    public class Keg : Entity
     {
         private readonly List<Pour> _pours;
+
+        private Keg()
+        {
+        }
 
         public Keg(double capacity)
         {
@@ -18,7 +22,6 @@
             _pours = new List<Pour>();
         }
 
-        public string Id { get; set; }
         public Beer Beer { get; set; }
         public Status Status { get; set; }
         public Tap Tap { get; set; }

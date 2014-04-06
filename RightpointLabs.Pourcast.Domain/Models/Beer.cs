@@ -1,13 +1,16 @@
 ﻿namespace RightpointLabs.Pourcast.Domain.Models
 {
-    public class Beer
+    public class Beer : Entity
     {
+        private Beer()
+        {
+        }
+
         public Beer(string name)
         {
             Name = name;
         }
 
-        public string Id { get; set; }
         public string Name { get; set; }
         public Brewery Brewer { get; set; }
         public double ABV { get; set; }

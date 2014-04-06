@@ -2,9 +2,9 @@
 {
     using MongoDB.Driver;
 
-    using RightpointLabs.Pourcast.Infrastructure.Data.Entities;
+    using RightpointLabs.Pourcast.Domain.Models;
 
-    public class MongoConnectionHandler<T> : IMongoConnectionHandler<T> where T : IMongoEntity
+    public class MongoConnectionHandler<T> : IMongoConnectionHandler<T> where T : Entity
     {
         protected readonly MongoCollection<T> Collection;
         private MongoServer _server;
