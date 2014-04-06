@@ -7,12 +7,19 @@
 
     public class MongoClassMapper
     {
+        private bool _areClassesMapped = false;
+
         public void EnsureMappings()
         {
-            MapEntity();
-            MapKeg();
-            MapBeer();
-            MapBrewery();
+            if (!_areClassesMapped)
+            {
+                _areClassesMapped = true;
+
+                MapEntity();
+                MapKeg();
+                MapBeer();
+                MapBrewery();
+            }
         }
 
         private static void MapEntity()
