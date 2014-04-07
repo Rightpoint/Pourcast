@@ -7,10 +7,6 @@
             Id = id;
         }
 
-        protected internal Entity()
-        {
-        }
-
         public string Id { get; private set; }
     }
 }

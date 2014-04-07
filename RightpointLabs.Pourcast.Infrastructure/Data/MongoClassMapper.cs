@@ -39,6 +39,7 @@
                 cm =>
                 {
                     cm.AutoMap();
+                    cm.MapCreator(b => new Brewery(b.Id, b.Name));
                 });
         }
 
@@ -48,6 +49,7 @@
                 cm =>
                 {
                     cm.AutoMap();
+                    cm.MapCreator(b => new Beer(b.Id, b.Name));
                 });
         }
 
@@ -57,6 +59,7 @@
                 cm =>
                 {
                     cm.AutoMap();
+                    cm.MapCreator(k => new Keg(k.Id, k.Capacity));
                 });
         }
     }

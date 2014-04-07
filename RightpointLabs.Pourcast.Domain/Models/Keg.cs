@@ -8,10 +8,6 @@
     {
         private readonly List<Pour> _pours;
 
-        private Keg()
-        {
-        }
-
         public Keg(string id, double capacity)
             : base(id)
         {
