@@ -2,9 +2,7 @@
 {
     using MongoDB.Driver;
 
-    using RightpointLabs.Pourcast.Infrastructure.Data.Entities;
-
-    public interface IMongoConnectionHandler<T> where T : IMongoEntity
+    public interface IMongoConnectionHandler<T>
     {
         MongoCollection<T> MongoCollection { get; }
     }

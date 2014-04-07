@@ -8,5 +8,6 @@
     {
         Beer GetById(string id);
         IEnumerable<Beer> GetAll();
+        string NextIdentity();
     }
 }

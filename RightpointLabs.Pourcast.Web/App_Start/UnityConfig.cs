@@ -26,7 +26,9 @@ namespace RightpointLabs.Pourcast.Web
             var database = System.Web.Configuration.WebConfigurationManager.ConnectionStrings["Mongo"].ProviderName;
 
             container.RegisterType<IDateTimeProvider, CurrentDateTimeProvider>(new ContainerControlledLifetimeManager());
-            
+
+            container.RegisterType<MongoClassMapper>(new ContainerControlledLifetimeManager());
+
             // e.g. container.RegisterType<ITestService, TestService>();
             container.RegisterType(typeof(IMongoConnectionHandler<>), typeof(MongoConnectionHandler<>),
                 new InjectionConstructor(connectionString, database));

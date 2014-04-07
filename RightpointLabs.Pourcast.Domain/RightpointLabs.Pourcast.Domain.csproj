@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Entity.cs" />
     <Compile Include="Repositories\IBeerRepository.cs" />
     <Compile Include="Repositories\IBreweryRepository.cs" />
     <Compile Include="Repositories\IKegRepository.cs" />

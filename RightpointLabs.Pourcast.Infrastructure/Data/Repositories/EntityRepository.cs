@@ -4,20 +4,19 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    using AutoMapper;
-
     using MongoDB.Bson;
     using MongoDB.Driver;
     using MongoDB.Driver.Builders;
 
-    using RightpointLabs.Pourcast.Infrastructure.Data.Entities;
+    using RightpointLabs.Pourcast.Domain.Models;
 
-    public abstract class EntityRepository<TModel, TEntity> : IEntityRepository<TModel> where TEntity : IMongoEntity
+    public abstract class EntityRepository<TModel> : IEntityRepository<TModel> where TModel : Entity
     {
-        protected readonly IMongoConnectionHandler<TEntity> MongoConnectionHandler; 
-        protected EntityRepository(IMongoConnectionHandler<TEntity> connectionHandler)
+        protected readonly IMongoConnectionHandler<TModel> MongoConnectionHandler; 
+        protected EntityRepository(IMongoConnectionHandler<TModel> connectionHandler, MongoClassMapper mapper)
         {
             MongoConnectionHandler = connectionHandler;
+            mapper.EnsureMappings();
         } 
 
         public virtual void Create(TModel entity)
@@ -35,7 +34,7 @@
 
         public virtual void Delete(string id)
         {
-            var result = MongoConnectionHandler.MongoCollection.Remove(Query<TEntity>.EQ(e => e.Id, new ObjectId(id)),
+            var result = MongoConnectionHandler.MongoCollection.Remove(Query<TModel>.EQ(e => e.Id, id),
                                                                        RemoveFlags.None, WriteConcern.Acknowledged);
             if (!result.Ok)
             {
@@ -45,10 +44,10 @@
 
         public virtual TModel GetById(string id)
         {
-            var query = Query<TEntity>.EQ(e => e.Id, new ObjectId(id));
+            var query = Query<TModel>.EQ(e => e.Id, id);
             var entity = this.MongoConnectionHandler.MongoCollection.FindOne(query);
 
-            return Mapper.Map<TEntity, TModel>(entity);
+            return entity;
         }
 
         public virtual void Update(TModel entity)
@@ -63,9 +62,12 @@
 
         public virtual IEnumerable<TModel> GetAll()
         {
-            var result = MongoConnectionHandler.MongoCollection.FindAllAs<TEntity>().AsEnumerable();
+            return MongoConnectionHandler.MongoCollection.FindAllAs<TModel>().AsEnumerable();
+        }
 
-            return Mapper.Map<IEnumerable<TEntity>, IEnumerable<TModel>>(result);
+        public virtual string NextIdentity()
+        {
+            return new ObjectId().ToString();
         }
     }
 }

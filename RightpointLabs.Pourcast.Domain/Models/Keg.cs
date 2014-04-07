@@ -4,11 +4,12 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    public class Keg
+    public class Keg : Entity
     {
         private readonly List<Pour> _pours;
 
-        public Keg(double capacity)
+        public Keg(string id, double capacity)
+            : base(id)
         {
             if (capacity <= 0) throw new ArgumentOutOfRangeException("capacity", "Capacity must be greater than zero.");
 
@@ -18,7 +19,6 @@
             _pours = new List<Pour>();
         }
 
-        public string Id { get; set; }
         public Beer Beer { get; set; }
         public Status Status { get; set; }
         public Tap Tap { get; set; }

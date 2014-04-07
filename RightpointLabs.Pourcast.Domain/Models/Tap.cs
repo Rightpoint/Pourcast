@@ -1,13 +1,13 @@
 ﻿namespace RightpointLabs.Pourcast.Domain.Models
 {
-    public class Tap
+    public class Tap : Entity
     {
-        public Tap(TapName name)
+        public Tap(string id, TapName name)
+            : base(id)
         {
             Name = name;
         }
 
-        public string TapId { get; set; }
         public TapName Name { get; set; }
     }
 }
