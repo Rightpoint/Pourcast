@@ -1,12 +1,16 @@
 using System.Web.Http;
 
 using Microsoft.Practices.Unity;
+using Microsoft.Practices.Unity.Mvc;
 
 using RightpointLabs.Pourcast.Web.App_Start;
 
 namespace RightpointLabs.Pourcast.Web
 {
+    using System;
     using System.Web.Mvc;
+
+    using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 
     using RightpointLabs.Pourcast.Application.Orchestrators.Abstract;
     using RightpointLabs.Pourcast.Application.Orchestrators.Concrete;
@@ -18,9 +22,25 @@ namespace RightpointLabs.Pourcast.Web
 
     public static class UnityConfig
     {
-        public static void RegisterComponents(HttpConfiguration config)
+        #region Unity Container
+        private static Lazy<IUnityContainer> container = new Lazy<IUnityContainer>(() =>
         {
-			var container = new UnityContainer();
+            var container = new UnityContainer();
+            RegisterTypes(container);
+            return container;
+        });
+
+        /// <summary>
+        /// Gets the configured Unity container.
+        /// </summary>
+        public static IUnityContainer GetConfiguredContainer()
+        {
+            return container.Value;
+        }
+        #endregion
+
+        public static void RegisterTypes(IUnityContainer container)
+        {
             var connectionString =
                 System.Web.Configuration.WebConfigurationManager.ConnectionStrings["Mongo"].ConnectionString;
             var database = System.Web.Configuration.WebConfigurationManager.ConnectionStrings["Mongo"].ProviderName;
@@ -29,16 +49,17 @@ namespace RightpointLabs.Pourcast.Web
 
             // e.g. container.RegisterType<ITestService, TestService>();
             container.RegisterType(typeof(IMongoConnectionHandler<>), typeof(MongoConnectionHandler<>),
+                new PerRequestLifetimeManager(),
                 new InjectionConstructor(connectionString, database));
-            container.RegisterType<IKegRepository, KegRepository>();
-            container.RegisterType<IBeerRepository, BeerRepository>();
-            container.RegisterType<IBreweryRepository, BreweryRepository>();
-            container.RegisterType<IBreweryOrchestrator, BreweryOrchestrator>();
-            container.RegisterType<IKegOrchestrator, KegOrchestrator>();
+            container.RegisterType<IKegRepository, KegRepository>(new PerRequestLifetimeManager());
+            container.RegisterType<IBeerRepository, BeerRepository>(new PerRequestLifetimeManager());
+            container.RegisterType<IBreweryRepository, BreweryRepository>(new PerRequestLifetimeManager());
+            container.RegisterType<IBreweryOrchestrator, BreweryOrchestrator>(new PerRequestLifetimeManager());
+            container.RegisterType<IKegOrchestrator, KegOrchestrator>(new PerRequestLifetimeManager());
 
-
-            config.DependencyResolver = new UnityResolver(container);
-            DependencyResolver.SetResolver(new UnityResolver(container));
+            var unityResolver = new UnityResolver(container);
+            GlobalConfiguration.Configuration.DependencyResolver = unityResolver;
+            DependencyResolver.SetResolver(unityResolver);
         }
     }
 }
