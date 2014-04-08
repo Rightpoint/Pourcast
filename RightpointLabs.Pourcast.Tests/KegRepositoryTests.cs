@@ -14,7 +14,7 @@ namespace RightpointLabs.Pourcast.Tests
         public void CanGetKegsFromLocalDatabase()
         {
             // setup
-            var repo = new KegRepository(new MongoConnectionHandler<Keg>("mongodb://localhost", "test"), new MongoClassMapper());
+            var repo = new KegRepository(new MongoConnectionHandler<Keg>("mongodb://localhost", "test"));
 
             // Act
             var kegs = repo.GetAll().ToList();
