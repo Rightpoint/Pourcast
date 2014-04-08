@@ -5,6 +5,8 @@
     using System.Linq;
 
     using MongoDB.Bson;
+    using MongoDB.Bson.Serialization;
+    using MongoDB.Bson.Serialization.IdGenerators;
     using MongoDB.Driver;
     using MongoDB.Driver.Builders;
 
@@ -12,11 +14,22 @@
 
     public abstract class EntityRepository<TModel> : IEntityRepository<TModel> where TModel : Entity
     {
-        protected readonly IMongoConnectionHandler<TModel> MongoConnectionHandler; 
-        protected EntityRepository(IMongoConnectionHandler<TModel> connectionHandler, MongoClassMapper mapper)
+        protected readonly IMongoConnectionHandler<TModel> MongoConnectionHandler;
+
+        static EntityRepository()
+        {
+            BsonClassMap.RegisterClassMap<Entity>(
+                cm =>
+                {
+                    cm.AutoMap();
+                    cm.SetIdMember(cm.GetMemberMap(c => c.Id));
+                    cm.IdMemberMap.SetIdGenerator(StringObjectIdGenerator.Instance);
+                });
+        } 
+
+        protected EntityRepository(IMongoConnectionHandler<TModel> connectionHandler)
         {
             MongoConnectionHandler = connectionHandler;
-            mapper.EnsureMappings();
         } 
 
         public virtual void Create(TModel entity)

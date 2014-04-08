@@ -57,7 +57,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\IMongoConnectionHandler.cs" />
-    <Compile Include="Data\MongoClassMapper.cs" />
     <Compile Include="Data\MongoConnectionHandler.cs" />
     <Compile Include="Data\Repositories\BeerRepository.cs" />
     <Compile Include="Data\Repositories\BreweryRepository.cs" />

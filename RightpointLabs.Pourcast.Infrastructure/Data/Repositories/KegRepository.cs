@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
 
+    using MongoDB.Bson.Serialization;
     using MongoDB.Driver.Builders;
 
     using RightpointLabs.Pourcast.Domain.Repositories;
@@ -10,8 +11,18 @@
 
     public class KegRepository : EntityRepository<Keg>,  IKegRepository
     {
-        public KegRepository(IMongoConnectionHandler<Keg> connectionHandler, MongoClassMapper mapper)
-            : base(connectionHandler, mapper)
+        static KegRepository()
+        {
+            BsonClassMap.RegisterClassMap<Keg>(
+                cm =>
+                {
+                    cm.AutoMap();
+                    cm.MapCreator(k => new Keg(k.Id, k.Capacity));
+                });
+        }
+
+        public KegRepository(IMongoConnectionHandler<Keg> connectionHandler)
+            : base(connectionHandler)
         {
         }
 
