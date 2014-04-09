@@ -4,6 +4,8 @@
     using System.Collections.Generic;
     using System.Linq;
 
+    using RightpointLabs.Pourcast.Domain.Events;
+
     public class Keg : Entity
     {
         private readonly List<Pour> _pours;
@@ -59,13 +61,23 @@
             }
         }
 
+        public bool IsEmpty
+        {
+            get
+            {
+                return AmountOfBeerRemaining <= 0;
+            }
+        }
+
         public void PourBeer(DateTime pouredDateTime, double volume)
         {
-            if (AmountOfBeerRemaining - volume < 0) 
-                throw new Exception("Volume exceeds amount of beer remaining.");
-
             var newPour = new Pour(pouredDateTime, volume);
             _pours.Add(newPour);
+
+            if (IsEmpty)
+            {
+                DomainEventPublisher.Publish(new KegEmptied(Id, Tap.Id));
+            }
         }
     }
 }

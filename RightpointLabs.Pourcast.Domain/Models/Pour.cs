@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class Pour
+    public class Pour : ValueObject
     {
         public Pour(DateTime pouredDateTime, double volume)
         {
