@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    public class DomainEventPublisher
+    public static class DomainEventPublisher
     {
         private static readonly List<IDomainEventHandler<IDomainEvent>> _handlers;
 
