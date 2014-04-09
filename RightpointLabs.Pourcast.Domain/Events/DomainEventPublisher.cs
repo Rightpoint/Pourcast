@@ -1,18 +1,18 @@
 ﻿namespace RightpointLabs.Pourcast.Domain.Events
 {
-    using System.Collections.Generic;
+    using System.Collections;
     using System.Linq;
 
     public static class DomainEventPublisher
     {
-        private static readonly List<IDomainEventHandler<IDomainEvent>> _handlers;
+        private static readonly ArrayList _handlers;
 
         static DomainEventPublisher()
         {
-            _handlers = new List<IDomainEventHandler<IDomainEvent>>();
+            _handlers = new ArrayList();
         }
 
-        public static void Subscribe(IDomainEventHandler<IDomainEvent> handler)
+        public static void Subscribe<T>(IDomainEventHandler<T> handler) where T : IDomainEvent
         {
             _handlers.Add(handler);
         }
