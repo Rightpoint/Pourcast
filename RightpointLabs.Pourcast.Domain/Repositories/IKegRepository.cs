@@ -8,8 +8,6 @@
     {
         Keg GetById(string id);
         IEnumerable<Keg> GetAll();
-        IEnumerable<Keg> OnTap();
-        Keg OnTap(string tapId);
         void Update(Keg keg);
         string NextIdentity();
     }

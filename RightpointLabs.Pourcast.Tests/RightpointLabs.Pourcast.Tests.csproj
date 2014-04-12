@@ -65,6 +65,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Application\Orchestrators\KegOrchestratorTests.cs" />
+    <Compile Include="Domain\Events\DomainEventPublisherTests.cs" />
     <Compile Include="Domain\Models\KegTests.cs" />
     <Compile Include="Domain\Models\PourTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

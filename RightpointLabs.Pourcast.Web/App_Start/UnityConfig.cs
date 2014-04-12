@@ -1,16 +1,10 @@
-using System.Web.Http;
-
 using Microsoft.Practices.Unity;
-using Microsoft.Practices.Unity.Mvc;
-
-using RightpointLabs.Pourcast.Web.App_Start;
 
 namespace RightpointLabs.Pourcast.Web
 {
     using System;
-    using System.Web.Mvc;
 
-    using Microsoft.Web.Infrastructure.DynamicModuleHelper;
+    using Microsoft.Practices.ServiceLocation;
 
     using RightpointLabs.Pourcast.Application.Orchestrators.Abstract;
     using RightpointLabs.Pourcast.Application.Orchestrators.Concrete;
@@ -57,9 +51,8 @@ namespace RightpointLabs.Pourcast.Web
             container.RegisterType<IBreweryOrchestrator, BreweryOrchestrator>(new PerRequestLifetimeManager());
             container.RegisterType<IKegOrchestrator, KegOrchestrator>(new PerRequestLifetimeManager());
 
-            var unityResolver = new UnityResolver(container);
-            GlobalConfiguration.Configuration.DependencyResolver = unityResolver;
-            DependencyResolver.SetResolver(unityResolver);
+            var locator = new App_Start.UnityServiceLocator(container);
+            ServiceLocator.SetLocatorProvider(() => locator);
         }
     }
 }

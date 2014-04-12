@@ -10,7 +10,7 @@ namespace RightpointLabs.Pourcast.Web.Controllers
     public class KegController : ApiController
     {
         private readonly IKegOrchestrator _kegOrchestrator;
-        
+
         public KegController(IKegOrchestrator kegOrchestrator)
         {
             _kegOrchestrator = kegOrchestrator;
