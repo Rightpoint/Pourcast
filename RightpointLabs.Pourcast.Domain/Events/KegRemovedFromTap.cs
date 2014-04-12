@@ -1,12 +1,12 @@
 ﻿namespace RightpointLabs.Pourcast.Domain.Events
 {
-    public class KegRemoved : IDomainEvent
+    public class KegRemovedFromTap : IDomainEvent
     {
         public string TapId { get; private set; }
 
         public string KegId { get; private set; }
 
-        public KegRemoved(string tapId, string kegId)
+        public KegRemovedFromTap(string tapId, string kegId)
         {
             TapId = tapId;
             KegId = kegId;

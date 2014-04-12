@@ -34,7 +34,7 @@
             var pour = new Pour(KegId, volume, time);
             _pours.Add(pour);
 
-            DomainEvents.Raise(new BeerPoured(Id, KegId, volume, time));
+            DomainEvents.Raise(new BeerPoured(Id, KegId, volume));
         }
 
         public void RemoveKeg()
@@ -42,7 +42,7 @@
             var kegId = KegId;
             KegId = null;
 
-            DomainEvents.Raise(new KegRemoved(Id, kegId));
+            DomainEvents.Raise(new KegRemovedFromTap(Id, kegId));
         }
     }
 }

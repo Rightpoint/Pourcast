@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace RightpointLabs.Pourcast.Domain.Events
+﻿namespace RightpointLabs.Pourcast.Domain.Events
 {
     public class BeerPoured : IDomainEvent
     {
@@ -10,14 +8,11 @@ namespace RightpointLabs.Pourcast.Domain.Events
 
         public double Volume { get; private set; }
 
-        public DateTime Time { get; private set; }
-
-        public BeerPoured(string tapId, string kegId, double volume, DateTime time)
+        public BeerPoured(string tapId, string kegId, double volume)
         {
             TapId = tapId;
             KegId = kegId;
             Volume = volume;
-            Time = time;
         }
     }
 }
