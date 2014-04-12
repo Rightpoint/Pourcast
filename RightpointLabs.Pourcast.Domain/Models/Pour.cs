@@ -4,16 +4,20 @@
 
     public class Pour : ValueObject
     {
-        public Pour(DateTime pouredDateTime, double volume)
+        public Pour(string kegId, double volume, DateTime pouredDateTime)
         {
             if (volume <= 0) 
                 throw new ArgumentOutOfRangeException("volume", "Volume must be greater than zero.");
 
+            KegId = kegId;
             PouredDateTime = pouredDateTime;
             Volume = volume;
         }
 
-        public DateTime PouredDateTime { get; set; }
-        public double Volume { get; set; }
+        public DateTime PouredDateTime { get; private set; }
+        
+        public double Volume { get; private set; }
+
+        public string KegId { get; private set; }
     }
 }

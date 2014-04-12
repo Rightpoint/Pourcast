@@ -4,12 +4,9 @@
     {
         public string KegId { get; set; }
 
-        public string TapId { get; set; }
-
-        public KegEmptied(string kegId, string tapId)
+        public KegEmptied(string kegId)
         {
             KegId = kegId;
-            TapId = tapId;
         }
     }
 }
