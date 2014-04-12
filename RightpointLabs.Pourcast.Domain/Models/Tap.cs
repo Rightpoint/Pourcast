@@ -44,5 +44,12 @@
 
             DomainEvents.Raise(new KegRemovedFromTap(Id, kegId));
         }
+
+        public void TapKeg(string kegId)
+        {
+            KegId = kegId;
+
+            DomainEvents.Raise(new KegTapped(Id, KegId));
+        }
     }
 }

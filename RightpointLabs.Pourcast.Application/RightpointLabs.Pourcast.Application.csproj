@@ -39,7 +39,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EventHandlers\BeerPouredEventHandler.cs" />
     <Compile Include="EventHandlers\EventStoreEventHandler.cs" />
     <Compile Include="Orchestrators\Abstract\BaseOrchestrator.cs" />
     <Compile Include="Orchestrators\Abstract\IBeerOrchestrator.cs" />
