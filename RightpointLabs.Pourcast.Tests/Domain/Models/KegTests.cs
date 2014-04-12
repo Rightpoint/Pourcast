@@ -24,14 +24,14 @@
             [ExpectedException(typeof(ArgumentOutOfRangeException))]
             public void ZeroCapactiyThrowsException()
             {
-                new Keg("asdf", 0);
+                new Keg("asdf", "qwer", 0);
             }
 
             [TestMethod]
             [ExpectedException(typeof(ArgumentOutOfRangeException))]
             public void NegativeCapactiyThrowsException()
             {
-                new Keg("asdf", - 1);
+                new Keg("asdf", "qwer", -1);
             }
         }
     }

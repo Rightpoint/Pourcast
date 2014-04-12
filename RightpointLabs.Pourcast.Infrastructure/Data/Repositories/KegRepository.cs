@@ -17,7 +17,7 @@
                 cm =>
                 {
                     cm.AutoMap();
-                    cm.MapCreator(k => new Keg(k.Id, k.Capacity));
+                    cm.MapCreator(k => new Keg(k.Id, k.BeerId, k.Capacity));
                 });
         }
 

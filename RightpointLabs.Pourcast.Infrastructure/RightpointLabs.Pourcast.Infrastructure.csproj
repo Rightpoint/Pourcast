@@ -64,6 +64,7 @@
     <Compile Include="Data\Repositories\IEntityRepository.cs" />
     <Compile Include="Data\Repositories\KegRepository.cs" />
     <Compile Include="Data\Repositories\StoredEventRepository.cs" />
+    <Compile Include="Data\Repositories\TapRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CurrentDateTimeProvider.cs" />
   </ItemGroup>
