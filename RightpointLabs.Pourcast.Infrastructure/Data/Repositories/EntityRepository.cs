@@ -32,7 +32,7 @@
             MongoConnectionHandler = connectionHandler;
         } 
 
-        public virtual void Create(TModel entity)
+        public virtual void Add(TModel entity)
         {
             var result = MongoConnectionHandler.MongoCollection.Save(entity, new MongoInsertOptions
                 {
