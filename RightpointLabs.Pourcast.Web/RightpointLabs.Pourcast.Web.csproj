@@ -249,9 +249,9 @@
     <Compile Include="App_Start\UnityServiceLocator.cs" />
     <Compile Include="App_Start\UnityWebApiActivator.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\BreweryController.cs" />
+    <Compile Include="Controllers\Api\BreweryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\KegController.cs" />
+    <Compile Include="Controllers\Api\KegController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

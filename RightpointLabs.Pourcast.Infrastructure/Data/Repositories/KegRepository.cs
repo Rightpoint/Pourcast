@@ -21,7 +21,7 @@
                 });
         }
 
-        public KegRepository(IMongoConnectionHandler<Keg> connectionHandler)
+        public KegRepository(IMongoConnectionHandler connectionHandler)
             : base(connectionHandler)
         {
         }

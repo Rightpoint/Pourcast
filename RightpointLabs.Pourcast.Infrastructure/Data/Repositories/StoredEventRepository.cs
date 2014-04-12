@@ -5,7 +5,7 @@ namespace RightpointLabs.Pourcast.Infrastructure.Data.Repositories
 
     public class StoredEventRepository<T> : EntityRepository<StoredEvent<T>>, IStoredEventRepository<T> where T : IDomainEvent
     {
-        public StoredEventRepository(IMongoConnectionHandler<StoredEvent<T>> connectionHandler)
+        public StoredEventRepository(IMongoConnectionHandler connectionHandler)
             : base(connectionHandler)
         {
         }

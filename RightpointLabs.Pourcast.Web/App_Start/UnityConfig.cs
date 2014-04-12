@@ -44,7 +44,7 @@ namespace RightpointLabs.Pourcast.Web
             container.RegisterType<IDateTimeProvider, CurrentDateTimeProvider>(new ContainerControlledLifetimeManager());
 
             // e.g. container.RegisterType<ITestService, TestService>();
-            container.RegisterType(typeof(IMongoConnectionHandler<>), typeof(MongoConnectionHandler<>),
+            container.RegisterType<IMongoConnectionHandler, MongoConnectionHandler>(
                 new PerRequestLifetimeManager(),
                 new InjectionConstructor(connectionString, database));
 

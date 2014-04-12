@@ -12,11 +12,10 @@ namespace RightpointLabs.Pourcast.Tests
         public void AbleToRetrieveItemsFromTestDatabase()
         {
             // Setup
-            var mch = new MongoConnectionHandler<Keg>("mongodb://localhost", "test");
+            var mch = new MongoConnectionHandler("mongodb://localhost", "test");
 
             // Act
-            var kegs = mch.MongoCollection.FindAllAs<Keg>();
-            
+            var kegs = mch.Database.GetCollection<Keg>("kegs").FindAllAs<Keg>();
 
             // Assert
             Assert.AreNotEqual(0, kegs.Count());

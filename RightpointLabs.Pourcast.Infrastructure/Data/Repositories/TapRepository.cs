@@ -5,7 +5,7 @@ namespace RightpointLabs.Pourcast.Infrastructure.Data.Repositories
 
     public class TapRepository : EntityRepository<Tap>, ITapRepository
     {
-        public TapRepository(IMongoConnectionHandler<Tap> connectionHandler)
+        public TapRepository(IMongoConnectionHandler connectionHandler)
             : base(connectionHandler)
         {
         }
