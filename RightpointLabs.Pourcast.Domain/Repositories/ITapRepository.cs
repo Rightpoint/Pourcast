@@ -13,5 +13,7 @@ namespace RightpointLabs.Pourcast.Domain.Repositories
         Tap GetById(string id);
         
         string NextIdentity();
+
+        void Update(Tap tap);
     }
 }

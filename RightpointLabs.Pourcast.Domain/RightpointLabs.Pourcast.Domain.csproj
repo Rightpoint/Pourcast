@@ -50,6 +50,7 @@
     <Compile Include="Events\IEventHandler.cs" />
     <Compile Include="Events\KegEmptied.cs" />
     <Compile Include="Events\KegNearingEmpty.cs" />
+    <Compile Include="Events\KegRemoved.cs" />
     <Compile Include="Events\StoredEvent.cs" />
     <Compile Include="Models\Entity.cs" />
     <Compile Include="Models\ValueObject.cs" />

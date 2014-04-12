@@ -6,7 +6,7 @@
     {
         void PourBeerFromTap(string tapId, double volume);
 
-        void SwitchKegOnTap(string tapId, string kegId);
+        void RemoveKegFromTap(string tapId);
 
         void CreateTap(TapName name);
     }

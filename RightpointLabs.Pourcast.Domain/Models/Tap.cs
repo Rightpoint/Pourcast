@@ -17,9 +17,9 @@
             _pours = new List<Pour>();
         }
 
-        public TapName Name { get; set; }
+        public TapName Name { get; private set; }
 
-        public string KegId { get; set; }
+        public string KegId { get; private set; }
 
         public IEnumerable<Pour> Pours
         {
@@ -35,6 +35,14 @@
             _pours.Add(pour);
 
             DomainEvents.Raise(new BeerPoured(Id, KegId, volume, time));
+        }
+
+        public void RemoveKeg()
+        {
+            var kegId = KegId;
+            KegId = null;
+
+            DomainEvents.Raise(new KegRemoved(Id, kegId));
         }
     }
 }
