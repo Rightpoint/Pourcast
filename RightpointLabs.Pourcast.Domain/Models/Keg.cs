@@ -6,16 +6,17 @@
 
     public class Keg : Entity
     {
-        public Keg(string id, double capacity)
+        public Keg(string id, string beerId, double capacity)
             : base(id)
         {
             if (capacity <= 0) throw new ArgumentOutOfRangeException("capacity", "Capacity must be greater than zero.");
 
             Status = Status.InQueue;
             Capacity = capacity;
+            BeerId = beerId;
         }
 
-        public string BeerId { get; set; }
+        public string BeerId { get; private set; }
 
         public Status Status { get; set; }
 

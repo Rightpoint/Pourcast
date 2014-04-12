@@ -7,7 +7,9 @@
     public interface IBreweryRepository
     {
         Brewery GetById(string id);
+        
         IEnumerable<Brewery> GetAll();
+        
         string NextIdentity();
     }
 }

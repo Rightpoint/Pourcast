@@ -6,8 +6,10 @@ namespace RightpointLabs.Pourcast.Web
 
     using Microsoft.Practices.ServiceLocation;
 
+    using RightpointLabs.Pourcast.Application.EventHandlers;
     using RightpointLabs.Pourcast.Application.Orchestrators.Abstract;
     using RightpointLabs.Pourcast.Application.Orchestrators.Concrete;
+    using RightpointLabs.Pourcast.Domain.Events;
     using RightpointLabs.Pourcast.Domain.Repositories;
     using RightpointLabs.Pourcast.Domain.Services;
     using RightpointLabs.Pourcast.Infrastructure.Data;
@@ -42,14 +44,25 @@ namespace RightpointLabs.Pourcast.Web
             container.RegisterType<IDateTimeProvider, CurrentDateTimeProvider>(new ContainerControlledLifetimeManager());
 
             // e.g. container.RegisterType<ITestService, TestService>();
-            container.RegisterType(typeof(IMongoConnectionHandler<>), typeof(MongoConnectionHandler<>),
+            container.RegisterType<IMongoConnectionHandler, MongoConnectionHandler>(
                 new PerRequestLifetimeManager(),
                 new InjectionConstructor(connectionString, database));
+
+            // orchestrators
+            container.RegisterType<IBreweryOrchestrator, BreweryOrchestrator>(new PerRequestLifetimeManager());
+            container.RegisterType<IBeerOrchestrator, BeerOrchestrator>(new PerRequestLifetimeManager());
+            container.RegisterType<IKegOrchestrator, KegOrchestrator>(new PerRequestLifetimeManager());
+            container.RegisterType<ITapOrchestrator, TapOrchestrator>(new PerRequestLifetimeManager());
+
+            // repositories
             container.RegisterType<IKegRepository, KegRepository>(new PerRequestLifetimeManager());
             container.RegisterType<IBeerRepository, BeerRepository>(new PerRequestLifetimeManager());
             container.RegisterType<IBreweryRepository, BreweryRepository>(new PerRequestLifetimeManager());
-            container.RegisterType<IBreweryOrchestrator, BreweryOrchestrator>(new PerRequestLifetimeManager());
-            container.RegisterType<IKegOrchestrator, KegOrchestrator>(new PerRequestLifetimeManager());
+            container.RegisterType<ITapRepository, TapRepository>(new PerRequestLifetimeManager());
+            container.RegisterType(typeof(IStoredEventRepository<>), typeof(StoredEventRepository<>), new PerRequestLifetimeManager());
+
+            // events
+            container.RegisterType(typeof(IEventHandler<>), typeof(EventStoreEventHandler<>));
 
             var locator = new App_Start.UnityServiceLocator(container);
             ServiceLocator.SetLocatorProvider(() => locator);

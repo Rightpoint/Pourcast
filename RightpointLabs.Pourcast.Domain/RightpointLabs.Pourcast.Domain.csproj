@@ -50,10 +50,14 @@
     <Compile Include="Events\IEventHandler.cs" />
     <Compile Include="Events\KegEmptied.cs" />
     <Compile Include="Events\KegNearingEmpty.cs" />
+    <Compile Include="Events\KegRemovedFromTap.cs" />
+    <Compile Include="Events\KegTapped.cs" />
+    <Compile Include="Events\StoredEvent.cs" />
     <Compile Include="Models\Entity.cs" />
     <Compile Include="Models\ValueObject.cs" />
     <Compile Include="Repositories\IBeerRepository.cs" />
     <Compile Include="Repositories\IBreweryRepository.cs" />
+    <Compile Include="Repositories\IStoredEventRepository.cs" />
     <Compile Include="Repositories\IKegRepository.cs" />
     <Compile Include="Models\Beer.cs" />
     <Compile Include="Models\Brewery.cs" />

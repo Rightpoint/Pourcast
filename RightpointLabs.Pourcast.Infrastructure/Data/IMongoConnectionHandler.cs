@@ -2,8 +2,8 @@
 {
     using MongoDB.Driver;
 
-    public interface IMongoConnectionHandler<T>
+    public interface IMongoConnectionHandler
     {
-        MongoCollection<T> MongoCollection { get; }
+        MongoDatabase Database { get; }
     }
 }

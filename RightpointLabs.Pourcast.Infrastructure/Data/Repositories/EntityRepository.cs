@@ -12,29 +12,36 @@
 
     using RightpointLabs.Pourcast.Domain.Models;
 
-    public abstract class EntityRepository<TModel> : IEntityRepository<TModel> where TModel : Entity
+    public abstract class EntityRepository<T> : IEntityRepository<T> where T : Entity
     {
-        protected readonly IMongoConnectionHandler<TModel> MongoConnectionHandler;
+        protected readonly IMongoConnectionHandler MongoConnectionHandler;
+
+        protected readonly MongoCollection<T> Collection; 
 
         static EntityRepository()
         {
-            BsonClassMap.RegisterClassMap<Entity>(
+            if (!BsonClassMap.IsClassMapRegistered(typeof(Entity)))
+            {
+                BsonClassMap.RegisterClassMap<Entity>(
                 cm =>
                 {
                     cm.AutoMap();
                     cm.SetIdMember(cm.GetMemberMap(c => c.Id));
                     cm.IdMemberMap.SetIdGenerator(StringObjectIdGenerator.Instance);
                 });
+            }
         } 
 
-        protected EntityRepository(IMongoConnectionHandler<TModel> connectionHandler)
+        protected EntityRepository(IMongoConnectionHandler connectionHandler)
         {
             MongoConnectionHandler = connectionHandler;
+
+            Collection = connectionHandler.Database.GetCollection<T>(typeof(T).Name.ToLower() + "s");
         } 
 
-        public virtual void Create(TModel entity)
+        public virtual void Add(T entity)
         {
-            var result = MongoConnectionHandler.MongoCollection.Save(entity, new MongoInsertOptions
+            var result = Collection.Save(entity, new MongoInsertOptions
                 {
                     WriteConcern = WriteConcern.Acknowledged
                 });
@@ -47,7 +54,7 @@
 
         public virtual void Delete(string id)
         {
-            var result = MongoConnectionHandler.MongoCollection.Remove(Query<TModel>.EQ(e => e.Id, id),
+            var result = Collection.Remove(Query<T>.EQ(e => e.Id, id),
                                                                        RemoveFlags.None, WriteConcern.Acknowledged);
             if (!result.Ok)
             {
@@ -55,17 +62,17 @@
             }
         }
 
-        public virtual TModel GetById(string id)
+        public virtual T GetById(string id)
         {
-            var query = Query<TModel>.EQ(e => e.Id, id);
-            var entity = this.MongoConnectionHandler.MongoCollection.FindOne(query);
+            var query = Query<T>.EQ(e => e.Id, id);
+            var entity = Collection.FindOne(query);
 
             return entity;
         }
 
-        public virtual void Update(TModel entity)
+        public virtual void Update(T entity)
         {
-            var result = MongoConnectionHandler.MongoCollection.Save(entity, WriteConcern.Acknowledged);
+            var result = Collection.Save(entity, WriteConcern.Acknowledged);
 
             if (!result.Ok)
             {
@@ -73,9 +80,9 @@
             }
         }
 
-        public virtual IEnumerable<TModel> GetAll()
+        public virtual IEnumerable<T> GetAll()
         {
-            return MongoConnectionHandler.MongoCollection.FindAllAs<TModel>().AsEnumerable();
+            return Collection.FindAllAs<T>().AsEnumerable();
         }
 
         public virtual string NextIdentity()

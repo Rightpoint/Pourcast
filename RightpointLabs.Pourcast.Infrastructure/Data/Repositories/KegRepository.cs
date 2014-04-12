@@ -17,11 +17,11 @@
                 cm =>
                 {
                     cm.AutoMap();
-                    cm.MapCreator(k => new Keg(k.Id, k.Capacity));
+                    cm.MapCreator(k => new Keg(k.Id, k.BeerId, k.Capacity));
                 });
         }
 
-        public KegRepository(IMongoConnectionHandler<Keg> connectionHandler)
+        public KegRepository(IMongoConnectionHandler connectionHandler)
             : base(connectionHandler)
         {
         }

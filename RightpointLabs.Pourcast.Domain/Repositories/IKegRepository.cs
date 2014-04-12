@@ -7,8 +7,13 @@
     public interface IKegRepository
     {
         Keg GetById(string id);
+        
         IEnumerable<Keg> GetAll();
+        
         void Update(Keg keg);
+        
         string NextIdentity();
+
+        void Add(Keg keg);
     }
 }

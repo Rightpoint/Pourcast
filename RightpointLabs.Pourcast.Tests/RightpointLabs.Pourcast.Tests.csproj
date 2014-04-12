@@ -68,6 +68,7 @@
     <Compile Include="Domain\Events\DomainEventPublisherTests.cs" />
     <Compile Include="Domain\Models\KegTests.cs" />
     <Compile Include="Domain\Models\PourTests.cs" />
+    <Compile Include="Domain\Models\TapTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MongoConnectionHandlerTest.cs" />
     <Compile Include="KegRepositoryTests.cs" />
