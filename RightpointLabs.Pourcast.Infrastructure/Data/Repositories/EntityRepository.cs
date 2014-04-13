@@ -9,6 +9,7 @@
     using MongoDB.Bson.Serialization.IdGenerators;
     using MongoDB.Driver;
     using MongoDB.Driver.Builders;
+    using MongoDB.Driver.Linq;
 
     using RightpointLabs.Pourcast.Domain.Models;
 
@@ -16,7 +17,16 @@
     {
         protected readonly IMongoConnectionHandler MongoConnectionHandler;
 
-        protected readonly MongoCollection<T> Collection; 
+        protected readonly MongoCollection<T> Collection;
+
+        protected IQueryable<T> Queryable
+        {
+            get
+            {
+                return Collection.AsQueryable();
+            }
+            
+        }
 
         static EntityRepository()
         {
@@ -54,8 +64,7 @@
 
         public virtual void Delete(string id)
         {
-            var result = Collection.Remove(Query<T>.EQ(e => e.Id, id),
-                                                                       RemoveFlags.None, WriteConcern.Acknowledged);
+            var result = Collection.Remove(Query<T>.EQ(e => e.Id, id), RemoveFlags.None, WriteConcern.Acknowledged);
             if (!result.Ok)
             {
                 throw new Exception(result.ErrorMessage);
@@ -64,10 +73,7 @@
 
         public virtual T GetById(string id)
         {
-            var query = Query<T>.EQ(e => e.Id, id);
-            var entity = Collection.FindOne(query);
-
-            return entity;
+            return Queryable.Single(e => e.Id == id);
         }
 
         public virtual void Update(T entity)
@@ -82,7 +88,7 @@
 
         public virtual IEnumerable<T> GetAll()
         {
-            return Collection.FindAllAs<T>().AsEnumerable();
+            return Queryable.AsEnumerable();
         }
 
         public virtual string NextIdentity()

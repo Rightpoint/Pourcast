@@ -11,14 +11,11 @@
         {
             if (capacity <= 0) throw new ArgumentOutOfRangeException("capacity", "Capacity must be greater than zero.");
 
-            Status = Status.InQueue;
             Capacity = capacity;
             BeerId = beerId;
         }
 
         public string BeerId { get; private set; }
-
-        public Status Status { get; set; }
 
         public DateTime? DateTimeTapped { get; private set; }
 

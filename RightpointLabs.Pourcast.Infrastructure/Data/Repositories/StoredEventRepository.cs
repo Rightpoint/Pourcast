@@ -1,6 +1,12 @@
 namespace RightpointLabs.Pourcast.Infrastructure.Data.Repositories
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
     using MongoDB.Bson.Serialization;
+    using MongoDB.Driver.Builders;
+    using MongoDB.Driver.Linq;
 
     using RightpointLabs.Pourcast.Domain.Events;
     using RightpointLabs.Pourcast.Domain.Repositories;
@@ -20,6 +26,16 @@ namespace RightpointLabs.Pourcast.Infrastructure.Data.Repositories
         public StoredEventRepository(IMongoConnectionHandler connectionHandler)
             : base(connectionHandler)
         {
+        }
+
+        public IEnumerable<StoredEvent> GetAll<T>() where T : IDomainEvent
+        {
+            return Queryable.Where(e => e.DomainEvent is T).AsEnumerable();
+        }
+
+        public IEnumerable<StoredEvent> Find<T>(Func<StoredEvent, bool> storedEventPredicate, Func<T, bool> domainEventPredicate) where T : IDomainEvent
+        {
+            return Queryable.Where(e => e.DomainEvent is T).Where(storedEventPredicate).Where(e => domainEventPredicate((T)e.DomainEvent)).AsEnumerable();
         }
     }
 }
