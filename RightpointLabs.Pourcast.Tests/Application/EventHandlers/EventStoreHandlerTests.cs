@@ -12,7 +12,7 @@
     using RightpointLabs.Pourcast.Domain.Services;
 
     [TestClass]
-    public class EventStoreEventHandlerTests
+    public class EventStoreHandlerTests
     {
         [TestClass]
         public class HandleMethod
@@ -25,7 +25,7 @@
                 var mockRepo = new Mock<IStoredEventRepository>();
                 var mockDateTimeProvider = new Mock<IDateTimeProvider>();
 
-                var sut = new EventStoreEventHandler<BeerPoured>(mockRepo.Object, mockDateTimeProvider.Object);
+                var sut = new EventStoreHandler<BeerPoured>(mockRepo.Object, mockDateTimeProvider.Object);
 
                 sut.Handle(mockEvent);
 

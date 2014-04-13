@@ -62,7 +62,7 @@ namespace RightpointLabs.Pourcast.Web
             container.RegisterType<IStoredEventRepository, StoredEventRepository>(new PerRequestLifetimeManager());
 
             // events (must be named!)
-            container.RegisterType(typeof(IEventHandler<>), typeof(EventStoreEventHandler<>), "EventStore", new PerRequestLifetimeManager());
+            container.RegisterType(typeof(IEventHandler<>), typeof(EventStoreHandler<>), "EventStore", new PerRequestLifetimeManager());
 
             var locator = new App_Start.UnityServiceLocator(container);
             ServiceLocator.SetLocatorProvider(() => locator);
