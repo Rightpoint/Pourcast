@@ -19,10 +19,6 @@
 
         public string BeerId { get; private set; }
 
-        public DateTime? DateTimeTapped { get; private set; }
-
-        public DateTime? DateTimeEmptied { get; private set; }
-
         public double Capacity { get; private set; }
 
         public double AmountOfBeerPoured
