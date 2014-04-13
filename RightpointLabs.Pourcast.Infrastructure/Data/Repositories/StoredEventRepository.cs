@@ -36,9 +36,9 @@ namespace RightpointLabs.Pourcast.Infrastructure.Data.Repositories
             return Queryable.Where(predicate);
         }
 
-        public IEnumerable<StoredEvent> Find<T>(Func<StoredEvent, bool> storedEventPredicate, Func<T, bool> domainEventPredicate) where T : IDomainEvent
+        public IEnumerable<StoredEvent> Find<T>(Func<StoredEvent, T, bool> predicate) where T : IDomainEvent
         {
-            return Queryable.Where(e => e.DomainEvent is T).Where(storedEventPredicate).Where(e => domainEventPredicate((T)e.DomainEvent)).AsEnumerable();
+            return Queryable.Where(e => e.DomainEvent is T).Where(e => predicate(e, (T)e.DomainEvent)).AsEnumerable();
         }
     }
 }

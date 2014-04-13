@@ -19,6 +19,6 @@
 
         IEnumerable<StoredEvent> Find(Func<StoredEvent, bool> predicate);
 
-        IEnumerable<StoredEvent> Find<T>(Func<StoredEvent, bool> storedEventPredicate, Func<T, bool> domainEventPredicate) where T : IDomainEvent;
+        IEnumerable<StoredEvent> Find<T>(Func<StoredEvent, T, bool> predicate) where T : IDomainEvent;
     }
 }
