@@ -61,6 +61,9 @@ namespace RightpointLabs.Pourcast.Web
             container.RegisterType<ITapRepository, TapRepository>(new PerRequestLifetimeManager());
             container.RegisterType<IStoredEventRepository, StoredEventRepository>(new PerRequestLifetimeManager());
 
+            // domain services
+            container.RegisterType<IEmailService, SmtpEmailService>(new PerRequestLifetimeManager());
+
             // events (must be named!)
             container.RegisterType(typeof(IEventHandler<>), typeof(EventStoreHandler<>), "EventStore", new PerRequestLifetimeManager());
             container.RegisterType<IEventHandler<BeerPoured>, KegNearingEmptyNotificationHandler>("KegNearingEmptyNotification", new PerRequestLifetimeManager());

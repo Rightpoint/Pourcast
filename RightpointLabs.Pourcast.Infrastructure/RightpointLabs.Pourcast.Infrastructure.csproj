@@ -67,6 +67,7 @@
     <Compile Include="Data\Repositories\TapRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CurrentDateTimeProvider.cs" />
+    <Compile Include="Services\SmtpEmailService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
