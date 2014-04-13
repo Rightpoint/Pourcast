@@ -61,7 +61,6 @@
     <Compile Include="Models\Beer.cs" />
     <Compile Include="Models\Brewery.cs" />
     <Compile Include="Models\Keg.cs" />
-    <Compile Include="Models\Status.cs" />
     <Compile Include="Models\Tap.cs" />
     <Compile Include="Models\TapName.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
