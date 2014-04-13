@@ -1,7 +1,5 @@
 ﻿namespace RightpointLabs.Pourcast.Domain.Models
 {
-    using System;
-
     using RightpointLabs.Pourcast.Domain.Events;
 
     public class Tap : Entity
@@ -15,11 +13,6 @@
         public TapName Name { get; private set; }
 
         public string KegId { get; private set; }
-
-        public void PoorBeer(double volume, DateTime time)
-        {
-            DomainEvents.Raise(new BeerPoured(Id, KegId, volume));
-        }
 
         public void RemoveKeg()
         {

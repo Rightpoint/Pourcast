@@ -49,12 +49,14 @@
             }
         }
 
-        public void PourBeer(double volume)
+        public void PourBeerFromTap(string tapId, double volume)
         {
             if (volume <= 0)
                 throw new ArgumentOutOfRangeException("volume", "Volume must be a positive number.");
             
             AmountOfBeerPoured += volume;
+
+            DomainEvents.Raise(new BeerPoured(tapId, Id, volume));
 
             if (IsEmpty)
             {
