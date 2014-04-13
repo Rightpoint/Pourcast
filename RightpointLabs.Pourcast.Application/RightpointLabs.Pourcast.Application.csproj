@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EventHandlers\EventStoreHandler.cs" />
+    <Compile Include="EventHandlers\KegEmptiedNotificationHandler.cs" />
     <Compile Include="EventHandlers\KegNearingEmptyNotificationHandler.cs" />
     <Compile Include="Orchestrators\Abstract\BaseOrchestrator.cs" />
     <Compile Include="Orchestrators\Abstract\IBeerOrchestrator.cs" />
