@@ -6,8 +6,6 @@
 
     public class Keg : Entity
     {
-        private double _amountOfBeerPoured;
-
         public Keg(string id, string beerId, double capacity)
             : base(id)
         {
@@ -21,23 +19,7 @@
 
         public double Capacity { get; private set; }
 
-        public double AmountOfBeerPoured
-        {
-            get
-            {
-                return _amountOfBeerPoured;
-            }
-            private set
-            {
-                _amountOfBeerPoured = value;
-
-                if (IsEmpty)
-                {
-                    DomainEvents.Raise(new KegEmptied(Id));
-                }
-
-            }
-        }
+        public double AmountOfBeerPoured { get; private set; }
 
         public double AmountOfBeerRemaining
         {
@@ -71,6 +53,11 @@
             AmountOfBeerPoured += volume;
 
             DomainEvents.Raise(new BeerPoured(tapId, Id, volume));
+
+            if (IsEmpty)
+            {
+                DomainEvents.Raise(new KegEmptied(Id));
+            }
         }
     }
 }

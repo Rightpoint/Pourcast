@@ -3,6 +3,7 @@ using Microsoft.Practices.Unity;
 namespace RightpointLabs.Pourcast.Web
 {
     using System;
+    using System.Net.Mail;
 
     using Microsoft.Practices.ServiceLocation;
 
@@ -68,6 +69,8 @@ namespace RightpointLabs.Pourcast.Web
             container.RegisterType(typeof(IEventHandler<>), typeof(EventStoreHandler<>), "EventStore", new PerRequestLifetimeManager());
             container.RegisterType<IEventHandler<BeerPoured>, KegNearingEmptyNotificationHandler>("KegNearingEmptyNotification", new PerRequestLifetimeManager());
             container.RegisterType<IEventHandler<KegEmptied>, KegEmptiedNotificationHandler>("KegEmptiedNotification", new PerRequestLifetimeManager());
+
+            container.RegisterType<SmtpClient>(new PerRequestLifetimeManager(), new InjectionConstructor());
 
             var locator = new App_Start.UnityServiceLocator(container);
             ServiceLocator.SetLocatorProvider(() => locator);
