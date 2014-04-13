@@ -1,5 +1,7 @@
 namespace RightpointLabs.Pourcast.Infrastructure.Data.Repositories
 {
+    using System.Linq;
+
     using MongoDB.Bson.Serialization;
 
     using RightpointLabs.Pourcast.Domain.Models;
@@ -20,6 +22,11 @@ namespace RightpointLabs.Pourcast.Infrastructure.Data.Repositories
         public TapRepository(IMongoConnectionHandler connectionHandler)
             : base(connectionHandler)
         {
+        }
+
+        public Tap GetByKegId(string kegId)
+        {
+            return Queryable.Single(t => t.KegId == kegId);
         }
     }
 }

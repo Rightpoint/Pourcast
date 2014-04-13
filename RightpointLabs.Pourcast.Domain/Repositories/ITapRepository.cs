@@ -11,6 +11,8 @@ namespace RightpointLabs.Pourcast.Domain.Repositories
         IEnumerable<Tap> GetAll();
         
         Tap GetById(string id);
+
+        Tap GetByKegId(string kegId);
         
         string NextIdentity();
 
