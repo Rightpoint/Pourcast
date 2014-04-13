@@ -26,7 +26,7 @@ namespace RightpointLabs.Pourcast.Infrastructure.Data.Repositories
         {
         }
 
-        public IEnumerable<StoredEvent> GetAll<T>() where T : IDomainEvent
+        public IEnumerable<StoredEvent> GetAll<T>() where T : class, IDomainEvent
         {
             return Queryable.Where(e => e.DomainEvent is T).AsEnumerable();
         }
@@ -36,9 +36,9 @@ namespace RightpointLabs.Pourcast.Infrastructure.Data.Repositories
             return Queryable.Where(predicate);
         }
 
-        public IEnumerable<StoredEvent> Find<T>(Func<StoredEvent, T, bool> predicate) where T : IDomainEvent
+        public IEnumerable<StoredEvent> Find<T>(Func<StoredEvent, bool> predicate) where T : class, IDomainEvent
         {
-            return Queryable.Where(e => e.DomainEvent is T).Where(e => predicate(e, (T)e.DomainEvent)).AsEnumerable();
+            return Queryable.Where(e => e.DomainEvent is T).Where(predicate).AsEnumerable();
         }
     }
 }

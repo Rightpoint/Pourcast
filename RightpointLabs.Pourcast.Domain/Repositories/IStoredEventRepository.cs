@@ -15,10 +15,10 @@
 
         string NextIdentity();
 
-        IEnumerable<StoredEvent> GetAll<T>() where T : IDomainEvent;
+        IEnumerable<StoredEvent> GetAll<T>() where T : class, IDomainEvent;
 
         IEnumerable<StoredEvent> Find(Func<StoredEvent, bool> predicate);
 
-        IEnumerable<StoredEvent> Find<T>(Func<StoredEvent, T, bool> predicate) where T : IDomainEvent;
+        IEnumerable<StoredEvent> Find<T>(Func<StoredEvent, bool> predicate) where T : class, IDomainEvent;
     }
 }
