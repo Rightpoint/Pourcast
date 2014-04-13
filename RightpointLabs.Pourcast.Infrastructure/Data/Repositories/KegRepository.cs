@@ -1,10 +1,6 @@
 ﻿namespace RightpointLabs.Pourcast.Infrastructure.Data.Repositories
 {
-    using System.Collections.Generic;
-    using System.Linq;
-
     using MongoDB.Bson.Serialization;
-    using MongoDB.Driver.Builders;
 
     using RightpointLabs.Pourcast.Domain.Repositories;
     using RightpointLabs.Pourcast.Domain.Models;

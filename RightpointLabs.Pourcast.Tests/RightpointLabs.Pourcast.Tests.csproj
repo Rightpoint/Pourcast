@@ -64,6 +64,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Application\EventHandlers\EventStoreEventHandlerTests.cs" />
     <Compile Include="Application\Orchestrators\KegOrchestratorTests.cs" />
     <Compile Include="Domain\Events\DomainEventPublisherTests.cs" />
     <Compile Include="Domain\Models\KegTests.cs" />

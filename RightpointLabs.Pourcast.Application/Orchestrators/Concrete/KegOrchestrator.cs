@@ -53,13 +53,15 @@
             return keg;
         }
 
-        public void CreateKeg(string beerId, double capacity)
+        public string CreateKeg(string beerId, double capacity)
         {
             var id = _kegRepository.NextIdentity();
             var beer = _beerRepository.GetById(beerId);
             var keg = new Keg(id, beer.Id, capacity);
 
             _kegRepository.Add(keg);
+
+            return id;
         }
     }
 }

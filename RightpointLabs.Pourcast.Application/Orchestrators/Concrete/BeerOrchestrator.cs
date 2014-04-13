@@ -27,5 +27,15 @@
         {
             throw new System.NotImplementedException();
         }
+
+        public string CreateBeer(string name)
+        {
+            var id = _beerRepository.NextIdentity();
+            var beer = new Beer(id, name);
+
+            _beerRepository.Add(beer);
+
+            return id;
+        }
     }
 }

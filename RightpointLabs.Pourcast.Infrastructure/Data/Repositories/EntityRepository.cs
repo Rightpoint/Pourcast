@@ -87,7 +87,7 @@
 
         public virtual string NextIdentity()
         {
-            return new ObjectId().ToString();
+            return ObjectId.GenerateNewId(DateTime.Now).ToString();
         }
     }
 }

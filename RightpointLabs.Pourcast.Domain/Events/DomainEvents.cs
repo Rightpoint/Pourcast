@@ -5,6 +5,8 @@
 
     using Microsoft.Practices.ServiceLocation;
 
+    using RightpointLabs.Pourcast.Domain.Repositories;
+
     public static class DomainEvents
     {
         [ThreadStatic]

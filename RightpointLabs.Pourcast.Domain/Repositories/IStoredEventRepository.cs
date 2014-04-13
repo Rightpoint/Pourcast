@@ -4,13 +4,13 @@
 
     using RightpointLabs.Pourcast.Domain.Events;
 
-    public interface IStoredEventRepository<T> where T : IDomainEvent
+    public interface IStoredEventRepository
     {
-        void Add(StoredEvent<T> domainEvent);
+        void Add(StoredEvent domainEvent);
         
-        IEnumerable<StoredEvent<T>> GetAll();
+        IEnumerable<StoredEvent> GetAll();
         
-        StoredEvent<T> GetById(string id);
+        StoredEvent GetById(string id);
         
         string NextIdentity();
     }

@@ -59,10 +59,11 @@ namespace RightpointLabs.Pourcast.Web
             container.RegisterType<IBeerRepository, BeerRepository>(new PerRequestLifetimeManager());
             container.RegisterType<IBreweryRepository, BreweryRepository>(new PerRequestLifetimeManager());
             container.RegisterType<ITapRepository, TapRepository>(new PerRequestLifetimeManager());
-            container.RegisterType(typeof(IStoredEventRepository<>), typeof(StoredEventRepository<>), new PerRequestLifetimeManager());
+            container.RegisterType<IStoredEventRepository, StoredEventRepository>(new PerRequestLifetimeManager());
 
             // events
-            container.RegisterType(typeof(IEventHandler<>), typeof(EventStoreEventHandler<>));
+            container.RegisterType(typeof(IEventHandler<>), typeof(EventStoreEventHandler<>), "EventStore", new PerRequestLifetimeManager());
+            //container.RegisterType<IEventHandler<IDomainEvent>, EventStoreEventHandler<IDomainEvent>>();
 
             var locator = new App_Start.UnityServiceLocator(container);
             ServiceLocator.SetLocatorProvider(() => locator);

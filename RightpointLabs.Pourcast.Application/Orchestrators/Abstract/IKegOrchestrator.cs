@@ -14,6 +14,6 @@
         
         Keg GetKegOnTap(string tapId);
 
-        void CreateKeg(string beerId, double capacity);
+        string CreateKeg(string beerId, double capacity);
     }
 }

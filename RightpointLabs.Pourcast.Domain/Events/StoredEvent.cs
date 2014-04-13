@@ -4,20 +4,20 @@
 
     using RightpointLabs.Pourcast.Domain.Models;
 
-    public class StoredEvent<T> : Entity where T : IDomainEvent
+    public class StoredEvent : Entity 
     {
         public DateTime OccuredOn { get; private set; }
 
-        public T DomainEvent { get; private set; }
+        public IDomainEvent DomainEvent { get; private set; }
 
         public string TypeName { get; private set; }
 
-        public StoredEvent(string id, DateTime occuredOn, T domainEvent)
+        public StoredEvent(string id, DateTime occuredOn, IDomainEvent domainEvent)
             : base(id)
         {
             OccuredOn = occuredOn;
             DomainEvent = domainEvent;
-            TypeName = typeof(T).Name;
+            TypeName = domainEvent.GetType().Name;
         }
     }
 }

@@ -10,6 +10,6 @@
 
         void TapKeg(string tapId, string kegId);
 
-        void CreateTap(TapName name);
+        string CreateTap(TapName name);
     }
 }

@@ -11,5 +11,7 @@
         IEnumerable<Beer> GetAll();
         
         string NextIdentity();
+
+        void Add(Beer beer);
     }
 }

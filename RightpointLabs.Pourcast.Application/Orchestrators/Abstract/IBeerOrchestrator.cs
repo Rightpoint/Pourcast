@@ -10,5 +10,6 @@
         
         IEnumerable<Beer> GetBeersByBrewery(int breweryId);
 
+        string CreateBeer(string name);
     }
 }
