@@ -17,6 +17,8 @@
 
         IEnumerable<StoredEvent> GetAll<T>() where T : IDomainEvent;
 
+        IEnumerable<StoredEvent> Find(Func<StoredEvent, bool> predicate);
+
         IEnumerable<StoredEvent> Find<T>(Func<StoredEvent, bool> storedEventPredicate, Func<T, bool> domainEventPredicate) where T : IDomainEvent;
     }
 }
