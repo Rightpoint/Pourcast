@@ -49,7 +49,6 @@
     <Compile Include="Events\DomainEvents.cs" />
     <Compile Include="Events\IEventHandler.cs" />
     <Compile Include="Events\KegEmptied.cs" />
-    <Compile Include="Events\KegNearingEmpty.cs" />
     <Compile Include="Events\KegRemovedFromTap.cs" />
     <Compile Include="Events\KegTapped.cs" />
     <Compile Include="Events\StoredEvent.cs" />
