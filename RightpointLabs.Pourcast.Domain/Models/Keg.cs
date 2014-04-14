@@ -49,6 +49,8 @@
         {
             if (volume <= 0)
                 throw new ArgumentOutOfRangeException("volume", "Volume must be a positive number.");
+
+            if (AmountOfBeerRemaining <= 0) return;
             
             AmountOfBeerPoured += volume;
 
