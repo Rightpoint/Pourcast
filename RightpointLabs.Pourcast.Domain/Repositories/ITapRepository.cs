@@ -6,8 +6,16 @@ namespace RightpointLabs.Pourcast.Domain.Repositories
 
     public interface ITapRepository
     {
+        void Add(Tap tap);
+        
         IEnumerable<Tap> GetAll();
+        
+        Tap GetById(string id);
 
-        Tap GetById(string tapId);
+        Tap GetByKegId(string kegId);
+        
+        string NextIdentity();
+
+        void Update(Tap tap);
     }
 }

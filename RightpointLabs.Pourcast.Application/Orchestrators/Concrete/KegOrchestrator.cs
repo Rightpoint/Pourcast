@@ -14,13 +14,17 @@
 
         private readonly ITapRepository _tapRepository;
 
-        public KegOrchestrator(IKegRepository kegRepository, ITapRepository tapRepository)
+        private readonly IBeerRepository _beerRepository;
+
+        public KegOrchestrator(IKegRepository kegRepository, ITapRepository tapRepository, IBeerRepository beerRepository)
         {
             if (kegRepository == null) throw new ArgumentNullException("kegRepository");
             if (tapRepository == null) throw new ArgumentNullException("tapRepository");
+            if (beerRepository == null) throw new ArgumentNullException("beerRepository");
 
             _kegRepository = kegRepository;
             _tapRepository = tapRepository;
+            _beerRepository = beerRepository;
         }
 
         public IEnumerable<Keg> GetKegs()
@@ -47,6 +51,17 @@
             var keg = _kegRepository.GetById(tap.KegId);
 
             return keg;
+        }
+
+        public string CreateKeg(string beerId, double capacity)
+        {
+            var id = _kegRepository.NextIdentity();
+            var beer = _beerRepository.GetById(beerId);
+            var keg = new Keg(id, beer.Id, capacity);
+
+            _kegRepository.Add(keg);
+
+            return id;
         }
     }
 }

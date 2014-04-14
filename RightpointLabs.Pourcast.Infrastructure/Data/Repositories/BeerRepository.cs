@@ -17,7 +17,7 @@
                 });
         }
 
-        public BeerRepository(IMongoConnectionHandler<Beer> connectionHandler)
+        public BeerRepository(IMongoConnectionHandler connectionHandler)
             : base(connectionHandler)
         {
         }

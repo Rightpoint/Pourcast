@@ -6,22 +6,16 @@
 
     public class Keg : Entity
     {
-        public Keg(string id, double capacity)
+        public Keg(string id, string beerId, double capacity)
             : base(id)
         {
             if (capacity <= 0) throw new ArgumentOutOfRangeException("capacity", "Capacity must be greater than zero.");
 
-            Status = Status.InQueue;
             Capacity = capacity;
+            BeerId = beerId;
         }
 
-        public string BeerId { get; set; }
-
-        public Status Status { get; set; }
-
-        public DateTime? DateTimeTapped { get; private set; }
-
-        public DateTime? DateTimeEmptied { get; private set; }
+        public string BeerId { get; private set; }
 
         public double Capacity { get; private set; }
 
@@ -51,12 +45,16 @@
             }
         }
 
-        public void PourBeer(double volume)
+        public void PourBeerFromTap(string tapId, double volume)
         {
             if (volume <= 0)
                 throw new ArgumentOutOfRangeException("volume", "Volume must be a positive number.");
+
+            if (AmountOfBeerRemaining <= 0) return;
             
-            AmountOfBeerPoured -= volume;
+            AmountOfBeerPoured += volume;
+
+            DomainEvents.Raise(new BeerPoured(tapId, Id, volume));
 
             if (IsEmpty)
             {

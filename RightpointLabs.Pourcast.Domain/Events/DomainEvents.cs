@@ -5,6 +5,8 @@
 
     using Microsoft.Practices.ServiceLocation;
 
+    using RightpointLabs.Pourcast.Domain.Repositories;
+
     public static class DomainEvents
     {
         [ThreadStatic]
@@ -38,11 +40,11 @@
                     handler.Handle(eventArgs);
                 }
             }
-            catch (NullReferenceException)
+            catch (InvalidOperationException)
             {
                 //When service locator is not set, ignore it.
             }
-            foreach (Action action in Actions)
+            foreach (var action in Actions)
             {
                 Action<T> typedAction = action as Action<T>;
                 if (typedAction != null)

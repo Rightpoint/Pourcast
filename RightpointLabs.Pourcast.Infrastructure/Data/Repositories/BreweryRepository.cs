@@ -17,7 +17,7 @@
                 });
         }
 
-        public BreweryRepository(IMongoConnectionHandler<Brewery> connectionHandler)
+        public BreweryRepository(IMongoConnectionHandler connectionHandler)
             : base(connectionHandler)
         {
         }

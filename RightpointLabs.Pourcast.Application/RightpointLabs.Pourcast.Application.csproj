@@ -39,7 +39,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EventHandlers\BeerPouredEventHandler.cs" />
+    <Compile Include="EventHandlers\EventStoreHandler.cs" />
+    <Compile Include="EventHandlers\KegEmptiedNotificationHandler.cs" />
+    <Compile Include="EventHandlers\KegNearingEmptyNotificationHandler.cs" />
     <Compile Include="Orchestrators\Abstract\BaseOrchestrator.cs" />
     <Compile Include="Orchestrators\Abstract\IBeerOrchestrator.cs" />
     <Compile Include="Orchestrators\Abstract\IBreweryOrchestrator.cs" />

@@ -1,40 +1,47 @@
 ﻿namespace RightpointLabs.Pourcast.Domain.Models
 {
     using System;
-    using System.Collections.Generic;
 
     using RightpointLabs.Pourcast.Domain.Events;
 
     public class Tap : Entity
     {
-        private readonly List<Pour> _pours;
-
         public Tap(string id, TapName name)
             : base(id)
         {
             Name = name;
-
-            _pours = new List<Pour>();
         }
 
-        public TapName Name { get; set; }
+        public TapName Name { get; private set; }
 
-        public string KegId { get; set; }
+        public string KegId { get; private set; }
 
-        public IEnumerable<Pour> Pours
+        public bool HasKeg
         {
             get
             {
-                return _pours;
+                return KegId != null;
             }
         }
 
-        public void PoorBeer(double volume, DateTime time)
+        public void RemoveKeg()
         {
-            var pour = new Pour(KegId, volume, time);
-            _pours.Add(pour);
+            if (!HasKeg) return;
 
-            DomainEvents.Raise(new BeerPoured(Id, KegId, volume, time));
+            var kegId = KegId;
+            KegId = null;
+
+            DomainEvents.Raise(new KegRemovedFromTap(Id, kegId));
+        }
+
+        public void TapKeg(string kegId)
+        {
+            if (HasKeg)
+                throw new Exception("Tap already has a keg.");
+
+            KegId = kegId;
+
+            DomainEvents.Raise(new KegTapped(Id, KegId));
         }
     }
 }
