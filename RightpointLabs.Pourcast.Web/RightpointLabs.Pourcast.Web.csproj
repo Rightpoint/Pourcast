@@ -229,6 +229,8 @@
     <Content Include="Content\toastr.less" />
     <Content Include="Scripts\app\model\pourcast.beer.js" />
     <Content Include="Scripts\app\model\pourcast.brewery.js" />
+    <Content Include="Scripts\app\pourcast.beer.js" />
+    <Content Include="Scripts\app\pourcast.brewery.js" />
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
@@ -287,6 +289,7 @@
     <Compile Include="Areas\Admin\Controllers\BreweryController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Models\BreweryViewModel.cs" />
+    <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Controllers\Api\BreweryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Api\KegController.cs" />
@@ -325,6 +328,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Admin\Scripts\" />
     <Folder Include="Models\" />
   </ItemGroup>
