@@ -9,12 +9,15 @@
     {
         static BeerRepository()
         {
-            BsonClassMap.RegisterClassMap<Beer>(
-                cm =>
-                {
-                    cm.AutoMap();
-                    cm.MapCreator(b => new Beer(b.Id, b.Name));
-                });
+            if (!BsonClassMap.IsClassMapRegistered(typeof(Beer)))
+            {
+                BsonClassMap.RegisterClassMap<Beer>(
+                    cm =>
+                    {
+                        cm.AutoMap();
+                        cm.MapCreator(b => new Beer(b.Id, b.Name));
+                    });
+            }
         }
 
         public BeerRepository(IMongoConnectionHandler connectionHandler)
