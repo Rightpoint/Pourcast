@@ -8,7 +8,7 @@
     using RightpointLabs.Pourcast.Domain.Repositories;
     using RightpointLabs.Pourcast.Domain.Services;
 
-    public class KegNearingEmptyNotificationHandler : TransactionDependantEventHandler<BeerPoured>
+    public class KegNearingEmptyNotificationHandler : TransactionDependentEventHandler<BeerPoured>
     {
         private const double PercentageThreshold = 10;
 

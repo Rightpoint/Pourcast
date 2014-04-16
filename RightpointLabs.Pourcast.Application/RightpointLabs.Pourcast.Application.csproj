@@ -40,7 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EventHandlers\TransactionDependantEventHandler.cs" />
+    <Compile Include="EventHandlers\TransactionDependentEventHandler.cs" />
     <Compile Include="EventHandlers\EventStoreHandler.cs" />
     <Compile Include="EventHandlers\KegEmptiedNotificationHandler.cs" />
     <Compile Include="EventHandlers\KegNearingEmptyNotificationHandler.cs" />

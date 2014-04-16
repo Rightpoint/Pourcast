@@ -4,7 +4,7 @@
 
     using RightpointLabs.Pourcast.Domain.Events;
 
-    public abstract class TransactionDependantEventHandler<T> : IEventHandler<T> where T : IDomainEvent
+    public abstract class TransactionDependentEventHandler<T> : IEventHandler<T> where T : IDomainEvent
     {
         private T _domainEvent;
 

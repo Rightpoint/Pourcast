@@ -6,7 +6,7 @@
     using RightpointLabs.Pourcast.Domain.Repositories;
     using RightpointLabs.Pourcast.Domain.Services;
 
-    public class EventStoreHandler<T> : TransactionDependantEventHandler<T> where T : IDomainEvent
+    public class EventStoreHandler<T> : TransactionDependentEventHandler<T> where T : IDomainEvent
     {
         private readonly IStoredEventRepository _storedEventRepository;
 

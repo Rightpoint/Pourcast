@@ -8,7 +8,7 @@
     using RightpointLabs.Pourcast.Domain.Repositories;
     using RightpointLabs.Pourcast.Domain.Services;
 
-    public class KegEmptiedNotificationHandler : TransactionDependantEventHandler<KegEmptied>
+    public class KegEmptiedNotificationHandler : TransactionDependentEventHandler<KegEmptied>
     {
         private readonly IEmailService _emailService;
 
