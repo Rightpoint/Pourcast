@@ -19,6 +19,8 @@ namespace RightpointLabs.Pourcast.Infrastructure.Services
 
         public void SendEmail(MailMessage email)
         {
+            if (email == null) return;
+
             _client.SendMailAsync(email);
         }
     }

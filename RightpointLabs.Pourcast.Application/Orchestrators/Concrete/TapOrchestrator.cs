@@ -1,6 +1,7 @@
 namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
 {
     using System;
+    using System.Transactions;
 
     using RightpointLabs.Pourcast.Application.Orchestrators.Abstract;
     using RightpointLabs.Pourcast.Domain.Models;
@@ -23,39 +24,62 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
 
         public void PourBeerFromTap(string tapId, double volume)
         {
-            var tap = _tapRepository.GetById(tapId);
-            var keg = _kegRepository.GetById(tap.KegId);
+            using (var scope = new TransactionScope())
+            {
+                var tap = _tapRepository.GetById(tapId);
+                var keg = _kegRepository.GetById(tap.KegId);
 
-            keg.PourBeerFromTap(tap.Id, volume);
+                keg.PourBeerFromTap(tap.Id, volume);
 
-            _kegRepository.Update(keg);
+                _kegRepository.Update(keg);
+
+                scope.Complete();
+            }
         }
 
         public void RemoveKegFromTap(string tapId)
         {
-            var tap = _tapRepository.GetById(tapId);
+            using (var scope = new TransactionScope())
+            {
+                var tap = _tapRepository.GetById(tapId);
 
-            tap.RemoveKeg();
+                tap.RemoveKeg();
 
-            _tapRepository.Update(tap);
+                _tapRepository.Update(tap);
+
+                scope.Complete();
+            }
+            
         }
 
         public void TapKeg(string tapId, string kegId)
         {
-            var tap = _tapRepository.GetById(tapId);
-            var keg = _kegRepository.GetById(kegId);
+            using (var scope = new TransactionScope())
+            {
+                var tap = _tapRepository.GetById(tapId);
+                var keg = _kegRepository.GetById(kegId);
 
-            tap.TapKeg(keg.Id);
+                tap.TapKeg(keg.Id);
 
-            _tapRepository.Update(tap);
+                _tapRepository.Update(tap);
+
+                scope.Complete();
+            }
         }
 
         public string CreateTap(TapName name)
         {
-            var id = _tapRepository.NextIdentity();
-            var tap = new Tap(id, name);
+            var id = "";
 
-            _tapRepository.Add(tap);
+            using (var scope = new TransactionScope())
+            {
+                id = _tapRepository.NextIdentity();
+                var tap = new Tap(id, name);
+
+                _tapRepository.Add(tap);
+
+                scope.Complete();
+            }
 
             return id;
         }

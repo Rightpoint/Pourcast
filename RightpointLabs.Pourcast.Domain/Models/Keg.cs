@@ -54,7 +54,7 @@
             
             AmountOfBeerPoured += volume;
 
-            DomainEvents.Raise(new BeerPoured(tapId, Id, volume));
+            DomainEvents.Raise(new BeerPoured(tapId, Id, volume, PercentRemaining));
 
             if (IsEmpty)
             {

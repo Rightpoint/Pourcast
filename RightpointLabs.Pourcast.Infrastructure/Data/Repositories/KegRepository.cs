@@ -9,12 +9,15 @@
     {
         static KegRepository()
         {
-            BsonClassMap.RegisterClassMap<Keg>(
+            if (!BsonClassMap.IsClassMapRegistered(typeof(Keg)))
+            {
+                BsonClassMap.RegisterClassMap<Keg>(
                 cm =>
                 {
                     cm.AutoMap();
                     cm.MapCreator(k => new Keg(k.Id, k.BeerId, k.Capacity));
                 });
+            }
         }
 
         public KegRepository(IMongoConnectionHandler connectionHandler)

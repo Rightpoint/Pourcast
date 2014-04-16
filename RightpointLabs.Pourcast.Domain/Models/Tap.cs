@@ -36,6 +36,8 @@
 
         public void TapKeg(string kegId)
         {
+            if (string.IsNullOrWhiteSpace(kegId)) throw new ArgumentNullException("kegId");
+
             if (HasKeg)
                 throw new Exception("Tap already has a keg.");
 

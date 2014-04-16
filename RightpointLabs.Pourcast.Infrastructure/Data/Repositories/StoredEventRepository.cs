@@ -13,12 +13,15 @@ namespace RightpointLabs.Pourcast.Infrastructure.Data.Repositories
     {
         static StoredEventRepository()
         {
-            BsonClassMap.RegisterClassMap<StoredEvent>(
-                cm =>
-                {
-                    cm.AutoMap();
-                    cm.MapCreator(e => new StoredEvent(e.Id, e.OccuredOn, e.DomainEvent));
-                });
+            if (!BsonClassMap.IsClassMapRegistered(typeof(StoredEvent)))
+            {
+                BsonClassMap.RegisterClassMap<StoredEvent>(
+                    cm =>
+                    {
+                        cm.AutoMap();
+                        cm.MapCreator(e => new StoredEvent(e.Id, e.OccuredOn, e.DomainEvent));
+                    });
+            }
         }
 
         public StoredEventRepository(IMongoConnectionHandler connectionHandler)

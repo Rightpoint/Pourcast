@@ -11,12 +11,15 @@ namespace RightpointLabs.Pourcast.Infrastructure.Data.Repositories
     {
         static TapRepository()
         {
-            BsonClassMap.RegisterClassMap<Tap>(
-                cm =>
-                {
-                    cm.AutoMap();
-                    cm.MapCreator(t => new Tap(t.Id, t.Name));
-                });
+            if (!BsonClassMap.IsClassMapRegistered(typeof(Tap)))
+            {
+                BsonClassMap.RegisterClassMap<Tap>(
+                    cm =>
+                    {
+                        cm.AutoMap();
+                        cm.MapCreator(t => new Tap(t.Id, t.Name));
+                    });
+            }
         }
 
         public TapRepository(IMongoConnectionHandler connectionHandler)
