@@ -16,6 +16,7 @@ namespace RightpointLabs.Pourcast.Web
     using RightpointLabs.Pourcast.Infrastructure.Data;
     using RightpointLabs.Pourcast.Infrastructure.Data.Repositories;
     using RightpointLabs.Pourcast.Infrastructure.Services;
+    using RightpointLabs.Pourcast.Web.SignalR;
 
     public static class UnityConfig
     {
@@ -69,6 +70,7 @@ namespace RightpointLabs.Pourcast.Web
             container.RegisterType(typeof(IEventHandler<>), typeof(EventStoreHandler<>), "EventStore", new PerRequestLifetimeManager());
             container.RegisterType<IEventHandler<BeerPoured>, KegNearingEmptyNotificationHandler>("KegNearingEmptyNotification", new PerRequestLifetimeManager());
             container.RegisterType<IEventHandler<KegEmptied>, KegEmptiedNotificationHandler>("KegEmptiedNotification", new PerRequestLifetimeManager());
+            container.RegisterType<IEventHandler<BeerPoured>, BeerPouredClientHandler>("BeerPouredClientHandler", new PerRequestLifetimeManager());
 
             container.RegisterType<SmtpClient>(new PerRequestLifetimeManager(), new InjectionConstructor());
 
