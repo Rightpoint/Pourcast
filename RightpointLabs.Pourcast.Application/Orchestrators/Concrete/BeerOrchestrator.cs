@@ -23,6 +23,11 @@
             return _beerRepository.GetAll();
         }
 
+        public IEnumerable<Beer> GetByName(string name)
+        {
+            return _beerRepository.GetAllByName(name);
+        }
+
         public IEnumerable<Beer> GetBeersByBrewery(int breweryId)
         {
             throw new System.NotImplementedException();
