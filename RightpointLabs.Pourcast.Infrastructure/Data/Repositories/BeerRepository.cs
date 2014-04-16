@@ -25,15 +25,22 @@
         {
         }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> Adding create beer files
         public System.Collections.Generic.IEnumerable<Beer> GetAllByName(string name)
         {
             return Queryable.Where(b => b.Name.Contains(name));
         }
+<<<<<<< HEAD
 
 
         public System.Collections.Generic.IEnumerable<Beer> GetByBreweryId(string breweryId)
         {
             return Queryable.Where(b => b.BreweryId == breweryId);
         }
+=======
+>>>>>>> Adding create beer files
     }
 }

@@ -245,6 +245,8 @@
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\app\pourcast.breweryvm.js" />
     <Content Include="Scripts\app\pourcast.events.js" />
+    <Content Include="Areas\Admin\Views\Home\_CreateBeer.cshtml" />
+    <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\app\pourcast.admin.js" />
     <Content Include="Scripts\app\viewModel\pourcast.beervm.js" />
     <Content Include="Scripts\app\viewModel\pourcast.breweryvm.js" />

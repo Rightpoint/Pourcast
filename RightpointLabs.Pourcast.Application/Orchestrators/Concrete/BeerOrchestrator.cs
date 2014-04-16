@@ -30,7 +30,16 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
             return _beerRepository.GetAll();
         }
 
+<<<<<<< HEAD
         public IEnumerable<Beer> GetBeersByBrewery(string breweryId)
+=======
+        public IEnumerable<Beer> GetByName(string name)
+        {
+            return _beerRepository.GetAllByName(name);
+        }
+
+        public IEnumerable<Beer> GetBeersByBrewery(int breweryId)
+>>>>>>> Adding create beer files
         {
             return _beerRepository.GetByBreweryId(breweryId);
         }
