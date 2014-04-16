@@ -23,6 +23,9 @@
             pourcast.events.on("beerPoured", function (e) {
                 toastr.success(e.PercentRemaining);
             });
+            pourcast.events.on("beerPoured", function (e) {
+                toastr.success(e.Volume);
+            });
         });
     </script>
 }

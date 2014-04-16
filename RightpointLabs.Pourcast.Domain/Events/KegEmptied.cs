@@ -2,7 +2,7 @@
 {
     public class KegEmptied : IDomainEvent
     {
-        public string KegId { get; set; }
+        public string KegId { get; private set; }
 
         public KegEmptied(string kegId)
         {
