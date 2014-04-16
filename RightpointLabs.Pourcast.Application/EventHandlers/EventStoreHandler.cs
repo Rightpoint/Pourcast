@@ -6,7 +6,7 @@
     using RightpointLabs.Pourcast.Domain.Repositories;
     using RightpointLabs.Pourcast.Domain.Services;
 
-    public class EventStoreHandler<T> : IEventHandler<T> where T : IDomainEvent
+    public class EventStoreHandler<T> : TransactionDependantEventHandler<T> where T : IDomainEvent
     {
         private readonly IStoredEventRepository _storedEventRepository;
 
@@ -21,7 +21,7 @@
             _dateTimeProvider = dateTimeProvider;
         }
 
-        public void Handle(T domainEvent)
+        protected override void HandleAfterTransaction(T domainEvent)
         {
             var id = _storedEventRepository.NextIdentity();
             var occuredOn = _dateTimeProvider.GetCurrentDateTime();

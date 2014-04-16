@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Transactions;
 
     using RightpointLabs.Pourcast.Application.Orchestrators.Abstract;
     using RightpointLabs.Pourcast.Domain.Models;
@@ -30,10 +31,17 @@
 
         public string CreateBeer(string name)
         {
-            var id = _beerRepository.NextIdentity();
-            var beer = new Beer(id, name);
+            var id = "";
 
-            _beerRepository.Add(beer);
+            using (var scope = new TransactionScope())
+            {
+                id = _beerRepository.NextIdentity();
+                var beer = new Beer(id, name);
+
+                _beerRepository.Add(beer);
+
+                scope.Complete();
+            }
 
             return id;
         }

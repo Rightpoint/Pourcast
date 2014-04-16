@@ -32,6 +32,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -39,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EventHandlers\TransactionDependantEventHandler.cs" />
     <Compile Include="EventHandlers\EventStoreHandler.cs" />
     <Compile Include="EventHandlers\KegEmptiedNotificationHandler.cs" />
     <Compile Include="EventHandlers\KegNearingEmptyNotificationHandler.cs" />
