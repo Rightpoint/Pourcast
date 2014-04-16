@@ -8,7 +8,7 @@
 
         public double Volume { get; private set; }
 
-        public double PercentRemaining { get; set; }
+        public double PercentRemaining { get; private set; }
 
         public BeerPoured(string tapId, string kegId, double volume, double percentRemaining)
         {

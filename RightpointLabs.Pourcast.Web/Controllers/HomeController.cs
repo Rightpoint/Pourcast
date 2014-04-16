@@ -17,7 +17,7 @@ namespace RightpointLabs.Pourcast.Web.Controllers
         // GET: /Home/
         public ActionResult Index()
         {
-            _tapOrchestrator.PourBeerFromTap("534a14b1aed2bf2a00045509", 10);
+            _tapOrchestrator.PourBeerFromTap("534a14b1aed2bf2a00045509", .01);
 
             return View();
         }
