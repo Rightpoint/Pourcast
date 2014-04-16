@@ -9,6 +9,8 @@
         Beer GetById(string id);
         
         IEnumerable<Beer> GetAll();
+
+        IEnumerable<Beer> GetAllByName(string name);
         
         string NextIdentity();
 

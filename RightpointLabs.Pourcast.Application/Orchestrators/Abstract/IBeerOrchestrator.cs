@@ -7,7 +7,9 @@
     public interface IBeerOrchestrator
     {
         IEnumerable<Beer> GetBeers();
-        
+
+        IEnumerable<Beer> GetBeersByName(string name);
+
         IEnumerable<Beer> GetBeersByBrewery(int breweryId);
 
         string CreateBeer(string name);
