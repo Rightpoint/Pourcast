@@ -1,0 +1,22 @@
+﻿@model RightpointLabs.Pourcast.Web.Areas.Admin.Models.BreweryViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>@Model.Brewery.Name</h2>
+<p>@Html.Raw(string.Format("{0}, {1} {2}", Model.Brewery.City, Model.Brewery.State, Model.Brewery.Country))</p>
+<hr />
+<div>
+    <h4>Beers</h4>
+    <ul>
+        @foreach (var beer in Model.Beers)
+        {
+            <li>@beer.Name</li>
+        }
+    </ul>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Brewery.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

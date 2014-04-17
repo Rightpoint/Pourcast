@@ -1,4 +1,6 @@
-﻿namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
+﻿using RightpointLabs.Pourcast.Application.Commands;
+
+namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
 {
     using System.Collections.Generic;
 
@@ -26,15 +28,20 @@
         }
 
 
-        public void Create(Brewery brewery)
+        public void Create(CreateBrewery breweryCommand)
         {
+            //TODO Check for existing brewery with the name
+
+            var brewery = new Brewery(_breweryRepository.NextIdentity(), breweryCommand.Name)
+            {
+                City = breweryCommand.City,
+                State = breweryCommand.State,
+                Country = breweryCommand.Country,
+                PostalCode = breweryCommand.PostalCode,
+                Website = breweryCommand.Website,
+                Logo = breweryCommand.Logo
+            };
             _breweryRepository.Create(brewery);
-        }
-
-
-        public Brewery GetShell()
-        {
-            return new Brewery(_breweryRepository.NextIdentity(), string.Empty);
         }
     }
 }
