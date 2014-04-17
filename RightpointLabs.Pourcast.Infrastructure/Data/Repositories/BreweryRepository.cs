@@ -21,10 +21,5 @@
             : base(connectionHandler)
         {
         }
-
-        public void Create(Brewery brewery)
-        {
-            Add(brewery);
-        }
     }
 }
