@@ -9,7 +9,7 @@
             $('button[name="btnBreweryDetails"]').on('click', function() {
                 var breweryId = $(this).attr("data-breweryid");
                 $.ajax({
-                    url: '@Url.Action("Details", "Brewery")/' + breweryId,
+                    url: '@Url.Action("PartialDetails", "Brewery")/' + breweryId,
                     format: 'json',
                     type: 'get'
                 }).done(function (data) {
