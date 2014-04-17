@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 using RightpointLabs.Pourcast.Application.Commands;
 using RightpointLabs.Pourcast.Domain.Models;
 using RightpointLabs.Pourcast.Application.Orchestrators.Abstract;
@@ -69,8 +70,8 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
         {
             try
             {
-                _breweryOrchestrator.Create(breweryCommand);
-                return RedirectToAction("Index");
+                var brewreyId = _breweryOrchestrator.Create(breweryCommand);
+                return RedirectToAction("Details", new { id = brewreyId });
             }
             catch
             {
@@ -82,26 +83,19 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
         // GET: /Admin/Brewery/Edit/5
         public ActionResult Edit(string id)
         {
-            var brewery = _breweryOrchestrator.GetById(id);
+            var brewery = _breweryOrchestrator.EditBrewery(id);
             return View("Edit", brewery);
         }
 
         //
         // POST: /Admin/Brewery/Edit/5
         [HttpPost]
-        public ActionResult Edit(string id, FormCollection collection)
+        public ActionResult Edit(EditBrewery editBreweryCommand)
         {
             try
             {
-                var brewery = _breweryOrchestrator.GetById(id);
-                brewery.Name = collection["Name"];
-                brewery.City = collection["City"];
-                brewery.State = collection["State"];
-                brewery.PostalCode = collection["PostalCode"];
-                brewery.Website = collection["Website"];
-                brewery.Logo = collection["Logo"];
-
-                return RedirectToAction("Index");
+                _breweryOrchestrator.EditBrewery(editBreweryCommand);
+                return RedirectToAction("Details", new { id = editBreweryCommand.Id });
             }
             catch
             {
