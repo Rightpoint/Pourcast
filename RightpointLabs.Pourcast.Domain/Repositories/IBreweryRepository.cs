@@ -11,12 +11,18 @@
         IEnumerable<Brewery> GetAll();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         void Add(Brewery brewery);
 
         void Update(Brewery brewery);
 =======
         void Create(Brewery brewery);
 >>>>>>> Can create brewery.
+=======
+        void Add(Brewery brewery);
+
+        void Update(Brewery brewery);
+>>>>>>> Can edit brewery
 
         string NextIdentity();
     }

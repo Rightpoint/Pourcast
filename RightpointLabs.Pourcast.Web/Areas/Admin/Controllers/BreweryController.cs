@@ -5,6 +5,9 @@ using System.Web;
 using System.Web.Mvc;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Can edit brewery
 using System.Web.Routing;
 using RightpointLabs.Pourcast.Application.Commands;
 =======
@@ -102,6 +105,7 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
             {
                 var brewreyId = _breweryOrchestrator.Create(breweryCommand);
                 return RedirectToAction("Details", new { id = brewreyId });
+<<<<<<< HEAD
 =======
         public ActionResult Create(FormCollection collection)
 =======
@@ -113,6 +117,8 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
                 _breweryOrchestrator.Create(breweryCommand);
                 return RedirectToAction("Index");
 >>>>>>> Can create brewery.
+=======
+>>>>>>> Can edit brewery
             }
             catch
             {
@@ -125,16 +131,21 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
         public ActionResult Edit(string id)
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
             var brewery = _breweryOrchestrator.EditBrewery(id);
 =======
             var brewery = _breweryOrchestrator.GetById(id);
 >>>>>>> Can create brewery.
+=======
+            var brewery = _breweryOrchestrator.EditBrewery(id);
+>>>>>>> Can edit brewery
             return View("Edit", brewery);
         }
 
         //
         // POST: /Admin/Brewery/Edit/5
         [HttpPost]
+<<<<<<< HEAD
 <<<<<<< HEAD
         public ActionResult Edit(EditBrewery editBreweryCommand)
         {
@@ -157,6 +168,14 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
 
                 return RedirectToAction("Index");
 >>>>>>> Can create brewery.
+=======
+        public ActionResult Edit(EditBrewery editBreweryCommand)
+        {
+            try
+            {
+                _breweryOrchestrator.EditBrewery(editBreweryCommand);
+                return RedirectToAction("Details", new { id = editBreweryCommand.Id });
+>>>>>>> Can edit brewery
             }
             catch
             {
