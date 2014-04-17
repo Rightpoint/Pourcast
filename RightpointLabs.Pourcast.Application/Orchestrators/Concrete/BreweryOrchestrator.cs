@@ -28,6 +28,7 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
         }
 
 
+<<<<<<< HEAD
         public string Create(CreateBrewery breweryCommand)
         {
             //TODO Check for existing brewery with the name
@@ -76,6 +77,17 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
             brewery.Website = editBreweryCommand.Website;
             brewery.Logo = editBreweryCommand.Logo;
             _breweryRepository.Update(brewery);
+=======
+        public void Create(Brewery brewery)
+        {
+            _breweryRepository.Create(brewery);
+        }
+
+
+        public Brewery GetShell()
+        {
+            return new Brewery(_breweryRepository.NextIdentity(), string.Empty);
+>>>>>>> Can create brewery.
         }
     }
 }

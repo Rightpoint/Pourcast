@@ -34,13 +34,19 @@
             return Queryable.Where(b => b.Name.Contains(name));
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Can create brewery.
 
 
         public System.Collections.Generic.IEnumerable<Beer> GetByBreweryId(string breweryId)
         {
             return Queryable.Where(b => b.BreweryId == breweryId);
         }
+<<<<<<< HEAD
 =======
 >>>>>>> Adding create beer files
+=======
+>>>>>>> Can create brewery.
     }
 }

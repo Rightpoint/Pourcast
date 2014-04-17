@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 <<<<<<< HEAD
+<<<<<<< HEAD
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -17,18 +18,27 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+=======
+using System.Web;
+using System.Web.Mvc;
+>>>>>>> Can create brewery.
 using RightpointLabs.Pourcast.Domain.Models;
 using RightpointLabs.Pourcast.Application.Orchestrators.Abstract;
 
 namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
 {
+<<<<<<< HEAD
     public class BeerController : ApiController
 >>>>>>> Adding create beer files
+=======
+    public class BeerController : Controller
+>>>>>>> Can create brewery.
     {
         private readonly IBeerOrchestrator _beerOrchestrator;
 
         public BeerController(IBeerOrchestrator beerOrchestrator)
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
             if (beerOrchestrator == null) throw new ArgumentNullException("beerOrchestrator");
             _beerOrchestrator = beerOrchestrator;
@@ -122,41 +132,100 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
                 return View();
             }
 =======
+=======
+            if (beerOrchestrator == null) throw new ArgumentNullException("beerOrchestrator");
+>>>>>>> Can create brewery.
             _beerOrchestrator = beerOrchestrator;
         }
 
-        // GET api/beer
-        public IEnumerable<Beer> Get()
+        //
+        // GET: /Admin/Beer/
+        public ActionResult Index()
         {
-            throw new NotImplementedException();
+            return View();
         }
 
-        // GET api/beer/5
-        public string Get(string id)
+        //
+        // GET: /Admin/Beer/Details/My-Beer-Name
+        public ActionResult Details(string slug)
         {
-            throw new NotImplementedException();
+            return View();
         }
 
-        //Get api/beer/
-        public IEnumerable<Beer> GetByName(string name)
+        //
+        // GET: /Admin/Beer/Create
+        public ActionResult Create()
         {
-            return _beerOrchestrator.GetBeersByName(name);
+            return View();
         }
 
-        // POST api/beer
-        public void Post([FromBody]Beer value)
+        //
+        // POST: /Admin/Beer/Create
+        [HttpPost]
+        public ActionResult Create(Beer collection)
         {
+            try
+            {
+                // TODO: Add insert logic here
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
         }
 
-        // PUT api/beer/5
-        public void Put(string id, [FromBody]Beer value)
+        //
+        // GET: /Admin/Beer/Edit/5
+        public ActionResult Edit(int id)
         {
+            return View();
         }
 
-        // DELETE api/beer/5
-        public void Delete(string id)
+        //
+        // POST: /Admin/Beer/Edit/5
+        [HttpPost]
+        public ActionResult Edit(int id, FormCollection collection)
         {
+            try
+            {
+                // TODO: Add update logic here
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        //
+        // GET: /Admin/Beer/Delete/5
+        public ActionResult Delete(int id)
+        {
+<<<<<<< HEAD
 >>>>>>> Adding create beer files
+=======
+            return View();
+        }
+
+        //
+        // POST: /Admin/Beer/Delete/5
+        [HttpPost]
+        public ActionResult Delete(int id, FormCollection collection)
+        {
+            try
+            {
+                // TODO: Add delete logic here
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+>>>>>>> Can create brewery.
         }
     }
 }

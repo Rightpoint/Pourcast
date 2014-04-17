@@ -9,14 +9,21 @@
             $('button[name="btnBreweryDetails"]').on('click', function() {
                 var breweryId = $(this).attr("data-breweryid");
                 $.ajax({
+<<<<<<< HEAD
                     url: '@Url.Action("PartialDetails", "Brewery")/' + breweryId,
+=======
+                    url: '@Url.Action("Details", "Brewery")/' + breweryId,
+>>>>>>> Can create brewery.
                     format: 'json',
                     type: 'get'
                 }).done(function (data) {
                     $('#breweryDetails').html(data);
+<<<<<<< HEAD
                     $('#backToList').on('click', function() {
                         $('#breweryDetails').html('');
                     });
+=======
+>>>>>>> Can create brewery.
                 });
             });
         });
@@ -33,6 +40,10 @@
     <div class="col-lg-6">
         @Html.Partial("_BreweryList", Model)
     </div>
+<<<<<<< HEAD
     <div class="col-lg-4 pull-right" id="breweryDetails">
+=======
+    <div class="col-lg-6" id="breweryDetails">
+>>>>>>> Can create brewery.
     </div>
 </div>

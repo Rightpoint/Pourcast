@@ -31,6 +31,7 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
         }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         public IEnumerable<Beer> GetBeersByBrewery(string breweryId)
 =======
         public IEnumerable<Beer> GetByName(string name)
@@ -41,6 +42,10 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
         public IEnumerable<Beer> GetBeersByBrewery(int breweryId)
 >>>>>>> Adding create beer files
         {
+=======
+        public IEnumerable<Beer> GetBeersByBrewery(string breweryId)
+        {
+>>>>>>> Can create brewery.
             return _beerRepository.GetByBreweryId(breweryId);
         }
 
@@ -70,6 +75,7 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
             return id;
         }
 
+<<<<<<< HEAD
         public CreateBeer CreateBeer(string breweryId)
         {
             var brewery = _breweryOrchestrator.GetById(breweryId);
@@ -81,6 +87,8 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
                 BreweryName = brewery.Name
             };
         }
+=======
+>>>>>>> Can create brewery.
 
         public IEnumerable<Beer> GetBeersByName(string name)
         {
