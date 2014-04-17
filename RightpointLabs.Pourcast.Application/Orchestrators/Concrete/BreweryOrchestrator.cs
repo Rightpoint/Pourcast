@@ -29,6 +29,7 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         public string Create(CreateBrewery breweryCommand)
         {
             //TODO Check for existing brewery with the name
@@ -79,9 +80,24 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
             _breweryRepository.Update(brewery);
 =======
         public void Create(Brewery brewery)
+=======
+        public void Create(CreateBrewery breweryCommand)
+>>>>>>> Can create brewery and can add/create beers for the brewery.  Also, added commands
         {
+            //TODO Check for existing brewery with the name
+
+            var brewery = new Brewery(_breweryRepository.NextIdentity(), breweryCommand.Name)
+            {
+                City = breweryCommand.City,
+                State = breweryCommand.State,
+                Country = breweryCommand.Country,
+                PostalCode = breweryCommand.PostalCode,
+                Website = breweryCommand.Website,
+                Logo = breweryCommand.Logo
+            };
             _breweryRepository.Create(brewery);
         }
+<<<<<<< HEAD
 
 
         public Brewery GetShell()
@@ -89,5 +105,7 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
             return new Brewery(_breweryRepository.NextIdentity(), string.Empty);
 >>>>>>> Can create brewery.
         }
+=======
+>>>>>>> Can create brewery and can add/create beers for the brewery.  Also, added commands
     }
 }

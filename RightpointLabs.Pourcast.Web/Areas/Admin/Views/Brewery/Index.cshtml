@@ -10,10 +10,14 @@
                 var breweryId = $(this).attr("data-breweryid");
                 $.ajax({
 <<<<<<< HEAD
+<<<<<<< HEAD
                     url: '@Url.Action("PartialDetails", "Brewery")/' + breweryId,
 =======
                     url: '@Url.Action("Details", "Brewery")/' + breweryId,
 >>>>>>> Can create brewery.
+=======
+                    url: '@Url.Action("PartialDetails", "Brewery")/' + breweryId,
+>>>>>>> Can create brewery and can add/create beers for the brewery.  Also, added commands
                     format: 'json',
                     type: 'get'
                 }).done(function (data) {

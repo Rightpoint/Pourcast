@@ -1,8 +1,12 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 ﻿@model RightpointLabs.Pourcast.Application.Commands.CreateBeer
 =======
 ﻿@model RightpointLabs.Pourcast.Domain.Models.Beer
 >>>>>>> Can create brewery.
+=======
+﻿@model RightpointLabs.Pourcast.Application.Commands.CreateBeer
+>>>>>>> Can create brewery and can add/create beers for the brewery.  Also, added commands
 
 @{
     ViewBag.Title = "CreateBeer";
@@ -19,10 +23,14 @@
         <hr />
         @Html.ValidationSummary(true)
 <<<<<<< HEAD
+<<<<<<< HEAD
         
 =======
 
 >>>>>>> Can create brewery.
+=======
+        
+>>>>>>> Can create brewery and can add/create beers for the brewery.  Also, added commands
         <div class="form-group">
             @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -33,6 +41,7 @@
 
         <div class="form-group">
 <<<<<<< HEAD
+<<<<<<< HEAD
             @Html.LabelFor(model => model.BreweryName, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.TextBoxFor(m => m.BreweryName, new {@readonly = "readonly"})
@@ -41,11 +50,18 @@
             @Html.HiddenFor(m => m.BreweryId)
 =======
             @Html.LabelFor(model => model.BreweryId, new { @class = "control-label col-md-2" })
+=======
+            @Html.LabelFor(model => model.BreweryName, new { @class = "control-label col-md-2" })
+>>>>>>> Can create brewery and can add/create beers for the brewery.  Also, added commands
             <div class="col-md-10">
-                @Html.EditorFor(model => model.BreweryId)
-                @Html.ValidationMessageFor(model => model.BreweryId)
+                @Html.TextBoxFor(m => m.BreweryName, new {@readonly = "readonly"})
+                @Html.ValidationMessageFor(model => model.BreweryName)
             </div>
+<<<<<<< HEAD
 >>>>>>> Can create brewery.
+=======
+            @Html.HiddenFor(m => m.BreweryId)
+>>>>>>> Can create brewery and can add/create beers for the brewery.  Also, added commands
         </div>
 
         <div class="form-group">
@@ -66,6 +82,7 @@
 
         <div class="form-group">
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
             @Html.LabelFor(model => model.RPScore, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -76,6 +93,8 @@
 
         <div class="form-group">
 >>>>>>> Can create brewery.
+=======
+>>>>>>> Can create brewery and can add/create beers for the brewery.  Also, added commands
             @Html.LabelFor(model => model.Style, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Style)

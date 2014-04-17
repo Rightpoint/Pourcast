@@ -51,11 +51,13 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
 
         public string CreateBeer(CreateBeer createBeerCommand)
         {
-            var id = "";
-
+            var id = _beerRepository.NextIdentity();
             using (var scope = new TransactionScope())
             {
+<<<<<<< HEAD
                 id = _beerRepository.NextIdentity();
+=======
+>>>>>>> Can create brewery and can add/create beers for the brewery.  Also, added commands
                 var beer = new Beer(id, createBeerCommand.Name)
                 {
                     ABV = createBeerCommand.ABV,
@@ -76,6 +78,9 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
         }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Can create brewery and can add/create beers for the brewery.  Also, added commands
         public CreateBeer CreateBeer(string breweryId)
         {
             var brewery = _breweryOrchestrator.GetById(breweryId);
@@ -87,8 +92,11 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
                 BreweryName = brewery.Name
             };
         }
+<<<<<<< HEAD
 =======
 >>>>>>> Can create brewery.
+=======
+>>>>>>> Can create brewery and can add/create beers for the brewery.  Also, added commands
 
         public IEnumerable<Beer> GetBeersByName(string name)
         {

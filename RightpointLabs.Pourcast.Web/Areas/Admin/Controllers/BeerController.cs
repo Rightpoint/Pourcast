@@ -154,21 +154,24 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
 
         //
         // GET: /Admin/Beer/Create
-        public ActionResult Create()
+        public ActionResult Create(string breweryId)
         {
-            return View();
+            var command = _beerOrchestrator.CreateBeer(breweryId);
+            if (command != null) return View("Create", command);
+
+            ViewBag.Error = "Brewery with that id does not exist.";
+            return View("Create", null);
         }
 
         //
         // POST: /Admin/Beer/Create
         [HttpPost]
-        public ActionResult Create(Beer collection)
+        public ActionResult Create(CreateBeer createBeerCommand)
         {
             try
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                _beerOrchestrator.CreateBeer(createBeerCommand);
+                return RedirectToAction("Details", "Brewery", new { id = createBeerCommand.BreweryId});
             }
             catch
             {

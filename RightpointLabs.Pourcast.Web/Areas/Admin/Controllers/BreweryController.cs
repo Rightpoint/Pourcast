@@ -4,10 +4,14 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 <<<<<<< HEAD
+<<<<<<< HEAD
 using System.Web.Routing;
 using RightpointLabs.Pourcast.Application.Commands;
 =======
 >>>>>>> Can create brewery.
+=======
+using RightpointLabs.Pourcast.Application.Commands;
+>>>>>>> Can create brewery and can add/create beers for the brewery.  Also, added commands
 using RightpointLabs.Pourcast.Domain.Models;
 using RightpointLabs.Pourcast.Application.Orchestrators.Abstract;
 using RightpointLabs.Pourcast.Web.Areas.Admin.Models;
@@ -38,6 +42,7 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
         }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         public ActionResult Details(string id)
         {
             var brewery = new BreweryViewModel()
@@ -54,8 +59,22 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
 =======
         //
         // GET: /Admin/Brewery/Details/5
+=======
+>>>>>>> Can create brewery and can add/create beers for the brewery.  Also, added commands
         public ActionResult Details(string id)
 >>>>>>> Can create brewery.
+        {
+            var brewery = new BreweryViewModel()
+            {
+                Brewery = _breweryOrchestrator.GetById(id),
+                Beers = _beerOrchestrator.GetBeersByBrewery(id)
+            };
+            return View("Details", brewery);
+        }
+
+        //
+        // GET: /Admin/Brewery/Details/berweryidwer23r
+        public ActionResult PartialDetails(string id)
         {
             var breweryViewModel = new BreweryViewModel()
             {
@@ -76,6 +95,7 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
         // POST: /Admin/Brewery/Create
         [HttpPost]
 <<<<<<< HEAD
+<<<<<<< HEAD
         public ActionResult Create(CreateBrewery breweryCommand)
         {
             try
@@ -84,17 +104,13 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
                 return RedirectToAction("Details", new { id = brewreyId });
 =======
         public ActionResult Create(FormCollection collection)
+=======
+        public ActionResult Create(CreateBrewery breweryCommand)
+>>>>>>> Can create brewery and can add/create beers for the brewery.  Also, added commands
         {
             try
             {
-                var shell = _breweryOrchestrator.GetShell();
-                shell.Name = collection["Name"];
-                shell.City = collection["City"];
-                shell.State = collection["State"];
-                shell.PostalCode = collection["PostalCode"];
-                shell.Website = collection["Website"];
-                shell.Logo = collection["Logo"];
-                _breweryOrchestrator.Create(shell);
+                _breweryOrchestrator.Create(breweryCommand);
                 return RedirectToAction("Index");
 >>>>>>> Can create brewery.
             }
