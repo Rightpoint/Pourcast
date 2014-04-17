@@ -23,14 +23,9 @@
             return _beerRepository.GetAll();
         }
 
-        public IEnumerable<Beer> GetByName(string name)
+        public IEnumerable<Beer> GetBeersByBrewery(string breweryId)
         {
-            return _beerRepository.GetAllByName(name);
-        }
-
-        public IEnumerable<Beer> GetBeersByBrewery(int breweryId)
-        {
-            throw new System.NotImplementedException();
+            return _beerRepository.GetByBreweryId(breweryId);
         }
 
         public string CreateBeer(string name)
@@ -41,6 +36,12 @@
             _beerRepository.Add(beer);
 
             return id;
+        }
+
+
+        public IEnumerable<Beer> GetBeersByName(string name)
+        {
+            return _beerRepository.GetAllByName(name);
         }
     }
 }

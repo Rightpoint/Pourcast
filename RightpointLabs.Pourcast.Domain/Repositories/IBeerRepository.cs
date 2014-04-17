@@ -11,7 +11,9 @@
         IEnumerable<Beer> GetAll();
 
         IEnumerable<Beer> GetAllByName(string name);
-        
+
+        IEnumerable<Beer> GetByBreweryId(string breweryId); 
+
         string NextIdentity();
 
         void Add(Beer beer);

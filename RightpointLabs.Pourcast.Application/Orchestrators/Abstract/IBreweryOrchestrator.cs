@@ -7,5 +7,8 @@
     public interface IBreweryOrchestrator
     {
         IEnumerable<Brewery> GetBreweries();
+        Brewery GetById(string id);
+        Brewery GetShell();
+        void Create(Brewery brewery);
     }
 }

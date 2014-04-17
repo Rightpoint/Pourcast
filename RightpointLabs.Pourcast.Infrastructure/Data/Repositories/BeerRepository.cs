@@ -27,5 +27,11 @@
         {
             return Queryable.Where(b => b.Name.Contains(name));
         }
+
+
+        public System.Collections.Generic.IEnumerable<Beer> GetByBreweryId(string breweryId)
+        {
+            return Queryable.Where(b => b.BreweryId == breweryId);
+        }
     }
 }
