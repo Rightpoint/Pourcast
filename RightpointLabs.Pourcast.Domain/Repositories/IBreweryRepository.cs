@@ -9,7 +9,9 @@
         Brewery GetById(string id);
         
         IEnumerable<Brewery> GetAll();
-        
+
+        void Create(Brewery brewery);
+
         string NextIdentity();
     }
 }

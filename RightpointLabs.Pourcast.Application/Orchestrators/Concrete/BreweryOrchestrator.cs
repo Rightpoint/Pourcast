@@ -19,5 +19,22 @@
         {
             return _breweryRepository.GetAll();
         }
+
+        public Brewery GetById(string id)
+        {
+            return _breweryRepository.GetById(id);
+        }
+
+
+        public void Create(Brewery brewery)
+        {
+            _breweryRepository.Create(brewery);
+        }
+
+
+        public Brewery GetShell()
+        {
+            return new Brewery(_breweryRepository.NextIdentity(), string.Empty);
+        }
     }
 }
