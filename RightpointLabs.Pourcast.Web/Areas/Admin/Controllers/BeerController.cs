@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
+using RightpointLabs.Pourcast.Application.Commands;
 using RightpointLabs.Pourcast.Domain.Models;
 using RightpointLabs.Pourcast.Application.Orchestrators.Abstract;
+using RightpointLabs.Pourcast.Infrastructure.Data.Repositories;
 
 namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
 {
@@ -34,21 +37,24 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
 
         //
         // GET: /Admin/Beer/Create
-        public ActionResult Create()
+        public ActionResult Create(string breweryId)
         {
-            return View();
+            var command = _beerOrchestrator.CreateBeer(breweryId);
+            if (command != null) return View("Create", command);
+
+            ViewBag.Error = "Brewery with that id does not exist.";
+            return View("Create", null);
         }
 
         //
         // POST: /Admin/Beer/Create
         [HttpPost]
-        public ActionResult Create(Beer collection)
+        public ActionResult Create(CreateBeer createBeerCommand)
         {
             try
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                _beerOrchestrator.CreateBeer(createBeerCommand);
+                return RedirectToAction("Details", "Brewery", new { id = createBeerCommand.BreweryId});
             }
             catch
             {

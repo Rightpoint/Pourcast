@@ -1,4 +1,6 @@
-﻿namespace RightpointLabs.Pourcast.Application.Orchestrators.Abstract
+﻿using RightpointLabs.Pourcast.Application.Commands;
+
+namespace RightpointLabs.Pourcast.Application.Orchestrators.Abstract
 {
     using System.Collections.Generic;
 
@@ -12,6 +14,8 @@
 
         IEnumerable<Beer> GetBeersByBrewery(string breweryId);
 
-        string CreateBeer(string name);
+        string CreateBeer(CreateBeer createBeerCommand);
+
+        CreateBeer CreateBeer(string breweryId);
     }
 }

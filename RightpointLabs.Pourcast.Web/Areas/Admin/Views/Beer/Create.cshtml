@@ -1,4 +1,4 @@
-﻿@model RightpointLabs.Pourcast.Domain.Models.Beer
+﻿@model RightpointLabs.Pourcast.Application.Commands.CreateBeer
 
 @{
     ViewBag.Title = "CreateBeer";
@@ -14,7 +14,7 @@
         <h4>Beer</h4>
         <hr />
         @Html.ValidationSummary(true)
-
+        
         <div class="form-group">
             @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -24,11 +24,12 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.BreweryId, new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.BreweryName, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.BreweryId)
-                @Html.ValidationMessageFor(model => model.BreweryId)
+                @Html.TextBoxFor(m => m.BreweryName, new {@readonly = "readonly"})
+                @Html.ValidationMessageFor(model => model.BreweryName)
             </div>
+            @Html.HiddenFor(m => m.BreweryId)
         </div>
 
         <div class="form-group">
@@ -44,14 +45,6 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.BAScore)
                 @Html.ValidationMessageFor(model => model.BAScore)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.RPScore, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.RPScore)
-                @Html.ValidationMessageFor(model => model.RPScore)
             </div>
         </div>
 

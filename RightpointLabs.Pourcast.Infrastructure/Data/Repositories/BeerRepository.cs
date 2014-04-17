@@ -25,7 +25,6 @@
         {
         }
 
-
         public System.Collections.Generic.IEnumerable<Beer> GetAllByName(string name)
         {
             return Queryable.Where(b => b.Name.Contains(name));

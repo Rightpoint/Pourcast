@@ -31,6 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
@@ -41,6 +42,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EventHandlers\TransactionDependentEventHandler.cs" />
+    <Compile Include="Commands\CreateBeer.cs" />
+    <Compile Include="Commands\CreateBrewery.cs" />
+    <Compile Include="Commands\EditBrewery.cs" />
     <Compile Include="EventHandlers\EventStoreHandler.cs" />
     <Compile Include="EventHandlers\KegEmptiedNotificationHandler.cs" />
     <Compile Include="EventHandlers\KegNearingEmptyNotificationHandler.cs" />
@@ -55,9 +59,7 @@
     <Compile Include="Orchestrators\Concrete\TapOrchestrator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Commands\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\RightpointLabs.Pourcast.Domain\RightpointLabs.Pourcast.Domain.csproj">
       <Project>{86a90834-4fda-40e7-810f-f1ab0ade8fe0}</Project>

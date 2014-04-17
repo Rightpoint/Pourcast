@@ -239,6 +239,7 @@
     <Content Include="Areas\Admin\Views\Brewery\_BreweryDetails.cshtml" />
     <Content Include="Areas\Admin\Views\Brewery\CreateBrewery.cshtml" />
     <Content Include="Areas\Admin\Views\Brewery\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Brewery\Details.cshtml" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\app\pourcast.breweryvm.js" />
     <Content Include="Scripts\app\pourcast.events.js" />
