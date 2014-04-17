@@ -30,34 +30,23 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
             return _beerRepository.GetAll();
         }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-        public IEnumerable<Beer> GetBeersByBrewery(string breweryId)
-=======
         public IEnumerable<Beer> GetByName(string name)
         {
             return _beerRepository.GetAllByName(name);
         }
 
-        public IEnumerable<Beer> GetBeersByBrewery(int breweryId)
->>>>>>> Adding create beer files
-        {
-=======
         public IEnumerable<Beer> GetBeersByBrewery(string breweryId)
         {
->>>>>>> Can create brewery.
             return _beerRepository.GetByBreweryId(breweryId);
         }
 
         public string CreateBeer(CreateBeer createBeerCommand)
         {
-            var id = _beerRepository.NextIdentity();
+            var id = string.Empty;
+
             using (var scope = new TransactionScope())
             {
-<<<<<<< HEAD
                 id = _beerRepository.NextIdentity();
-=======
->>>>>>> Can create brewery and can add/create beers for the brewery.  Also, added commands
                 var beer = new Beer(id, createBeerCommand.Name)
                 {
                     ABV = createBeerCommand.ABV,
@@ -77,10 +66,6 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
             return id;
         }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> Can create brewery and can add/create beers for the brewery.  Also, added commands
         public CreateBeer CreateBeer(string breweryId)
         {
             var brewery = _breweryOrchestrator.GetById(breweryId);
@@ -92,11 +77,6 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
                 BreweryName = brewery.Name
             };
         }
-<<<<<<< HEAD
-=======
->>>>>>> Can create brewery.
-=======
->>>>>>> Can create brewery and can add/create beers for the brewery.  Also, added commands
 
         public IEnumerable<Beer> GetBeersByName(string name)
         {

@@ -229,8 +229,6 @@
     <Content Include="Content\toastr.less" />
     <Content Include="Scripts\app\model\pourcast.beer.js" />
     <Content Include="Scripts\app\model\pourcast.brewery.js" />
-    <Content Include="Scripts\app\pourcast.beer.js" />
-    <Content Include="Scripts\app\pourcast.brewery.js" />
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
@@ -243,9 +241,7 @@
     <Content Include="Areas\Admin\Views\Brewery\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Brewery\Details.cshtml" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
-    <Content Include="Scripts\app\pourcast.breweryvm.js" />
     <Content Include="Scripts\app\pourcast.events.js" />
-    <Content Include="Areas\Admin\Views\Home\_CreateBeer.cshtml" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\app\pourcast.admin.js" />
     <Content Include="Scripts\app\viewModel\pourcast.beervm.js" />
@@ -289,8 +285,6 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\BeerController.cs" />
     <Compile Include="Areas\Admin\Controllers\BreweryController.cs" />
-    <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
-    <Compile Include="Areas\Admin\Models\BreweryViewModel.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Models\BreweryViewModel.cs" />
     <Compile Include="Controllers\Api\BreweryController.cs" />

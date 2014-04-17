@@ -11,19 +11,7 @@
         IEnumerable<Beer> GetAll();
 
         IEnumerable<Beer> GetAllByName(string name);
-<<<<<<< HEAD
-<<<<<<< HEAD
-
         IEnumerable<Beer> GetByBreweryId(string breweryId); 
-
-=======
-        
->>>>>>> Adding create beer files
-=======
-
-        IEnumerable<Beer> GetByBreweryId(string breweryId); 
-
->>>>>>> Can create brewery.
         string NextIdentity();
 
         void Add(Beer beer);

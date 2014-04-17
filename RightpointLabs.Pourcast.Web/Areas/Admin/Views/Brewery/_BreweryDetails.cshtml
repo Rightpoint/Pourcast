@@ -1,19 +1,9 @@
 ﻿@model RightpointLabs.Pourcast.Web.Areas.Admin.Models.BreweryViewModel
 
 <div>
-<<<<<<< HEAD
-<<<<<<< HEAD
     <h3>@Model.Brewery.Name</h3>
     <p>@Html.Raw(string.Format("{0}, {1} {2}", Model.Brewery.City, Model.Brewery.State, Model.Brewery.Country))</p>
-=======
-    <h3></h3>
-    <p><span data-bind="text: fomattedAddress"></span></p>
     <h4>Beers</h4>
->>>>>>> Can create brewery.
-=======
-    <h3>@Model.Brewery.Name</h3>
-    <p>@Html.Raw(string.Format("{0}, {1} {2}", Model.Brewery.City, Model.Brewery.State, Model.Brewery.Country))</p>
->>>>>>> Can edit brewery
     
     <hr />
     <dl class="dl-horizontal">
@@ -74,30 +64,10 @@
         </dd>
 
     </dl>
-<<<<<<< HEAD
-<<<<<<< HEAD
 </div>
+
 <p>
     @Html.ActionLink("Full Details", "Details", new { id = Model.Brewery.Id }) | 
     @Html.ActionLink("Add Beer", "Create", new { controller = "Beer", area = "Admin", breweryId = Model.Brewery.Id }) | 
     <a href="" id="backToList">Back to List</a>
-=======
-    <ul>
-        @foreach (var beer in Model.Beers)
-        {
-            <li>@beer.Name</li>
-        }
-    </ul>
-=======
->>>>>>> Can edit brewery
-</div>
-<p>
-    @Html.ActionLink("Full Details", "Details", new { id = Model.Brewery.Id }) | 
-    @Html.ActionLink("Add Beer", "Create", new { controller = "Beer", area = "Admin", breweryId = Model.Brewery.Id }) | 
-<<<<<<< HEAD
-    @Html.ActionLink("Back to List", "Index")
->>>>>>> Can create brewery.
-=======
-    <a href="" id="backToList">Back to List</a>
->>>>>>> Can edit brewery
 </p>

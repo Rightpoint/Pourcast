@@ -9,31 +9,14 @@
             $('button[name="btnBreweryDetails"]').on('click', function() {
                 var breweryId = $(this).attr("data-breweryid");
                 $.ajax({
-<<<<<<< HEAD
-<<<<<<< HEAD
                     url: '@Url.Action("PartialDetails", "Brewery")/' + breweryId,
-=======
-                    url: '@Url.Action("Details", "Brewery")/' + breweryId,
->>>>>>> Can create brewery.
-=======
-                    url: '@Url.Action("PartialDetails", "Brewery")/' + breweryId,
->>>>>>> Can create brewery and can add/create beers for the brewery.  Also, added commands
                     format: 'json',
                     type: 'get'
-                }).done(function (data) {
+                }).done(function(data) {
                     $('#breweryDetails').html(data);
-<<<<<<< HEAD
-<<<<<<< HEAD
                     $('#backToList').on('click', function() {
                         $('#breweryDetails').html('');
                     });
-=======
->>>>>>> Can create brewery.
-=======
-                    $('#backToList').on('click', function() {
-                        $('#breweryDetails').html('');
-                    });
->>>>>>> Can edit brewery
                 });
             });
         });
@@ -50,14 +33,6 @@
     <div class="col-lg-6">
         @Html.Partial("_BreweryList", Model)
     </div>
-<<<<<<< HEAD
-<<<<<<< HEAD
     <div class="col-lg-4 pull-right" id="breweryDetails">
-=======
-    <div class="col-lg-6" id="breweryDetails">
->>>>>>> Can create brewery.
-=======
-    <div class="col-lg-4 pull-right" id="breweryDetails">
->>>>>>> Can edit brewery
     </div>
 </div>

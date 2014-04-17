@@ -25,31 +25,14 @@
         {
         }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
->>>>>>> Adding create beer files
-=======
->>>>>>> Can create brewery and can add/create beers for the brewery.  Also, added commands
         public System.Collections.Generic.IEnumerable<Beer> GetAllByName(string name)
         {
             return Queryable.Where(b => b.Name.Contains(name));
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> Can create brewery.
-
 
         public System.Collections.Generic.IEnumerable<Beer> GetByBreweryId(string breweryId)
         {
             return Queryable.Where(b => b.BreweryId == breweryId);
         }
-<<<<<<< HEAD
-=======
->>>>>>> Adding create beer files
-=======
->>>>>>> Can create brewery.
     }
 }

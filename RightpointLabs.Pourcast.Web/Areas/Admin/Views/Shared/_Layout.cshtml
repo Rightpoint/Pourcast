@@ -9,15 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/themes/base/css")
-<<<<<<< HEAD
-<<<<<<< HEAD
     @Scripts.Render("~/bundles/modernizer")
-=======
-    @Scripts.Render("~/bundles/modernizr")
->>>>>>> Added Admin Area
-=======
-    @Scripts.Render("~/bundles/modernizer")
->>>>>>> Adding create beer files
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -29,9 +21,11 @@
                     <span class="icon-bar"></span>
                 </button>
                 @Html.ActionLink(Resources.Application, "Index", "Home", null, new { @class = "navbar-brand" })
+                
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Breweries", "Index", "Brewery", null, new { @class = "navbar-btn" })</li>
                 </ul>
             </div>
         </div>
@@ -41,15 +35,7 @@
         @RenderBody()
         <hr />
         <footer>
-<<<<<<< HEAD
-<<<<<<< HEAD
             <p>&copy; @DateTime.Now.Year - @Resources.Company | @Resources.Made</p>
-=======
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
->>>>>>> Added Admin Area
-=======
-            <p>&copy; @DateTime.Now.Year - @Resources.Company | @Resources.Made</p>
->>>>>>> Can edit brewery
         </footer>
     </div>
 
