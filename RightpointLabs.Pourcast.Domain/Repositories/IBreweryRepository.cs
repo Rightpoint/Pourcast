@@ -10,7 +10,9 @@
         
         IEnumerable<Brewery> GetAll();
 
-        void Create(Brewery brewery);
+        void Add(Brewery brewery);
+
+        void Update(Brewery brewery);
 
         string NextIdentity();
     }
