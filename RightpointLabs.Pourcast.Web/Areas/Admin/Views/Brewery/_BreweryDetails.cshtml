@@ -1,0 +1,78 @@
+﻿@model RightpointLabs.Pourcast.Web.Areas.Admin.Models.BreweryViewModel
+
+<div>
+    <h3></h3>
+    <p><span data-bind="text: fomattedAddress"></span></p>
+    <h4>Beers</h4>
+    
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Brewery.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Brewery.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Brewery.City)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Brewery.City)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Brewery.State)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Brewery.State)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Brewery.Country)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Brewery.Country)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Brewery.PostalCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Brewery.PostalCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Brewery.Website)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Brewery.Website)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Brewery.Logo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Brewery.Logo)
+        </dd>
+
+    </dl>
+    <ul>
+        @foreach (var beer in Model.Beers)
+        {
+            <li>@beer.Name</li>
+        }
+    </ul>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Brewery.Id }) | 
+    @Html.ActionLink("Add Beer", "Create", new { controller = "Beer", area = "Admin", breweryId = Model.Brewery.Id }) | 
+    @Html.ActionLink("Back to List", "Index")
+</p>
