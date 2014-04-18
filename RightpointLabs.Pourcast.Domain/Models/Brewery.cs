@@ -2,6 +2,8 @@
 {
     public class Brewery : Entity
     {
+        private Brewery() { }
+
         public Brewery(string id, string name)
             :base(id)
         {

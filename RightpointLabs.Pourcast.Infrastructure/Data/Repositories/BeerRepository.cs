@@ -15,7 +15,6 @@
                     cm =>
                     {
                         cm.AutoMap();
-                        cm.MapCreator(b => new Beer(b.Id, b.Name));
                     });
             }
         }

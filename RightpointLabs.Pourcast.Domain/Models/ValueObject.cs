@@ -2,5 +2,6 @@
 {
     public abstract class ValueObject
     {
+        protected ValueObject() { }
     }
 }

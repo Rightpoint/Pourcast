@@ -17,7 +17,6 @@ namespace RightpointLabs.Pourcast.Infrastructure.Data.Repositories
                     cm =>
                     {
                         cm.AutoMap();
-                        cm.MapCreator(t => new Tap(t.Id, t.Name));
                     });
             }
         }
