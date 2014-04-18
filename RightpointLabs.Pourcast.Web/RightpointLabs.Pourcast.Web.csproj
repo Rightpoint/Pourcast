@@ -240,6 +240,7 @@
     <Content Include="Areas\Admin\Views\Brewery\CreateBrewery.cshtml" />
     <Content Include="Areas\Admin\Views\Brewery\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Brewery\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_OnTapKegDetails.cshtml" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\app\pourcast.events.js" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
@@ -287,6 +288,8 @@
     <Compile Include="Areas\Admin\Controllers\BreweryController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Models\BreweryViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\KegsOnTap.cs" />
+    <Compile Include="Areas\Admin\Models\OnTapKeg.cs" />
     <Compile Include="Controllers\Api\BreweryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Api\KegController.cs" />
