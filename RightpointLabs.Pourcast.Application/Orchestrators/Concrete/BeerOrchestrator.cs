@@ -1,4 +1,7 @@
-﻿namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
+﻿using System.Diagnostics;
+using RightpointLabs.Pourcast.Application.Commands;
+
+namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
 {
     using System;
     using System.Collections.Generic;
@@ -11,12 +14,15 @@
     public class BeerOrchestrator : BaseOrchestrator, IBeerOrchestrator
     {
         private readonly IBeerRepository _beerRepository;
+        private readonly IBreweryOrchestrator _breweryOrchestrator;
 
-        public BeerOrchestrator(IBeerRepository beerRepository)
+        public BeerOrchestrator(IBeerRepository beerRepository, IBreweryOrchestrator breweryOrchestrator)
         {
             if (beerRepository == null) throw new ArgumentNullException("beerRepository");
+            if(breweryOrchestrator == null) throw new ArgumentNullException("breweryOrchestrator");
 
             _beerRepository = beerRepository;
+            _breweryOrchestrator = breweryOrchestrator;
         }
 
         public IEnumerable<Beer> GetBeers()
@@ -24,19 +30,33 @@
             return _beerRepository.GetAll();
         }
 
-        public IEnumerable<Beer> GetBeersByBrewery(int breweryId)
+        public IEnumerable<Beer> GetByName(string name)
         {
-            throw new System.NotImplementedException();
+            return _beerRepository.GetAllByName(name);
         }
 
-        public string CreateBeer(string name)
+        public IEnumerable<Beer> GetBeersByBrewery(string breweryId)
         {
-            var id = "";
+            return _beerRepository.GetByBreweryId(breweryId);
+        }
+
+        public string CreateBeer(CreateBeer createBeerCommand)
+        {
+            var id = string.Empty;
 
             using (var scope = new TransactionScope())
             {
                 id = _beerRepository.NextIdentity();
-                var beer = new Beer(id, name);
+                var beer = new Beer(id, createBeerCommand.Name)
+                {
+                    ABV = createBeerCommand.ABV,
+                    BAScore = createBeerCommand.BAScore,
+                    BreweryId = createBeerCommand.BreweryId,
+                    Color = createBeerCommand.Color,
+                    Glass = createBeerCommand.Glass,
+                    Style = createBeerCommand.Style,
+                    RPScore = 0
+                };
 
                 _beerRepository.Add(beer);
 
@@ -44,6 +64,23 @@
             }
 
             return id;
+        }
+
+        public CreateBeer CreateBeer(string breweryId)
+        {
+            var brewery = _breweryOrchestrator.GetById(breweryId);
+            if (brewery == null)
+                return null;
+            return new CreateBeer()
+            {
+                BreweryId = brewery.Id,
+                BreweryName = brewery.Name
+            };
+        }
+
+        public IEnumerable<Beer> GetBeersByName(string name)
+        {
+            return _beerRepository.GetAllByName(name);
         }
     }
 }

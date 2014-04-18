@@ -20,6 +20,7 @@
 @section scripts {
     <script type="text/javascript">
         $(function () {
+            
             pourcast.events.on("beerPoured", function (e) {
                 toastr.success(e.PercentRemaining);
             });

@@ -1,0 +1,73 @@
+﻿@model RightpointLabs.Pourcast.Web.Areas.Admin.Models.BreweryViewModel
+
+<div>
+    <h3>@Model.Brewery.Name</h3>
+    <p>@Html.Raw(string.Format("{0}, {1} {2}", Model.Brewery.City, Model.Brewery.State, Model.Brewery.Country))</p>
+    <h4>Beers</h4>
+    
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Brewery.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Brewery.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Brewery.City)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Brewery.City)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Brewery.State)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Brewery.State)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Brewery.Country)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Brewery.Country)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Brewery.PostalCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Brewery.PostalCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Brewery.Website)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Brewery.Website)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Brewery.Logo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Brewery.Logo)
+        </dd>
+
+    </dl>
+</div>
+
+<p>
+    @Html.ActionLink("Full Details", "Details", new { id = Model.Brewery.Id }) | 
+    @Html.ActionLink("Add Beer", "Create", new { controller = "Beer", area = "Admin", breweryId = Model.Brewery.Id }) | 
+    <a href="" id="backToList">Back to List</a>
+</p>

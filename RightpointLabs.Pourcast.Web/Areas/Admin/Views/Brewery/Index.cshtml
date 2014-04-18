@@ -1,0 +1,38 @@
+﻿@model IEnumerable<RightpointLabs.Pourcast.Domain.Models.Brewery>
+
+@{
+    ViewBag.Title = "Index";
+}
+@section scripts{
+    <script type="text/javascript">
+        $(function () {
+            $('button[name="btnBreweryDetails"]').on('click', function() {
+                var breweryId = $(this).attr("data-breweryid");
+                $.ajax({
+                    url: '@Url.Action("PartialDetails", "Brewery")/' + breweryId,
+                    format: 'json',
+                    type: 'get'
+                }).done(function(data) {
+                    $('#breweryDetails').html(data);
+                    $('#backToList').on('click', function() {
+                        $('#breweryDetails').html('');
+                    });
+                });
+            });
+        });
+
+    </script>
+}
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<div class="row">
+    <div class="col-lg-6">
+        @Html.Partial("_BreweryList", Model)
+    </div>
+    <div class="col-lg-4 pull-right" id="breweryDetails">
+    </div>
+</div>
