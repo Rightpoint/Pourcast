@@ -1,5 +1,32 @@
-﻿@{
-    ViewBag.Title = "Index";
+﻿@using RightpointLabs.Pourcast.Web.Properties
+@model RightpointLabs.Pourcast.Web.Areas.Admin.Models.KegsOnTap
+
+@{
+    ViewBag.Title = Resources.Admin_Home_Title;
 }
 
-<h2>Index</h2>
+<h2>@Resources.Admin_Home_Title</h2>
+
+<div class="row">
+    <h2>@Resources.Admin_Home_CurrentKegs</h2>
+    <div id="leftTap" class="col-lg-4">
+        @if (Model.LeftKeg != null)
+        {
+            Html.Partial("_OnTapKegDetails", Model.LeftKeg);
+        }
+        else
+        {
+            <h4>@Resources.Admin_Home_NoKeg</h4>
+        }
+    </div>
+    <div id="rightTap" class="col-lg-4">
+        @if (Model.RightKeg != null)
+        {
+            Html.Partial("_OnTapKegDetails", Model.RightKeg);
+        }
+        else
+        {
+            <h4>@Resources.Admin_Home_NoKeg</h4>
+        }
+    </div>
+</div>

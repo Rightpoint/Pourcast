@@ -1,10 +1,11 @@
-﻿@model RightpointLabs.Pourcast.Application.Commands.EditBrewery
+﻿@using RightpointLabs.Pourcast.Web.Properties
+@model RightpointLabs.Pourcast.Application.Commands.EditBrewery
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = Resources.Admin_Brewery_Edit_Title;
 }
 
-<h2>Edit @Model.Name</h2>
+<h2>@Resources.Admin_Brewery_Edit_Title @Model.Name</h2>
 
 
 @using (Html.BeginForm())
@@ -12,7 +13,7 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Brewery</h4>
+        <h4>@Resources.Admin_Brewery_Edit_Brewery</h4>
         <hr />
         @Html.ValidationSummary(true)
         @Html.HiddenFor(model => model.Id)
@@ -75,14 +76,14 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="@Resources.Admin_Brewery_Edit_SaveButton" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink(Resources.Admin_Brewery_Edit_BackLink, "Index")
 </div>
 
 @section Scripts {

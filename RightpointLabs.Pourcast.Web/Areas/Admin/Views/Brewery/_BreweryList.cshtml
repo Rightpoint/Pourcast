@@ -1,4 +1,5 @@
-﻿@using WebGrease
+﻿@using RightpointLabs.Pourcast.Web.Properties
+@using WebGrease
 @model IEnumerable<RightpointLabs.Pourcast.Domain.Models.Brewery>
 
 <table class="table">
@@ -51,7 +52,7 @@
             @Html.DisplayFor(modelItem => item.Logo)
         </td>
         <td>
-            <button data-breweryid="@item.Id" name="btnBreweryDetails">Details</button>
+            <button data-breweryid="@item.Id" name="btnBreweryDetails">@Resources.Admin_BreweryList_Details</button>
         </td>
     </tr>
 }

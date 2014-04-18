@@ -1,7 +1,8 @@
-﻿@model RightpointLabs.Pourcast.Web.Areas.Admin.Models.BreweryViewModel
+﻿@using RightpointLabs.Pourcast.Web.Properties
+@model RightpointLabs.Pourcast.Web.Areas.Admin.Models.BreweryViewModel
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = Resources.Admin_Brewery_Details_Title;
 }
 
 <h2>@Model.Brewery.Name</h2>
@@ -17,7 +18,7 @@
     </ul>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Brewery.Id }) |
-    @Html.ActionLink("Add Beer", "Create", new { controller = "Beer", area = "Admin", breweryId = Model.Brewery.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink(Resources.Admin_Brewery_Details_EditLink, "Edit", new { id = Model.Brewery.Id }) |
+    @Html.ActionLink(Resources.Admin_Brewery_Details_CreateLink, "Create", new { controller = "Beer", area = "Admin", breweryId = Model.Brewery.Id }) |
+    @Html.ActionLink(Resources.Admin_Brewery_Details_BackLink, "Index")
 </p>
