@@ -50,6 +50,7 @@
       <HintPath>..\packages\AutoFixture.3.18.1\lib\net40\Ploeh.AutoFixture.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Transactions" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -64,9 +65,11 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Application\EventHandlers\EventStoreHandlerTests.cs" />
     <Compile Include="Application\Orchestrators\KegOrchestratorTests.cs" />
+    <Compile Include="Domain\Events\DomainEventPublisherTests.cs" />
     <Compile Include="Domain\Models\KegTests.cs" />
-    <Compile Include="Domain\Models\PourTests.cs" />
+    <Compile Include="Domain\Models\TapTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MongoConnectionHandlerTest.cs" />
     <Compile Include="KegRepositoryTests.cs" />

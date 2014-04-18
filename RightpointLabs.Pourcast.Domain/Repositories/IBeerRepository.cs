@@ -7,7 +7,13 @@
     public interface IBeerRepository
     {
         Beer GetById(string id);
+        
         IEnumerable<Beer> GetAll();
+
+        IEnumerable<Beer> GetAllByName(string name);
+        IEnumerable<Beer> GetByBreweryId(string breweryId); 
         string NextIdentity();
+
+        void Add(Beer beer);
     }
 }

@@ -9,15 +9,18 @@
     {
         static BreweryRepository()
         {
-            BsonClassMap.RegisterClassMap<Brewery>(
-                cm =>
-                {
-                    cm.AutoMap();
-                    cm.MapCreator(b => new Brewery(b.Id, b.Name));
-                });
+            if (!BsonClassMap.IsClassMapRegistered(typeof(Brewery)))
+            {
+                BsonClassMap.RegisterClassMap<Brewery>(
+                    cm =>
+                    {
+                        cm.AutoMap();
+                        cm.MapCreator(b => new Brewery(b.Id, b.Name));
+                    });
+            }
         }
 
-        public BreweryRepository(IMongoConnectionHandler<Brewery> connectionHandler)
+        public BreweryRepository(IMongoConnectionHandler connectionHandler)
             : base(connectionHandler)
         {
         }

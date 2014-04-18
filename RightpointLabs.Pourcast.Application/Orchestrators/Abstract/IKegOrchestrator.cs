@@ -7,6 +7,13 @@
     public interface IKegOrchestrator
     {
         IEnumerable<Keg> GetKegs();
+
+        Keg GetKeg(string kegId);
+        
         IEnumerable<Keg> GetKegsOnTap();
+        
+        Keg GetKegOnTap(string tapId);
+
+        string CreateKeg(string beerId, double capacity);
     }
 }

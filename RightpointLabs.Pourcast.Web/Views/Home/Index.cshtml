@@ -16,3 +16,17 @@
 @Html.Partial("_CreateBrewery")
 
 <input type="button" data-bind="click: brewery.create" value="Create Brewery"/>
+
+@section scripts {
+    <script type="text/javascript">
+        $(function () {
+            
+            pourcast.events.on("beerPoured", function (e) {
+                toastr.success(e.PercentRemaining);
+            });
+            pourcast.events.on("beerPoured", function (e) {
+                toastr.success(e.Volume);
+            });
+        });
+    </script>
+}

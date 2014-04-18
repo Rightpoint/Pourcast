@@ -6,7 +6,7 @@ namespace RightpointLabs.Pourcast.Web.App_Start
 {
     using System.Web.Http.Dependencies;
 
-    public class UnityResolver : System.Web.Mvc.IDependencyResolver, System.Web.Http.Dependencies.IDependencyResolver
+    public class UnityResolver : System.Web.Mvc.IDependencyResolver, IDependencyResolver
     {
         protected IUnityContainer container;
 

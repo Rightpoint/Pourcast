@@ -1,47 +1,25 @@
 ﻿namespace RightpointLabs.Pourcast.Domain.Models
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
+
+    using RightpointLabs.Pourcast.Domain.Events;
 
     public class Keg : Entity
     {
-        private readonly List<Pour> _pours;
-
-        public Keg(string id, double capacity)
+        public Keg(string id, string beerId, double capacity)
             : base(id)
         {
             if (capacity <= 0) throw new ArgumentOutOfRangeException("capacity", "Capacity must be greater than zero.");
 
-            Status = Status.InQueue;
             Capacity = capacity;
-
-            _pours = new List<Pour>();
+            BeerId = beerId;
         }
 
-        public Beer Beer { get; set; }
-        public Status Status { get; set; }
-        public Tap Tap { get; set; }
-        public DateTime? DateTimeTapped { get; set; }
-        public DateTime? DateTimeEmptied { get; set; }
+        public string BeerId { get; private set; }
 
-        public IEnumerable<Pour> Pours
-        {
-            get
-            {
-                return _pours;
-            }
-        }
+        public double Capacity { get; private set; }
 
-        public double Capacity { get; set; }
-
-        public double AmountOfBeerPoured
-        {
-            get
-            {
-                return Pours.Sum(x => x.Volume);
-            }
-        }
+        public double AmountOfBeerPoured { get; private set; }
 
         public double AmountOfBeerRemaining
         {
@@ -59,13 +37,29 @@
             }
         }
 
-        public void PourBeer(DateTime pouredDateTime, double volume)
+        public bool IsEmpty
         {
-            if (AmountOfBeerRemaining - volume < 0) 
-                throw new Exception("Volume exceeds amount of beer remaining.");
+            get
+            {
+                return AmountOfBeerRemaining <= 0;
+            }
+        }
 
-            var newPour = new Pour(pouredDateTime, volume);
-            _pours.Add(newPour);
+        public void PourBeerFromTap(string tapId, double volume)
+        {
+            if (volume <= 0)
+                throw new ArgumentOutOfRangeException("volume", "Volume must be a positive number.");
+
+            if (AmountOfBeerRemaining <= 0) return;
+            
+            AmountOfBeerPoured += volume;
+
+            DomainEvents.Raise(new BeerPoured(tapId, Id, volume, PercentRemaining));
+
+            if (IsEmpty)
+            {
+                DomainEvents.Raise(new KegEmptied(Id));
+            }
         }
     }
 }

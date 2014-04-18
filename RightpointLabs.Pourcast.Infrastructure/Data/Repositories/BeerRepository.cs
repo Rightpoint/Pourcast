@@ -1,7 +1,7 @@
 ﻿namespace RightpointLabs.Pourcast.Infrastructure.Data.Repositories
 {
     using MongoDB.Bson.Serialization;
-
+    using System.Linq;
     using RightpointLabs.Pourcast.Domain.Models;
     using RightpointLabs.Pourcast.Domain.Repositories;
 
@@ -9,17 +9,30 @@
     {
         static BeerRepository()
         {
-            BsonClassMap.RegisterClassMap<Beer>(
-                cm =>
-                {
-                    cm.AutoMap();
-                    cm.MapCreator(b => new Beer(b.Id, b.Name));
-                });
+            if (!BsonClassMap.IsClassMapRegistered(typeof(Beer)))
+            {
+                BsonClassMap.RegisterClassMap<Beer>(
+                    cm =>
+                    {
+                        cm.AutoMap();
+                        cm.MapCreator(b => new Beer(b.Id, b.Name));
+                    });
+            }
         }
 
-        public BeerRepository(IMongoConnectionHandler<Beer> connectionHandler)
+        public BeerRepository(IMongoConnectionHandler connectionHandler)
             : base(connectionHandler)
         {
+        }
+
+        public System.Collections.Generic.IEnumerable<Beer> GetAllByName(string name)
+        {
+            return Queryable.Where(b => b.Name.Contains(name));
+        }
+
+        public System.Collections.Generic.IEnumerable<Beer> GetByBreweryId(string breweryId)
+        {
+            return Queryable.Where(b => b.BreweryId == breweryId);
         }
     }
 }

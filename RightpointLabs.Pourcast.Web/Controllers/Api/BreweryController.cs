@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Web.Http;
-
-namespace RightpointLabs.Pourcast.Web.Controllers
+﻿namespace RightpointLabs.Pourcast.Web.Controllers.Api
 {
+    using System.Collections.Generic;
+    using System.Web.Http;
+
     using RightpointLabs.Pourcast.Application.Orchestrators.Abstract;
     using RightpointLabs.Pourcast.Domain.Models;
 

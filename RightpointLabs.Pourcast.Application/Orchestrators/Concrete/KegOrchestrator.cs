@@ -2,25 +2,30 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
+    using System.Transactions;
 
     using RightpointLabs.Pourcast.Application.Orchestrators.Abstract;
     using RightpointLabs.Pourcast.Domain.Models;
     using RightpointLabs.Pourcast.Domain.Repositories;
-    using RightpointLabs.Pourcast.Domain.Services;
 
     public class KegOrchestrator : BaseOrchestrator, IKegOrchestrator
     {
         private readonly IKegRepository _kegRepository;
 
-        private readonly IDateTimeProvider _dateTimeProvider;
+        private readonly ITapRepository _tapRepository;
 
-        public KegOrchestrator(IKegRepository kegRepository, IDateTimeProvider dateTimeProvider)
+        private readonly IBeerRepository _beerRepository;
+
+        public KegOrchestrator(IKegRepository kegRepository, ITapRepository tapRepository, IBeerRepository beerRepository)
         {
             if (kegRepository == null) throw new ArgumentNullException("kegRepository");
-            if (dateTimeProvider == null) throw new ArgumentNullException("dateTimeProvider");
+            if (tapRepository == null) throw new ArgumentNullException("tapRepository");
+            if (beerRepository == null) throw new ArgumentNullException("beerRepository");
 
             _kegRepository = kegRepository;
-            _dateTimeProvider = dateTimeProvider;
+            _tapRepository = tapRepository;
+            _beerRepository = beerRepository;
         }
 
         public IEnumerable<Keg> GetKegs()
@@ -28,23 +33,43 @@
             return _kegRepository.GetAll();
         }
 
-        public IEnumerable<Keg> GetKegsOnTap()
+        public Keg GetKeg(string kegId)
         {
-            return _kegRepository.OnTap();
+            return _kegRepository.GetById(kegId);
         }
 
-        public void PourBeerFromTap(string tapId, double volume)
+        public IEnumerable<Keg> GetKegsOnTap()
         {
-            var keg = _kegRepository.OnTap(tapId);
+            var taps = _tapRepository.GetAll();
+            var kegs = taps.Select(t => _kegRepository.GetById(t.KegId));
 
-            if (keg == null)
-                throw new Exception("No keg found for the given tapId.");
+            return kegs;
+        }
 
-            var now = _dateTimeProvider.GetCurrentDateTime();
-            
-            keg.PourBeer(now, volume);
+        public Keg GetKegOnTap(string tapId)
+        {
+            var tap = _tapRepository.GetById(tapId);
+            var keg = _kegRepository.GetById(tap.KegId);
 
-            _kegRepository.Update(keg);
+            return keg;
+        }
+
+        public string CreateKeg(string beerId, double capacity)
+        {
+            var id = "";
+
+            using (var scope = new TransactionScope())
+            {
+                id = _kegRepository.NextIdentity();
+                var beer = _beerRepository.GetById(beerId);
+                var keg = new Keg(id, beer.Id, capacity);
+
+                _kegRepository.Add(keg);
+
+                scope.Complete();
+            }
+
+            return id;
         }
     }
 }

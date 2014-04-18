@@ -1,4 +1,6 @@
-﻿namespace RightpointLabs.Pourcast.Application.Orchestrators.Abstract
+﻿using RightpointLabs.Pourcast.Application.Commands;
+
+namespace RightpointLabs.Pourcast.Application.Orchestrators.Abstract
 {
     using System.Collections.Generic;
 
@@ -7,5 +9,9 @@
     public interface IBreweryOrchestrator
     {
         IEnumerable<Brewery> GetBreweries();
+        Brewery GetById(string id);
+        string Create(CreateBrewery breweryCommand);
+        EditBrewery EditBrewery(string breweryId);
+        void EditBrewery(EditBrewery editBreweryCommand);
     }
 }
