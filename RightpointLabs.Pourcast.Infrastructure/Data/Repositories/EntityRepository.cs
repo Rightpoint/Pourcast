@@ -73,7 +73,7 @@
 
         public virtual T GetById(string id)
         {
-            return Queryable.Single(e => e.Id == id);
+                return Queryable.Single(e => e.Id == id);
         }
 
         public virtual void Update(T entity)

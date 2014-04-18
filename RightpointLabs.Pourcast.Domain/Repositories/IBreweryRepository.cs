@@ -9,7 +9,11 @@
         Brewery GetById(string id);
         
         IEnumerable<Brewery> GetAll();
-        
+
+        void Add(Brewery brewery);
+
+        void Update(Brewery brewery);
+
         string NextIdentity();
     }
 }
