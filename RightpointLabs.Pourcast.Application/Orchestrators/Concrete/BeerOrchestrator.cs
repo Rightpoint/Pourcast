@@ -40,6 +40,11 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
             return _beerRepository.GetByBreweryId(breweryId);
         }
 
+        public Beer GetById(string id)
+        {
+            return _beerRepository.GetById(id);
+        }
+
         public string CreateBeer(CreateBeer createBeerCommand)
         {
             var id = string.Empty;

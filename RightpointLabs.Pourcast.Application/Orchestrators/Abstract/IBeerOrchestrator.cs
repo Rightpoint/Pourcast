@@ -14,6 +14,8 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Abstract
 
         IEnumerable<Beer> GetBeersByBrewery(string breweryId);
 
+        Beer GetById(string id);
+
         string CreateBeer(CreateBeer createBeerCommand);
 
         CreateBeer CreateBeer(string breweryId);

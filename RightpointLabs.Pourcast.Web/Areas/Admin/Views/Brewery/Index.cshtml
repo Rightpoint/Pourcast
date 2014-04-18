@@ -1,7 +1,8 @@
-﻿@model IEnumerable<RightpointLabs.Pourcast.Domain.Models.Brewery>
+﻿@using RightpointLabs.Pourcast.Web.Properties
+@model IEnumerable<RightpointLabs.Pourcast.Domain.Models.Brewery>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = Resources.Admin_Brewery_Index_Title;
 }
 @section scripts{
     <script type="text/javascript">
@@ -26,7 +27,7 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink(Resources.Admin_Brewery_Index_CreateLink, "Create")
 </p>
 
 <div class="row">
