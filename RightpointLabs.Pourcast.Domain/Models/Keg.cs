@@ -6,6 +6,8 @@
 
     public class Keg : Entity
     {
+        private Keg() { }
+
         public Keg(string id, string beerId, double capacity)
             : base(id)
         {

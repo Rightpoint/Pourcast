@@ -15,7 +15,6 @@
                     cm =>
                     {
                         cm.AutoMap();
-                        cm.MapCreator(b => new Brewery(b.Id, b.Name));
                     });
             }
         }

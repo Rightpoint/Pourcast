@@ -2,6 +2,8 @@
 {
     public class Beer : Entity
     {
+        private Beer() { }
+
         public Beer(string id, string name)
             : base(id)
         {

@@ -5,6 +5,8 @@ namespace RightpointLabs.Pourcast.Web
     using System;
     using System.Net.Mail;
 
+    using Microsoft.AspNet.SignalR;
+    using Microsoft.AspNet.SignalR.Infrastructure;
     using Microsoft.Practices.ServiceLocation;
 
     using RightpointLabs.Pourcast.Application.EventHandlers;
@@ -73,6 +75,7 @@ namespace RightpointLabs.Pourcast.Web
             container.RegisterType<IEventHandler<BeerPoured>, BeerPouredClientHandler>("BeerPouredClientHandler", new PerRequestLifetimeManager());
 
             container.RegisterType<SmtpClient>(new PerRequestLifetimeManager(), new InjectionConstructor());
+            container.RegisterType<IConnectionManager>(new ContainerControlledLifetimeManager(), new InjectionFactory(c => GlobalHost.ConnectionManager));
 
             var locator = new App_Start.UnityServiceLocator(container);
             ServiceLocator.SetLocatorProvider(() => locator);

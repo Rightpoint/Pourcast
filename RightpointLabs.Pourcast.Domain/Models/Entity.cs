@@ -2,6 +2,8 @@
 {
     public abstract class Entity
     {
+        protected Entity() { }
+
         protected Entity(string id)
         {
             Id = id;
