@@ -86,6 +86,7 @@ body {
 	background: #fff;
     border: 2px solid #fff;
     position: relative;
+    overflow: hidden;
 }
 
 .profile img {
@@ -99,11 +100,11 @@ body {
 
     .profile .beerLvl {
         background-color: yellow;
-        height: 245px;
+        height: 44%;
         width: 100%;
-        position: relative;
-        
+        position: absolute;
         opacity: .5;
+        bottom: 0;
     }
 
 .intro-content h1 > span {
