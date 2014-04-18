@@ -117,6 +117,84 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Admin_Beer_Create_BackLink" xml:space="preserve">
+    <value>Back to List</value>
+  </data>
+  <data name="Admin_Beer_Create_Beer" xml:space="preserve">
+    <value>Beer</value>
+  </data>
+  <data name="Admin_Beer_Create_SubmitButton" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="Admin_Beer_Create_Title" xml:space="preserve">
+    <value>Add New Beer</value>
+  </data>
+  <data name="Admin_BreweryDetails_AddBeer" xml:space="preserve">
+    <value>Add Beer</value>
+  </data>
+  <data name="Admin_BreweryDetails_BackToList" xml:space="preserve">
+    <value>Back to List</value>
+  </data>
+  <data name="Admin_BreweryDetails_Beers" xml:space="preserve">
+    <value>Beers</value>
+  </data>
+  <data name="Admin_BreweryDetails_FullDetails" xml:space="preserve">
+    <value>Full Details</value>
+  </data>
+  <data name="Admin_BreweryList_Details" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="Admin_Brewery_Details_BackLink" xml:space="preserve">
+    <value>Back to List</value>
+  </data>
+  <data name="Admin_Brewery_Details_CreateLink" xml:space="preserve">
+    <value>Add Beer</value>
+  </data>
+  <data name="Admin_Brewery_Details_EditLink" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Admin_Brewery_Details_Title" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="Admin_Brewery_Edit_BackLink" xml:space="preserve">
+    <value>Back to List</value>
+  </data>
+  <data name="Admin_Brewery_Edit_Brewery" xml:space="preserve">
+    <value>Brewery</value>
+  </data>
+  <data name="Admin_Brewery_Edit_SaveButton" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Admin_Brewery_Edit_Title" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Admin_Brewery_Index_CreateLink" xml:space="preserve">
+    <value>Create New</value>
+  </data>
+  <data name="Admin_Brewery_Index_Title" xml:space="preserve">
+    <value>Index</value>
+  </data>
+  <data name="Admin_CreateBrewery_Back" xml:space="preserve">
+    <value>Back to List</value>
+  </data>
+  <data name="Admin_CreateBrewery_Brewery" xml:space="preserve">
+    <value>Brewery</value>
+  </data>
+  <data name="Admin_CreateBrewery_SubmitButton" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="Admin_CreateBrewery_Title" xml:space="preserve">
+    <value>Create Brewery</value>
+  </data>
+  <data name="Admin_Home_CurrentKegs" xml:space="preserve">
+    <value>Current Kegs</value>
+  </data>
+  <data name="Admin_Home_NoKeg" xml:space="preserve">
+    <value>No Keg On Tap</value>
+  </data>
+  <data name="Admin_Home_Title" xml:space="preserve">
+    <value>Dashboard</value>
+  </data>
   <data name="Application" xml:space="preserve">
     <value>Pourcast</value>
   </data>

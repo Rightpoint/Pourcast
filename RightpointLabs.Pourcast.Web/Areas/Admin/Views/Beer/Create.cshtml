@@ -1,16 +1,17 @@
-﻿@model RightpointLabs.Pourcast.Application.Commands.CreateBeer
+﻿@using RightpointLabs.Pourcast.Web.Properties
+@model RightpointLabs.Pourcast.Application.Commands.CreateBeer
 @{
-    ViewBag.Title = "CreateBeer";
+    ViewBag.Title = Resources.Admin_Beer_Create_Title;
 }
 
-<h2>CreateBeer</h2>
+<h2>@Resources.Admin_Beer_Create_Title</h2>
 
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Beer</h4>
+        <h4>@Resources.Admin_Beer_Create_Beer</h4>
         <hr />
         @Html.ValidationSummary(true)
         <div class="form-group">
@@ -72,12 +73,12 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="@Resources.Admin_Beer_Create_SubmitButton" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink(Resources.Admin_Beer_Create_SubmitButton, "Index")
 </div>
