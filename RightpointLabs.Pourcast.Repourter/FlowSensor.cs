@@ -6,7 +6,7 @@ namespace RightpointLabs.Pourcast.Repourter
 {
     public class FlowSensor
     {
-        private InterruptPort _port;
+        private readonly InterruptPort _port;
 
         private DateTime _flowStart;
 
@@ -15,10 +15,7 @@ namespace RightpointLabs.Pourcast.Repourter
         private double _pulseCount = 0.0;
 
         private double _totalLiters = 0.0;
-
-        // count flow every half a second
-        private const int MILLISECONDS_BETWEEN_COUNT = 5000;
-
+        
         private const int PULSES_PER_LITER = 5600;
 
         private bool _flowing = false;
