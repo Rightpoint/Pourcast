@@ -6,6 +6,8 @@
 
     public class Tap : Entity
     {
+        private Tap() { }
+
         public Tap(string id, TapName name)
             : base(id)
         {
