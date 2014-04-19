@@ -43,10 +43,12 @@
             public void UpdatesAmountOfBeerPouredAndRemaining()
             {
                 var fixture = new Fixture();
+                var tapId = "asdf";
                 var sut = fixture.Create<Keg>();
                 var volume = 10;
 
-                sut.PourBeerFromTap("asdf", volume);
+                sut.StartPourFromTap(tapId);
+                sut.StopPourFromTap(tapId, volume);
 
                 Assert.AreEqual(sut.AmountOfBeerPoured, volume);
                 Assert.AreEqual(sut.AmountOfBeerRemaining + volume, sut.Capacity);
@@ -56,10 +58,12 @@
             public void SetsIsEmptyWhenEmpty()
             {
                 var fixture = new Fixture();
+                var tapId = "asdf";
                 var sut = fixture.Create<Keg>();
                 var volume = sut.Capacity;
 
-                sut.PourBeerFromTap("asdf", volume);
+                sut.StartPourFromTap(tapId);
+                sut.StopPourFromTap(tapId, volume);
 
                 Assert.IsTrue(sut.IsEmpty);
             }
@@ -69,9 +73,11 @@
             {
                 var fixture = new Fixture();
                 var sut = fixture.Create<Keg>();
+                var tapId = "asdf";
                 var volume = sut.Capacity - 1;
 
-                sut.PourBeerFromTap("asdf", volume);
+                sut.StartPourFromTap(tapId);
+                sut.StopPourFromTap(tapId, volume);
 
                 Assert.IsFalse(sut.IsEmpty);
             }
@@ -81,13 +87,15 @@
             {
                 var fixture = new Fixture();
                 var sut = fixture.Create<Keg>();
+                var tapId = "asdf";
                 var beerPouredEventWasRaised = false;
                 var kegEmptiedEventWasRaised = false;
                 
-                DomainEvents.Register<BeerPoured>(b => beerPouredEventWasRaised = true);
+                DomainEvents.Register<BeerPourStopped>(b => beerPouredEventWasRaised = true);
                 DomainEvents.Register<KegEmptied>(k => kegEmptiedEventWasRaised = true);
 
-                sut.PourBeerFromTap("asdf", sut.Capacity - 1);
+                sut.StartPourFromTap(tapId);
+                sut.StopPourFromTap(tapId, sut.Capacity - 1);
 
                 Assert.IsTrue(beerPouredEventWasRaised);
                 Assert.IsFalse(kegEmptiedEventWasRaised);
@@ -98,13 +106,15 @@
             {
                 var fixture = new Fixture();
                 var sut = fixture.Create<Keg>();
+                var tapId = "asdf";
                 var beerPouredEventWasRaised = false;
                 var kegEmptiedEventWasRaised = false;
 
-                DomainEvents.Register<BeerPoured>(b => beerPouredEventWasRaised = true);
+                DomainEvents.Register<BeerPourStopped>(b => beerPouredEventWasRaised = true);
                 DomainEvents.Register<KegEmptied>(k => kegEmptiedEventWasRaised = true);
 
-                sut.PourBeerFromTap("asdf", sut.Capacity);
+                sut.StartPourFromTap(tapId);
+                sut.StopPourFromTap(tapId, sut.Capacity);
 
                 Assert.IsTrue(beerPouredEventWasRaised);
                 Assert.IsTrue(kegEmptiedEventWasRaised);
@@ -116,8 +126,10 @@
             {
                 var fixture = new Fixture();
                 var sut = fixture.Create<Keg>();
+                var tapId = "asdf";
 
-                sut.PourBeerFromTap("asdf", -1);
+                sut.StartPourFromTap(tapId);
+                sut.StopPourFromTap(tapId, -1);
             }
 
             [TestMethod]
@@ -126,8 +138,10 @@
             {
                 var fixture = new Fixture();
                 var sut = fixture.Create<Keg>();
+                var tapId = "asdf";
 
-                sut.PourBeerFromTap("asdf", 0);
+                sut.StartPourFromTap(tapId);
+                sut.StopPourFromTap(tapId, 0);
             }
         }
     }
