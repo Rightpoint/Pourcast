@@ -1,6 +1,6 @@
 ﻿namespace RightpointLabs.Pourcast.Domain.Events
 {
-    public class BeerPourEnded : IDomainEvent
+    public class BeerPourStopped : IDomainEvent
     {
         public string TapId { get; private set; }
 
@@ -10,7 +10,7 @@
 
         public double PercentRemaining { get; private set; }
 
-        public BeerPourEnded(string tapId, string kegId, double volume, double percentRemaining)
+        public BeerPourStopped(string tapId, string kegId, double volume, double percentRemaining)
         {
             TapId = tapId;
             KegId = kegId;

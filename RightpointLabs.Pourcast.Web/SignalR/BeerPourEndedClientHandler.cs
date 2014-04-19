@@ -5,7 +5,7 @@
     using RightpointLabs.Pourcast.Application.EventHandlers;
     using RightpointLabs.Pourcast.Domain.Events;
 
-    public class BeerPourEndedClientHandler : TransactionDependentEventHandler<BeerPourEnded>
+    public class BeerPourEndedClientHandler : TransactionDependentEventHandler<BeerPourStopped>
     {
         private readonly IConnectionManager _connectionManager;
 
@@ -14,7 +14,7 @@
             _connectionManager = connectionManager;
         }
 
-        protected override void HandleAfterTransaction(BeerPourEnded domainEvent)
+        protected override void HandleAfterTransaction(BeerPourStopped domainEvent)
         {
             var context = _connectionManager.GetHubContext<EventsHub>();
 

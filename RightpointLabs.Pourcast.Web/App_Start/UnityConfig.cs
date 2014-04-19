@@ -69,12 +69,12 @@ namespace RightpointLabs.Pourcast.Web
 
             // event handlers (must be named!)
             container.RegisterType(typeof(IEventHandler<>), typeof(EventStoreHandler<>), "EventStore", new PerRequestLifetimeManager());
-            container.RegisterType<IEventHandler<BeerPourEnded>, KegNearingEmptyNotificationHandler>("KegNearingEmptyNotification", new PerRequestLifetimeManager());
+            container.RegisterType<IEventHandler<BeerPourStopped>, KegNearingEmptyNotificationHandler>("KegNearingEmptyNotification", new PerRequestLifetimeManager());
             container.RegisterType<IEventHandler<KegEmptied>, KegEmptiedNotificationHandler>("KegEmptiedNotification", new PerRequestLifetimeManager());
             
             // signalr event handlers
             container.RegisterType<IEventHandler<BeerPourStarted>, BeerPourStartedClientHandler>("BeerPourStartedClientHandler", new PerRequestLifetimeManager());
-            container.RegisterType<IEventHandler<BeerPourEnded>, BeerPourEndedClientHandler>("BeerPourEndedClientHandler", new PerRequestLifetimeManager());
+            container.RegisterType<IEventHandler<BeerPourStopped>, BeerPourEndedClientHandler>("BeerPourStoppedClientHandler", new PerRequestLifetimeManager());
 
             // misc
             container.RegisterType<SmtpClient>(new PerRequestLifetimeManager(), new InjectionConstructor());

@@ -60,7 +60,7 @@
             DomainEvents.Raise(new BeerPourStarted(tapId, Id));
         }
 
-        public void EndPourFromTap(string tapId, double volume)
+        public void StopPourFromTap(string tapId, double volume)
         {
             if (!IsPouring)
                 throw new Exception("Keg isn't currently pouring.");
@@ -73,7 +73,7 @@
             AmountOfBeerPoured += volume;
             IsPouring = false;
 
-            DomainEvents.Raise(new BeerPourEnded(tapId, Id, volume, PercentRemaining));
+            DomainEvents.Raise(new BeerPourStopped(tapId, Id, volume, PercentRemaining));
 
             if (IsEmpty)
             {

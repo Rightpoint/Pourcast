@@ -44,7 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Events\BeerPourEnded.cs" />
+    <Compile Include="Events\BeerPourStopped.cs" />
     <Compile Include="Events\BeerPourStarted.cs" />
     <Compile Include="Events\IDomainEvent.cs" />
     <Compile Include="Events\DomainEvents.cs" />

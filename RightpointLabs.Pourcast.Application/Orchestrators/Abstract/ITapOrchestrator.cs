@@ -12,7 +12,7 @@
 
         void StartPourFromTap(string tapId);
 
-        void EndPourFromTap(string tapId, double volume);
+        void StopPourFromTap(string tapId, double volume);
 
         void RemoveKegFromTap(string tapId);
 

@@ -48,14 +48,14 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
             }
         }
 
-        public void EndPourFromTap(string tapId, double volume)
+        public void StopPourFromTap(string tapId, double volume)
         {
             using (var scope = new TransactionScope())
             {
                 var tap = _tapRepository.GetById(tapId);
                 var keg = _kegRepository.GetById(tap.KegId);
 
-                keg.EndPourFromTap(tap.Id, volume);
+                keg.StopPourFromTap(tap.Id, volume);
 
                 _kegRepository.Update(keg);
 

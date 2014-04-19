@@ -35,9 +35,9 @@ namespace RightpointLabs.Pourcast.Web.Controllers.Api
         }
 
         [HttpPost]
-        public void EndPour([FromUri]string id, [FromUri]double volume)
+        public void StopPour([FromUri]string id, [FromUri]double volume)
         {
-            _tapOrchestrator.EndPourFromTap(id, volume);
+            _tapOrchestrator.StopPourFromTap(id, volume);
         }
     }
 }
