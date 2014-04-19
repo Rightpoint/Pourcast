@@ -300,6 +300,7 @@
     <Compile Include="Areas\Admin\Models\KegsOnTap.cs" />
     <Compile Include="Areas\Admin\Models\OnTapKeg.cs" />
     <Compile Include="Controllers\Api\BreweryController.cs" />
+    <Compile Include="Controllers\Api\TapController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Api\KegController.cs" />
     <Compile Include="Global.asax.cs">
@@ -311,7 +312,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="SignalR\BeerPouredClientHandler.cs" />
+    <Compile Include="SignalR\BeerPourStartedClientHandler.cs" />
+    <Compile Include="SignalR\BeerPourEndedClientHandler.cs" />
     <Compile Include="SignalR\EventsHub.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

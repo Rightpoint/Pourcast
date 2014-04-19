@@ -1,6 +1,7 @@
 namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
 {
     using System;
+    using System.Collections.Generic;
     using System.Transactions;
 
     using RightpointLabs.Pourcast.Application.Orchestrators.Abstract;
@@ -22,14 +23,39 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
             _kegRepository = kegRepository;
         }
 
-        public void PourBeerFromTap(string tapId, double volume)
+        public Tap GetTapById(string id)
+        {
+            return _tapRepository.GetById(id);
+        }
+
+        public IEnumerable<Tap> GetTaps()
+        {
+            return _tapRepository.GetAll();
+        }
+
+        public void StartPourFromTap(string tapId)
         {
             using (var scope = new TransactionScope())
             {
                 var tap = _tapRepository.GetById(tapId);
                 var keg = _kegRepository.GetById(tap.KegId);
 
-                keg.PourBeerFromTap(tap.Id, volume);
+                keg.StartPourFromTap(tap.Id);
+
+                _kegRepository.Update(keg);
+
+                scope.Complete();
+            }
+        }
+
+        public void EndPourFromTap(string tapId, double volume)
+        {
+            using (var scope = new TransactionScope())
+            {
+                var tap = _tapRepository.GetById(tapId);
+                var keg = _kegRepository.GetById(tap.KegId);
+
+                keg.EndPourFromTap(tap.Id, volume);
 
                 _kegRepository.Update(keg);
 

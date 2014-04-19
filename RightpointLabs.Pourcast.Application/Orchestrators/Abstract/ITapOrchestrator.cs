@@ -1,10 +1,18 @@
 ﻿namespace RightpointLabs.Pourcast.Application.Orchestrators.Abstract
 {
+    using System.Collections.Generic;
+
     using RightpointLabs.Pourcast.Domain.Models;
 
     public interface ITapOrchestrator
     {
-        void PourBeerFromTap(string tapId, double volume);
+        Tap GetTapById(string id);
+
+        IEnumerable<Tap> GetTaps();
+
+        void StartPourFromTap(string tapId);
+
+        void EndPourFromTap(string tapId, double volume);
 
         void RemoveKegFromTap(string tapId);
 

@@ -18,8 +18,8 @@
             double volume = 1;
             double volumeResult = 0;
 
-            DomainEvents.Register<BeerPoured>(b => volumeResult = b.Volume);
-            DomainEvents.Raise(new BeerPoured("asdf", "qwer", volume, 10));
+            DomainEvents.Register<BeerPourEnded>(b => volumeResult = b.Volume);
+            DomainEvents.Raise(new BeerPourEnded("asdf", "qwer", volume, 10));
 
             Assert.AreEqual(volume, volumeResult);
         }
@@ -32,9 +32,9 @@
             string tapId = "asdf";
             string tapIdResult = "";
 
-            DomainEvents.Register<BeerPoured>(b => volumeResult = b.Volume);
-            DomainEvents.Register<BeerPoured>(b => tapIdResult = b.TapId);
-            DomainEvents.Raise(new BeerPoured(tapId, "qwer", volume, 10));
+            DomainEvents.Register<BeerPourEnded>(b => volumeResult = b.Volume);
+            DomainEvents.Register<BeerPourEnded>(b => tapIdResult = b.TapId);
+            DomainEvents.Raise(new BeerPourEnded(tapId, "qwer", volume, 10));
 
             Assert.AreEqual(volume, volumeResult);
             Assert.AreEqual(tapId, tapIdResult);
@@ -46,9 +46,9 @@
             bool beerWasPoured = false;
             bool kegWasEmptied = false;
 
-            DomainEvents.Register<BeerPoured>(b => beerWasPoured = true);
+            DomainEvents.Register<BeerPourEnded>(b => beerWasPoured = true);
             DomainEvents.Register<KegEmptied>(k => kegWasEmptied = true);
-            DomainEvents.Raise(new BeerPoured("asdf", "qwer", 1, 0));
+            DomainEvents.Raise(new BeerPourEnded("asdf", "qwer", 1, 0));
             DomainEvents.Raise(new KegEmptied("qwer"));
 
             Assert.IsTrue(beerWasPoured);
