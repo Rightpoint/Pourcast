@@ -37,8 +37,48 @@
         }
 
         [TestClass]
-        public class PourBeerMethod
+        public class StartPourFromTapMethod
         {
+            [TestMethod]
+            public void UpdatesIsPouring()
+            {
+                var fixture = new Fixture();
+                var tapId = "asdf";
+                var sut = fixture.Create<Keg>();
+
+                sut.StartPourFromTap(tapId);
+
+                Assert.IsTrue(sut.IsPouring);
+            }
+
+            [TestMethod]
+            [ExpectedException(typeof(Exception))]
+            public void ThrowsExceptionIfAlreadyPouring()
+            {
+                var fixture = new Fixture();
+                var tapId = "asdf";
+                var sut = fixture.Create<Keg>();
+
+                sut.StartPourFromTap(tapId);
+                sut.StartPourFromTap(tapId);
+            }
+        }
+
+        [TestClass]
+        public class StopPourFromTapMethod
+        {
+            [TestMethod]
+            [ExpectedException(typeof(Exception))]
+            public void StopPourWithoutStartingThrowsException()
+            {
+                var fixture = new Fixture();
+                var tapId = "asdf";
+                var sut = fixture.Create<Keg>();
+                var volume = 10;
+
+                sut.StopPourFromTap(tapId, volume);
+            }
+
             [TestMethod]
             public void UpdatesAmountOfBeerPouredAndRemaining()
             {
