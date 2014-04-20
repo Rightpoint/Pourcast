@@ -313,7 +313,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="SignalR\BeerPourStartedClientHandler.cs" />
-    <Compile Include="SignalR\BeerPourEndedClientHandler.cs" />
+    <Compile Include="SignalR\BeerPourStoppedClientHandler.cs" />
     <Compile Include="SignalR\EventsHub.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
