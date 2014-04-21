@@ -9,6 +9,8 @@ namespace RightpointLabs.Pourcast.Web
         {
             configuration.Routes.MapHttpRoute("API Default", "api/{controller}/{id}", new {id = RouteParameter.Optional});
 
+            configuration.Routes.MapHttpRoute("API Action", "api/{controller}/{id}/{action}");
+
             var appXmlType =
                 configuration.Formatters.XmlFormatter.SupportedMediaTypes.FirstOrDefault(
                     t => t.MediaType == "application/xml");

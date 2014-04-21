@@ -45,8 +45,6 @@ namespace RightpointLabs.Pourcast.Web
                 System.Web.Configuration.WebConfigurationManager.ConnectionStrings["Mongo"].ConnectionString;
             var database = System.Web.Configuration.WebConfigurationManager.ConnectionStrings["Mongo"].ProviderName;
 
-            container.RegisterType<IDateTimeProvider, CurrentDateTimeProvider>(new ContainerControlledLifetimeManager());
-
             // e.g. container.RegisterType<ITestService, TestService>();
             container.RegisterType<IMongoConnectionHandler, MongoConnectionHandler>(
                 new PerRequestLifetimeManager(),
@@ -67,13 +65,18 @@ namespace RightpointLabs.Pourcast.Web
 
             // domain services
             container.RegisterType<IEmailService, SmtpEmailService>(new PerRequestLifetimeManager());
+            container.RegisterType<IDateTimeProvider, CurrentDateTimeProvider>(new ContainerControlledLifetimeManager());
 
-            // events (must be named!)
+            // event handlers (must be named!)
             container.RegisterType(typeof(IEventHandler<>), typeof(EventStoreHandler<>), "EventStore", new PerRequestLifetimeManager());
-            container.RegisterType<IEventHandler<BeerPoured>, KegNearingEmptyNotificationHandler>("KegNearingEmptyNotification", new PerRequestLifetimeManager());
+            container.RegisterType<IEventHandler<BeerPourStopped>, KegNearingEmptyNotificationHandler>("KegNearingEmptyNotification", new PerRequestLifetimeManager());
             container.RegisterType<IEventHandler<KegEmptied>, KegEmptiedNotificationHandler>("KegEmptiedNotification", new PerRequestLifetimeManager());
-            container.RegisterType<IEventHandler<BeerPoured>, BeerPouredClientHandler>("BeerPouredClientHandler", new PerRequestLifetimeManager());
+            
+            // signalr event handlers
+            container.RegisterType<IEventHandler<BeerPourStarted>, BeerPourStartedClientHandler>("BeerPourStartedClientHandler", new PerRequestLifetimeManager());
+            container.RegisterType<IEventHandler<BeerPourStopped>, BeerPourStoppedClientHandler>("BeerPourStoppedClientHandler", new PerRequestLifetimeManager());
 
+            // misc
             container.RegisterType<SmtpClient>(new PerRequestLifetimeManager(), new InjectionConstructor());
             container.RegisterType<IConnectionManager>(new ContainerControlledLifetimeManager(), new InjectionFactory(c => GlobalHost.ConnectionManager));
 
