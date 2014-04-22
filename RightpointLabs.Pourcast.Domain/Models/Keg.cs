@@ -16,6 +16,8 @@
             Capacity = capacity;
             BeerId = beerId;
             IsPouring = false;
+
+            DomainEvents.Raise(new KegCreated(id, beerId));
         }
 
         public string BeerId { get; private set; }
