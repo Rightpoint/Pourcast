@@ -1,29 +1,62 @@
-﻿(function (app, $) {
+﻿(function (app, $, toastr) {
     app.events = app.events || function () {
         $.connection.hub.start();
 
-        var timeout = 0;
-
-        // try reconnect if disconnected
-        $.connection.eventsHub.disconnected(function() {
-            setTimeout(function () {
-                $.connection.eventsHub.start();
-                timeout++;
-            }, Math.pow(2, timeout) * 1000);
-        });
-
-        $.connection.hub.reconnected(function () {
-            timeout = 0;
-        });
-
-        return {
-            on: function (event, callback) {
+        var pub = {
+            on: function(event, callback) {
                 $.connection.eventsHub.on(event, callback);
             },
-            off: function (event, callback) {
+            off: function(event, callback) {
                 $.connection.eventsHub.off(event, callback);
             }
-        }
+        };
+
+
+        // reconnect
+        var retryCount = 0;
+        var isDisconnected = false;
+        var disconnectedToast;
+
+        $.connection.hub.stateChanged(function (e) {
+            if (e.newState === $.connection.connectionState.connected) {
+                if (isDisconnected) {
+                    toastr.clear(disconnectedToast);
+                    toastr.success("Reconnected");
+
+                    isDisconnected = false;
+                }
+            } else if (e.newState === $.connection.connectionState.disconnected) {
+                if (!isDisconnected) {
+                    disconnectedToast = toastr.error("Disconnected", "", {
+                        timeOut: 0,
+                        extendedTimeOut: 0
+                    });
+
+                    retryCount = 0;
+                    isDisconnected = true;
+                }
+            }
+        });
+
+        $.connection.hub.disconnected(function () {
+            setTimeout(function () {
+                $.connection.hub.start();
+            }, Math.pow(2, retryCount) * 1000);
+
+            retryCount++;
+        });
+
+
+        // admin refresh
+        pub.on("refresh", function(url) {
+            if (url) {
+                window.location.href = url;
+            } else {
+                window.location.reload();
+            }
+        });
+
+        return pub;
     }();
 
-}(window.pourcast = window.pourcast || {}, jQuery));
+}(window.pourcast = window.pourcast || {}, jQuery, toastr));
