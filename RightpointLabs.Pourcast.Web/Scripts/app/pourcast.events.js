@@ -48,12 +48,8 @@
 
 
         // admin refresh
-        pub.on("refresh", function(url) {
-            if (url) {
-                window.location.href = url;
-            } else {
-                window.location.reload();
-            }
+        pub.on("refresh", function() {
+            window.location.reload();
         });
 
         return pub;
