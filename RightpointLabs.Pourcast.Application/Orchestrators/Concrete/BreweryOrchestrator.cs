@@ -3,6 +3,7 @@
 namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
 {
     using System.Collections.Generic;
+    using System.Transactions;
 
     using RightpointLabs.Pourcast.Application.Orchestrators.Abstract;
     using RightpointLabs.Pourcast.Domain.Models;
@@ -31,17 +32,27 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
         {
             //TODO Check for existing brewery with the name
 
-            var brewery = new Brewery(_breweryRepository.NextIdentity(), breweryCommand.Name)
+            var id = "";
+
+            using (var scope = new TransactionScope())
             {
-                City = breweryCommand.City,
-                State = breweryCommand.State,
-                Country = breweryCommand.Country,
-                PostalCode = breweryCommand.PostalCode,
-                Website = breweryCommand.Website,
-                Logo = breweryCommand.Logo
-            };
-            _breweryRepository.Add(brewery);
-            return brewery.Id;
+                id = _breweryRepository.NextIdentity();
+                var brewery = new Brewery(id, breweryCommand.Name)
+                {
+                    City = breweryCommand.City,
+                    State = breweryCommand.State,
+                    Country = breweryCommand.Country,
+                    PostalCode = breweryCommand.PostalCode,
+                    Website = breweryCommand.Website,
+                    Logo = breweryCommand.Logo
+                };
+
+                _breweryRepository.Add(brewery);
+
+                scope.Complete();
+            }
+
+            return id;
         }
 
 
