@@ -12,6 +12,8 @@
             : base(id)
         {
             Name = name;
+
+            DomainEvents.Raise(new TapCreated(id));
         }
 
         public TapName Name { get; private set; }
