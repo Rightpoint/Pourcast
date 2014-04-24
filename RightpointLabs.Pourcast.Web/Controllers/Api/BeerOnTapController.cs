@@ -7,11 +7,11 @@ namespace RightpointLabs.Pourcast.Web.Controllers.Api
     using RightpointLabs.Pourcast.Application.Orchestrators.Abstract;
     using RightpointLabs.Pourcast.Application.Payloads;
 
-    public class BeerController : ApiController
+    public class BeerOnTapController : ApiController
     {
         private readonly IBeerOrchestrator _beerOrchestrator;
 
-        public BeerController(IBeerOrchestrator beerOrchestrator)
+        public BeerOnTapController(IBeerOrchestrator beerOrchestrator)
         {
             if (beerOrchestrator == null) throw new ArgumentNullException("beerOrchestrator");
 
@@ -24,9 +24,9 @@ namespace RightpointLabs.Pourcast.Web.Controllers.Api
             return _beerOrchestrator.GetBeersOnTap();
         }
 
-        public BeerOnTap Get(string tapId)
+        public BeerOnTap Get([FromUri]string id)
         {
-            return _beerOrchestrator.GetBeerOnTap(tapId);
+            return _beerOrchestrator.GetBeerOnTap(id);
         }
     }
 }
