@@ -1,0 +1,16 @@
+﻿@model dynamic
+
+@{
+    ViewBag.Title = "title";
+}
+
+<h2>Repourter Tests</h2>
+
+@section scripts {
+    <script>
+        $(function() {
+            pourcast.events.on("StartPour", function (e) { document.write("StartPour:" + JSON.stringify(e) + "</br>"); });
+            pourcast.events.on("StopPour", function (e) { document.write("StopPour:" + JSON.stringify(e) + "</br>"); });
+        });
+    </script>
+}
