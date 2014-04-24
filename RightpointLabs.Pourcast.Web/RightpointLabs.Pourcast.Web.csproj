@@ -299,6 +299,7 @@
     <Compile Include="Areas\Admin\Models\BreweryViewModel.cs" />
     <Compile Include="Areas\Admin\Models\KegsOnTap.cs" />
     <Compile Include="Areas\Admin\Models\OnTapKeg.cs" />
+    <Compile Include="Controllers\Api\BeerController.cs" />
     <Compile Include="Controllers\Api\BreweryController.cs" />
     <Compile Include="Controllers\Api\TapController.cs" />
     <Compile Include="Controllers\HomeController.cs" />

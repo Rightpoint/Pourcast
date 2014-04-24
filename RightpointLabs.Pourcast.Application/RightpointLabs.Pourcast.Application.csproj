@@ -57,6 +57,7 @@
     <Compile Include="Orchestrators\Concrete\BreweryOrchestrator.cs" />
     <Compile Include="Orchestrators\Concrete\KegOrchestrator.cs" />
     <Compile Include="Orchestrators\Concrete\TapOrchestrator.cs" />
+    <Compile Include="Payloads\BeerOnTap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
