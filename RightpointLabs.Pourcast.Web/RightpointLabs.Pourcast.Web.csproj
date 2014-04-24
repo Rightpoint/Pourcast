@@ -301,9 +301,11 @@
     <Compile Include="Areas\Admin\Models\OnTapKeg.cs" />
     <Compile Include="Controllers\Api\BeerOnTapController.cs" />
     <Compile Include="Controllers\Api\BreweryController.cs" />
+    <Compile Include="Controllers\Api\RepourterTestController.cs" />
     <Compile Include="Controllers\Api\TapController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Api\KegController.cs" />
+    <Compile Include="Controllers\RepourterTestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -334,6 +336,7 @@
     <Content Include="Scripts\toastr.min.js.map" />
     <Content Include="Views\Home\_CreateBrewery.cshtml" />
     <Content Include="Views\Home\Split.cshtml" />
+    <Content Include="Views\RepourterTest\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
