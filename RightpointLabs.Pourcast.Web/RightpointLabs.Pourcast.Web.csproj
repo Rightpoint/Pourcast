@@ -315,6 +315,8 @@
     <Compile Include="SignalR\BeerPourStartedClientHandler.cs" />
     <Compile Include="SignalR\BeerPourStoppedClientHandler.cs" />
     <Compile Include="SignalR\EventsHub.cs" />
+    <Compile Include="SignalR\KegRemovedFromTapClientHandler.cs" />
+    <Compile Include="SignalR\KegTappedClientHandler.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
