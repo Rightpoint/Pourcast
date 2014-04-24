@@ -1,4 +1,5 @@
-﻿using RightpointLabs.Pourcast.Application.Commands;
+﻿using System;
+using RightpointLabs.Pourcast.Application.Commands;
 
 namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
 {
@@ -28,64 +29,38 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
             return _breweryRepository.GetById(id);
         }
 
-        public string Create(CreateBrewery breweryCommand)
+        public string Create(string name, string city, string state, string country, string postalCode, string website, string logo)
         {
             //TODO Check for existing brewery with the name
-
             var id = "";
-
             using (var scope = new TransactionScope())
             {
                 id = _breweryRepository.NextIdentity();
-                var brewery = new Brewery(id, breweryCommand.Name)
+                var brewery = new Brewery(id, name)
                 {
-                    City = breweryCommand.City,
-                    State = breweryCommand.State,
-                    Country = breweryCommand.Country,
-                    PostalCode = breweryCommand.PostalCode,
-                    Website = breweryCommand.Website,
-                    Logo = breweryCommand.Logo
+                    City = city,
+                    State = state,
+                    Country = country,
+                    PostalCode = postalCode,
+                    Website = website,
+                    Logo = logo
                 };
-
                 _breweryRepository.Add(brewery);
-
                 scope.Complete();
             }
 
             return id;
         }
 
-
-        public EditBrewery EditBrewery(string breweryId)
+        public void Save(Brewery brewery)
         {
-            var brewery = _breweryRepository.GetById(breweryId);
-            if (brewery == null) return null;
-
-            return new EditBrewery()
-            {
-                Id = brewery.Id,
-                Name = brewery.Name,
-                City = brewery.City,
-                State = brewery.State,
-                Country = brewery.Country,
-                PostalCode = brewery.PostalCode,
-                Website = brewery.Website,
-                Logo = brewery.Logo
-            };
+            _breweryRepository.Update(brewery);
         }
 
-        public void EditBrewery(EditBrewery editBreweryCommand)
+
+        public Brewery GetByName(string name)
         {
-            var brewery = _breweryRepository.GetById(editBreweryCommand.Id);
-            //TODO Check for existing brewery name
-            brewery.Name = editBreweryCommand.Name;
-            brewery.City = editBreweryCommand.City;
-            brewery.State = editBreweryCommand.State;
-            brewery.Country = editBreweryCommand.Country;
-            brewery.PostalCode = editBreweryCommand.PostalCode;
-            brewery.Website = editBreweryCommand.Website;
-            brewery.Logo = editBreweryCommand.Logo;
-            _breweryRepository.Update(brewery);
+            return _breweryRepository.GetByName(name);
         }
     }
 }

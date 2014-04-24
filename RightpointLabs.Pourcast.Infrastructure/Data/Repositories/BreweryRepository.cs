@@ -1,4 +1,6 @@
-﻿namespace RightpointLabs.Pourcast.Infrastructure.Data.Repositories
+﻿using System.Linq;
+
+namespace RightpointLabs.Pourcast.Infrastructure.Data.Repositories
 {
     using MongoDB.Bson.Serialization;
 
@@ -22,6 +24,12 @@
         public BreweryRepository(IMongoConnectionHandler connectionHandler)
             : base(connectionHandler)
         {
+        }
+
+
+        public Brewery GetByName(string name)
+        {
+            return Queryable.Single(e => e.Name == name);
         }
     }
 }

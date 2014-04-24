@@ -7,7 +7,9 @@
     public interface IBreweryRepository
     {
         Brewery GetById(string id);
-        
+
+        Brewery GetByName(string name);
+
         IEnumerable<Brewery> GetAll();
 
         void Add(Brewery brewery);

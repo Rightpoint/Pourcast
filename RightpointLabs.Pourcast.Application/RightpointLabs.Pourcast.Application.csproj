@@ -43,8 +43,6 @@
   <ItemGroup>
     <Compile Include="EventHandlers\TransactionDependentEventHandler.cs" />
     <Compile Include="Commands\CreateBeer.cs" />
-    <Compile Include="Commands\CreateBrewery.cs" />
-    <Compile Include="Commands\EditBrewery.cs" />
     <Compile Include="EventHandlers\EventStoreHandler.cs" />
     <Compile Include="EventHandlers\KegEmptiedNotificationHandler.cs" />
     <Compile Include="EventHandlers\KegNearingEmptyNotificationHandler.cs" />
