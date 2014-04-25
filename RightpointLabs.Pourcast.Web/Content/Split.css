@@ -61,9 +61,9 @@ body {
 
 .side-right {
 	right: 0;
-	background: #fff;
+	background: #ccc;
 	color: #47a3da;
-	outline: 1px solid #fff; /* avoid gap */
+	outline: 1px solid #ccc; /* avoid gap */
 }
 
 /* Intro content, profile image and name, back button */
@@ -79,17 +79,51 @@ body {
 }
 
 .profile {
-	margin: 0 auto;
-	width: 140px;
-	height: 140px;
-	border-radius: 50%;
-	background: #47a3da;
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    background: #fff;
+    border: 5px solid #fff;
+    position: relative;
+    overflow: hidden;
 }
 
-.profile img {
-	max-width: 100%;
-	border-radius: 50%;
-	opacity: 0.6;
+  .profile img {
+      max-width: 100%;
+      height: 75%;
+      margin-top:12%;
+      position: absolute;
+      bottom: 0;
+      left: 23%;
+  }
+
+    .profile .beerlvl {
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        background: #A86048;
+        /*-webkit-animation: rise 5s 1 linear;
+        -webkit-animation-delay: 1s;*/
+    }
+
+  .profile .pour {
+    width: 15px;
+    position: absolute;
+    top: 0px;
+    margin-left: 46%;
+    background: #A86048;
+    display: none;
+    /*-webkit-animation: pour 5s 1 linear;*/
+  }
+
+@-webkit-keyframes pour {
+  0% { height: 0%; }
+  20% { height: 100%; }
+  100% { height: 0%; }
+}
+@-webkit-keyframes rise {
+  0% { height: 0%; }
+  80% { height: 100%; }
 }
 
 .intro-content h1 > span {
