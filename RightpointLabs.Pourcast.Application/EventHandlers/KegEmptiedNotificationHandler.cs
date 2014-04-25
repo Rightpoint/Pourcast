@@ -1,7 +1,6 @@
 ﻿namespace RightpointLabs.Pourcast.Application.EventHandlers
 {
     using System;
-    using System.Configuration;
     using System.Net.Mail;
 
     using RightpointLabs.Pourcast.Domain.Events;
@@ -17,19 +16,15 @@
 
         private readonly IKegRepository _kegRepository;
 
-        private readonly IBeerRepository _beerRepository;
-
-        public KegEmptiedNotificationHandler(ITapRepository tapRepository, IKegRepository kegRepository, IEmailService emailService, IBeerRepository beerRepository)
+        public KegEmptiedNotificationHandler(ITapRepository tapRepository, IKegRepository kegRepository, IEmailService emailService)
         {
             if (tapRepository == null) throw new ArgumentNullException("tapRepository");
             if (kegRepository == null) throw new ArgumentNullException("kegRepository");
             if (emailService == null) throw new ArgumentNullException("emailService");
-            if (beerRepository == null) throw new ArgumentNullException("beerRepository");
 
             _tapRepository = tapRepository;
             _kegRepository = kegRepository;
             _emailService = emailService;
-            _beerRepository = beerRepository;
         }
 
         protected override void HandleAfterTransaction(KegEmptied domainEvent)
@@ -44,24 +39,9 @@
 
         private MailMessage BuildNotification(KegEmptied kegEmptied, Tap tap, Keg keg)
         {
-            string emailaddy = ConfigurationManager.AppSettings.Get("EmailRecipient");
-            Beer emptybeer = _beerRepository.GetById(keg.BeerId);
-            double percentempty = (1 - keg.PercentRemaining) * 100;
+            // todo : build notification
 
-            MailMessage message = new MailMessage();
-            message.To.Add(emailaddy);
-            message.IsBodyHtml = true;
-            message.Subject = "The " + emptybeer.Name + " keg in tap #" + tap.Name + " is " + percentempty + "% empty";
-            message.From = new MailAddress("Pourcast@rightpoint.com");
-            message.Body = "<html><body><p>" +
-                           "The " + emptybeer.Name + " keg in tap #" + tap.Name + " is " + percentempty + "% empty. " +
-                           "</p>" +
-                           "<p>If a new keg has not yet been ordered, get on that!</p>" +
-                           "<p>Love,</p>" +
-                           "<p>Your Pourcast</p>" +
-                           "</body></html>";
-
-            return message;
+            return null;
         }
     }
 }
