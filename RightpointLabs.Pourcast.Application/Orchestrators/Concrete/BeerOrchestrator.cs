@@ -79,7 +79,7 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
             return _beerRepository.GetAllByName(name);
         }
 
-        public IEnumerable<Beer> GetBeersByBrewery(string breweryId)
+        public IEnumerable<Beer> GetByBrewery(string breweryId)
         {
             return _beerRepository.GetByBreweryId(breweryId);
         }
@@ -89,42 +89,28 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
             return _beerRepository.GetById(id);
         }
 
-        public string CreateBeer(CreateBeer createBeerCommand)
+        public string CreateBeer(string name, double abv, int baScore, string style, string color, string glass, string breweryId)
         {
             var id = string.Empty;
 
             using (var scope = new TransactionScope())
             {
                 id = _beerRepository.NextIdentity();
-                var beer = new Beer(id, createBeerCommand.Name)
+                var beer = new Beer(id, name)
                 {
-                    ABV = createBeerCommand.ABV,
-                    BAScore = createBeerCommand.BAScore,
-                    BreweryId = createBeerCommand.BreweryId,
-                    Color = createBeerCommand.Color,
-                    Glass = createBeerCommand.Glass,
-                    Style = createBeerCommand.Style,
+                    ABV = abv,
+                    BAScore = baScore,
+                    BreweryId = breweryId,
+                    Color = color,
+                    Glass = glass,
+                    Style = style,
                     RPScore = 0
                 };
-
                 _beerRepository.Add(beer);
-
                 scope.Complete();
             }
 
             return id;
-        }
-
-        public CreateBeer CreateBeer(string breweryId)
-        {
-            var brewery = _breweryRepository.GetById(breweryId);
-            if (brewery == null)
-                return null;
-            return new CreateBeer()
-            {
-                BreweryId = brewery.Id,
-                BreweryName = brewery.Name
-            };
         }
 
         public IEnumerable<Beer> GetBeersByName(string name)

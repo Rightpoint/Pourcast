@@ -46,7 +46,7 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
             var brewery = new BreweryViewModel()
             {
                 Brewery = _breweryOrchestrator.GetById(id),
-                Beers = _beerOrchestrator.GetBeersByBrewery(id)
+                Beers = _beerOrchestrator.GetByBrewery(id)
             };
             return View("Details", brewery);
         }
@@ -58,7 +58,7 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
             var breweryViewModel = new BreweryViewModel()
             {
                 Brewery = _breweryOrchestrator.GetById(id),
-                Beers = _beerOrchestrator.GetBeersByBrewery(id)
+                Beers = _beerOrchestrator.GetByBrewery(id)
             };
             return PartialView("_BreweryDetails", breweryViewModel);
         }
