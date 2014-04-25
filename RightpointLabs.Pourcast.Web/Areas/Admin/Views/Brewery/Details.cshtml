@@ -13,12 +13,12 @@
     <ul>
         @foreach (var beer in Model.Beers)
         {
-            <li>@beer.Name @Html.ActionLink("Edit", "Edit", "Beer", beer.Id)</li>
+            <li>@beer.Name @Html.ActionLink("Detials", "Details", "Beer", new{id = beer.Id}, null)</li>
         }
     </ul>
 </div>
 <p>
     @Html.ActionLink(Resources.Admin_Brewery_Details_EditLink, "Edit", new { id = Model.Brewery.Id }) |
-    @Html.ActionLink(Resources.Admin_Brewery_Details_CreateLink, "Create", new { controller = "Beer", area = "Admin", breweryId = Model.Brewery.Id }) |
+    @Html.ActionLink(Resources.Admin_Brewery_Details_CreateLink, "Create", "Beer", new { breweryId = Model.Brewery.Id }, null) |
     @Html.ActionLink(Resources.Admin_Brewery_Details_BackLink, "Index")
 </p>
