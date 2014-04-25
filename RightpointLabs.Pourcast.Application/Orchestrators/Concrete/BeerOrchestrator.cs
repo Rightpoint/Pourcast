@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using RightpointLabs.Pourcast.Application.Commands;
+﻿using RightpointLabs.Pourcast.Application.Commands;
 
 namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
 {
@@ -8,26 +7,71 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
     using System.Transactions;
 
     using RightpointLabs.Pourcast.Application.Orchestrators.Abstract;
+    using RightpointLabs.Pourcast.Application.Payloads;
     using RightpointLabs.Pourcast.Domain.Models;
     using RightpointLabs.Pourcast.Domain.Repositories;
 
     public class BeerOrchestrator : BaseOrchestrator, IBeerOrchestrator
     {
         private readonly IBeerRepository _beerRepository;
-        private readonly IBreweryOrchestrator _breweryOrchestrator;
+        private readonly IBreweryRepository _breweryRepository;
 
-        public BeerOrchestrator(IBeerRepository beerRepository, IBreweryOrchestrator breweryOrchestrator)
+        private readonly ITapRepository _tapRepository;
+
+        private readonly IKegRepository _kegRepository;
+
+        public BeerOrchestrator(IBeerRepository beerRepository, IBreweryRepository breweryRepository, ITapRepository tapRepository, IKegRepository kegRepository)
         {
             if (beerRepository == null) throw new ArgumentNullException("beerRepository");
-            if(breweryOrchestrator == null) throw new ArgumentNullException("breweryOrchestrator");
+            if(breweryRepository == null) throw new ArgumentNullException("breweryRepository");
+            if (tapRepository == null) throw new ArgumentNullException("tapRepository");
+            if (kegRepository == null) throw new ArgumentNullException("kegRepository");
 
             _beerRepository = beerRepository;
-            _breweryOrchestrator = breweryOrchestrator;
+            _breweryRepository = breweryRepository;
+            _tapRepository = tapRepository;
+            _kegRepository = kegRepository;
         }
 
         public IEnumerable<Beer> GetBeers()
         {
             return _beerRepository.GetAll();
+        }
+
+        public IEnumerable<BeerOnTap> GetBeersOnTap()
+        {
+            var taps = _tapRepository.GetAll();
+
+            foreach (var tap in taps)
+            {
+                var keg = _kegRepository.GetById(tap.KegId);
+                var beer = _beerRepository.GetById(keg.BeerId);
+                var brewery = _breweryRepository.GetById(beer.BreweryId);
+
+                yield return new BeerOnTap()
+                {
+                    Tap = tap,
+                    Keg = keg,
+                    Beer = beer,
+                    Brewery = brewery
+                };
+            }
+        }
+
+        public BeerOnTap GetBeerOnTap(string tapId)
+        {
+            var tap = _tapRepository.GetById(tapId);
+            var keg = _kegRepository.GetById(tap.KegId);
+            var beer = _beerRepository.GetById(keg.BeerId);
+            var brewery = _breweryRepository.GetById(beer.BreweryId);
+
+            return new BeerOnTap()
+            {
+                Tap = tap,
+                Keg = keg,
+                Beer = beer,
+                Brewery = brewery
+            };
         }
 
         public IEnumerable<Beer> GetByName(string name)
@@ -73,7 +117,7 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
 
         public CreateBeer CreateBeer(string breweryId)
         {
-            var brewery = _breweryOrchestrator.GetById(breweryId);
+            var brewery = _breweryRepository.GetById(breweryId);
             if (brewery == null)
                 return null;
             return new CreateBeer()

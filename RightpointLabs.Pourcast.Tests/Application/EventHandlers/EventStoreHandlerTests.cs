@@ -21,11 +21,11 @@
             public void AddsEventToRepository()
             {
                 var fixture = new Fixture();
-                var mockEvent = fixture.Create<BeerPoured>();
+                var mockEvent = fixture.Create<BeerPourStopped>();
                 var mockRepo = new Mock<IStoredEventRepository>();
                 var mockDateTimeProvider = new Mock<IDateTimeProvider>();
 
-                var sut = new EventStoreHandler<BeerPoured>(mockRepo.Object, mockDateTimeProvider.Object);
+                var sut = new EventStoreHandler<BeerPourStopped>(mockRepo.Object, mockDateTimeProvider.Object);
 
                 sut.Handle(mockEvent);
 

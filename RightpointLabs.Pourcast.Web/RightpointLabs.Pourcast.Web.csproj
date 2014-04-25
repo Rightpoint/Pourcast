@@ -44,6 +44,13 @@
     <Reference Include="Antlr3.Runtime">
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="AutoMapper">
+      <HintPath>..\packages\AutoMapper.3.2.0\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper.Net4, Version=3.2.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\AutoMapper.3.2.0\lib\net40\AutoMapper.Net4.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNet.SignalR.Core">
       <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.0.0\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
     </Reference>
@@ -154,7 +161,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\Split.css" />
     <Content Include="Content\themes\base\images\animated-overlay.gif" />
@@ -220,12 +229,18 @@
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tooltip.min.css" />
+    <Content Include="Content\themes\Split.css" />
     <Content Include="Content\toastr.css" />
     <Content Include="Content\toastr.min.css" />
     <Content Include="Fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\toastr.less" />
     <Content Include="Scripts\app\SplitLayout.js" />
+    <Content Include="Scripts\app\classie.js" />
+    <Content Include="Scripts\app\pourcast.beer.js" />
+    <Content Include="Scripts\app\pourcast.brewery.js" />
     <Content Include="AppSettings.config" />
     <Content Include="ConnectionStrings.config" />
     <Content Include="Scripts\app\model\pourcast.beer.js" />
@@ -289,11 +304,17 @@
     <Compile Include="Areas\Admin\Controllers\BreweryController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Models\BreweryViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\CreateBreweryViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\EditBreweryViewModel.cs" />
     <Compile Include="Areas\Admin\Models\KegsOnTap.cs" />
     <Compile Include="Areas\Admin\Models\OnTapKeg.cs" />
+    <Compile Include="Controllers\Api\BeerOnTapController.cs" />
     <Compile Include="Controllers\Api\BreweryController.cs" />
+    <Compile Include="Controllers\Api\RepourterTestController.cs" />
+    <Compile Include="Controllers\Api\TapController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Api\KegController.cs" />
+    <Compile Include="Controllers\RepourterTestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -303,8 +324,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="SignalR\BeerPouredClientHandler.cs" />
+    <Compile Include="SignalR\BeerPourStartedClientHandler.cs" />
+    <Compile Include="SignalR\BeerPourStoppedClientHandler.cs" />
     <Compile Include="SignalR\EventsHub.cs" />
+    <Compile Include="SignalR\KegRemovedFromTapClientHandler.cs" />
+    <Compile Include="SignalR\KegTappedClientHandler.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -320,6 +344,8 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\toastr.min.js.map" />
     <Content Include="Views\Home\_CreateBrewery.cshtml" />
+    <Content Include="Views\Home\Split.cshtml" />
+    <Content Include="Views\RepourterTest\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -394,4 +420,5 @@
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
+  <Import Project="..\packages\AutoMapper.3.2.0\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.2.0\tools\AutoMapper.targets')" />
 </Project>

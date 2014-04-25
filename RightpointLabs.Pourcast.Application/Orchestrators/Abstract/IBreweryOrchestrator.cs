@@ -10,8 +10,9 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Abstract
     {
         IEnumerable<Brewery> GetBreweries();
         Brewery GetById(string id);
-        string Create(CreateBrewery breweryCommand);
-        EditBrewery EditBrewery(string breweryId);
-        void EditBrewery(EditBrewery editBreweryCommand);
+        Brewery GetByName(string name);
+        string Create(string name, string city, string state, string country, string postalCode, string website,
+            string logo);
+        void Save(Brewery brewery);
     }
 }

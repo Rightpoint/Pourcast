@@ -43,8 +43,6 @@
   <ItemGroup>
     <Compile Include="EventHandlers\TransactionDependentEventHandler.cs" />
     <Compile Include="Commands\CreateBeer.cs" />
-    <Compile Include="Commands\CreateBrewery.cs" />
-    <Compile Include="Commands\EditBrewery.cs" />
     <Compile Include="EventHandlers\EventStoreHandler.cs" />
     <Compile Include="EventHandlers\KegEmptiedNotificationHandler.cs" />
     <Compile Include="EventHandlers\KegNearingEmptyNotificationHandler.cs" />
@@ -57,6 +55,7 @@
     <Compile Include="Orchestrators\Concrete\BreweryOrchestrator.cs" />
     <Compile Include="Orchestrators\Concrete\KegOrchestrator.cs" />
     <Compile Include="Orchestrators\Concrete\TapOrchestrator.cs" />
+    <Compile Include="Payloads\BeerOnTap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
