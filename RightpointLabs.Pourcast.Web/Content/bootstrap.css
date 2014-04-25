@@ -4021,8 +4021,8 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   color: #333;
 }
 .navbar-inverse {
-  background-color: #222;
-  border-color: #080808;
+  background-color: #f0f0c0;
+  border-color: #f0f0c0;
 }
 .navbar-inverse .navbar-brand {
   color: #999;
@@ -4067,7 +4067,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .navbar-inverse .navbar-collapse,
 .navbar-inverse .navbar-form {
-  border-color: #101010;
+  border-color: #f0f0c0;
 }
 .navbar-inverse .navbar-nav > .open > a,
 .navbar-inverse .navbar-nav > .open > a:hover,
