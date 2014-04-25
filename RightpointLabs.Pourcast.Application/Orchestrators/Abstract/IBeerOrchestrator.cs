@@ -15,14 +15,12 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Abstract
 
         BeerOnTap GetBeerOnTap(string tapId);
             
-        IEnumerable<Beer> GetBeersByName(string name);
+        IEnumerable<Beer> GetByName(string name);
 
-        IEnumerable<Beer> GetBeersByBrewery(string breweryId);
+        IEnumerable<Beer> GetByBrewery(string breweryId);
 
         Beer GetById(string id);
 
-        string CreateBeer(CreateBeer createBeerCommand);
-
-        CreateBeer CreateBeer(string breweryId);
+        string CreateBeer(string name, double abv, int baScore, string style, string color, string glass, string breweryId);
     }
 }
