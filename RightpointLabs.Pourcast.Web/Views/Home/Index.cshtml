@@ -31,7 +31,7 @@
 
 
 
-
+<script src="~/Scripts/app/bubbles.js"></script>
 @section scripts {
     <script type="text/javascript">
         $(function () {
@@ -42,6 +42,8 @@
             pourcast.events.on("beerPoured", function (e) {
                 toastr.success(e.Volume);
             });
+            var leftBubbles = bubbles($("#left-split .side"));
+            var rightBubbles = bubbles($("#right-split .side"));
         });
     </script>
 }
