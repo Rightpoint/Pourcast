@@ -18,27 +18,17 @@
 <input type="button" data-bind="click: brewery.create" value="Create Brewery"/>*@
 
 
-<div class="container">
-    <div id="splitlayout" class="splitlayout">
-            <div class="side side-left" style="background: #f0c030; outline: 1px solid #f0c030;">
-                <div class="intro-content">
-                    <div class="profile">
-                        <div class="beerlvl" style="height: 35%; background: #f0c030;"></div>
-                        <img src="~/Content/themes/base/images/keg.png" alt="kegLeft" /></div>
-                    <h1><span>Keg Left</span><span>Beer Distributor</span></h1>
-                </div>
-            </div>
-            <div class="side side-right" style="background: #a84800; outline: 1px solid #a84800;">
-                <div class="intro-content">
-                    <div class="profile">
-                        <div class="beerlvl" style="height: 78%; background: #a84800;"></div>
-                        <img src="~/Content/themes/base/images/keg.png" alt="kegRight" /></div>
-                    <h1><span>Keg Right</span><span>Beer Distributor</span></h1>
-                </div>
-            </div>
+
+<div class="row">
+    <div id="left-split" class="col-xs-6">
+        @Html.Partial("KegSplit")
     </div>
-    <!-- /splitlayout -->
-</div><!-- /container -->
+    <div id="right-split" class="col-xs-6">
+        @Html.Partial("KegSplit")
+    </div>
+</div>
+<!-- /splitlayout -->
+
 
 
 

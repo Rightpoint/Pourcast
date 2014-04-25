@@ -3,6 +3,12 @@
     padding-bottom: 20px;
 }
 
+footer {
+    position: absolute;
+    bottom: 0;
+    color: #ffffff;
+}
+
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
@@ -51,13 +57,6 @@ body {
 	overflow-y: scroll;
 }
 
-.splitlayout {
-	position: relative;
-	overflow-x: hidden;
-	min-height: 100%;
-	width: 100%;
-}
-
 /* Intro sides */
 .side {
 	position: fixed;
@@ -66,18 +65,15 @@ body {
 	width: 50%;
 	height: 100%;
 	text-align: center;
-	-webkit-backface-visibility: hidden;
+    color: #fff;
 }
 
-.side-left {
+#left-split .side {
 	left: 0;
-	color: #fff;
-	 /* avoid gap */
 }
 
-.side-right {
+#right-split .side {
 	right: 0;
-	color: #fff;
 }
 
 /* Intro content, profile image and name, back button */
@@ -93,52 +89,35 @@ body {
 }
 
 .profile {
-    width: 250px;
-    height: 250px;
+    width: 300px;
+    height: 300px;
     border-radius: 50%;
     margin: 0 auto;
     background: #fff;
-    border: 5px solid #fff;
+    border: 10px solid #fff;
     position: relative;
     overflow: hidden;
 }
 
-  .profile img {
+  .profile img.keg {
       max-width: 100%;
       height: 75%;
-      margin-top:12%;
       position: absolute;
-      bottom: 0;
-      left: 23%;
+      bottom: -10px;
+      left: 19%;
+  }
+
+  .profile img.face {
+      position: absolute;
+      bottom: 30%;
+      left: 38%;
   }
 
     .profile .beerlvl {
         width: 100%;
         position: absolute;
         bottom: 0;
-        /*-webkit-animation: rise 5s 1 linear;
-        -webkit-animation-delay: 1s;*/
     }
-
-  .profile .pour {
-    width: 15px;
-    position: absolute;
-    top: 0px;
-    margin-left: 46%;
-    background: #A86048;
-    display: none;
-    /*-webkit-animation: pour 5s 1 linear;*/
-  }
-
-@-webkit-keyframes pour {
-  0% { height: 0%; }
-  20% { height: 100%; }
-  100% { height: 0%; }
-}
-@-webkit-keyframes rise {
-  0% { height: 0%; }
-  80% { height: 100%; }
-}
 
 .intro-content h1 > span {
 	display: block;
@@ -215,4 +194,52 @@ body {
 
 @media screen and (max-width: 320px) {
 	body { font-size: 70%; }
+}
+
+/* BEER STYLE CLASSES
+ =================================================*/
+.AmberAle, .AmberAle .beerlvl {
+    background: #f0c030;
+}
+.BlondeAle, .BlondeAle .beerlvl {
+    background: #f0c030;
+}
+.AmericanPaleAle, .AmericanPaleAle .beerlvl {
+    background: #f0c030;
+}
+.IndianPaleAle, .IndianPaleAle .beerlvl {
+    background: #f0c030;
+}
+.BrownAle, .BrownAle .beerlvl {
+    background: #f0c030;
+}
+.Porter, .Porter .beerlvl {
+    background: #f0c030;
+}
+.Stout, .Stout .beerlvl {
+    background: #000;
+}
+.Wheat, .Wheat .beerlvl {
+    background: #f0c030;
+}
+.Lager, .Lager .beerlvl {
+    background: #f0c030;
+}
+.LightLager, .LightLager .beerlvl {
+    background: #f0c030;
+}
+.Pilsner, .Pilsner .beerlvl {
+    background: #f0c030;
+}
+.Saison, .Saison .beerlvl {
+    background: #f0c030;
+}
+.Witbeer, .Witbeer .beerlvl {
+    background: #f0c030;
+}
+.Bock, .Bock .beerlvl {
+    background: #f0c030;
+}
+.Rye, .Rye .beerlvl {
+    background: #f0c030;
 }
