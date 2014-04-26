@@ -37,7 +37,7 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
         // GET: /Admin/Beer/
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("Index", "Brewery");
         }
 
         //
