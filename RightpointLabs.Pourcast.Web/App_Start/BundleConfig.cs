@@ -26,6 +26,7 @@ namespace RightpointLabs.Pourcast.Web.App_Start
                 .Include("~/Content/bootstrap.css",
                 "~/Content/bootstrap-theme.css",
                 "~/Content/Site.css",
+                "~/Content/bubbles.css",
                 "~/Content/themes/base/*.css",
                 "~/Content/toastr.css"));
         }

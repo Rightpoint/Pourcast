@@ -178,9 +178,12 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\bubbles.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\Split.css" />
     <Content Include="Content\themes\base\images\animated-overlay.gif" />
+    <Content Include="Content\themes\base\images\face-happy.png" />
+    <Content Include="Content\themes\base\images\face-sad.png" />
     <Content Include="Content\themes\base\images\keg.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -251,6 +254,7 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\toastr.less" />
+    <Content Include="Scripts\app\bubbles.js" />
     <Content Include="Scripts\app\SplitLayout.js" />
     <Content Include="Scripts\app\classie.js" />
     <Content Include="Scripts\app\pourcast.beer.js" />
@@ -361,8 +365,8 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\toastr.min.js.map" />
     <Content Include="Views\Home\_CreateBrewery.cshtml" />
-    <Content Include="Views\Home\Split.cshtml" />
     <Content Include="Views\RepourterTest\Index.cshtml" />
+    <Content Include="Views\Home\KegSplit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
