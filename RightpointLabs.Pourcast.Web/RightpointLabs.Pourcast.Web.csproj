@@ -322,6 +322,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Api\KegController.cs" />
     <Compile Include="Controllers\RepourterTestController.cs" />
+    <Compile Include="CustomRoleProvider.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
