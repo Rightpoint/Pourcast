@@ -15,5 +15,7 @@
         string NextIdentity();
 
         void Add(Role role);
+
+        void Update(Role role);
     }
 }

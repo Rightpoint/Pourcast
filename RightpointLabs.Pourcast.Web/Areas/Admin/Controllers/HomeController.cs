@@ -8,6 +8,7 @@ using RightpointLabs.Pourcast.Web.Areas.Admin.Models;
 
 namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Administrators")]
     public class HomeController : Controller
     {
         private readonly ITapOrchestrator _tapOrchestrator;

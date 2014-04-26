@@ -16,10 +16,14 @@
 
         bool RoleExists(string roleName);
 
+        void CreateUser(string username);
+
         void AddUsersToRoles(string[] usernames, string[] roleNames);
 
         IEnumerable<User> GetUsersInRole(string roleName);
 
         IEnumerable<Role> GetAllRoles();
+
+        void AddUserToRole(string username, string roleName);
     }
 }

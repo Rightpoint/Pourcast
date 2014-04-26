@@ -4,20 +4,19 @@
     using System.Web.Mvc;
     using System.Web.Security;
 
+    using Microsoft.Practices.ServiceLocation;
+
     using RightpointLabs.Pourcast.Application.Orchestrators.Abstract;
 
-    public class CustomRoleProvider : RoleProvider
+    public class PourcastRoleProvider : RoleProvider
     {
-        private readonly IIdentityOrchestrator _identityOrchestrator;
-
-        public CustomRoleProvider()
-            : this(DependencyResolver.Current.GetService<IIdentityOrchestrator>())
+        private IIdentityOrchestrator _identityOrchestrator
         {
-        }
-
-        public CustomRoleProvider(IIdentityOrchestrator identityOrchestrator)
-        {
-            _identityOrchestrator = identityOrchestrator;
+            get
+            {
+                return ServiceLocator.Current.GetInstance<IIdentityOrchestrator>();
+                //return DependencyResolver.Current.GetService<IIdentityOrchestrator>();
+            }
         }
 
         public override bool IsUserInRole(string username, string roleName)

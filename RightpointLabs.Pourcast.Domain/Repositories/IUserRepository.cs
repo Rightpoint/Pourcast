@@ -11,5 +11,11 @@
         IEnumerable<User> GetAll();
 
         User GetByUsername(string username);
+
+        IEnumerable<User> GetUsersInRole(string id);
+
+        void Add(User user);
+
+        void Update(User user);
     }
 }

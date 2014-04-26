@@ -5,10 +5,11 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
     using System.Linq;
 
     using RightpointLabs.Pourcast.Application.Orchestrators.Abstract;
+    using RightpointLabs.Pourcast.Application.Transactions;
     using RightpointLabs.Pourcast.Domain.Models;
     using RightpointLabs.Pourcast.Domain.Repositories;
 
-    public class IdentityOrchestrator : IIdentityOrchestrator
+    public class IdentityOrchestrator : BaseOrchestrator, IIdentityOrchestrator
     {
         private readonly IUserRepository _userRepository;
 
@@ -27,6 +28,11 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
         {
             var user = _userRepository.GetByUsername(username);
             var role = _roleRepository.GetByName(roleName);
+
+            if (role == null || user == null)
+            {
+                return false;
+            }
 
             return role.HasUser(user.Id);
         }
@@ -53,6 +59,7 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
             _roleRepository.Add(role);
         }
 
+        [Transactional]
         public void DeleteRole(string roleName)
         {
             throw new System.NotImplementedException();
@@ -60,22 +67,58 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
 
         public bool RoleExists(string roleName)
         {
-            throw new System.NotImplementedException();
+            return (_roleRepository.GetByName(roleName) != null);
         }
 
+        [Transactional]
+        public void CreateUser(string username)
+        {
+            if (_userRepository.GetByUsername(username) != null)
+            {
+                throw new Exception("User already exists.");
+            }
+
+            var id = _roleRepository.NextIdentity();
+            var user = new User(id, username);
+
+            _userRepository.Add(user);
+        }
+
+        [Transactional]
         public void AddUsersToRoles(string[] usernames, string[] roleNames)
         {
-            throw new System.NotImplementedException();
+            var users = _userRepository.GetAll().Where(u => usernames.Contains(u.Username));
+            var roles = _roleRepository.GetAll().Where(r => roleNames.Contains(r.Name));
+
+            foreach (var role in roles)
+            {
+                foreach (var user in users)
+                {
+                    role.AddUser(user.Id);
+                    user.AddRole(role.Id);
+
+                    _roleRepository.Update(role);
+                    _userRepository.Update(user);
+                }
+            }
         }
 
         public IEnumerable<User> GetUsersInRole(string roleName)
         {
-            throw new System.NotImplementedException();
+            var role = _roleRepository.GetByName(roleName);
+
+            return _userRepository.GetUsersInRole(role.Id);
         }
 
         public IEnumerable<Role> GetAllRoles()
         {
-            throw new System.NotImplementedException();
+            return _roleRepository.GetAll();
+        }
+
+        [Transactional]
+        public void AddUserToRole(string username, string roleName)
+        {
+            AddUsersToRoles(new []{ username }, new []{ roleName });
         }
     }
 }

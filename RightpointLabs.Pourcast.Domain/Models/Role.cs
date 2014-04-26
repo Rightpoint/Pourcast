@@ -7,6 +7,15 @@
     {
         private List<string> _userIds;
 
+        private Role() { }
+
+        public Role(string id, string name)
+            : base(id)
+        {
+            Name = name;
+            _userIds = new List<string>();
+        }
+
         public string Name { get; set; }
 
         public IEnumerable<String> UserIds
@@ -17,16 +26,9 @@
             }
         }
 
-        public Role(string id, string name)
-            : base(id)
-        {
-            Name = name;
-            _userIds = new List<string>();
-        }
-
         public void AddUser(string id)
         {
-            if (!_userIds.Contains(id))
+            if (!HasUser(id))
             {
                 _userIds.Add(id);    
             }

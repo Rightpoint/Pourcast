@@ -18,6 +18,7 @@
                 cm =>
                 {
                     cm.AutoMap();
+                    cm.MapField("_userIds").SetElementName("UserIds");
                 });
             }
         }
@@ -29,7 +30,7 @@
 
         public Role GetByName(string name)
         {
-            return Queryable.SingleOrDefault(x => x.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase));
+            return Queryable.SingleOrDefault(x => x.Name == name);
         }
     }
 }

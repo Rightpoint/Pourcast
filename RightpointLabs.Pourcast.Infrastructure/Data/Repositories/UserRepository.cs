@@ -1,6 +1,7 @@
 ﻿namespace RightpointLabs.Pourcast.Infrastructure.Data.Repositories
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
 
     using MongoDB.Bson.Serialization;
@@ -18,6 +19,7 @@
                     cm =>
                     {
                         cm.AutoMap();
+                        cm.MapField("_roleIds").SetElementName("RoleIds");
                     });
             }
         }
@@ -29,7 +31,12 @@
 
         public User GetByUsername(string username)
         {
-            return Queryable.SingleOrDefault(x => x.Username.Equals(username, StringComparison.InvariantCultureIgnoreCase));
+            return Queryable.SingleOrDefault(x => x.Username == username);
+        }
+
+        public IEnumerable<User> GetUsersInRole(string id)
+        {
+            return Queryable.Where(x => x.RoleIds.Contains(id));
         }
     }
 }

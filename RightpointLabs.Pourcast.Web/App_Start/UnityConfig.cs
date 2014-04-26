@@ -69,11 +69,22 @@ namespace RightpointLabs.Pourcast.Web
                 });
 
             // repositories
-            container.RegisterType<IKegRepository, KegRepository>(new PerRequestLifetimeManager());
-            container.RegisterType<IBeerRepository, BeerRepository>(new PerRequestLifetimeManager());
-            container.RegisterType<IBreweryRepository, BreweryRepository>(new PerRequestLifetimeManager());
-            container.RegisterType<ITapRepository, TapRepository>(new PerRequestLifetimeManager());
-            container.RegisterType<IStoredEventRepository, StoredEventRepository>(new PerRequestLifetimeManager());
+            container.RegisterTypes(
+                AllClasses.FromLoadedAssemblies().Where(
+                  t => t.Namespace == "RightpointLabs.Pourcast.Infrastructure.Data.Repositories"),
+                WithMappings.FromAllInterfaces,
+                WithName.Default,
+                WithLifetime.Custom<PerRequestLifetimeManager>,
+                getInjectionMembers: t => new InjectionMember[]
+                {
+                    //new InterceptionBehavior<PolicyInjectionBehavior>(),
+                    //new Interceptor<InterfaceInterceptor>()
+                });
+            //container.RegisterType<IKegRepository, KegRepository>(new PerRequestLifetimeManager());
+            //container.RegisterType<IBeerRepository, BeerRepository>(new PerRequestLifetimeManager());
+            //container.RegisterType<IBreweryRepository, BreweryRepository>(new PerRequestLifetimeManager());
+            //container.RegisterType<ITapRepository, TapRepository>(new PerRequestLifetimeManager());
+            //container.RegisterType<IStoredEventRepository, StoredEventRepository>(new PerRequestLifetimeManager());
 
             // domain services
             container.RegisterType<IEmailService, SmtpEmailService>(new PerRequestLifetimeManager());
