@@ -3,9 +3,9 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Transactions;
 
     using RightpointLabs.Pourcast.Application.Orchestrators.Abstract;
+    using RightpointLabs.Pourcast.Application.Transactions;
     using RightpointLabs.Pourcast.Domain.Models;
     using RightpointLabs.Pourcast.Domain.Repositories;
 
@@ -54,20 +54,14 @@
             return keg;
         }
 
+        [Transactional]
         public string CreateKeg(string beerId, double capacity)
         {
-            var id = "";
+            var id = _kegRepository.NextIdentity();
+            var beer = _beerRepository.GetById(beerId);
+            var keg = new Keg(id, beer.Id, capacity);
 
-            using (var scope = new TransactionScope())
-            {
-                id = _kegRepository.NextIdentity();
-                var beer = _beerRepository.GetById(beerId);
-                var keg = new Keg(id, beer.Id, capacity);
-
-                _kegRepository.Add(keg);
-
-                scope.Complete();
-            }
+            _kegRepository.Add(keg);
 
             return id;
         }
