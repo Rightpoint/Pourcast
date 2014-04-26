@@ -13,7 +13,7 @@
         IEnumerable<Beer> GetAllByName(string name);
         IEnumerable<Beer> GetByBreweryId(string breweryId); 
         string NextIdentity();
-
+        void Update(Beer beer);
         void Add(Beer beer);
     }
 }
