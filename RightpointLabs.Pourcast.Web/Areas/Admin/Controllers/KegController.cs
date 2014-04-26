@@ -22,8 +22,6 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
         {
             AutoMapper.Mapper.CreateMap<Keg, KegModel>();
             AutoMapper.Mapper.CreateMap<KegModel, Keg>();
-            AutoMapper.Mapper.CreateMap<EditKegViewModel, Keg>();
-            AutoMapper.Mapper.CreateMap<Keg, EditKegViewModel>();
         }
 
         public KegController(IKegOrchestrator kegOrchestrator, IBeerOrchestrator beerOrchestrator,
