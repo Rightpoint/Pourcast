@@ -56,19 +56,6 @@ namespace RightpointLabs.Pourcast.Web
                 new InjectionConstructor(connectionString, database));
 
             // orchestrators
-            //container.RegisterType<IBreweryOrchestrator, BreweryOrchestrator>(new PerRequestLifetimeManager())
-            //    .Configure<Interception>()
-            //    .SetInterceptorFor<IBreweryOrchestrator>(new InterfaceInterceptor());
-            //container.RegisterType<IBeerOrchestrator, BeerOrchestrator>(new PerRequestLifetimeManager())
-            //    .Configure<Interception>()
-            //    .SetInterceptorFor<IBeerOrchestrator>(new InterfaceInterceptor());
-            //container.RegisterType<IKegOrchestrator, KegOrchestrator>(new PerRequestLifetimeManager())
-            //    .Configure<Interception>()
-            //    .SetInterceptorFor<IKegOrchestrator>(new InterfaceInterceptor());
-            //container.RegisterType<ITapOrchestrator, TapOrchestrator>(new PerRequestLifetimeManager())
-            //    .Configure<Interception>()
-            //    .SetInterceptorFor<ITapOrchestrator>(new InterfaceInterceptor());
-
             container.RegisterTypes(
                 AllClasses.FromLoadedAssemblies().Where(
                   t => t.Namespace == "RightpointLabs.Pourcast.Application.Orchestrators.Concrete"),
@@ -80,8 +67,6 @@ namespace RightpointLabs.Pourcast.Web
                     new InterceptionBehavior<PolicyInjectionBehavior>(),
                     new Interceptor<InterfaceInterceptor>()
                 });
-
-
 
             // repositories
             container.RegisterType<IKegRepository, KegRepository>(new PerRequestLifetimeManager());
