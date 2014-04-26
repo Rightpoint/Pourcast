@@ -2,35 +2,15 @@
 
 namespace RightpointLabs.Pourcast.Application.Transactions
 {
-    using System.Transactions;
-
     using Microsoft.Practices.Unity;
     using Microsoft.Practices.Unity.InterceptionExtension;
 
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Property | AttributeTargets.Method)]
     public class TransactionalAttribute : HandlerAttribute
     {
         public override ICallHandler CreateHandler(IUnityContainer container)
         {
-            return new TransactionCallHandler();
+            return new TransactionalCallHandler();
         }
-    }
-
-    public class TransactionCallHandler : ICallHandler
-    {
-        public IMethodReturn Invoke(IMethodInvocation input, GetNextHandlerDelegate getNext)
-        {
-            IMethodReturn result;
-
-            using (var scope = new TransactionScope())
-            {
-                result = getNext()(input, getNext);
-
-                scope.Complete();
-            }
-
-            return result;
-        }
-
-        public int Order { get; set; }
     }
 }

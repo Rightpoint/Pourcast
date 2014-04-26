@@ -2,6 +2,7 @@ using System.Web.Http;
 using Microsoft.Practices.Unity.WebApi;
 
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(RightpointLabs.Pourcast.Web.App_Start.UnityWebApiActivator), "Start")]
+[assembly: WebActivatorEx.ApplicationShutdownMethod(typeof(RightpointLabs.Pourcast.Web.App_Start.UnityWebApiActivator), "Shutdown")]
 
 namespace RightpointLabs.Pourcast.Web.App_Start
 {
@@ -16,6 +17,13 @@ namespace RightpointLabs.Pourcast.Web.App_Start
             var resolver = new UnityDependencyResolver(UnityConfig.GetConfiguredContainer());
 
             GlobalConfiguration.Configuration.DependencyResolver = resolver;
+        }
+
+        /// <summary>Disposes the Unity container when the application is shut down.</summary>
+        public static void Shutdown()
+        {
+            var container = UnityConfig.GetConfiguredContainer();
+            container.Dispose();
         }
     }
 }
