@@ -112,5 +112,11 @@
         {
             return _beerRepository.GetAllByName(name);
         }
+
+        [Transactional]
+        public void Save(Beer beer)
+        {
+            _beerRepository.Update(beer);
+        }
     }
 }

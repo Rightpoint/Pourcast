@@ -298,6 +298,7 @@
     <Content Include="Areas\Admin\Views\Brewery\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_OnTapKegDetails.cshtml" />
     <Content Include="Areas\Admin\Views\Beer\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Beer\Edit.cshtml" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\app\pourcast.events.js" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
@@ -348,6 +349,7 @@
     <Compile Include="Areas\Admin\Models\BreweryViewModel.cs" />
     <Compile Include="Areas\Admin\Models\CreateBeerViewModel.cs" />
     <Compile Include="Areas\Admin\Models\CreateBreweryViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\EditBeerViewModel.cs" />
     <Compile Include="Areas\Admin\Models\EditBreweryViewModel.cs" />
     <Compile Include="Areas\Admin\Models\KegsOnTap.cs" />
     <Compile Include="Areas\Admin\Models\OnTapKeg.cs" />

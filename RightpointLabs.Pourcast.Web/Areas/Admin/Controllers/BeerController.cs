@@ -18,6 +18,9 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
             AutoMapper.Mapper.CreateMap<CreateBeerViewModel, Beer>();
             AutoMapper.Mapper.CreateMap<Beer, BeerViewModel>();
             AutoMapper.Mapper.CreateMap<BeerViewModel, Beer>();
+            AutoMapper.Mapper.CreateMap<Beer, EditBeerViewModel>();
+            AutoMapper.Mapper.CreateMap<EditBeerViewModel, Beer>();
+
         }
         private readonly IBeerOrchestrator _beerOrchestrator;
         private readonly IBreweryOrchestrator _breweryOrchestrator;
@@ -34,7 +37,7 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
         // GET: /Admin/Beer/
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("Index", "Brewery");
         }
 
         //
@@ -81,26 +84,33 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
 
         //
         // GET: /Admin/Beer/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(string id)
         {
-            return View();
+            var beer = _beerOrchestrator.GetById(id);
+
+            if (null == beer)
+            {
+                ViewBag.Error = "No beer with that id exists";
+                return View();
+            }
+            var brewery = _breweryOrchestrator.GetById(beer.BreweryId);
+            var model = AutoMapper.Mapper.Map<Beer, EditBeerViewModel>(beer);
+            model.BreweryName = brewery.Name;
+            return View(model);
         }
 
         //
         // POST: /Admin/Beer/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(EditBeerViewModel model)
         {
-            try
+            if (!ModelState.IsValid)
             {
-                // TODO: Add update logic here
+                return View(model);
+            }
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            _beerOrchestrator.Save(AutoMapper.Mapper.Map<EditBeerViewModel, Beer>(model));
+            return RedirectToAction("Details", new {id = model.Id});
         }
 
         //
