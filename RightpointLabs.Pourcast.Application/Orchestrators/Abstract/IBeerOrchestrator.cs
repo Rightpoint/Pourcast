@@ -4,20 +4,23 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Abstract
 {
     using System.Collections.Generic;
 
+    using RightpointLabs.Pourcast.Application.Payloads;
     using RightpointLabs.Pourcast.Domain.Models;
 
     public interface IBeerOrchestrator
     {
         IEnumerable<Beer> GetBeers();
 
-        IEnumerable<Beer> GetBeersByName(string name);
+        IEnumerable<BeerOnTap> GetBeersOnTap();
 
-        IEnumerable<Beer> GetBeersByBrewery(string breweryId);
+        BeerOnTap GetBeerOnTap(string tapId);
+            
+        IEnumerable<Beer> GetByName(string name);
+
+        IEnumerable<Beer> GetByBrewery(string breweryId);
 
         Beer GetById(string id);
 
-        string CreateBeer(CreateBeer createBeerCommand);
-
-        CreateBeer CreateBeer(string breweryId);
+        string CreateBeer(string name, double abv, int baScore, string style, string color, string glass, string breweryId);
     }
 }

@@ -44,6 +44,13 @@
     <Reference Include="Antlr3.Runtime">
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="AutoMapper">
+      <HintPath>..\packages\AutoMapper.3.2.0\lib\net40\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper.Net4, Version=3.2.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\AutoMapper.3.2.0\lib\net40\AutoMapper.Net4.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNet.SignalR.Core">
       <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.0.0\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
     </Reference>
@@ -250,6 +257,7 @@
     <Content Include="Areas\Admin\Views\Brewery\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Brewery\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_OnTapKegDetails.cshtml" />
+    <Content Include="Areas\Admin\Views\Beer\Details.cshtml" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\app\pourcast.events.js" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
@@ -296,13 +304,20 @@
     <Compile Include="Areas\Admin\Controllers\BeerController.cs" />
     <Compile Include="Areas\Admin\Controllers\BreweryController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Models\BeerViewModel.cs" />
     <Compile Include="Areas\Admin\Models\BreweryViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\CreateBeerViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\CreateBreweryViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\EditBreweryViewModel.cs" />
     <Compile Include="Areas\Admin\Models\KegsOnTap.cs" />
     <Compile Include="Areas\Admin\Models\OnTapKeg.cs" />
+    <Compile Include="Controllers\Api\BeerOnTapController.cs" />
     <Compile Include="Controllers\Api\BreweryController.cs" />
+    <Compile Include="Controllers\Api\RepourterTestController.cs" />
     <Compile Include="Controllers\Api\TapController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Api\KegController.cs" />
+    <Compile Include="Controllers\RepourterTestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -315,6 +330,8 @@
     <Compile Include="SignalR\BeerPourStartedClientHandler.cs" />
     <Compile Include="SignalR\BeerPourStoppedClientHandler.cs" />
     <Compile Include="SignalR\EventsHub.cs" />
+    <Compile Include="SignalR\KegRemovedFromTapClientHandler.cs" />
+    <Compile Include="SignalR\KegTappedClientHandler.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -331,6 +348,7 @@
     <Content Include="Scripts\toastr.min.js.map" />
     <Content Include="Views\Home\_CreateBrewery.cshtml" />
     <Content Include="Views\Home\Split.cshtml" />
+    <Content Include="Views\RepourterTest\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -405,4 +423,5 @@
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
+  <Import Project="..\packages\AutoMapper.3.2.0\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.2.0\tools\AutoMapper.targets')" />
 </Project>

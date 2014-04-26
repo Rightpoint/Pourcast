@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using RightpointLabs.Pourcast.Application.Commands;
+﻿using RightpointLabs.Pourcast.Application.Commands;
 
 namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
 {
@@ -8,21 +7,30 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
     using System.Transactions;
 
     using RightpointLabs.Pourcast.Application.Orchestrators.Abstract;
+    using RightpointLabs.Pourcast.Application.Payloads;
     using RightpointLabs.Pourcast.Domain.Models;
     using RightpointLabs.Pourcast.Domain.Repositories;
 
     public class BeerOrchestrator : BaseOrchestrator, IBeerOrchestrator
     {
         private readonly IBeerRepository _beerRepository;
-        private readonly IBreweryOrchestrator _breweryOrchestrator;
+        private readonly IBreweryRepository _breweryRepository;
 
-        public BeerOrchestrator(IBeerRepository beerRepository, IBreweryOrchestrator breweryOrchestrator)
+        private readonly ITapRepository _tapRepository;
+
+        private readonly IKegRepository _kegRepository;
+
+        public BeerOrchestrator(IBeerRepository beerRepository, IBreweryRepository breweryRepository, ITapRepository tapRepository, IKegRepository kegRepository)
         {
             if (beerRepository == null) throw new ArgumentNullException("beerRepository");
-            if(breweryOrchestrator == null) throw new ArgumentNullException("breweryOrchestrator");
+            if(breweryRepository == null) throw new ArgumentNullException("breweryRepository");
+            if (tapRepository == null) throw new ArgumentNullException("tapRepository");
+            if (kegRepository == null) throw new ArgumentNullException("kegRepository");
 
             _beerRepository = beerRepository;
-            _breweryOrchestrator = breweryOrchestrator;
+            _breweryRepository = breweryRepository;
+            _tapRepository = tapRepository;
+            _kegRepository = kegRepository;
         }
 
         public IEnumerable<Beer> GetBeers()
@@ -30,12 +38,48 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
             return _beerRepository.GetAll();
         }
 
+        public IEnumerable<BeerOnTap> GetBeersOnTap()
+        {
+            var taps = _tapRepository.GetAll();
+
+            foreach (var tap in taps)
+            {
+                var keg = _kegRepository.GetById(tap.KegId);
+                var beer = _beerRepository.GetById(keg.BeerId);
+                var brewery = _breweryRepository.GetById(beer.BreweryId);
+
+                yield return new BeerOnTap()
+                {
+                    Tap = tap,
+                    Keg = keg,
+                    Beer = beer,
+                    Brewery = brewery
+                };
+            }
+        }
+
+        public BeerOnTap GetBeerOnTap(string tapId)
+        {
+            var tap = _tapRepository.GetById(tapId);
+            var keg = _kegRepository.GetById(tap.KegId);
+            var beer = _beerRepository.GetById(keg.BeerId);
+            var brewery = _breweryRepository.GetById(beer.BreweryId);
+
+            return new BeerOnTap()
+            {
+                Tap = tap,
+                Keg = keg,
+                Beer = beer,
+                Brewery = brewery
+            };
+        }
+
         public IEnumerable<Beer> GetByName(string name)
         {
             return _beerRepository.GetAllByName(name);
         }
 
-        public IEnumerable<Beer> GetBeersByBrewery(string breweryId)
+        public IEnumerable<Beer> GetByBrewery(string breweryId)
         {
             return _beerRepository.GetByBreweryId(breweryId);
         }
@@ -45,42 +89,28 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
             return _beerRepository.GetById(id);
         }
 
-        public string CreateBeer(CreateBeer createBeerCommand)
+        public string CreateBeer(string name, double abv, int baScore, string style, string color, string glass, string breweryId)
         {
             var id = string.Empty;
 
             using (var scope = new TransactionScope())
             {
                 id = _beerRepository.NextIdentity();
-                var beer = new Beer(id, createBeerCommand.Name)
+                var beer = new Beer(id, name)
                 {
-                    ABV = createBeerCommand.ABV,
-                    BAScore = createBeerCommand.BAScore,
-                    BreweryId = createBeerCommand.BreweryId,
-                    Color = createBeerCommand.Color,
-                    Glass = createBeerCommand.Glass,
-                    Style = createBeerCommand.Style,
+                    ABV = abv,
+                    BAScore = baScore,
+                    BreweryId = breweryId,
+                    Color = color,
+                    Glass = glass,
+                    Style = style,
                     RPScore = 0
                 };
-
                 _beerRepository.Add(beer);
-
                 scope.Complete();
             }
 
             return id;
-        }
-
-        public CreateBeer CreateBeer(string breweryId)
-        {
-            var brewery = _breweryOrchestrator.GetById(breweryId);
-            if (brewery == null)
-                return null;
-            return new CreateBeer()
-            {
-                BreweryId = brewery.Id,
-                BreweryName = brewery.Name
-            };
         }
 
         public IEnumerable<Beer> GetBeersByName(string name)

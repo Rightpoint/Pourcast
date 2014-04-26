@@ -1,0 +1,69 @@
+﻿@model RightpointLabs.Pourcast.Web.Areas.Admin.Models.BeerViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div style="display: block">
+    <h4>@Model.Name</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ABV)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ABV)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BAScore)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BAScore)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Style)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Style)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Color)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Color)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Glass)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Glass)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BreweryName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BreweryName)
+        </dd>
+
+    </dl>
+
+
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Back to List", "Details", "Brewery", new RouteValueDictionary() { { "id", Model.BreweryId } })
+    </p>
+</div>
+

@@ -4,14 +4,22 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Microsoft.Owin.Security.Provider;
 using RightpointLabs.Pourcast.Application.Commands;
 using RightpointLabs.Pourcast.Application.Orchestrators.Abstract;
+using RightpointLabs.Pourcast.Domain.Models;
 using RightpointLabs.Pourcast.Web.Areas.Admin.Models;
 
 namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
 {
     public class BreweryController : Controller
     {
+        static BreweryController()
+        {
+            AutoMapper.Mapper.CreateMap<Brewery, EditBreweryViewModel>();
+            AutoMapper.Mapper.CreateMap<EditBreweryViewModel, Brewery>();
+        }
+
         private readonly IBreweryOrchestrator _breweryOrchestrator;
         private readonly IBeerOrchestrator _beerOrchestrator;
 
@@ -38,7 +46,7 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
             var brewery = new BreweryViewModel()
             {
                 Brewery = _breweryOrchestrator.GetById(id),
-                Beers = _beerOrchestrator.GetBeersByBrewery(id)
+                Beers = _beerOrchestrator.GetByBrewery(id)
             };
             return View("Details", brewery);
         }
@@ -50,7 +58,7 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
             var breweryViewModel = new BreweryViewModel()
             {
                 Brewery = _breweryOrchestrator.GetById(id),
-                Beers = _beerOrchestrator.GetBeersByBrewery(id)
+                Beers = _beerOrchestrator.GetByBrewery(id)
             };
             return PartialView("_BreweryDetails", breweryViewModel);
         }
@@ -65,40 +73,45 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
         //
         // POST: /Admin/Brewery/Create
         [HttpPost]
-        public ActionResult Create(CreateBrewery breweryCommand)
+        public ActionResult Create(CreateBreweryViewModel model)
         {
-            try
+            if (!ModelState.IsValid)
             {
-                var brewreyId = _breweryOrchestrator.Create(breweryCommand);
-                return RedirectToAction("Details", new { id = brewreyId });
+                return View("CreateBrewery", model);
             }
-            catch
+
+            var existing = _breweryOrchestrator.GetByName(model.Name);
+            if (null == existing)
             {
-                return View("CreateBrewery");
+                var brewreyId = _breweryOrchestrator.Create(model.Name, model.City, model.State, model.Country,
+                    model.PostalCode, model.Website, model.Logo);
+                return RedirectToAction("Details", new {id = brewreyId});
             }
+
+            ModelState.AddModelError("BreweryExists", "A brewery with that name already exists");
+            return View("CreateBrewery", model);
         }
 
         //
         // GET: /Admin/Brewery/Edit/5
         public ActionResult Edit(string id)
         {
-            var brewery = _breweryOrchestrator.EditBrewery(id);
-
-            return View("Edit", brewery);
+            var brewery = _breweryOrchestrator.GetById(id);
+            return View("Edit", AutoMapper.Mapper.Map<Brewery, EditBreweryViewModel>(brewery));
         }
 
         [HttpPost]
-        public ActionResult Edit(EditBrewery editBreweryCommand)
+        public ActionResult Edit(EditBreweryViewModel model)
         {
-            try
+            var existing = _breweryOrchestrator.GetById(model.Id);
+            if (null == existing)
             {
-                _breweryOrchestrator.EditBrewery(editBreweryCommand);
-                return RedirectToAction("Details", new { id = editBreweryCommand.Id });
+                // Return view with Error
+                ModelState.AddModelError("Brewery", "No brewery with that id exists.");
             }
-            catch
-            {
-                return View("Edit");
-            }
+
+            _breweryOrchestrator.Save(AutoMapper.Mapper.Map<EditBreweryViewModel, Brewery>(model));
+            return RedirectToAction("Details", new {id = model.Id});
         }
 
         //
