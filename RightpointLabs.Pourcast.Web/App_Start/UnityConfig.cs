@@ -3,15 +3,18 @@ using Microsoft.Practices.Unity;
 namespace RightpointLabs.Pourcast.Web
 {
     using System;
+    using System.Linq;
     using System.Net.Mail;
 
     using Microsoft.AspNet.SignalR;
     using Microsoft.AspNet.SignalR.Infrastructure;
     using Microsoft.Practices.ServiceLocation;
+    using Microsoft.Practices.Unity.InterceptionExtension;
 
     using RightpointLabs.Pourcast.Application.EventHandlers;
     using RightpointLabs.Pourcast.Application.Orchestrators.Abstract;
     using RightpointLabs.Pourcast.Application.Orchestrators.Concrete;
+    using RightpointLabs.Pourcast.Application.Transactions;
     using RightpointLabs.Pourcast.Domain.Events;
     using RightpointLabs.Pourcast.Domain.Repositories;
     using RightpointLabs.Pourcast.Domain.Services;
@@ -41,6 +44,8 @@ namespace RightpointLabs.Pourcast.Web
 
         public static void RegisterTypes(IUnityContainer container)
         {
+            container.AddNewExtension<Interception>();
+
             var connectionString =
                 System.Web.Configuration.WebConfigurationManager.ConnectionStrings["Mongo"].ConnectionString;
             var database = System.Web.Configuration.WebConfigurationManager.ConnectionStrings["Mongo"].ProviderName;
@@ -51,10 +56,17 @@ namespace RightpointLabs.Pourcast.Web
                 new InjectionConstructor(connectionString, database));
 
             // orchestrators
-            container.RegisterType<IBreweryOrchestrator, BreweryOrchestrator>(new PerRequestLifetimeManager());
-            container.RegisterType<IBeerOrchestrator, BeerOrchestrator>(new PerRequestLifetimeManager());
-            container.RegisterType<IKegOrchestrator, KegOrchestrator>(new PerRequestLifetimeManager());
-            container.RegisterType<ITapOrchestrator, TapOrchestrator>(new PerRequestLifetimeManager());
+            container.RegisterTypes(
+                AllClasses.FromLoadedAssemblies().Where(
+                  t => t.Namespace == "RightpointLabs.Pourcast.Application.Orchestrators.Concrete"),
+                WithMappings.FromAllInterfaces,
+                WithName.Default,
+                WithLifetime.Custom<PerRequestLifetimeManager>,
+                getInjectionMembers: t => new InjectionMember[]
+                {
+                    new InterceptionBehavior<PolicyInjectionBehavior>(),
+                    new Interceptor<InterfaceInterceptor>()
+                });
 
             // repositories
             container.RegisterType<IKegRepository, KegRepository>(new PerRequestLifetimeManager());

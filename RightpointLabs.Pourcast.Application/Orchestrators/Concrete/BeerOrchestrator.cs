@@ -1,13 +1,11 @@
-﻿using RightpointLabs.Pourcast.Application.Commands;
-
-namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
+﻿namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
 {
     using System;
     using System.Collections.Generic;
-    using System.Transactions;
 
     using RightpointLabs.Pourcast.Application.Orchestrators.Abstract;
     using RightpointLabs.Pourcast.Application.Payloads;
+    using RightpointLabs.Pourcast.Application.Transactions;
     using RightpointLabs.Pourcast.Domain.Models;
     using RightpointLabs.Pourcast.Domain.Repositories;
 
@@ -89,26 +87,23 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
             return _beerRepository.GetById(id);
         }
 
+        [Transactional]
         public string CreateBeer(string name, double abv, int baScore, string style, string color, string glass, string breweryId)
         {
             var id = string.Empty;
 
-            using (var scope = new TransactionScope())
+            id = _beerRepository.NextIdentity();
+            var beer = new Beer(id, name)
             {
-                id = _beerRepository.NextIdentity();
-                var beer = new Beer(id, name)
-                {
-                    ABV = abv,
-                    BAScore = baScore,
-                    BreweryId = breweryId,
-                    Color = color,
-                    Glass = glass,
-                    Style = style,
-                    RPScore = 0
-                };
-                _beerRepository.Add(beer);
-                scope.Complete();
-            }
+                ABV = abv,
+                BAScore = baScore,
+                BreweryId = breweryId,
+                Color = color,
+                Glass = glass,
+                Style = style,
+                RPScore = 0
+            };
+            _beerRepository.Add(beer);
 
             return id;
         }
