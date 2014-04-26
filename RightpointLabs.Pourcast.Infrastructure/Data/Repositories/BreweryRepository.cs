@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 namespace RightpointLabs.Pourcast.Infrastructure.Data.Repositories
 {
@@ -29,7 +30,14 @@ namespace RightpointLabs.Pourcast.Infrastructure.Data.Repositories
 
         public Brewery GetByName(string name)
         {
-            return Queryable.Single(e => e.Name == name);
+            try
+            {
+                return Queryable.Single(e => e.Name == name);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
     }
 }

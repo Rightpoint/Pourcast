@@ -307,6 +307,9 @@
     <Content Include="Areas\Admin\Views\Shared\_OnTapKegDetails.cshtml" />
     <Content Include="Areas\Admin\Views\Beer\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Beer\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Keg\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Keg\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Keg\Details.cshtml" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\app\pourcast.events.js" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
@@ -353,13 +356,17 @@
     <Compile Include="Areas\Admin\Controllers\BeerController.cs" />
     <Compile Include="Areas\Admin\Controllers\BreweryController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\KegController.cs" />
     <Compile Include="Areas\Admin\Models\BeerViewModel.cs" />
     <Compile Include="Areas\Admin\Models\BreweryViewModel.cs" />
     <Compile Include="Areas\Admin\Models\CreateBeerViewModel.cs" />
     <Compile Include="Areas\Admin\Models\CreateBreweryViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\CreateKegViewModel.cs" />
     <Compile Include="Areas\Admin\Models\EditBeerViewModel.cs" />
     <Compile Include="Areas\Admin\Models\EditBreweryViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\KegModel.cs" />
     <Compile Include="Areas\Admin\Models\KegsOnTap.cs" />
+    <Compile Include="Areas\Admin\Models\KegViewModel.cs" />
     <Compile Include="Areas\Admin\Models\OnTapKeg.cs" />
     <Compile Include="Controllers\Api\BeerOnTapController.cs" />
     <Compile Include="Controllers\Api\BreweryController.cs" />
