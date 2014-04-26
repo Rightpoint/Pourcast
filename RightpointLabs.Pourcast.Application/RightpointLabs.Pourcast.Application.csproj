@@ -69,10 +69,12 @@
     <Compile Include="Orchestrators\Abstract\IBreweryOrchestrator.cs" />
     <Compile Include="Orchestrators\Abstract\IKegOrchestrator.cs" />
     <Compile Include="Orchestrators\Abstract\ITapOrchestrator.cs" />
+    <Compile Include="Orchestrators\Abstract\IIdentityOrchestrator.cs" />
     <Compile Include="Orchestrators\Concrete\BeerOrchestrator.cs" />
     <Compile Include="Orchestrators\Concrete\BreweryOrchestrator.cs" />
     <Compile Include="Orchestrators\Concrete\KegOrchestrator.cs" />
     <Compile Include="Orchestrators\Concrete\TapOrchestrator.cs" />
+    <Compile Include="Orchestrators\Concrete\IdentityOrchestrator.cs" />
     <Compile Include="Payloads\BeerOnTap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Transactions\TransactionalAttribute.cs">
