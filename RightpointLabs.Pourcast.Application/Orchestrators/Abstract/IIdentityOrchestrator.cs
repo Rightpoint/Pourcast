@@ -25,5 +25,7 @@
         IEnumerable<Role> GetAllRoles();
 
         void AddUserToRole(string username, string roleName);
+
+        bool UserExists(string username);
     }
 }

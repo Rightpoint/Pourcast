@@ -120,5 +120,10 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
         {
             AddUsersToRoles(new []{ username }, new []{ roleName });
         }
+
+        public bool UserExists(string username)
+        {
+            return (_userRepository.GetByUsername(username) != null);
+        }
     }
 }

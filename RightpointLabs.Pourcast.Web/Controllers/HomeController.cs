@@ -24,13 +24,22 @@ namespace RightpointLabs.Pourcast.Web.Controllers
             //_tapOrchestrator.PourBeerFromTap("534a14b1aed2bf2a00045509", .01);
 
             // TODO : remove this so users aren't added to admin automatically!
-            var role = "Administrators";
-            if (!_identityOrchestrator.IsUserInRole(Request.LogonUserIdentity.Name, role))
-            {
-                _identityOrchestrator.CreateUser(Request.LogonUserIdentity.Name);
-                _identityOrchestrator.CreateRole(role);
+            var roleName = "Administrators";
+            var username = Request.LogonUserIdentity.Name;
 
-                _identityOrchestrator.AddUserToRole(Request.LogonUserIdentity.Name, role);
+            if (!_identityOrchestrator.UserExists(username))
+            {
+                _identityOrchestrator.CreateUser(username);
+            }
+
+            if (!_identityOrchestrator.RoleExists(roleName))
+            {
+                _identityOrchestrator.CreateRole(roleName);   
+            }
+
+            if (!_identityOrchestrator.IsUserInRole(username, roleName))
+            {
+                _identityOrchestrator.AddUserToRole(username, roleName);
             }
             
 
