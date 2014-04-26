@@ -85,38 +85,5 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
             var id = _kegOrchestrator.CreateKeg(model.BeerId, model.Capacity);
             return RedirectToAction("Details", new {id = id});
         }
-
-        public ActionResult Edit(string id)
-        {
-            var keg = _kegOrchestrator.GetKeg(id);
-            if (null == keg)
-            {
-                ViewBag.Error = "There is no keg with that id.";
-                return View();
-            }
-
-            var model = AutoMapper.Mapper.Map<Keg, EditKegViewModel>(keg);
-            model.BeerName = _beerOrchestrator.GetById(keg.BeerId).Name;
-
-            return View(model);
-        }
-
-        [HttpPost]
-        public ActionResult Edit(EditKegViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
-            var existing = _kegOrchestrator.GetKeg(model.Id);
-            if (null == existing)
-            {
-                ModelState.AddModelError("Keg", "No keg with that id exists.");
-                return View(model);
-            }
-
-            return RedirectToAction("Details", new {id = model.Id});
-        }
 	}
 }
