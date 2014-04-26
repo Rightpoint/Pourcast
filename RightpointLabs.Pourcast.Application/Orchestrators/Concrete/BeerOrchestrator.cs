@@ -88,7 +88,7 @@
         }
 
         [Transactional]
-        public string CreateBeer(string name, double abv, int baScore, string style, string color, string glass, string breweryId)
+        public string CreateBeer(string name, double abv, double baScore, string style, string color, string glass, string breweryId)
         {
             var id = string.Empty;
 
