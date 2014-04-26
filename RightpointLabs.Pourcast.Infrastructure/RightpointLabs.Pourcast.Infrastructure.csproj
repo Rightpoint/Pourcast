@@ -63,8 +63,10 @@
     <Compile Include="Data\Repositories\EntityRepository.cs" />
     <Compile Include="Data\Repositories\IEntityRepository.cs" />
     <Compile Include="Data\Repositories\KegRepository.cs" />
+    <Compile Include="Data\Repositories\RoleRepository.cs" />
     <Compile Include="Data\Repositories\StoredEventRepository.cs" />
     <Compile Include="Data\Repositories\TapRepository.cs" />
+    <Compile Include="Data\Repositories\UserRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CurrentDateTimeProvider.cs" />
     <Compile Include="Services\SmtpEmailService.cs" />
