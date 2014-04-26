@@ -23,9 +23,5 @@ namespace RightpointLabs.Pourcast.Web.Controllers
             return View();
         }
 
-        public ActionResult Split()
-        {
-            return View();
-        }
 	}
 }
