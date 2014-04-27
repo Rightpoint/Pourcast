@@ -12,14 +12,9 @@ namespace RightpointLabs.Pourcast.Web
     using Microsoft.Practices.Unity.InterceptionExtension;
 
     using RightpointLabs.Pourcast.Application.EventHandlers;
-    using RightpointLabs.Pourcast.Application.Orchestrators.Abstract;
-    using RightpointLabs.Pourcast.Application.Orchestrators.Concrete;
-    using RightpointLabs.Pourcast.Application.Transactions;
     using RightpointLabs.Pourcast.Domain.Events;
-    using RightpointLabs.Pourcast.Domain.Repositories;
     using RightpointLabs.Pourcast.Domain.Services;
-    using RightpointLabs.Pourcast.Infrastructure.Data;
-    using RightpointLabs.Pourcast.Infrastructure.Data.Repositories;
+    using RightpointLabs.Pourcast.Infrastructure.Persistance;
     using RightpointLabs.Pourcast.Infrastructure.Services;
     using RightpointLabs.Pourcast.Web.SignalR;
 
@@ -50,7 +45,6 @@ namespace RightpointLabs.Pourcast.Web
                 System.Web.Configuration.WebConfigurationManager.ConnectionStrings["Mongo"].ConnectionString;
             var database = System.Web.Configuration.WebConfigurationManager.ConnectionStrings["Mongo"].ProviderName;
 
-            // e.g. container.RegisterType<ITestService, TestService>();
             container.RegisterType<IMongoConnectionHandler, MongoConnectionHandler>(
                 new PerRequestLifetimeManager(),
                 new InjectionConstructor(connectionString, database));
@@ -80,11 +74,6 @@ namespace RightpointLabs.Pourcast.Web
                     //new InterceptionBehavior<PolicyInjectionBehavior>(),
                     //new Interceptor<InterfaceInterceptor>()
                 });
-            //container.RegisterType<IKegRepository, KegRepository>(new PerRequestLifetimeManager());
-            //container.RegisterType<IBeerRepository, BeerRepository>(new PerRequestLifetimeManager());
-            //container.RegisterType<IBreweryRepository, BreweryRepository>(new PerRequestLifetimeManager());
-            //container.RegisterType<ITapRepository, TapRepository>(new PerRequestLifetimeManager());
-            //container.RegisterType<IStoredEventRepository, StoredEventRepository>(new PerRequestLifetimeManager());
 
             // domain services
             container.RegisterType<IEmailService, SmtpEmailService>(new PerRequestLifetimeManager());
@@ -94,8 +83,8 @@ namespace RightpointLabs.Pourcast.Web
             container.RegisterType(typeof(IEventHandler<>), typeof(EventStoreHandler<>), "EventStore", new PerRequestLifetimeManager());
             container.RegisterType<IEventHandler<BeerPourStopped>, KegNearingEmptyNotificationHandler>("KegNearingEmptyNotification", new PerRequestLifetimeManager());
             container.RegisterType<IEventHandler<KegEmptied>, KegEmptiedNotificationHandler>("KegEmptiedNotification", new PerRequestLifetimeManager());
-            
-            // signalr event handlers
+
+            // signalr event handlers (must be named!)
             container.RegisterType<IEventHandler<BeerPourStarted>, BeerPourStartedClientHandler>("BeerPourStartedClientHandler", new PerRequestLifetimeManager());
             container.RegisterType<IEventHandler<BeerPourStopped>, BeerPourStoppedClientHandler>("BeerPourStoppedClientHandler", new PerRequestLifetimeManager());
 

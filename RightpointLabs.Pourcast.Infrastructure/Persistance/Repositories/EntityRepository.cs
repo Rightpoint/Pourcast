@@ -1,22 +1,19 @@
-﻿namespace RightpointLabs.Pourcast.Infrastructure.Data.Repositories
+﻿namespace RightpointLabs.Pourcast.Infrastructure.Persistance.Repositories
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
 
     using MongoDB.Bson;
-    using MongoDB.Bson.Serialization;
-    using MongoDB.Bson.Serialization.IdGenerators;
     using MongoDB.Driver;
     using MongoDB.Driver.Builders;
     using MongoDB.Driver.Linq;
 
     using RightpointLabs.Pourcast.Domain.Models;
+    using RightpointLabs.Pourcast.Infrastructure.Persistance.Collections;
 
     public abstract class EntityRepository<T> : IEntityRepository<T> where T : Entity
     {
-        protected readonly IMongoConnectionHandler MongoConnectionHandler;
-
         protected readonly MongoCollection<T> Collection;
 
         protected IQueryable<T> Queryable
@@ -28,25 +25,9 @@
             
         }
 
-        static EntityRepository()
+        protected EntityRepository(EntityCollectionDefinition<T> collectionDefinition)
         {
-            if (!BsonClassMap.IsClassMapRegistered(typeof(Entity)))
-            {
-                BsonClassMap.RegisterClassMap<Entity>(
-                cm =>
-                {
-                    cm.AutoMap();
-                    cm.SetIdMember(cm.GetMemberMap(c => c.Id));
-                    cm.IdMemberMap.SetIdGenerator(StringObjectIdGenerator.Instance);
-                });
-            }
-        } 
-
-        protected EntityRepository(IMongoConnectionHandler connectionHandler)
-        {
-            MongoConnectionHandler = connectionHandler;
-
-            Collection = connectionHandler.Database.GetCollection<T>(typeof(T).Name.ToLower() + "s");
+            Collection = collectionDefinition.Collection;
         } 
 
         public virtual void Add(T entity)

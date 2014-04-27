@@ -4,8 +4,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace RightpointLabs.Pourcast.Tests
 {
     using RightpointLabs.Pourcast.Domain.Models;
-    using RightpointLabs.Pourcast.Infrastructure.Data;
-    using RightpointLabs.Pourcast.Infrastructure.Data.Repositories;
+    using RightpointLabs.Pourcast.Infrastructure.Persistance;
+    using RightpointLabs.Pourcast.Infrastructure.Persistance.Collections;
+    using RightpointLabs.Pourcast.Infrastructure.Persistance.Repositories;
 
     [TestClass]
     public class KegRepositoryTests
@@ -14,7 +15,7 @@ namespace RightpointLabs.Pourcast.Tests
         public void CanGetKegsFromLocalDatabase()
         {
             // setup
-            var repo = new KegRepository(new MongoConnectionHandler("mongodb://localhost", "test"));
+            var repo = new KegRepository(new KegCollectionDefinition(new MongoConnectionHandler("mongodb://localhost", "test")));
 
             // Act
             var kegs = repo.GetAll().ToList();

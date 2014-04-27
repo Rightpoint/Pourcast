@@ -1,26 +1,15 @@
-﻿namespace RightpointLabs.Pourcast.Infrastructure.Data.Repositories
+﻿namespace RightpointLabs.Pourcast.Infrastructure.Persistance.Repositories
 {
-    using MongoDB.Bson.Serialization;
     using System.Linq;
+
     using RightpointLabs.Pourcast.Domain.Models;
     using RightpointLabs.Pourcast.Domain.Repositories;
+    using RightpointLabs.Pourcast.Infrastructure.Persistance.Collections;
 
     public class BeerRepository : EntityRepository<Beer>, IBeerRepository
     {
-        static BeerRepository()
-        {
-            if (!BsonClassMap.IsClassMapRegistered(typeof(Beer)))
-            {
-                BsonClassMap.RegisterClassMap<Beer>(
-                    cm =>
-                    {
-                        cm.AutoMap();
-                    });
-            }
-        }
-
-        public BeerRepository(IMongoConnectionHandler connectionHandler)
-            : base(connectionHandler)
+        public BeerRepository(BeerCollectionDefinition beerCollectionDefinition)
+            : base(beerCollectionDefinition)
         {
         }
 

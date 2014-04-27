@@ -3,7 +3,7 @@
 namespace RightpointLabs.Pourcast.Tests
 {
     using RightpointLabs.Pourcast.Domain.Models;
-    using RightpointLabs.Pourcast.Infrastructure.Data;
+    using RightpointLabs.Pourcast.Infrastructure.Persistance;
 
     [TestClass]
     public class MongoConnectionHandlerTest

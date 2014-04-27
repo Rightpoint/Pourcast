@@ -1,30 +1,17 @@
-namespace RightpointLabs.Pourcast.Infrastructure.Data.Repositories
+namespace RightpointLabs.Pourcast.Infrastructure.Persistance.Repositories
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
 
-    using MongoDB.Bson.Serialization;
-
     using RightpointLabs.Pourcast.Domain.Events;
     using RightpointLabs.Pourcast.Domain.Repositories;
+    using RightpointLabs.Pourcast.Infrastructure.Persistance.Collections;
 
     public class StoredEventRepository : EntityRepository<StoredEvent>, IStoredEventRepository
     {
-        static StoredEventRepository()
-        {
-            if (!BsonClassMap.IsClassMapRegistered(typeof(StoredEvent)))
-            {
-                BsonClassMap.RegisterClassMap<StoredEvent>(
-                    cm =>
-                    {
-                        cm.AutoMap();
-                    });
-            }
-        }
-
-        public StoredEventRepository(IMongoConnectionHandler connectionHandler)
-            : base(connectionHandler)
+        public StoredEventRepository(StoredEventCollectionDefinition storedEventCollectionDefinition)
+            : base(storedEventCollectionDefinition)
         {
         }
 

@@ -56,17 +56,43 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Data\IMongoConnectionHandler.cs" />
-    <Compile Include="Data\MongoConnectionHandler.cs" />
-    <Compile Include="Data\Repositories\BeerRepository.cs" />
-    <Compile Include="Data\Repositories\BreweryRepository.cs" />
-    <Compile Include="Data\Repositories\EntityRepository.cs" />
-    <Compile Include="Data\Repositories\IEntityRepository.cs" />
-    <Compile Include="Data\Repositories\KegRepository.cs" />
-    <Compile Include="Data\Repositories\RoleRepository.cs" />
-    <Compile Include="Data\Repositories\StoredEventRepository.cs" />
-    <Compile Include="Data\Repositories\TapRepository.cs" />
-    <Compile Include="Data\Repositories\UserRepository.cs" />
+    <Compile Include="Persistance\Collections\BeerCollectionDefinition.cs" />
+    <Compile Include="Persistance\Collections\BreweryCollectionDefinition.cs" />
+    <Compile Include="Persistance\Collections\EntityCollectionDefinition.cs" />
+    <Compile Include="Persistance\Collections\KegCollectionDefinition.cs" />
+    <Compile Include="Persistance\Collections\RoleCollectionDefinition.cs" />
+    <Compile Include="Persistance\Collections\StoredEventCollectionDefinition.cs" />
+    <Compile Include="Persistance\Collections\TapCollectionDefinition.cs" />
+    <Compile Include="Persistance\Collections\UserCollectionDefinition.cs" />
+    <Compile Include="Persistance\IMongoConnectionHandler.cs" />
+    <Compile Include="Persistance\MongoConnectionHandler.cs" />
+    <Compile Include="Persistance\Repositories\BeerRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Persistance\Repositories\BreweryRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Persistance\Repositories\EntityRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Persistance\Repositories\IEntityRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Persistance\Repositories\KegRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Persistance\Repositories\RoleRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Persistance\Repositories\StoredEventRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Persistance\Repositories\TapRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Persistance\Repositories\UserRepository.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CurrentDateTimeProvider.cs" />
     <Compile Include="Services\SmtpEmailService.cs" />
@@ -82,6 +108,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Data\" />
     <Folder Include="Notifications\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
