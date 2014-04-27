@@ -9,7 +9,9 @@
         Keg GetById(string id);
         
         IEnumerable<Keg> GetAll();
-        
+
+        IEnumerable<Keg> GetAll(bool isEmpty); 
+
         void Update(Keg keg);
         
         string NextIdentity();

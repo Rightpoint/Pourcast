@@ -1,3 +1,5 @@
+using System;
+
 namespace RightpointLabs.Pourcast.Infrastructure.Data.Repositories
 {
     using System.Linq;
@@ -29,6 +31,20 @@ namespace RightpointLabs.Pourcast.Infrastructure.Data.Repositories
         public Tap GetByKegId(string kegId)
         {
             return Queryable.Single(t => t.KegId == kegId);
+        }
+
+        public Tap GetByName(string name)
+        {
+            try
+            {
+                return Queryable.Single(t => t.Name == name);
+            }
+            catch(Exception ex)
+            {
+                // Probably blew up cause it didn't find anything. 
+                // Not sure why mongodb doesn't just return null
+                return null;
+            }
         }
     }
 }
