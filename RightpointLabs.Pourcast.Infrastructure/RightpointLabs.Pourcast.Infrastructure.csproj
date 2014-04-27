@@ -56,43 +56,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Persistance\Collections\BeerCollectionDefinition.cs" />
-    <Compile Include="Persistance\Collections\BreweryCollectionDefinition.cs" />
-    <Compile Include="Persistance\Collections\EntityCollectionDefinition.cs" />
-    <Compile Include="Persistance\Collections\KegCollectionDefinition.cs" />
-    <Compile Include="Persistance\Collections\RoleCollectionDefinition.cs" />
-    <Compile Include="Persistance\Collections\StoredEventCollectionDefinition.cs" />
-    <Compile Include="Persistance\Collections\TapCollectionDefinition.cs" />
-    <Compile Include="Persistance\Collections\UserCollectionDefinition.cs" />
-    <Compile Include="Persistance\IMongoConnectionHandler.cs" />
-    <Compile Include="Persistance\MongoConnectionHandler.cs" />
-    <Compile Include="Persistance\Repositories\BeerRepository.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Persistance\Repositories\BreweryRepository.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Persistance\Repositories\EntityRepository.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Persistance\Repositories\IEntityRepository.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Persistance\Repositories\KegRepository.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Persistance\Repositories\RoleRepository.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Persistance\Repositories\StoredEventRepository.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Persistance\Repositories\TapRepository.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Persistance\Repositories\UserRepository.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Persistence\Collections\BeerCollectionDefinition.cs" />
+    <Compile Include="Persistence\Collections\BreweryCollectionDefinition.cs" />
+    <Compile Include="Persistence\Collections\EntityCollectionDefinition.cs" />
+    <Compile Include="Persistence\Collections\KegCollectionDefinition.cs" />
+    <Compile Include="Persistence\Collections\RoleCollectionDefinition.cs" />
+    <Compile Include="Persistence\Collections\StoredEventCollectionDefinition.cs" />
+    <Compile Include="Persistence\Collections\TapCollectionDefinition.cs" />
+    <Compile Include="Persistence\Collections\UserCollectionDefinition.cs" />
+    <Compile Include="Persistence\IMongoConnectionHandler.cs" />
+    <Compile Include="Persistence\MongoConnectionHandler.cs" />
+    <Compile Include="Persistence\Repositories\BeerRepository.cs" />
+    <Compile Include="Persistence\Repositories\BreweryRepository.cs" />
+    <Compile Include="Persistence\Repositories\EntityRepository.cs" />
+    <Compile Include="Persistence\Repositories\IEntityRepository.cs" />
+    <Compile Include="Persistence\Repositories\KegRepository.cs" />
+    <Compile Include="Persistence\Repositories\RoleRepository.cs" />
+    <Compile Include="Persistence\Repositories\StoredEventRepository.cs" />
+    <Compile Include="Persistence\Repositories\TapRepository.cs" />
+    <Compile Include="Persistence\Repositories\UserRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\CurrentDateTimeProvider.cs" />
     <Compile Include="Services\SmtpEmailService.cs" />

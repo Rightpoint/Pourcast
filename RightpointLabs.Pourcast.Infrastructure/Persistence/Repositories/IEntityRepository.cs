@@ -1,4 +1,4 @@
-﻿namespace RightpointLabs.Pourcast.Infrastructure.Persistance.Repositories
+﻿namespace RightpointLabs.Pourcast.Infrastructure.Persistence.Repositories
 {
     public interface IEntityRepository<T>
     {

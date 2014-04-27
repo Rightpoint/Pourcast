@@ -1,4 +1,4 @@
-﻿namespace RightpointLabs.Pourcast.Infrastructure.Persistance.Collections
+﻿namespace RightpointLabs.Pourcast.Infrastructure.Persistence.Collections
 {
     using MongoDB.Bson.Serialization;
 

@@ -1,4 +1,4 @@
-﻿namespace RightpointLabs.Pourcast.Infrastructure.Persistance.Repositories
+﻿namespace RightpointLabs.Pourcast.Infrastructure.Persistence.Repositories
 {
     using System;
     using System.Collections.Generic;
@@ -10,7 +10,7 @@
     using MongoDB.Driver.Linq;
 
     using RightpointLabs.Pourcast.Domain.Models;
-    using RightpointLabs.Pourcast.Infrastructure.Persistance.Collections;
+    using RightpointLabs.Pourcast.Infrastructure.Persistence.Collections;
 
     public abstract class EntityRepository<T> : IEntityRepository<T> where T : Entity
     {

@@ -14,7 +14,7 @@ namespace RightpointLabs.Pourcast.Web
     using RightpointLabs.Pourcast.Application.EventHandlers;
     using RightpointLabs.Pourcast.Domain.Events;
     using RightpointLabs.Pourcast.Domain.Services;
-    using RightpointLabs.Pourcast.Infrastructure.Persistance;
+    using RightpointLabs.Pourcast.Infrastructure.Persistence;
     using RightpointLabs.Pourcast.Infrastructure.Services;
     using RightpointLabs.Pourcast.Web.SignalR;
 
@@ -65,10 +65,21 @@ namespace RightpointLabs.Pourcast.Web
             // repositories
             container.RegisterTypes(
                 AllClasses.FromLoadedAssemblies().Where(
-                  t => t.Namespace == "RightpointLabs.Pourcast.Infrastructure.Data.Repositories"),
+                  t => t.Namespace == "RightpointLabs.Pourcast.Infrastructure.Persistence.Repositories"),
                 WithMappings.FromAllInterfaces,
                 WithName.Default,
                 WithLifetime.Custom<PerRequestLifetimeManager>,
+                getInjectionMembers: t => new InjectionMember[]
+                {
+                    //new InterceptionBehavior<PolicyInjectionBehavior>(),
+                    //new Interceptor<InterfaceInterceptor>()
+                });
+            container.RegisterTypes(
+                AllClasses.FromLoadedAssemblies().Where(
+                  t => t.Namespace == "RightpointLabs.Pourcast.Infrastructure.Persistence.Collections"),
+                WithMappings.FromAllInterfaces,
+                WithName.Default,
+                WithLifetime.Custom<ContainerControlledLifetimeManager>,
                 getInjectionMembers: t => new InjectionMember[]
                 {
                     //new InterceptionBehavior<PolicyInjectionBehavior>(),

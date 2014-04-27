@@ -4,9 +4,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace RightpointLabs.Pourcast.Tests
 {
     using RightpointLabs.Pourcast.Domain.Models;
-    using RightpointLabs.Pourcast.Infrastructure.Persistance;
-    using RightpointLabs.Pourcast.Infrastructure.Persistance.Collections;
-    using RightpointLabs.Pourcast.Infrastructure.Persistance.Repositories;
+    using RightpointLabs.Pourcast.Infrastructure.Persistence;
+    using RightpointLabs.Pourcast.Infrastructure.Persistence.Collections;
+    using RightpointLabs.Pourcast.Infrastructure.Persistence.Repositories;
 
     [TestClass]
     public class KegRepositoryTests

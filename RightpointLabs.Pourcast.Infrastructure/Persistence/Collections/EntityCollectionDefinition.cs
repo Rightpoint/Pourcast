@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace RightpointLabs.Pourcast.Infrastructure.Persistance.Collections
+﻿namespace RightpointLabs.Pourcast.Infrastructure.Persistence.Collections
 {
+    using System;
+
     using MongoDB.Bson.Serialization;
     using MongoDB.Bson.Serialization.IdGenerators;
     using MongoDB.Driver;
