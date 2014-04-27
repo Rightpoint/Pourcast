@@ -1,6 +1,7 @@
 ﻿namespace RightpointLabs.Pourcast.Infrastructure.Persistance.Collections
 {
     using MongoDB.Bson.Serialization;
+    using MongoDB.Driver.Builders;
 
     using RightpointLabs.Pourcast.Domain.Models;
 
@@ -18,6 +19,8 @@
                     cm.MapField("_userIds").SetElementName("UserIds");
                 });
             }
+
+            Collection.EnsureIndex(new IndexKeysBuilder().Ascending("Name"));
         }
     }
 }
