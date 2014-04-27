@@ -73,7 +73,12 @@
 
         public virtual T GetById(string id)
         {
-                return Queryable.SingleOrDefault(e => e.Id == id);
+            return Queryable.SingleOrDefault(e => e.Id == id);
+        }
+
+        public virtual IEnumerable<T> GetByIds(IEnumerable<string> ids)
+        {
+            return Queryable.Where(e => ids.Contains(e.Id));
         }
 
         public virtual void Update(T entity)
