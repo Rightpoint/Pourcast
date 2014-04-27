@@ -1,7 +1,10 @@
-﻿namespace RightpointLabs.Pourcast.Infrastructure.Data.Repositories
-{
-    using MongoDB.Bson.Serialization;
+﻿using System;
 
+namespace RightpointLabs.Pourcast.Infrastructure.Data.Repositories
+{
+    using System.Linq;
+    using MongoDB.Bson.Serialization;
+    using System.Collections.Generic;
     using RightpointLabs.Pourcast.Domain.Repositories;
     using RightpointLabs.Pourcast.Domain.Models;
 
@@ -22,6 +25,11 @@
         public KegRepository(IMongoConnectionHandler connectionHandler)
             : base(connectionHandler)
         {
+        }
+
+        public IEnumerable<Keg> GetAll(bool isEmpty)
+        {
+            return isEmpty ? Queryable.Where(k => (k.Capacity - k.AmountOfBeerPoured).Equals(0)) : Queryable.Where(k => (k.Capacity - k.AmountOfBeerPoured) > 0);
         }
     }
 }
