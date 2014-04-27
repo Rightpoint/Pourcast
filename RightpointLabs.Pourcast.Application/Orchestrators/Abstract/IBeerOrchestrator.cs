@@ -23,6 +23,6 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Abstract
 
         void Save(Beer beer);
 
-        string CreateBeer(string name, double abv, int baScore, string style, string color, string glass, string breweryId);
+        string CreateBeer(string name, double abv, double baScore, string style, string color, string glass, string breweryId);
     }
 }
