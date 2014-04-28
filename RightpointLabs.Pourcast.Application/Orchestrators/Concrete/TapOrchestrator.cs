@@ -28,6 +28,11 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
             return _tapRepository.GetById(id);
         }
 
+        public Tap GetByName(string name)
+        {
+            return _tapRepository.GetByName(name);
+        }
+
         public IEnumerable<Tap> GetTaps()
         {
             return _tapRepository.GetAll();
@@ -77,15 +82,29 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
         }
 
         [Transactional]
-        public string CreateTap(TapName name)
+        public string CreateTap(string name)
         {
             var id = _tapRepository.NextIdentity();
             var tap = new Tap(id, name);
-
             _tapRepository.Add(tap);
 
             return id;
         }
 
+        [Transactional]
+        public string CreateTap(string name, string kegId)
+        {
+            var id = _tapRepository.NextIdentity();
+            var tap = new Tap(id, name);
+            _tapRepository.Add(tap);
+            tap.TapKeg(kegId);
+            return id;
+        }
+
+        [Transactional]
+        public void Save(Tap tap)
+        {
+            _tapRepository.Update(tap);
+        }
     }
 }

@@ -18,6 +18,12 @@
 
         void TapKeg(string tapId, string kegId);
 
-        string CreateTap(TapName name);
+        string CreateTap(string name);
+
+        string CreateTap(string name, string kegId);
+
+        Tap GetByName(string name);
+
+        void Save(Tap tap);
     }
 }
