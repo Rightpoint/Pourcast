@@ -1,4 +1,4 @@
-﻿namespace RightpointLabs.Pourcast.Infrastructure.Data
+﻿namespace RightpointLabs.Pourcast.Infrastructure.Persistence
 {
     using MongoDB.Driver;
 

@@ -1,13 +1,13 @@
-﻿namespace RightpointLabs.Pourcast.Infrastructure.Data.Repositories
+﻿namespace RightpointLabs.Pourcast.Infrastructure.Persistence.Collections
 {
     using MongoDB.Bson.Serialization;
 
-    using RightpointLabs.Pourcast.Domain.Repositories;
     using RightpointLabs.Pourcast.Domain.Models;
 
-    public class KegRepository : EntityRepository<Keg>,  IKegRepository
+    public class KegCollectionDefinition : EntityCollectionDefinition<Keg>
     {
-        static KegRepository()
+        public KegCollectionDefinition(IMongoConnectionHandler connectionHandler)
+            : base(connectionHandler)
         {
             if (!BsonClassMap.IsClassMapRegistered(typeof(Keg)))
             {
@@ -17,11 +17,6 @@
                     cm.AutoMap();
                 });
             }
-        }
-
-        public KegRepository(IMongoConnectionHandler connectionHandler)
-            : base(connectionHandler)
-        {
         }
     }
 }
