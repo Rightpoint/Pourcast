@@ -3,6 +3,13 @@
     padding-bottom: 20px;
 }
 
+footer {
+    position: absolute;
+    bottom: 0;
+    color: #ffffff;
+    display: none; /*fuck your footer*/
+}
+
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
@@ -51,123 +58,129 @@ body {
 	overflow-y: scroll;
 }
 
-.splitlayout {
-	position: relative;
-	overflow-x: hidden;
-	min-height: 100%;
-	width: 100%;
-}
-
 /* Intro sides */
 .side {
 	position: fixed;
 	top: 0;
-	z-index: 100;
 	width: 50%;
 	height: 100%;
 	text-align: center;
-	-webkit-backface-visibility: hidden;
+    color: #fff;
 }
 
-.side-left {
+#left-split .side {
 	left: 0;
-	color: #fff;
-	 /* avoid gap */
 }
 
-.side-right {
+#right-split .side {
 	right: 0;
-	color: #fff;
+}
+
+.remaining {
+    position: absolute;
+    top: -50px;
+}
+#right-split .remaining {
+    right: -15px;
+}
+#left-split .remaining {
+    left: -15px;
+}
+.remaining .fa {
+    position: absolute;
+    top: 0;
+    font-size: 10em;
+}
+#left-split .remaining .fa {
+    left: 0;
+    -moz-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+}
+#right-split .remaining .fa {
+    right: 0;
+}
+.remaining .percent {
+    position: absolute;
+    top: 45px;
+    
+    font-size: 2.5em;
+}
+#left-split .remaining .percent {
+    left: 35px;
+}
+#right-split .remaining .percent {
+    right: 35px;
 }
 
 /* Intro content, profile image and name, back button */
 .intro-content {
 	position: absolute;
-	top: 50%;
+	top: 55%;
 	left: 50%;
 	padding: 0 1em;
-	width: 50%;
+	width: 75%;
 	cursor: pointer;
 	-webkit-transform: translateY(-50%) translateX(-50%);
 	transform: translateY(-50%) translateX(-50%);
 }
 
 .profile {
-    width: 250px;
-    height: 250px;
+    width: 400px;
+    height: 400px;
     border-radius: 50%;
     margin: 0 auto;
     background: #fff;
-    border: 5px solid #fff;
+    border: 10px solid #fff;
     position: relative;
     overflow: hidden;
 }
 
-  .profile img {
+  .profile img.keg {
       max-width: 100%;
       height: 75%;
-      margin-top:12%;
       position: absolute;
-      bottom: 0;
-      left: 23%;
+      bottom: -10px;
+      left: 19%;
+  }
+
+  .profile img.face {
+      position: absolute;
+      bottom: 30%;
+      left: 41%;
   }
 
     .profile .beerlvl {
         width: 100%;
         position: absolute;
         bottom: 0;
-        /*-webkit-animation: rise 5s 1 linear;
-        -webkit-animation-delay: 1s;*/
     }
 
-  .profile .pour {
-    width: 15px;
-    position: absolute;
-    top: 0px;
-    margin-left: 46%;
-    background: #A86048;
-    display: none;
-    /*-webkit-animation: pour 5s 1 linear;*/
-  }
-
-@-webkit-keyframes pour {
-  0% { height: 0%; }
-  20% { height: 100%; }
-  100% { height: 0%; }
-}
-@-webkit-keyframes rise {
-  0% { height: 0%; }
-  80% { height: 100%; }
+.intro-content h1.beer {
+	font-weight: bold;
+	font-size: 5em;
+    margin-bottom: -20px;
 }
 
-.intro-content h1 > span {
-	display: block;
-	white-space: nowrap;
-}
-
-.intro-content h1 > span:first-child {
-	font-weight: 300;
-	font-size: 2em;
-}
-
-.intro-content h1 > span:nth-child(2) {
+.intro-content h1 > span.brewery,
+.intro-content h1 > span.location {
 	position: relative;
-	margin-top: 0.5em;
+    display: inline;
 	padding: 0.8em;
-	text-transform: uppercase;
 	letter-spacing: 1px;
-	font-size: 0.8em;
+	font-size: 0.6em;
 }
 
-.intro-content h1 > span:nth-child(2):before {
-	position: absolute;
-	top: 0;
-	left: 25%;
-	width: 50%;
-	height: 2px;
-	background: #fff;
-	content: '';
+.style {
+    font-size: 1.6em;
+    border: 4px solid #fff;
+    width: 50%;
+    margin: 0 auto;
+    padding: 10px;
+    border-radius: 20px;
 }
+
 
 .side-right .intro-content h1 > span:nth-child(2):before {
 	background: #fff;
@@ -216,3 +229,52 @@ body {
 @media screen and (max-width: 320px) {
 	body { font-size: 70%; }
 }
+
+/* BEER STYLE CLASSES
+ =================================================*/
+.AmberAle, .AmberAle .beerlvl {
+    background: #f0c030;
+}
+.BlondeAle, .BlondeAle .beerlvl {
+    background: #f0c030;
+}
+.AmericanPaleAle, .AmericanPaleAle .beerlvl {
+    background: #f0c030;
+}
+.IndianPaleAle, .IndianPaleAle .beerlvl {
+    background: #f0c030;
+}
+.BrownAle, .BrownAle .beerlvl {
+    background: #f0c030;
+}
+.Porter, .Porter .beerlvl {
+    background: #f0c030;
+}
+.Stout, .Stout .beerlvl {
+    background: #000;
+}
+.Wheat, .Wheat .beerlvl {
+    background: #f0c030;
+}
+.Lager, .Lager .beerlvl {
+    background: #f0c030;
+}
+.LightLager, .LightLager .beerlvl {
+    background: #f0c030;
+}
+.Pilsner, .Pilsner .beerlvl {
+    background: #f0c030;
+}
+.Saison, .Saison .beerlvl {
+    background: #f0c030;
+}
+.Witbeer, .Witbeer .beerlvl {
+    background: #f0c030;
+}
+.Bock, .Bock .beerlvl {
+    background: #f0c030;
+}
+.Rye, .Rye .beerlvl {
+    background: #f0c030;
+}
+

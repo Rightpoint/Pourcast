@@ -58,18 +58,21 @@
     <Compile Include="Events\StoredEvent.cs" />
     <Compile Include="Events\TapCreated.cs" />
     <Compile Include="Models\Entity.cs" />
+    <Compile Include="Models\Role.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Models\ValueObject.cs" />
     <Compile Include="Repositories\IBeerRepository.cs" />
     <Compile Include="Repositories\IBreweryRepository.cs" />
+    <Compile Include="Repositories\IRoleRepository.cs" />
     <Compile Include="Repositories\IStoredEventRepository.cs" />
     <Compile Include="Repositories\IKegRepository.cs" />
     <Compile Include="Models\Beer.cs" />
     <Compile Include="Models\Brewery.cs" />
     <Compile Include="Models\Keg.cs" />
     <Compile Include="Models\Tap.cs" />
-    <Compile Include="Models\TapName.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ITapRepository.cs" />
+    <Compile Include="Repositories\IUserRepository.cs" />
     <Compile Include="Services\IDateTimeProvider.cs" />
     <Compile Include="Services\IEmailService.cs" />
   </ItemGroup>

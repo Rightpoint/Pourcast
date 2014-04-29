@@ -12,6 +12,7 @@ using RightpointLabs.Pourcast.Web.Areas.Admin.Models;
 
 namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Administrators")]
     public class BreweryController : Controller
     {
         static BreweryController()

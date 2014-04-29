@@ -1,14 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
+using CsvHelper;
 using RightpointLabs.Pourcast.Application.Commands;
 using RightpointLabs.Pourcast.Domain.Models;
 using RightpointLabs.Pourcast.Application.Orchestrators.Abstract;
 using RightpointLabs.Pourcast.Web.Areas.Admin.Models;
+using ContinueNode = Microsoft.Ajax.Utilities.ContinueNode;
 
 namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Administrators")]
     public class BeerController : Controller
     {
         static BeerController()
@@ -17,6 +22,9 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
             AutoMapper.Mapper.CreateMap<CreateBeerViewModel, Beer>();
             AutoMapper.Mapper.CreateMap<Beer, BeerViewModel>();
             AutoMapper.Mapper.CreateMap<BeerViewModel, Beer>();
+            AutoMapper.Mapper.CreateMap<Beer, EditBeerViewModel>();
+            AutoMapper.Mapper.CreateMap<EditBeerViewModel, Beer>();
+
         }
         private readonly IBeerOrchestrator _beerOrchestrator;
         private readonly IBreweryOrchestrator _breweryOrchestrator;
@@ -33,7 +41,7 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
         // GET: /Admin/Beer/
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("Index", "Brewery");
         }
 
         //
@@ -80,26 +88,95 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
 
         //
         // GET: /Admin/Beer/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(string id)
         {
-            return View();
+            var beer = _beerOrchestrator.GetById(id);
+
+            if (null == beer)
+            {
+                ViewBag.Error = "No beer with that id exists";
+                return View();
+            }
+            var brewery = _breweryOrchestrator.GetById(beer.BreweryId);
+            var model = AutoMapper.Mapper.Map<Beer, EditBeerViewModel>(beer);
+            model.BreweryName = brewery.Name;
+            return View(model);
         }
 
         //
         // POST: /Admin/Beer/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(EditBeerViewModel model)
         {
-            try
+            if (!ModelState.IsValid)
             {
-                // TODO: Add update logic here
+                return View(model);
+            }
 
-                return RedirectToAction("Index");
-            }
-            catch
+            _beerOrchestrator.Save(AutoMapper.Mapper.Map<EditBeerViewModel, Beer>(model));
+            return RedirectToAction("Details", new {id = model.Id});
+        }
+
+        public ActionResult Import(string breweryId)
+        {
+            var model = new ImportBeerViewModel();
+            var brewery = _breweryOrchestrator.GetById(breweryId);
+            if (null == brewery)
             {
-                return View();
+                ViewBag.Error = "Brewery with that id does not exist.";
+                return View(model);
             }
+
+            model.BreweryName = brewery.Name;
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Import(ImportBeerViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            if (model.File.ContentLength <= 0) return View(model);
+
+            if (model.File.FileName.Contains("csv"))
+            {
+                try
+                {
+                    var beers = new List<ImportBeerModel>();
+                    using (var reader = new StreamReader(model.File.InputStream))
+                    {
+                        using (var csv = new CsvReader(reader))
+                        {
+                            beers = csv.GetRecords<ImportBeerModel>().ToList();
+                        }
+                    }
+
+                    beers.ForEach(b =>
+                    {
+                        var existing = _beerOrchestrator.GetByBrewery(model.BreweryId);
+                        if (false == existing.Any(beer => beer.Name == b.Name))
+                        {
+                            _beerOrchestrator.CreateBeer(b.Name, b.ABV?? 0, b.BAScore?? 0, b.Style, string.Empty, string.Empty,
+                                model.BreweryId);
+                        }
+                    });
+
+                    return RedirectToAction("Details", "Brewery", new { id = model.BreweryId });
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Error = "File not formatted correctly.";
+                    return View();
+                }
+            }
+            else
+            {
+                ViewBag.Error = "File is not a csv.";
+            }
+            return View();
         }
 
         //

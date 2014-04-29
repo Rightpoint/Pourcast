@@ -1,5 +1,5 @@
 ﻿@using RightpointLabs.Pourcast.Web.Properties
-@model RightpointLabs.Pourcast.Web.Areas.Admin.Models.KegsOnTap
+@model IEnumerable<RightpointLabs.Pourcast.Web.Areas.Admin.Models.TapModel>
 
 @{
     ViewBag.Title = Resources.Admin_Home_Title;
@@ -8,25 +8,26 @@
 <h2>@Resources.Admin_Home_Title</h2>
 
 <div class="row">
-    <h2>@Resources.Admin_Home_CurrentKegs</h2>
-    <div id="leftTap" class="col-lg-4">
-        @if (Model.LeftKeg != null)
+@foreach (var tap in Model)
+{
+    <div class="col-lg-6">
+        <h3>@tap.Name</h3>
+        @if (null == tap.Keg)
         {
-            Html.Partial("_OnTapKegDetails", Model.LeftKeg);
+            <h4>No Keg On Tap</h4>
+            <hr />
         }
         else
         {
-            <h4>@Resources.Admin_Home_NoKeg</h4>
+            <h4>@tap.Keg.BeerName</h4>
+            <p>
+                Amount of Beer Remaining: @tap.Keg.AmountOfBeerRemaining <br />
+                Percent Left: @tap.Keg.PercentRemaining <br />
+            </p>
         }
+        <p>
+            @Html.ActionLink("Edit", "Edit", "Tap", new { id = tap.Id }, null)
+        </p>
     </div>
-    <div id="rightTap" class="col-lg-4">
-        @if (Model.RightKeg != null)
-        {
-            Html.Partial("_OnTapKegDetails", Model.RightKeg);
-        }
-        else
-        {
-            <h4>@Resources.Admin_Home_NoKeg</h4>
-        }
-    </div>
+}
 </div>

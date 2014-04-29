@@ -2,6 +2,7 @@ using System.Web.Http;
 using Microsoft.Practices.Unity.WebApi;
 
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(RightpointLabs.Pourcast.Web.App_Start.UnityWebApiActivator), "Start")]
+[assembly: WebActivatorEx.ApplicationShutdownMethod(typeof(RightpointLabs.Pourcast.Web.App_Start.UnityWebApiActivator), "Shutdown")]
 
 namespace RightpointLabs.Pourcast.Web.App_Start
 {
@@ -12,10 +13,17 @@ namespace RightpointLabs.Pourcast.Web.App_Start
         public static void Start() 
         {
             // Use UnityHierarchicalDependencyResolver if you want to use a new child container for each IHttpController resolution.
-            // var resolver = new UnityHierarchicalDependencyResolver(UnityConfig.GetConfiguredContainer());
-            var resolver = new UnityDependencyResolver(UnityConfig.GetConfiguredContainer());
+            //var resolver = new UnityHierarchicalDependencyResolver(UnityConfig.GetConfiguredContainer());
+            var resolver = new UnityResolver(UnityConfig.GetConfiguredContainer());
 
             GlobalConfiguration.Configuration.DependencyResolver = resolver;
+        }
+
+        /// <summary>Disposes the Unity container when the application is shut down.</summary>
+        public static void Shutdown()
+        {
+            var container = UnityConfig.GetConfiguredContainer();
+            container.Dispose();
         }
     }
 }

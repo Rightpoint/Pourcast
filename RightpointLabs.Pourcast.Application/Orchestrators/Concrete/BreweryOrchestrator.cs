@@ -1,12 +1,9 @@
-﻿using System;
-using RightpointLabs.Pourcast.Application.Commands;
-
-namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
+﻿namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
 {
     using System.Collections.Generic;
-    using System.Transactions;
 
     using RightpointLabs.Pourcast.Application.Orchestrators.Abstract;
+    using RightpointLabs.Pourcast.Application.Transactions;
     using RightpointLabs.Pourcast.Domain.Models;
     using RightpointLabs.Pourcast.Domain.Repositories;
 
@@ -29,29 +26,27 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
             return _breweryRepository.GetById(id);
         }
 
+        [Transactional]
         public string Create(string name, string city, string state, string country, string postalCode, string website, string logo)
         {
             //TODO Check for existing brewery with the name
-            var id = "";
-            using (var scope = new TransactionScope())
+            var id = _breweryRepository.NextIdentity();
+
+            var brewery = new Brewery(id, name)
             {
-                id = _breweryRepository.NextIdentity();
-                var brewery = new Brewery(id, name)
-                {
-                    City = city,
-                    State = state,
-                    Country = country,
-                    PostalCode = postalCode,
-                    Website = website,
-                    Logo = logo
-                };
-                _breweryRepository.Add(brewery);
-                scope.Complete();
-            }
+                City = city,
+                State = state,
+                Country = country,
+                PostalCode = postalCode,
+                Website = website,
+                Logo = logo
+            };
+            _breweryRepository.Add(brewery);
 
             return id;
         }
 
+        [Transactional]
         public void Save(Brewery brewery)
         {
             _breweryRepository.Update(brewery);

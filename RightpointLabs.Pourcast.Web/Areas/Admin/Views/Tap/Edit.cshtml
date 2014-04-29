@@ -1,0 +1,53 @@
+﻿@using RightpointLabs.Pourcast.Web.Properties
+@model RightpointLabs.Pourcast.Web.Areas.Admin.Models.EditTapViewModel
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>@Model.Name</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.KegId, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.KegId, Model.Kegs, new {@class = "ddlKeg"})
+                @Html.ValidationMessageFor(model => model.KegId)
+                <button id="removeKeg">Remove Keg</button>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" /> 
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index") |
+    @Html.ActionLink("Create Keg", "Create", "Keg")
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(function() {
+            $('#removeKeg').on('click', function(e) {
+                $('.ddlKeg option:contains("@Resources.Admin_Tap_Edit_Dropdownlist")').attr('selected', true);
+                e.stopPropagation();
+                return false;
+            });
+        })
+    </script>
+}
