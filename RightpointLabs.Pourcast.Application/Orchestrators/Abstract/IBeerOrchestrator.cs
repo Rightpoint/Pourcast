@@ -1,6 +1,4 @@
-﻿using RightpointLabs.Pourcast.Application.Commands;
-
-namespace RightpointLabs.Pourcast.Application.Orchestrators.Abstract
+﻿namespace RightpointLabs.Pourcast.Application.Orchestrators.Abstract
 {
     using System.Collections.Generic;
 

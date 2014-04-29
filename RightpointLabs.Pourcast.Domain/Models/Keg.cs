@@ -59,7 +59,7 @@
 
             IsPouring = true;
 
-            DomainEvents.Raise(new BeerPourStarted(tapId, Id));
+            DomainEvents.Raise(new PourStarted(tapId, Id));
         }
 
         public void StopPourFromTap(string tapId, double volume)
@@ -75,7 +75,7 @@
             AmountOfBeerPoured += volume;
             IsPouring = false;
 
-            DomainEvents.Raise(new BeerPourStopped(tapId, Id, volume, PercentRemaining));
+            DomainEvents.Raise(new PourStopped(tapId, Id, volume, PercentRemaining));
 
             if (IsEmpty)
             {
