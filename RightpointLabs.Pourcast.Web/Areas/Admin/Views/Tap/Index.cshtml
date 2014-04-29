@@ -1,13 +1,11 @@
-﻿@using RightpointLabs.Pourcast.Web.Properties
-@model IEnumerable<RightpointLabs.Pourcast.Web.Areas.Admin.Models.TapModel>
+﻿@model IEnumerable<RightpointLabs.Pourcast.Web.Areas.Admin.Models.TapModel>
 
 @{
-    ViewBag.Title = Resources.Admin_Home_Title;
+    ViewBag.Title = "Index";
 }
 
-<h2>@Resources.Admin_Home_Title</h2>
+<h2>Taps</h2>
 
-<div class="row">
 @foreach (var tap in Model)
 {
     <div class="col-lg-6">
@@ -26,8 +24,11 @@
             </p>
         }
         <p>
-            @Html.ActionLink("Edit", "Edit", "Tap", new { id = tap.Id }, null)
+            @Html.ActionLink("Edit", "Edit", new {id = tap.Id})
         </p>
     </div>
 }
-</div>
+<p>
+     |
+    @Html.ActionLink("Back to List", "Index")
+</p>

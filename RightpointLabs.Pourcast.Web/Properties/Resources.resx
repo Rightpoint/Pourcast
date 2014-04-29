@@ -195,6 +195,12 @@
   <data name="Admin_Home_Title" xml:space="preserve">
     <value>Dashboard</value>
   </data>
+  <data name="Admin_Tap_Create_Dropdownlist" xml:space="preserve">
+    <value>Select One...</value>
+  </data>
+  <data name="Admin_Tap_Edit_Dropdownlist" xml:space="preserve">
+    <value>Select One...</value>
+  </data>
   <data name="Application" xml:space="preserve">
     <value>Pourcast</value>
   </data>

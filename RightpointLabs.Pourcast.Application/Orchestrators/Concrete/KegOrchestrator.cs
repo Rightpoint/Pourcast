@@ -33,6 +33,11 @@
             return _kegRepository.GetAll();
         }
 
+        public IEnumerable<Keg> GetKegs(bool isEmpty)
+        {
+            return _kegRepository.GetAll().Where(k => k.IsEmpty == isEmpty);
+        } 
+
         public Keg GetKeg(string kegId)
         {
             return _kegRepository.GetById(kegId);
