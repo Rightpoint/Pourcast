@@ -292,8 +292,6 @@
     <Content Include="Scripts\app\classie.js" />
     <Content Include="Scripts\app\pourcast.beer.js" />
     <Content Include="Scripts\app\pourcast.brewery.js" />
-    <Content Include="AppSettings.config" />
-    <Content Include="ConnectionStrings.config" />
     <Content Include="Scripts\app\model\pourcast.beer.js" />
     <Content Include="Scripts\app\model\pourcast.brewery.js" />
     <Content Include="Areas\Admin\Views\web.config" />
