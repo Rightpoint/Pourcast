@@ -131,7 +131,7 @@
                 var beerPouredEventWasRaised = false;
                 var kegEmptiedEventWasRaised = false;
                 
-                DomainEvents.Register<BeerPourStopped>(b => beerPouredEventWasRaised = true);
+                DomainEvents.Register<PourStopped>(b => beerPouredEventWasRaised = true);
                 DomainEvents.Register<KegEmptied>(k => kegEmptiedEventWasRaised = true);
 
                 sut.StartPourFromTap(tapId);
@@ -150,7 +150,7 @@
                 var beerPouredEventWasRaised = false;
                 var kegEmptiedEventWasRaised = false;
 
-                DomainEvents.Register<BeerPourStopped>(b => beerPouredEventWasRaised = true);
+                DomainEvents.Register<PourStopped>(b => beerPouredEventWasRaised = true);
                 DomainEvents.Register<KegEmptied>(k => kegEmptiedEventWasRaised = true);
 
                 sut.StartPourFromTap(tapId);

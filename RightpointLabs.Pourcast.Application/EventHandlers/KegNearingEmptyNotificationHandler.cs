@@ -9,7 +9,7 @@
     using RightpointLabs.Pourcast.Domain.Repositories;
     using RightpointLabs.Pourcast.Domain.Services;
 
-    public class KegNearingEmptyNotificationHandler : TransactionDependentEventHandler<BeerPourStopped>
+    public class KegNearingEmptyNotificationHandler : TransactionDependentEventHandler<PourStopped>
     {
         private const double PercentageThreshold = 10;
 
@@ -34,7 +34,7 @@
             _beerRepository = beerRepository;
         }
 
-        protected override void HandleAfterTransaction(BeerPourStopped domainEvent)
+        protected override void HandleAfterTransaction(PourStopped domainEvent)
         {
             var kegId = domainEvent.KegId;
             var keg = _kegRepository.GetById(kegId);
@@ -48,7 +48,7 @@
             }
         }
 
-        private MailMessage BuildNotification(BeerPourStopped beerPourStopped, Tap tap, Keg keg)
+        private MailMessage BuildNotification(PourStopped pourStopped, Tap tap, Keg keg)
         {
             string emailaddy = ConfigurationManager.AppSettings.Get("EmailRecipient");
             Beer emptybeer = _beerRepository.GetById(keg.BeerId);
