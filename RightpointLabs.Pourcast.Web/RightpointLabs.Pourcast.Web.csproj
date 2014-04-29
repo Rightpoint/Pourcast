@@ -315,6 +315,8 @@
     <Content Include="Areas\Admin\Views\Tap\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Tap\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Tap\Create.cshtml" />
+    <Content Include="AppSettings.config" />
+    <Content Include="ConnectionStrings.config" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\app\pourcast.events.js" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
