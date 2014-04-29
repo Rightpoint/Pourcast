@@ -309,6 +309,8 @@
     <Content Include="Areas\Admin\Views\Tap\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Tap\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Tap\Create.cshtml" />
+    <Content Include="AppSettings.config" />
+    <Content Include="ConnectionStrings.config" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\app\pourcast.events.js" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
@@ -391,8 +393,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="SignalR\BeerPourStartedClientHandler.cs" />
-    <Compile Include="SignalR\BeerPourStoppedClientHandler.cs" />
+    <Compile Include="SignalR\PourStartedClientHandler.cs" />
+    <Compile Include="SignalR\PourStoppedClientHandler.cs" />
     <Compile Include="SignalR\EventsHub.cs" />
     <Compile Include="SignalR\KegRemovedFromTapClientHandler.cs" />
     <Compile Include="SignalR\KegTappedClientHandler.cs" />

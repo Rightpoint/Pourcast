@@ -46,7 +46,7 @@ namespace RightpointLabs.Pourcast.Web
             var database = System.Web.Configuration.WebConfigurationManager.ConnectionStrings["Mongo"].ProviderName;
 
             container.RegisterType<IMongoConnectionHandler, MongoConnectionHandler>(
-                new PerRequestLifetimeManager(),
+                new ContainerControlledLifetimeManager(),
                 new InjectionConstructor(connectionString, database));
 
             // orchestrators
@@ -71,20 +71,15 @@ namespace RightpointLabs.Pourcast.Web
                 WithLifetime.Custom<PerRequestLifetimeManager>,
                 getInjectionMembers: t => new InjectionMember[]
                 {
-                    //new InterceptionBehavior<PolicyInjectionBehavior>(),
-                    //new Interceptor<InterfaceInterceptor>()
+                    new InterceptionBehavior<PolicyInjectionBehavior>(),
+                    new Interceptor<InterfaceInterceptor>()
                 });
             container.RegisterTypes(
                 AllClasses.FromLoadedAssemblies().Where(
                   t => t.Namespace == "RightpointLabs.Pourcast.Infrastructure.Persistence.Collections"),
                 WithMappings.FromAllInterfaces,
                 WithName.Default,
-                WithLifetime.Custom<ContainerControlledLifetimeManager>,
-                getInjectionMembers: t => new InjectionMember[]
-                {
-                    //new InterceptionBehavior<PolicyInjectionBehavior>(),
-                    //new Interceptor<InterfaceInterceptor>()
-                });
+                WithLifetime.Custom<ContainerControlledLifetimeManager>);
 
             // domain services
             container.RegisterType<IEmailService, SmtpEmailService>(new PerRequestLifetimeManager());
@@ -92,12 +87,12 @@ namespace RightpointLabs.Pourcast.Web
 
             // event handlers (must be named!)
             container.RegisterType(typeof(IEventHandler<>), typeof(EventStoreHandler<>), "EventStore", new PerRequestLifetimeManager());
-            container.RegisterType<IEventHandler<BeerPourStopped>, KegNearingEmptyNotificationHandler>("KegNearingEmptyNotification", new PerRequestLifetimeManager());
+            container.RegisterType<IEventHandler<PourStopped>, KegNearingEmptyNotificationHandler>("KegNearingEmptyNotification", new PerRequestLifetimeManager());
             container.RegisterType<IEventHandler<KegEmptied>, KegEmptiedNotificationHandler>("KegEmptiedNotification", new PerRequestLifetimeManager());
 
             // signalr event handlers (must be named!)
-            container.RegisterType<IEventHandler<BeerPourStarted>, BeerPourStartedClientHandler>("BeerPourStartedClientHandler", new PerRequestLifetimeManager());
-            container.RegisterType<IEventHandler<BeerPourStopped>, BeerPourStoppedClientHandler>("BeerPourStoppedClientHandler", new PerRequestLifetimeManager());
+            container.RegisterType<IEventHandler<PourStarted>, PourStartedClientHandler>("BeerPourStartedClientHandler", new PerRequestLifetimeManager());
+            container.RegisterType<IEventHandler<PourStopped>, PourStoppedClientHandler>("BeerPourStoppedClientHandler", new PerRequestLifetimeManager());
 
             // misc
             container.RegisterType<SmtpClient>(new PerRequestLifetimeManager(), new InjectionConstructor());
