@@ -18,15 +18,19 @@ namespace RightpointLabs.Pourcast.Repourter
         
         private const int PULSES_PER_LITER = 5600;
 
+        private const double OUNCES_PER_LITER = 33.814;
+
         private bool _flowing = false;
 
-        public FlowSensor(InterruptPort port)
+        private readonly int _tapId;
+
+        public FlowSensor(InterruptPort port, int tapId)
         {
+            _tapId = tapId;
             _port = port;
             _port.OnInterrupt += FlowDetected;
         }
 
-        //TODO: Add way to report total flow once flow is finished
         public void CheckPulses()
         {
             // Disable interrupts while we read so that we don't mess with a triggering interrput.
@@ -43,15 +47,15 @@ namespace RightpointLabs.Pourcast.Repourter
                 _totalLiters += liters;
                 if (!_flowing)
                 {
-                    // TODO: report that flow started
                     _flowing = true;
                     _flowStart = lastMeasuredTime;
+                    HttpMessageWriter.SendStartAsync(_tapId);
                 }
             }
             else if(_totalLiters > 0) // it didn't flow, but we have finished a pour. Report it.
             {
-                var id = _port.Id;
-                //TODO: report total liters, flow start (_flowStart) and flow end (_lastFlowDetected)
+                var ounces = _totalLiters*OUNCES_PER_LITER;
+                HttpMessageWriter.SendStopAsync(_tapId, ounces);
                 _totalLiters = 0;
             }
         }

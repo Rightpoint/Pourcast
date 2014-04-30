@@ -208,9 +208,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
-    <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bubbles.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\Split.css" />
@@ -279,19 +277,15 @@
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tooltip.min.css" />
-    <Content Include="Content\themes\Split.css" />
     <Content Include="Content\toastr.css" />
     <Content Include="Content\toastr.min.css" />
     <Content Include="Fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Content\bootstrap-theme.css.map" />
-    <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\toastr.less" />
     <Content Include="Scripts\app\bubbles.js" />
     <Content Include="Scripts\app\SplitLayout.js" />
-    <Content Include="Scripts\app\classie.js" />
-    <Content Include="Scripts\app\pourcast.beer.js" />
-    <Content Include="Scripts\app\pourcast.brewery.js" />
+    <Content Include="AppSettings.config" />
+    <Content Include="ConnectionStrings.config" />
     <Content Include="Scripts\app\model\pourcast.beer.js" />
     <Content Include="Scripts\app\model\pourcast.brewery.js" />
     <Content Include="Areas\Admin\Views\web.config" />
