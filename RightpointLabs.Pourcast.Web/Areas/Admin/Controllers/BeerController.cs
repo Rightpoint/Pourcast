@@ -39,7 +39,18 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
         // GET: /Admin/Beer/
         public ActionResult Index()
         {
-            return RedirectToAction("Index", "Brewery");
+            var vm = new BeerIndexViewModel()
+            {
+                Beers =
+                    _beerOrchestrator.GetBeers()
+                        .Select(b => new SelectListItem() {Text = b.Name, Value = b.Id})
+                        .ToList(),
+                Breweries =
+                    _breweryOrchestrator.GetBreweries()
+                        .Select(b => new SelectListItem() {Text = b.Name, Value = b.Id})
+                        .ToList()
+            };
+            return View(vm);
         }
 
         //

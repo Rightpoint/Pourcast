@@ -311,6 +311,7 @@
     <Content Include="Areas\Admin\Views\Tap\Create.cshtml" />
     <Content Include="AppSettings.config" />
     <Content Include="ConnectionStrings.config" />
+    <Content Include="Areas\Admin\Views\Beer\Index.cshtml" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\app\pourcast.events.js" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
@@ -359,6 +360,7 @@
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\KegController.cs" />
     <Compile Include="Areas\Admin\Controllers\TapController.cs" />
+    <Compile Include="Areas\Admin\Models\BeerIndexViewModel.cs" />
     <Compile Include="Areas\Admin\Models\BeerViewModel.cs" />
     <Compile Include="Areas\Admin\Models\BreweryViewModel.cs" />
     <Compile Include="Areas\Admin\Models\CreateBeerViewModel.cs" />
