@@ -212,6 +212,12 @@
     <Content Include="Content\bubbles.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\Split.css" />
+    <Content Include="Content\StyleSheet.css">
+      <DependentUpon>StyleSheet.less</DependentUpon>
+    </Content>
+    <Content Include="Content\StyleSheet.min.css">
+      <DependentUpon>StyleSheet.css</DependentUpon>
+    </Content>
     <Content Include="Content\themes\base\images\animated-overlay.gif" />
     <Content Include="Content\themes\base\images\face-happy.png" />
     <Content Include="Content\themes\base\images\face-sad.png" />
@@ -313,6 +319,7 @@
     <Content Include="ConnectionStrings.config" />
     <Content Include="Areas\Admin\Views\Beer\Index.cshtml" />
     <Content Include="Scripts\app\events.js" />
+    <Content Include="Content\StyleSheet.less" />
     <None Include="Scripts\libs\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\app\admin.js" />
     <Content Include="Scripts\app\model\tap.js" />
@@ -344,6 +351,7 @@
     <Content Include="Scripts\libs\toastr.min.js" />
     <Content Include="Scripts\libs\r.js" />
     <Content Include="Scripts\libs\require.js" />
+    <Content Include="Views\Shared\_Keg.cshtml" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -419,7 +427,6 @@
     <Content Include="Views\RepourterTest\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Tap.cshtml" />
-    <Content Include="Views\Shared\_Keg.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

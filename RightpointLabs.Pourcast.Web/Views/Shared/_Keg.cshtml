@@ -1,0 +1,31 @@
+﻿<script type="text/html" id="keg-template">
+    <div class="keg side" data-bind="style: { background: beer().color }, bubbles: {}">
+
+        <div class="intro-content">
+
+            <div class="remaining">
+                <i class="fa fa-comment-o"></i>
+                <span class="percent" data-bind="text: percentRemaining"></span>
+            </div>
+
+            <div class="profile">
+                <div class="beer-level" data-bind="style: { height: percentRemaining, background: beer().color }"></div>
+                <img class="body" src="/Content/themes/base/images/keg.png" alt="kegLeft" />
+                <img class="face" src="/Content/themes/base/images/face-happy.png" />
+            </div>
+
+            <div data-bind="with: beer">
+                <h1 class="beer" data-bind="text: name"></h1>
+                
+                <div data-bind="with: brewery">
+                    <h1>
+                        <span class="brewery" data-bind="text: name"></span><span class="location">Location</span>
+                    </h1>
+                </div>
+
+                <div class="style" data-bind="text: style"></div>
+            </div>
+
+        </div>
+    </div>
+</script>

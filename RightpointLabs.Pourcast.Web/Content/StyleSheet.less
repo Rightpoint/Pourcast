@@ -1,0 +1,294 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    color: #ffffff;
+    display: none; /*fuck your footer*/
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input[type="text"],
+input[type="password"] {
+    max-width: 280px;
+}
+
+/* styles for validation helpers */
+.field-validation-error {
+    color: #b94a48;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+input.input-validation-error {
+    border: 1px solid #b94a48;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: #b94a48;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+html, body, 
+.container {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+body {
+	overflow-y: scroll;
+}
+
+/* Intro sides */
+.keg {
+	position: fixed;
+	top: 0;
+	width: 50%;
+	height: 100%;
+	text-align: center;
+    color: #fff;
+}
+
+.tap:nth-child(odd) {
+    .keg {
+	    left: 0;
+    }
+
+    .remaining {
+        left: -15px;
+    }
+
+    .remaining .fa {
+        left: 0;
+        -moz-transform: scaleX(-1);
+        -o-transform: scaleX(-1);
+        -webkit-transform: scaleX(-1);
+        transform: scaleX(-1);
+    }
+
+    .remaining .percent {
+        left: 35px;
+    }
+}
+
+.tap:nth-child(even) {
+    .keg {
+	    right: 0;
+    }
+
+    .remaining {
+        right: -15px;
+    }
+
+    .remaining .fa {
+        right: 0;
+    }
+
+    .remaining .percent {
+        right: 35px;
+    }
+}
+
+.remaining {
+    position: absolute;
+    top: -50px;
+
+    .fa {
+        position: absolute;
+        top: 0;
+        font-size: 10em;
+    }
+    .percent {
+        position: absolute;
+        top: 45px;
+    
+        font-size: 2.5em;
+    }
+}
+
+
+/* Intro content, profile image and name, back button */
+.intro-content {
+	position: absolute;
+	top: 55%;
+	left: 50%;
+	padding: 0 1em;
+	width: 75%;
+	cursor: pointer;
+	-webkit-transform: translateY(-50%) translateX(-50%);
+	transform: translateY(-50%) translateX(-50%);
+}
+
+.keg {
+    .profile {
+        width: 400px;
+        height: 400px;
+        border-radius: 50%;
+        margin: 0 auto;
+        background: #fff;
+        border: 10px solid #fff;
+        position: relative;
+        overflow: hidden;
+
+        img.body {
+            max-width: 100%;
+            height: 75%;
+            position: absolute;
+            bottom: -10px;
+            left: 19%;
+        }
+
+        img.face {
+            position: absolute;
+            bottom: 30%;
+            left: 41%;
+        }
+
+        .beer-level {
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+        }
+    }
+}
+
+.intro-content h1.beer {
+	font-weight: bold;
+	font-size: 5em;
+    margin-bottom: -20px;
+}
+
+.intro-content h1 > span.brewery,
+.intro-content h1 > span.location {
+	position: relative;
+    display: inline;
+	padding: 0.8em;
+	letter-spacing: 1px;
+	font-size: 0.6em;
+}
+
+.style {
+    font-size: 1.6em;
+    border: 4px solid #fff;
+    width: 50%;
+    margin: 0 auto;
+    padding: 10px;
+    border-radius: 20px;
+}
+
+
+.side-right .intro-content h1 > span:nth-child(2):before {
+	background: #fff;
+}
+
+/* Media Queries */
+@media screen and (max-width: 83em) {
+	.intro-content { font-size: 60%; }
+}
+
+@media screen and (max-width: 58em) {
+	body { font-size: 90%; }
+}
+
+@media screen and (max-width: 49.4375em) {
+    .page-right {
+		left: 0;
+		padding-left: 15%;
+	}
+
+	.page-left {
+		padding-right: 15%;
+	}
+
+	.intro-content {
+		width: 100%;
+	}
+}
+
+@media screen and (max-width: 42.5em) {
+	body { font-size: 80%; }
+	.intro-content { font-size: 50%; }
+}
+
+@media screen and (max-height: 41.125em) {
+	.intro-content {
+		-webkit-transform: translateY(-25%) translateX(-50%);
+		transform: translateY(-25%) translateX(-50%);
+	}
+}
+
+@media screen and (max-width: 39.375em) {
+	.intro-content .profile { -webkit-transform: scale(0.5); transform: scale(0.5); }
+}
+
+@media screen and (max-width: 320px) {
+	body { font-size: 70%; }
+}
+
+/* BEER STYLE CLASSES
+ =================================================*/
+/*.AmberAle, .AmberAle .beer-level {
+    background: #f0c030;
+}
+.BlondeAle, .BlondeAle .beer-level {
+    background: #f0c030;
+}
+.AmericanPaleAle, .AmericanPaleAle .beer-level {
+    background: #f0c030;
+}
+.IndianPaleAle, .IndianPaleAle .beer-level {
+    background: #f0c030;
+}
+.BrownAle, .BrownAle .beer-level {
+    background: #f0c030;
+}
+.Porter, .Porter .beer-level {
+    background: #f0c030;
+}
+.Stout, .Stout .beer-level {
+    background: #000;
+}
+.Wheat, .Wheat .beer-level {
+    background: #f0c030;
+}
+.Lager, .Lager .beer-level {
+    background: #f0c030;
+}
+.LightLager, .LightLager .beer-level {
+    background: #f0c030;
+}
+.Pilsner, .Pilsner .beer-level {
+    background: #f0c030;
+}
+.Saison, .Saison .beer-level {
+    background: #f0c030;
+}
+.Witbeer, .Witbeer .beer-level {
+    background: #f0c030;
+}
+.Bock, .Bock .beer-level {
+    background: #f0c030;
+}
+.Rye, .Rye .beer-level {
+    background: #f0c030;
+}*/
+
