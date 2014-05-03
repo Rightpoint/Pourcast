@@ -19,31 +19,12 @@
 
 
 
-<div class="row">
-    <div id="left-split" class="col-xs-6">
-        @Html.Partial("KegSplit")
-    </div>
-    <div id="right-split" class="col-xs-6">
-        @Html.Partial("KegSplit")
-    </div>
+<div class="taps row" data-bind="template: { name: 'tap-template', foreach: taps }">
+    
 </div>
-<!-- /splitlayout -->
 
-
-
-<script src="~/Scripts/app/bubbles.js"></script>
-@section scripts {
-    <script type="text/javascript">
-        $(function () {
-            
-            pourcast.events.on("beerPoured", function (e) {
-                toastr.success(e.PercentRemaining);
-            });
-            pourcast.events.on("beerPoured", function (e) {
-                toastr.success(e.Volume);
-            });
-            var leftBubbles = bubbles($("#left-split .side"));
-            var rightBubbles = bubbles($("#right-split .side"));
-        });
-    </script>
+@section templates
+{
+    @Html.Partial("_Tap")
+    @Html.Partial("_Keg")
 }

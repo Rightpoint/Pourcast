@@ -282,6 +282,7 @@
     <Content Include="Fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\toastr.less" />
+    <Content Include="Scripts\app\bindings.js" />
     <Content Include="Scripts\app\bubbles.js" />
     <Content Include="AppSettings.config" />
     <Content Include="ConnectionStrings.config" />
@@ -314,8 +315,7 @@
     <Content Include="Scripts\app\events.js" />
     <None Include="Scripts\libs\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\app\admin.js" />
-    <Content Include="Scripts\app\viewModel\beervm.js" />
-    <Content Include="Scripts\app\viewModel\breweryvm.js" />
+    <Content Include="Scripts\app\model\tap.js" />
     <Content Include="Scripts\app\pourcast.js" />
     <Content Include="Scripts\app\model\keg.js" />
     <Content Include="Scripts\libs\bootstrap.js" />
@@ -419,6 +419,8 @@
     <Content Include="Views\RepourterTest\Index.cshtml" />
     <Content Include="Views\Home\KegSplit.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Tap.cshtml" />
+    <Content Include="Views\Shared\_Keg.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

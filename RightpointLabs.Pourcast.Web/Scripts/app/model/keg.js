@@ -1,19 +1,24 @@
 ﻿(function(app, $, ko, toast, moment) {
-    app.Keg = app.Keg || function(tapId, tapName, initVolume, beer, pours) {
+    app.Keg = app.Keg || function(kegJSON, beer) {
         var self = this;
-        self.tapId = ko.observable(tapId || 0);
-        self.tapName = ko.observable(tapName || "");
-        self.initalVolume = initVolume;
-        self.beer = beer || null;
-        self.pours = ko.observableArray(pours || []);
 
-        self.volume = ko.computed(function() {
-            var pourAmt = 0;
-            ko.utils.arrayForEach(self.pours, function(pour) {
-                pourAmt += pour.volume();
-            });
+        self.id = ko.observable(kegJSON.Id);
+        self.percentRemaining = ko.observable(kegJSON.PercentRemaining * 100 + "%");
+        self.isEmpty = ko.observable(kegJSON.IsEmpty);
+        self.isPouring = ko.observable(kegJSON.IsPouring);
+        self.capacity = ko.observable(kegJSON.Capacity);
+        self.beer = ko.observable(beer);
 
-            return self.initalVolume - pourAmt;
+        app.events.on("PourStarted", function(e) {
+
         });
+
+        app.events.on("PourStopped", function (e) {
+
+        });
+    };
+
+    app.Keg.prototype.bound = function(element) {
+        alert('hi');
     };
 }(window.pourcast = window.pourcast || {}, jQuery, ko, toastr, moment));

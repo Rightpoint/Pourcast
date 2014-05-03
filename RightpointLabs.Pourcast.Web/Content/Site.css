@@ -59,7 +59,7 @@ body {
 }
 
 /* Intro sides */
-.side {
+.keg {
 	position: fixed;
 	top: 0;
 	width: 50%;
@@ -68,11 +68,11 @@ body {
     color: #fff;
 }
 
-#left-split .side {
+.tap.left .keg {
 	left: 0;
 }
 
-#right-split .side {
+.tap.right .side {
 	right: 0;
 }
 
@@ -80,10 +80,10 @@ body {
     position: absolute;
     top: -50px;
 }
-#right-split .remaining {
+.tap.right .remaining {
     right: -15px;
 }
-#left-split .remaining {
+.tap.left .remaining {
     left: -15px;
 }
 .remaining .fa {
@@ -91,14 +91,14 @@ body {
     top: 0;
     font-size: 10em;
 }
-#left-split .remaining .fa {
+.tap.left .remaining .fa {
     left: 0;
     -moz-transform: scaleX(-1);
     -o-transform: scaleX(-1);
     -webkit-transform: scaleX(-1);
     transform: scaleX(-1);
 }
-#right-split .remaining .fa {
+.tap.right .remaining .fa {
     right: 0;
 }
 .remaining .percent {
@@ -107,10 +107,10 @@ body {
     
     font-size: 2.5em;
 }
-#left-split .remaining .percent {
+.tap.left .remaining .percent {
     left: 35px;
 }
-#right-split .remaining .percent {
+.tap.right .remaining .percent {
     right: 35px;
 }
 
@@ -151,7 +151,7 @@ body {
       left: 41%;
   }
 
-    .profile .beerlvl {
+    .profile .beer-level {
         width: 100%;
         position: absolute;
         bottom: 0;
@@ -232,49 +232,49 @@ body {
 
 /* BEER STYLE CLASSES
  =================================================*/
-.AmberAle, .AmberAle .beerlvl {
+.AmberAle, .AmberAle .beer-level {
     background: #f0c030;
 }
-.BlondeAle, .BlondeAle .beerlvl {
+.BlondeAle, .BlondeAle .beer-level {
     background: #f0c030;
 }
-.AmericanPaleAle, .AmericanPaleAle .beerlvl {
+.AmericanPaleAle, .AmericanPaleAle .beer-level {
     background: #f0c030;
 }
-.IndianPaleAle, .IndianPaleAle .beerlvl {
+.IndianPaleAle, .IndianPaleAle .beer-level {
     background: #f0c030;
 }
-.BrownAle, .BrownAle .beerlvl {
+.BrownAle, .BrownAle .beer-level {
     background: #f0c030;
 }
-.Porter, .Porter .beerlvl {
+.Porter, .Porter .beer-level {
     background: #f0c030;
 }
-.Stout, .Stout .beerlvl {
+.Stout, .Stout .beer-level {
     background: #000;
 }
-.Wheat, .Wheat .beerlvl {
+.Wheat, .Wheat .beer-level {
     background: #f0c030;
 }
-.Lager, .Lager .beerlvl {
+.Lager, .Lager .beer-level {
     background: #f0c030;
 }
-.LightLager, .LightLager .beerlvl {
+.LightLager, .LightLager .beer-level {
     background: #f0c030;
 }
-.Pilsner, .Pilsner .beerlvl {
+.Pilsner, .Pilsner .beer-level {
     background: #f0c030;
 }
-.Saison, .Saison .beerlvl {
+.Saison, .Saison .beer-level {
     background: #f0c030;
 }
-.Witbeer, .Witbeer .beerlvl {
+.Witbeer, .Witbeer .beer-level {
     background: #f0c030;
 }
-.Bock, .Bock .beerlvl {
+.Bock, .Bock .beer-level {
     background: #f0c030;
 }
-.Rye, .Rye .beerlvl {
+.Rye, .Rye .beer-level {
     background: #f0c030;
 }
 

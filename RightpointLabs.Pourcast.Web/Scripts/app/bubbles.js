@@ -1,12 +1,28 @@
-﻿function bubbles($container) {
+﻿function bubbles($container, params) {
     // Settings
-    var min_bubble_count = 5, // Minimum number of bubbles
-        max_bubble_count = 20, // Maximum number of bubbles
-        min_bubble_size = 2, // Smallest possible bubble diameter (px)
-        max_bubble_size = 6; // Largest possible bubble diameter (px)
+
+    var minBubbleCount = 5, // Minimum number of bubbles
+        maxBubbleCount = 20, // Maximum number of bubbles
+        minBubbleSize = 2, // Smallest possible bubble diameter (px)
+        maxBubbleSize = 6; // Largest possible bubble diameter (px)
+
+    if (params) {
+        if (params.hasOwnProperty("minBubbleCount")) {
+            minBubbleCount = params.minBubbleCount;
+        }
+        if (params.hasOwnProperty("maxBubbleCount")) {
+            maxBubbleCount = params.maxBubbleCount;
+        }
+        if (params.hasOwnProperty("minBubbleSize")) {
+            minBubbleSize = params.minBubbleSize;
+        }
+        if (params.hasOwnProperty("maxBubbleSize")) {
+            maxBubbleSize = params.maxBubbleSize;
+        }
+    }
 
     // Calculate a random number of bubbles based on our min/max
-    var bubbleCount = min_bubble_count + Math.floor(Math.random() * (max_bubble_count + 1));
+    var bubbleCount = minBubbleCount + Math.floor(Math.random() * (maxBubbleCount + 1));
 
     // Create the bubbles
     for (var i = 0; i < bubbleCount; i++) {
@@ -20,7 +36,7 @@
         var pos_rand = Math.floor(Math.random() * 101);
 
         // Randomise their size
-        var size_rand = min_bubble_size + Math.floor(Math.random() * (max_bubble_size + 1));
+        var size_rand = minBubbleSize + Math.floor(Math.random() * (maxBubbleSize + 1));
 
         // Randomise the time they start rising (0-15s)
         var delay_rand = Math.floor(Math.random() * 16);

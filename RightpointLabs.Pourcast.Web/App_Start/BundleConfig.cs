@@ -21,7 +21,15 @@ namespace RightpointLabs.Pourcast.Web.App_Start
             bundles.Add(new ScriptBundle("~/bundles/toastr").Include("~/Scripts/libs/toastr.js"));
             bundles.Add(new ScriptBundle("~/bundles/moment").Include("~/Scripts/libs/moment.js"));
             bundles.Add(new ScriptBundle("~/bundles/signalr").Include("~/Scripts/libs/jquery.signalR-{version}.js"));
-            bundles.Add(new ScriptBundle("~/bundles/app").Include("~/Scripts/app/events.js", "~/Scripts/app/model/beer.js", "~/Scripts/app/model/brewery.js", "~/Scripts/app/viewModel/breweryvm.js", "~/Scripts/app/pourcast.js"));
+            bundles.Add(new ScriptBundle("~/bundles/app")
+                .Include("~/Scripts/app/model/brewery.js",
+                "~/Scripts/app/model/beer.js",
+                "~/Scripts/app/model/keg.js",
+                "~/Scripts/app/model/tap.js",
+                "~/Scripts/app/events.js",
+                "~/Scripts/app/bindings.js", 
+                "~/Scripts/app/bubbles.js", 
+                "~/Scripts/app/pourcast.js"));
             bundles.Add(new StyleBundle("~/Content/themes/base/css")
                 .Include("~/Content/bootstrap.css",
                 "~/Content/bootstrap-theme.css",
