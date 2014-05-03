@@ -68,11 +68,11 @@ body {
     color: #fff;
 }
 
-.tap.left .keg {
+.tap:nth-child(odd) .keg {
 	left: 0;
 }
 
-.tap.right .side {
+.tap:nth-child(even) .side {
 	right: 0;
 }
 
@@ -80,10 +80,10 @@ body {
     position: absolute;
     top: -50px;
 }
-.tap.right .remaining {
+.tap:nth-child(even) .remaining {
     right: -15px;
 }
-.tap.left .remaining {
+.tap:nth-child(odd) .remaining {
     left: -15px;
 }
 .remaining .fa {
@@ -91,14 +91,14 @@ body {
     top: 0;
     font-size: 10em;
 }
-.tap.left .remaining .fa {
+.tap:nth-child(odd) .remaining .fa {
     left: 0;
     -moz-transform: scaleX(-1);
     -o-transform: scaleX(-1);
     -webkit-transform: scaleX(-1);
     transform: scaleX(-1);
 }
-.tap.right .remaining .fa {
+.tap:nth-child(even) .remaining .fa {
     right: 0;
 }
 .remaining .percent {
@@ -107,10 +107,10 @@ body {
     
     font-size: 2.5em;
 }
-.tap.left .remaining .percent {
+.tap:nth-child(odd) .remaining .percent {
     left: 35px;
 }
-.tap.right .remaining .percent {
+.tap:nth-child(even) .remaining .percent {
     right: 35px;
 }
 
@@ -137,7 +137,7 @@ body {
     overflow: hidden;
 }
 
-  .profile img.keg {
+  .profile img.body {
       max-width: 100%;
       height: 75%;
       position: absolute;
@@ -232,7 +232,7 @@ body {
 
 /* BEER STYLE CLASSES
  =================================================*/
-.AmberAle, .AmberAle .beer-level {
+/*.AmberAle, .AmberAle .beer-level {
     background: #f0c030;
 }
 .BlondeAle, .BlondeAle .beer-level {
@@ -276,5 +276,5 @@ body {
 }
 .Rye, .Rye .beer-level {
     background: #f0c030;
-}
+}*/
 
