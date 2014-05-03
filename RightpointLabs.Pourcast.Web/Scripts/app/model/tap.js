@@ -12,12 +12,14 @@
         app.events.on("KegRemovedFromTap", function(e) {
             if (e.TapId === self.id()) {
                 self.keg(null);
+                console.log("KegRemovedFromTap");
             }
         });
 
         app.events.on("KegTapped", function(e) {
             if (e.TapId === self.id()) {
                 self.loadKeg();
+                console.log("KegTapped");
             }
         });
     };
@@ -27,6 +29,8 @@
 
         $.get("/api/beerOnTap/" + self.id(),
             function (beerOnTapJSON) {
+                console.log(beerOnTapJSON);
+
                 var brewery = new app.Brewery(beerOnTapJSON.Brewery);
                 var beer = new app.Beer(beerOnTapJSON.Beer, brewery);
                 var keg = new app.Keg(beerOnTapJSON.Keg, beer);

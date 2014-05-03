@@ -2,7 +2,7 @@
     app.Brewery = app.Brewery || function (breweryJSON) {
         var self = this;
 
-        self.name = ko.observable(breweryJSON.Id);
+        self.id = ko.observable(breweryJSON.Id);
         self.name = ko.observable(breweryJSON.Name);
         self.city = ko.observable(breweryJSON.City);
         self.state = ko.observable(breweryJSON.State);
