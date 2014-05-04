@@ -33,10 +33,10 @@ namespace RightpointLabs.Pourcast.Web.App_Start
             bundles.Add(new StyleBundle("~/Content/themes/base/css")
                 .Include("~/Content/bootstrap.css",
                 "~/Content/bootstrap-theme.css",
-                "~/Content/Site.css",
                 "~/Content/bubbles.css",
                 "~/Content/themes/base/*.css",
-                "~/Content/toastr.css"));
+                "~/Content/toastr.css",
+                "~/Content/pourcast.css"));
         }
     }
 }

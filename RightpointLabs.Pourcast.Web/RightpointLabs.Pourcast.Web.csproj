@@ -210,13 +210,11 @@
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bubbles.css" />
-    <Content Include="Content\Site.css" />
-    <Content Include="Content\Split.css" />
-    <Content Include="Content\StyleSheet.css">
-      <DependentUpon>StyleSheet.less</DependentUpon>
+    <Content Include="Content\pourcast.css">
+      <DependentUpon>pourcast.less</DependentUpon>
     </Content>
-    <Content Include="Content\StyleSheet.min.css">
-      <DependentUpon>StyleSheet.css</DependentUpon>
+    <Content Include="Content\pourcast.min.css">
+      <DependentUpon>pourcast.css</DependentUpon>
     </Content>
     <Content Include="Content\themes\base\images\animated-overlay.gif" />
     <Content Include="Content\themes\base\images\face-happy.png" />
@@ -319,7 +317,7 @@
     <Content Include="ConnectionStrings.config" />
     <Content Include="Areas\Admin\Views\Beer\Index.cshtml" />
     <Content Include="Scripts\app\events.js" />
-    <Content Include="Content\StyleSheet.less" />
+    <Content Include="Content\pourcast.less" />
     <None Include="Scripts\libs\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\app\admin.js" />
     <Content Include="Scripts\app\model\tap.js" />
