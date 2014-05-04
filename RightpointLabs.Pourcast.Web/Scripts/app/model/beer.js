@@ -1,6 +1,6 @@
 ﻿var pourcast = pourcast || {};
 
-pourcast.Beer = (function ($, ko, toast, moment) {
+pourcast.Beer = (function ($, ko) {
     function Beer(beerJSON, brewery) {
         var self = this;
 
@@ -15,4 +15,4 @@ pourcast.Beer = (function ($, ko, toast, moment) {
     };
 
     return Beer;
-}(jQuery, ko, toastr, moment));
+}(jQuery, ko));

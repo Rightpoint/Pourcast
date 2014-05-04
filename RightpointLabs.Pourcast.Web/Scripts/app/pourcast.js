@@ -1,6 +1,6 @@
 ﻿var pourcast = pourcast || {};
 
-pourcast.app = (function ($, ko, toast, moment) {
+pourcast.app = (function ($, ko) {
     var pub = {};
 
     pub.taps = ko.observableArray();
@@ -23,4 +23,4 @@ pourcast.app = (function ($, ko, toast, moment) {
     };
 
     return pub;
-}(jQuery, ko, toastr, moment));
+}(jQuery, ko));

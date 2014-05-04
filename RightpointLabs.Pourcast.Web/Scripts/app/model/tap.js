@@ -1,6 +1,6 @@
 ﻿var pourcast = pourcast || {};
 
-pourcast.Tap = (function ($, ko, toast, moment) {
+pourcast.Tap = (function ($, ko) {
 
     function Tap(tapJSON) {
         var self = this;
@@ -47,4 +47,4 @@ pourcast.Tap = (function ($, ko, toast, moment) {
     };
 
     return Tap;
-}(jQuery, ko, toastr, moment));
+}(jQuery, ko));
