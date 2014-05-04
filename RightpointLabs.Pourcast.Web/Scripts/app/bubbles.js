@@ -1,27 +1,12 @@
 ﻿var pourcast = pourcast || {};
 
 function bubbles($container, params) {
-    // Settings
 
-    var minBubbleCount = 5, // Minimum number of bubbles
-        maxBubbleCount = 20, // Maximum number of bubbles
-        minBubbleSize = 2, // Smallest possible bubble diameter (px)
-        maxBubbleSize = 6; // Largest possible bubble diameter (px)
-
-    if (params) {
-        if (params.hasOwnProperty("minBubbleCount")) {
-            minBubbleCount = params.minBubbleCount;
-        }
-        if (params.hasOwnProperty("maxBubbleCount")) {
-            maxBubbleCount = params.maxBubbleCount;
-        }
-        if (params.hasOwnProperty("minBubbleSize")) {
-            minBubbleSize = params.minBubbleSize;
-        }
-        if (params.hasOwnProperty("maxBubbleSize")) {
-            maxBubbleSize = params.maxBubbleSize;
-        }
-    }
+    params = params || {};
+    var minBubbleCount = params.minBubbleCount || 5; // Minimum number of bubbles
+    var maxBubbleCount = params.maxBubbleCount || 20; // Maximum number of bubbles
+    var minBubbleSize = params.minBubbleSize || 2; // Smallest possible bubble diameter (px)
+    var maxBubbleSize = params.maxBubbleSize || 6; // Largest possible bubble diameter (px)
 
     // Calculate a random number of bubbles based on our min/max
     var bubbleCount = minBubbleCount + Math.floor(Math.random() * (maxBubbleCount + 1));
