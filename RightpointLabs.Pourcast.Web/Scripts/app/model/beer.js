@@ -1,5 +1,7 @@
-﻿(function (app, $, ko, toast, moment) {
-    app.Beer = app.Beer || function (beerJSON, brewery) {
+﻿var pourcast = pourcast || {};
+
+pourcast.Beer = (function ($, ko, toast, moment) {
+    function Beer(beerJSON, brewery) {
         var self = this;
 
         self.id = ko.observable(beerJSON.Id);
@@ -12,4 +14,5 @@
         self.brewery = ko.observable(brewery);
     };
 
-}(window.pourcast = window.pourcast || {}, jQuery, ko, toastr, moment));
+    return Beer;
+}(jQuery, ko, toastr, moment));

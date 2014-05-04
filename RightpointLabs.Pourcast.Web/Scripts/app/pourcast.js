@@ -1,34 +1,26 @@
-﻿(function (app, $, ko, toast, moment) {
-    //var vm = {
-    //    title : "Hello World"
-    //};
-   
-    //var brewery = new app.Brewery("Goose Island", "Chicago", "IL", []);
-    //brewery.beers.push(new app.Beer("Honker's Ale", 4.3, "http://cdn.beeradvocate.com/im/beers/1157.jpg", "English Bitter", "Pint"));
-    
-    //vm.brewery = new app.BreweryVM([brewery]);
-    //app.init = function() {
-    //    ko.applyBindings(vm);
-    //    toast.success(vm.title);
-    //};
+﻿var pourcast = pourcast || {};
 
-    app.taps = ko.observableArray();
+pourcast.app = (function ($, ko, toast, moment) {
+    var pub = {};
+
+    pub.taps = ko.observableArray();
 
     var loadTaps = function () {
         $.get("/api/tap",
             function (tapsJSON) {
                 tapsJSON.forEach(function (tapJSON) {
-                    var tap = new app.Tap(tapJSON);
-                    app.taps.push(tap);
+                    var tap = new pourcast.Tap(tapJSON);
+                    pub.taps.push(tap);
                 });
             }
         );
     };
 
-    app.init = function () {
+    pub.init = function () {
         loadTaps();
 
-        ko.applyBindings(app);
+        ko.applyBindings(pub);
     };
 
-}(window.pourcast = window.pourcast || {}, jQuery, ko, toastr, moment));
+    return pub;
+}(jQuery, ko, toastr, moment));

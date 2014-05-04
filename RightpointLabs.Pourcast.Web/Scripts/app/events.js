@@ -1,58 +1,57 @@
-﻿(function (app, $, toastr) {
-    app.events = app.events || function () {
-        $.connection.hub.start();
+﻿var pourcast = pourcast || {};
 
-        var pub = {
-            on: function(event, callback) {
-                $.connection.eventsHub.on(event, callback);
-            },
-            off: function(event, callback) {
-                $.connection.eventsHub.off(event, callback);
+pourcast.events = (function ($, toastr) {
+    $.connection.hub.start();
+
+    var pub = {
+        on: function (event, callback) {
+            $.connection.eventsHub.on(event, callback);
+        },
+        off: function (event, callback) {
+            $.connection.eventsHub.off(event, callback);
+        }
+    };
+
+
+    // reconnect
+    var retryCount = 0;
+    var isDisconnected = false;
+    var disconnectedToast;
+
+    $.connection.hub.stateChanged(function (e) {
+        if (e.newState === $.connection.connectionState.connected) {
+            if (isDisconnected) {
+                toastr.clear(disconnectedToast);
+                toastr.success("Reconnected");
+
+                isDisconnected = false;
             }
-        };
+        } else if (e.newState === $.connection.connectionState.disconnected) {
+            if (!isDisconnected) {
+                disconnectedToast = toastr.error("Disconnected", "", {
+                    timeOut: 0,
+                    extendedTimeOut: 0
+                });
 
-
-        // reconnect
-        var retryCount = 0;
-        var isDisconnected = false;
-        var disconnectedToast;
-
-        $.connection.hub.stateChanged(function (e) {
-            if (e.newState === $.connection.connectionState.connected) {
-                if (isDisconnected) {
-                    toastr.clear(disconnectedToast);
-                    toastr.success("Reconnected");
-
-                    isDisconnected = false;
-                }
-            } else if (e.newState === $.connection.connectionState.disconnected) {
-                if (!isDisconnected) {
-                    disconnectedToast = toastr.error("Disconnected", "", {
-                        timeOut: 0,
-                        extendedTimeOut: 0
-                    });
-
-                    retryCount = 0;
-                    isDisconnected = true;
-                }
+                retryCount = 0;
+                isDisconnected = true;
             }
-        });
+        }
+    });
 
-        $.connection.hub.disconnected(function () {
-            setTimeout(function () {
-                $.connection.hub.start();
-            }, Math.pow(2, retryCount) * 1000);
+    $.connection.hub.disconnected(function () {
+        setTimeout(function () {
+            $.connection.hub.start();
+        }, Math.pow(2, retryCount) * 1000);
 
-            retryCount++;
-        });
+        retryCount++;
+    });
 
 
-        // admin refresh
-        pub.on("refresh", function() {
-            window.location.reload();
-        });
+    // admin refresh
+    pub.on("refresh", function () {
+        window.location.reload();
+    });
 
-        return pub;
-    }();
-
-}(window.pourcast = window.pourcast || {}, jQuery, toastr));
+    return pub;
+}(jQuery, toastr));

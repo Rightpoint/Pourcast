@@ -1,4 +1,6 @@
-﻿function bubbles($container, params) {
+﻿var pourcast = pourcast || {};
+
+function bubbles($container, params) {
     // Settings
 
     var minBubbleCount = 5, // Minimum number of bubbles

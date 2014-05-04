@@ -1,5 +1,7 @@
-﻿(function(app, $, ko, toast, moment) {
-    app.Keg = app.Keg || function(kegJSON, beer) {
+﻿var pourcast = pourcast || {};
+
+pourcast.Keg = (function ($, ko, toast, moment) {
+    function Keg(kegJSON, beer) {
         var self = this;
 
         self.id = ko.observable(kegJSON.Id);
@@ -9,16 +11,17 @@
         self.capacity = ko.observable(kegJSON.Capacity);
         self.beer = ko.observable(beer);
 
-        app.events.on("PourStarted", function(e) {
-
-        });
-
-        app.events.on("PourStopped", function (e) {
-
-        });
+        pourcast.events.on("PourStarted", self.pourStarted);
+        pourcast.events.on("PourStopped", self.pourStopped);
     };
 
-    app.Keg.prototype.bound = function(element) {
-        alert('hi');
+    Keg.prototype.pourStarted = function(e) {
+        console.log("PourStarted");
     };
-}(window.pourcast = window.pourcast || {}, jQuery, ko, toastr, moment));
+
+    Keg.prototype.pourStopped = function (e) {
+        console.log("PourStopped");
+    };
+
+    return Keg;
+}(jQuery, ko, toastr, moment));
