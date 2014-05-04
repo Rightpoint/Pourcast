@@ -1,30 +1,9 @@
-﻿@{
-    
-}
-
-@*<header>
-    <h1>Pourcast</h1>
-    <h2 data-bind="text: brewery.name"></h2>
-    <p data-bind="text : brewery.location"></p>
-    <ul data-bind="foreach: brewery.breweries">
-        <li>
-            <span data-bind="text: name"></span> <span data-bind="text: location"></span>
-        </li>
-    </ul>
-</header>
-
-@Html.Partial("_CreateBrewery")
-
-<input type="button" data-bind="click: brewery.create" value="Create Brewery"/>*@
-
-
-
-<div class="taps" data-bind="template: { name: 'tap-template', foreach: taps }">
-    
+﻿<div class="taps" data-bind="foreach: taps">
+    <div class="tap">
+        <!-- ko if: keg -->
+            <!-- ko with: keg  -->
+                @Html.Partial("_Keg")
+            <!-- /ko -->
+        <!-- /ko -->
+    </div>
 </div>
-
-@section templates
-{
-    @Html.Partial("_Tap")
-    @Html.Partial("_Keg")
-}
