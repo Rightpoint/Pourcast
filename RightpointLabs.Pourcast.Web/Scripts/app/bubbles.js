@@ -1,7 +1,7 @@
 ﻿function bubbles($container) {
     // Settings
-    var min_bubble_count = 5, // Minimum number of bubbles
-        max_bubble_count = 20, // Maximum number of bubbles
+    var min_bubble_count = 10, // Minimum number of bubbles
+        max_bubble_count = 30, // Maximum number of bubbles
         min_bubble_size = 2, // Smallest possible bubble diameter (px)
         max_bubble_size = 6; // Largest possible bubble diameter (px)
 

@@ -54,10 +54,6 @@ html, body,
 	height: 100%;
 }
 
-body {
-	overflow-y: scroll;
-}
-
 /* Intro sides */
 .side {
 	position: fixed;
@@ -121,7 +117,6 @@ body {
 	left: 50%;
 	padding: 0 1em;
 	width: 75%;
-	cursor: pointer;
 	-webkit-transform: translateY(-50%) translateX(-50%);
 	transform: translateY(-50%) translateX(-50%);
 }
