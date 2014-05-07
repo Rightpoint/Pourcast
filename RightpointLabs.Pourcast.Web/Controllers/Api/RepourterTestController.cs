@@ -15,7 +15,7 @@ namespace RightpointLabs.Pourcast.Web.Controllers.Api
             _connectionManager = connectionManager;
         }
 
-        [HttpPost]
+        [HttpGet]
         public void StartPour(string id)
         {
             var context = _connectionManager.GetHubContext<EventsHub>();
@@ -23,7 +23,7 @@ namespace RightpointLabs.Pourcast.Web.Controllers.Api
             context.Clients.All.StartPour(new { tapId = id });
         }
 
-        [HttpPost]
+        [HttpGet]
         public void StopPour([FromUri]string id, [FromUri]double volume)
         {
             var context = _connectionManager.GetHubContext<EventsHub>();

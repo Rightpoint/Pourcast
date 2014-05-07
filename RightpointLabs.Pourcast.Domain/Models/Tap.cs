@@ -8,7 +8,7 @@
     {
         private Tap() { }
 
-        public Tap(string id, TapName name)
+        public Tap(string id, string name)
             : base(id)
         {
             Name = name;
@@ -16,7 +16,7 @@
             DomainEvents.Raise(new TapCreated(id));
         }
 
-        public TapName Name { get; private set; }
+        public string Name { get; private set; }
 
         public string KegId { get; private set; }
 

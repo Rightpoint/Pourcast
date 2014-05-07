@@ -80,5 +80,5 @@
 }
 
 <div>
-    @Html.ActionLink(Resources.Admin_Beer_Create_SubmitButton, "Index")
+    @Html.ActionLink("Import Beer List", "Import", new {breweryId = Model.BreweryId})
 </div>

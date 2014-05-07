@@ -25,7 +25,10 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Breweries", "Index", "Brewery", null, new { @class = "navbar-btn" })</li>
+                    <li>@Html.ActionLink("Manage Taps", "Index", "Tap", null, new { @class = "navbar-btn" })</li>
+                    <li>@Html.ActionLink("Manage Kegs", "Index", "Keg", null, new { @class = "navbar-btn" })</li>
+                    <li>@Html.ActionLink("Manage Breweries", "Index", "Brewery", null, new { @class = "navbar-btn" })</li>
+                    <li>@Html.ActionLink("Manage Beers", "Index", "Beer", null, new { @class = "navbar-btn" })</li>
                 </ul>
             </div>
         </div>
@@ -40,6 +43,7 @@
     </div>
 
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryUI")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>

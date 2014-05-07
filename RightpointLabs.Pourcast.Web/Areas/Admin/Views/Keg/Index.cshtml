@@ -1,0 +1,36 @@
+﻿@model RightpointLabs.Pourcast.Web.Areas.Admin.Models.KegViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>Beer</th>
+        <th>Remaining</th>
+        <th>Percent</th>
+        <th>Empty</th>
+        <th>On Tap</th>
+    </tr>
+
+@foreach (var keg in Model.Kegs) {
+    <tr>
+        <td>@keg.BeerName</td>
+        <td>@keg.AmountOfBeerRemaining</td>
+        <td>@keg.PercentRemaining</td>
+        <td>@keg.IsEmpty</td>
+        <td>@keg.IsOnTap</td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = keg.Id }) |
+            @Html.ActionLink("Details", "Details", new { id = keg.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id = keg.Id })
+        </td>
+    </tr>
+}
+
+</table>

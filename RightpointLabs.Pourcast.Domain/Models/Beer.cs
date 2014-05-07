@@ -17,8 +17,8 @@
         public string Name { get; set; }
         public string BreweryId { get; set; }
         public double ABV { get; set; }
-        public int BAScore { get; set; }
-        public int RPScore { get; set; }
+        public double BAScore { get; set; }
+        public double RPScore { get; set; }
         public string Style { get; set; }
         public string Color { get; set; }
         public string Glass { get; set; }

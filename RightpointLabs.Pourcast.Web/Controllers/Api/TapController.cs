@@ -28,13 +28,13 @@ namespace RightpointLabs.Pourcast.Web.Controllers.Api
             return _tapOrchestrator.GetTapById(id);
         }
 
-        [HttpPost]
+        [HttpGet]
         public void StartPour(string id)
         {
             _tapOrchestrator.StartPourFromTap(id);
         }
 
-        [HttpPost]
+        [HttpGet]
         public void StopPour([FromUri]string id, [FromUri]double volume)
         {
             _tapOrchestrator.StopPourFromTap(id, volume);

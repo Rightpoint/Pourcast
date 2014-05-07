@@ -4,15 +4,27 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using RightpointLabs.Pourcast.Application.Orchestrators.Abstract;
+using RightpointLabs.Pourcast.Domain.Models;
 using RightpointLabs.Pourcast.Web.Areas.Admin.Models;
+using WebGrease.Css.Extensions;
 
 namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Administrators")]
     public class HomeController : Controller
     {
         private readonly ITapOrchestrator _tapOrchestrator;
         private readonly IKegOrchestrator _kegOrchestrator;
         private readonly IBeerOrchestrator _beerOrchestrator;
+
+        static HomeController()
+        {
+
+            AutoMapper.Mapper.CreateMap<Keg, KegModel>();
+            AutoMapper.Mapper.CreateMap<KegModel, Keg>();
+            AutoMapper.Mapper.CreateMap<Tap, TapModel>();
+            AutoMapper.Mapper.CreateMap<TapModel, Tap>();
+        }
 
         public HomeController(ITapOrchestrator tapOrchestrator, IKegOrchestrator kegOrchestrator,
             IBeerOrchestrator beerOrchestrator)
@@ -20,7 +32,9 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
             if(tapOrchestrator == null) throw new ArgumentNullException("tapOrchestrator");
             if(kegOrchestrator == null) throw new ArgumentNullException("kegOrchestrator");
             if(beerOrchestrator == null) throw new ArgumentNullException("beerOrchestrator");
+            _tapOrchestrator = tapOrchestrator;
             _kegOrchestrator = kegOrchestrator;
+            _beerOrchestrator = beerOrchestrator;
         }
 
         //
@@ -28,31 +42,19 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
         public ActionResult Index()
         {
             // TODO Talk about how to figure out which keg is on which tap
-            var kegsOnTap = new KegsOnTap();
-            var kegs = _kegOrchestrator.GetKegsOnTap();
-            var count = 0;
-            foreach (var keg in kegs)
+            var taps = _tapOrchestrator.GetTaps();
+            var vm = new List<TapModel>();
+            taps.ForEach(t =>
             {
-                if (count == 0)
+                var tap = AutoMapper.Mapper.Map<Tap, TapModel>(t);
+                if (t.HasKeg)
                 {
-                    kegsOnTap.LeftKeg = new OnTapKeg()
-                    {
-                        Keg = keg,
-                        Beer = _beerOrchestrator.GetById(keg.BeerId)
-                    };
+                    var keg = _kegOrchestrator.GetKeg(t.KegId);
+                    tap.Keg = AutoMapper.Mapper.Map<Keg, KegModel>(keg);
                 }
-                else
-                {
-                    kegsOnTap.RightKeg = new OnTapKeg()
-                    {
-                        Keg = keg,
-                        Beer = _beerOrchestrator.GetById(keg.BeerId)
-                    };                    
-                }
-                count++;
-            }
-
-            return View("Index", kegsOnTap);
+                vm.Add(tap);
+            });
+            return View("Index", vm);
         }
 	}
 }

@@ -1,6 +1,4 @@
-﻿using RightpointLabs.Pourcast.Application.Commands;
-
-namespace RightpointLabs.Pourcast.Application.Orchestrators.Abstract
+﻿namespace RightpointLabs.Pourcast.Application.Orchestrators.Abstract
 {
     using System.Collections.Generic;
 
@@ -21,6 +19,8 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Abstract
 
         Beer GetById(string id);
 
-        string CreateBeer(string name, double abv, int baScore, string style, string color, string glass, string breweryId);
+        void Save(Beer beer);
+
+        string CreateBeer(string name, double abv, double baScore, string style, string color, string glass, string breweryId);
     }
 }

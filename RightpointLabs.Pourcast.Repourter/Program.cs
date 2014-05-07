@@ -11,7 +11,6 @@ namespace RightpointLabs.Pourcast.Repourter
 {
     public class Program
     {
-
         // count flow every half a second
         private const int MILLISECONDS_BETWEEN_COUNT = 500;
 
@@ -24,10 +23,9 @@ namespace RightpointLabs.Pourcast.Repourter
         {
             var sensors = new FlowSensor[NUMBER_OF_TAPS];
             // Flow sensor plugged into pin 13, no resistor necessary, fire on the rising edge of the pulse
-            sensors[0] = new FlowSensor(new InterruptPort(Pins.GPIO_PIN_D13, false, Port.ResistorMode.Disabled, Port.InterruptMode.InterruptEdgeHigh));
+            sensors[0] = new FlowSensor(new InterruptPort(Pins.GPIO_PIN_D13, false, Port.ResistorMode.Disabled, Port.InterruptMode.InterruptEdgeHigh), 1);
             // Flow sensor plugged into pin 12, no resistor necessary, fire on the rising edge of the pulse
-            sensors[1] = new FlowSensor(new InterruptPort(Pins.GPIO_PIN_D12, false, Port.ResistorMode.Disabled, Port.InterruptMode.InterruptEdgeHigh));
-
+            sensors[1] = new FlowSensor(new InterruptPort(Pins.GPIO_PIN_D12, false, Port.ResistorMode.Disabled, Port.InterruptMode.InterruptEdgeHigh), 2);
             while (true)
             {
                 foreach (var flowSensor in sensors)

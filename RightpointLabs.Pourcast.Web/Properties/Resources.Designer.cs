@@ -295,6 +295,24 @@ namespace RightpointLabs.Pourcast.Web.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select One....
+        /// </summary>
+        public static string Admin_Tap_Create_Dropdownlist {
+            get {
+                return ResourceManager.GetString("Admin_Tap_Create_Dropdownlist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select One....
+        /// </summary>
+        public static string Admin_Tap_Edit_Dropdownlist {
+            get {
+                return ResourceManager.GetString("Admin_Tap_Edit_Dropdownlist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pourcast.
         /// </summary>
         public static string Application {

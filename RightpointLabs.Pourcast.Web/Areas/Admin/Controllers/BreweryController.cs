@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.Routing;
-using Microsoft.Owin.Security.Provider;
-using RightpointLabs.Pourcast.Application.Commands;
+
 using RightpointLabs.Pourcast.Application.Orchestrators.Abstract;
 using RightpointLabs.Pourcast.Domain.Models;
 using RightpointLabs.Pourcast.Web.Areas.Admin.Models;
 
 namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Administrators")]
     public class BreweryController : Controller
     {
         static BreweryController()
