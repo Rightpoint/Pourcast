@@ -20,13 +20,7 @@
 
         public string KegId { get; private set; }
 
-        public bool HasKeg
-        {
-            get
-            {
-                return KegId != null;
-            }
-        }
+        public bool HasKeg { get; private set; }
 
         public void RemoveKeg()
         {
@@ -34,6 +28,7 @@
 
             var kegId = KegId;
             KegId = null;
+            HasKeg = false;
 
             DomainEvents.Raise(new KegRemovedFromTap(Id, kegId));
         }
@@ -46,6 +41,7 @@
                 throw new Exception("Tap already has a keg.");
 
             KegId = kegId;
+            HasKeg = true;
 
             DomainEvents.Raise(new KegTapped(Id, KegId));
         }

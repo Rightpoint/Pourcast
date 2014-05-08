@@ -1,49 +1,9 @@
-﻿@{
-    
-}
-
-@*<header>
-    <h1>Pourcast</h1>
-    <h2 data-bind="text: brewery.name"></h2>
-    <p data-bind="text : brewery.location"></p>
-    <ul data-bind="foreach: brewery.breweries">
-        <li>
-            <span data-bind="text: name"></span> <span data-bind="text: location"></span>
-        </li>
-    </ul>
-</header>
-
-@Html.Partial("_CreateBrewery")
-
-<input type="button" data-bind="click: brewery.create" value="Create Brewery"/>*@
-
-
-
-<div class="row">
-    <div id="left-split" class="col-xs-6">
-        @Html.Partial("KegSplit")
-    </div>
-    <div id="right-split" class="col-xs-6">
-        @Html.Partial("KegSplit")
+﻿<div class="taps" data-bind="foreach: taps">
+    <div class="tap">
+        <!-- ko if: keg -->
+            <!-- ko with: keg  -->
+                @Html.Partial("Keg")
+            <!-- /ko -->
+        <!-- /ko -->
     </div>
 </div>
-<!-- /splitlayout -->
-
-
-
-<script src="~/Scripts/app/bubbles.js"></script>
-@section scripts {
-    <script type="text/javascript">
-        $(function () {
-            
-            pourcast.events.on("beerPoured", function (e) {
-                toastr.success(e.PercentRemaining);
-            });
-            pourcast.events.on("beerPoured", function (e) {
-                toastr.success(e.Volume);
-            });
-            var leftBubbles = bubbles($("#left-split .side"));
-            var rightBubbles = bubbles($("#right-split .side"));
-        });
-    </script>
-}

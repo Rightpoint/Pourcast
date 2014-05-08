@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     using RightpointLabs.Pourcast.Application.Orchestrators.Abstract;
     using RightpointLabs.Pourcast.Application.Payloads;
@@ -40,36 +41,30 @@
         {
             var taps = _tapRepository.GetAll();
 
-            foreach (var tap in taps)
-            {
-                var keg = _kegRepository.GetById(tap.KegId);
-                var beer = _beerRepository.GetById(keg.BeerId);
-                var brewery = _breweryRepository.GetById(beer.BreweryId);
-
-                yield return new BeerOnTap()
-                {
-                    Tap = tap,
-                    Keg = keg,
-                    Beer = beer,
-                    Brewery = brewery
-                };
-            }
+            return taps.Select(tap => CreateBeerOnTap(tap));
         }
 
         public BeerOnTap GetBeerOnTap(string tapId)
         {
             var tap = _tapRepository.GetById(tapId);
-            var keg = _kegRepository.GetById(tap.KegId);
-            var beer = _beerRepository.GetById(keg.BeerId);
-            var brewery = _breweryRepository.GetById(beer.BreweryId);
 
-            return new BeerOnTap()
+            return CreateBeerOnTap(tap);
+        }
+
+        private BeerOnTap CreateBeerOnTap(Tap tap)
+        {
+            if (tap.HasKeg)
             {
-                Tap = tap,
-                Keg = keg,
-                Beer = beer,
-                Brewery = brewery
-            };
+                var keg = _kegRepository.GetById(tap.KegId);
+                var beer = _beerRepository.GetById(keg.BeerId);
+                var brewery = _breweryRepository.GetById(beer.BreweryId);
+
+                return new BeerOnTap() { Tap = tap, Keg = keg, Beer = beer, Brewery = brewery };
+            }
+            else
+            {
+                return new BeerOnTap() { Tap = tap };
+            }
         }
 
         public IEnumerable<Beer> GetByName(string name)
