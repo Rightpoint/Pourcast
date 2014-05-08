@@ -42,13 +42,7 @@
             }
         }
 
-        public bool IsEmpty
-        {
-            get
-            {
-                return AmountOfBeerRemaining <= 0;
-            }
-        }
+        public bool IsEmpty { get; private set; }
 
         public bool IsPouring { get; private set; }
 
@@ -77,8 +71,9 @@
 
             DomainEvents.Raise(new PourStopped(tapId, Id, volume, PercentRemaining));
 
-            if (IsEmpty)
+            if (AmountOfBeerRemaining <= 0)
             {
+                IsEmpty = true;
                 DomainEvents.Raise(new KegEmptied(Id));
             }
         }

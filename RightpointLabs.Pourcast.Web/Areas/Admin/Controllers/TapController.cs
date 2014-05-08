@@ -81,25 +81,28 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
         public ActionResult Edit(EditTapViewModel model)
         {
             if (!ModelState.IsValid) return View(model);
+
             var tap = _tapOrchestrator.GetTapById(model.Id);
 
             if (string.IsNullOrEmpty(model.KegId))
             {
-                if(tap.HasKeg) tap.RemoveKeg();
+                if (tap.HasKeg)
+                {
+                    _tapOrchestrator.RemoveKegFromTap(tap.Id);                  
+                }
             }
             else if (!tap.HasKeg)
             {
                 // Add New
-                tap.TapKeg(model.KegId);
+                _tapOrchestrator.TapKeg(tap.Id, model.KegId);
             }
             else if(!tap.KegId.Equals(model.KegId))
             {
                 // Remove old, add new
-                tap.RemoveKeg();
-                tap.TapKeg(model.KegId);
+                _tapOrchestrator.RemoveKegFromTap(tap.Id);
+                _tapOrchestrator.TapKeg(tap.Id, model.KegId);
             }
 
-            _tapOrchestrator.Save(tap);
             return RedirectToAction("Index");
 
         }

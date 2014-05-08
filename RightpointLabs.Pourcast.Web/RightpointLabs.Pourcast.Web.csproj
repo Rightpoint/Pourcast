@@ -210,8 +210,12 @@
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bubbles.css" />
-    <Content Include="Content\Site.css" />
-    <Content Include="Content\Split.css" />
+    <Content Include="Content\pourcast.css">
+      <DependentUpon>pourcast.less</DependentUpon>
+    </Content>
+    <Content Include="Content\pourcast.min.css">
+      <DependentUpon>pourcast.css</DependentUpon>
+    </Content>
     <Content Include="Content\themes\base\images\animated-overlay.gif" />
     <Content Include="Content\themes\base\images\face-happy.png" />
     <Content Include="Content\themes\base\images\face-sad.png" />
@@ -282,12 +286,12 @@
     <Content Include="Fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\toastr.less" />
+    <Content Include="Scripts\app\bindings.js" />
     <Content Include="Scripts\app\bubbles.js" />
-    <Content Include="Scripts\app\SplitLayout.js" />
     <Content Include="AppSettings.config" />
     <Content Include="ConnectionStrings.config" />
-    <Content Include="Scripts\app\model\pourcast.beer.js" />
-    <Content Include="Scripts\app\model\pourcast.brewery.js" />
+    <Content Include="Scripts\app\model\beer.js" />
+    <Content Include="Scripts\app\model\brewery.js" />
     <Content Include="Areas\Admin\Views\web.config" />
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
@@ -312,37 +316,40 @@
     <Content Include="AppSettings.config" />
     <Content Include="ConnectionStrings.config" />
     <Content Include="Areas\Admin\Views\Beer\Index.cshtml" />
-    <None Include="Scripts\jquery-2.1.0.intellisense.js" />
-    <Content Include="Scripts\app\pourcast.events.js" />
-    <None Include="Scripts\jquery-2.1.0.intellisense.js" />
-    <Content Include="Scripts\app\pourcast.admin.js" />
-    <Content Include="Scripts\app\viewModel\pourcast.beervm.js" />
-    <Content Include="Scripts\app\viewModel\pourcast.breweryvm.js" />
+    <Content Include="Scripts\app\events.js" />
+    <Content Include="Content\pourcast.less" />
+    <None Include="Scripts\libs\jquery-2.1.0.intellisense.js" />
+    <Content Include="Scripts\app\admin.js" />
+    <Content Include="Scripts\app\model\tap.js" />
     <Content Include="Scripts\app\pourcast.js" />
-    <Content Include="Scripts\app\model\pourcast.keg.js" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\jquery-2.1.0.js" />
-    <Content Include="Scripts\jquery-2.1.0.min.js" />
-    <Content Include="Scripts\jquery-2.1.0.min.map" />
-    <Content Include="Scripts\jquery-ui-1.10.4.js" />
-    <Content Include="Scripts\jquery-ui-1.10.4.min.js" />
-    <None Include="Scripts\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\jquery.signalR-2.0.3.js" />
-    <Content Include="Scripts\jquery.signalR-2.0.3.min.js" />
-    <Content Include="Scripts\jquery.validate.js" />
-    <Content Include="Scripts\jquery.validate.min.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\knockout-3.1.0.debug.js" />
-    <Content Include="Scripts\knockout-3.1.0.js" />
-    <Content Include="Scripts\modernizr-2.7.2.js" />
-    <Content Include="Scripts\moment-with-langs.js" />
-    <Content Include="Scripts\moment-with-langs.min.js" />
-    <Content Include="Scripts\moment.js" />
-    <Content Include="Scripts\moment.min.js" />
-    <Content Include="Scripts\toastr.js" />
-    <Content Include="Scripts\toastr.min.js" />
+    <Content Include="Scripts\app\model\keg.js" />
+    <Content Include="Scripts\libs\bootstrap.js" />
+    <Content Include="Scripts\libs\bootstrap.min.js" />
+    <None Include="Scripts\libs\jquery-2.1.0.intellisense.js" />
+    <Content Include="Scripts\libs\jquery-2.1.0.js" />
+    <Content Include="Scripts\libs\jquery-2.1.0.min.js" />
+    <Content Include="Scripts\libs\jquery-2.1.0.min.map" />
+    <Content Include="Scripts\libs\jquery-ui-1.10.4.js" />
+    <Content Include="Scripts\libs\jquery-ui-1.10.4.min.js" />
+    <None Include="Scripts\libs\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\libs\jquery.signalR-2.0.3.js" />
+    <Content Include="Scripts\libs\jquery.signalR-2.0.3.min.js" />
+    <Content Include="Scripts\libs\jquery.validate.js" />
+    <Content Include="Scripts\libs\jquery.validate.min.js" />
+    <Content Include="Scripts\libs\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\libs\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\libs\knockout-3.1.0.debug.js" />
+    <Content Include="Scripts\libs\knockout-3.1.0.js" />
+    <Content Include="Scripts\libs\modernizr-2.7.2.js" />
+    <Content Include="Scripts\libs\moment-with-langs.js" />
+    <Content Include="Scripts\libs\moment-with-langs.min.js" />
+    <Content Include="Scripts\libs\moment.js" />
+    <Content Include="Scripts\libs\moment.min.js" />
+    <Content Include="Scripts\libs\toastr.js" />
+    <Content Include="Scripts\libs\toastr.min.js" />
+    <Content Include="Scripts\libs\r.js" />
+    <Content Include="Scripts\libs\require.js" />
+    <Content Include="Views\Shared\Keg.cshtml" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -413,10 +420,8 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Scripts\toastr.min.js.map" />
-    <Content Include="Views\Home\_CreateBrewery.cshtml" />
+    <Content Include="Scripts\libs\toastr.min.js.map" />
     <Content Include="Views\RepourterTest\Index.cshtml" />
-    <Content Include="Views\Home\KegSplit.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

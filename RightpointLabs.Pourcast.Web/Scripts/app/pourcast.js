@@ -1,15 +1,26 @@
-﻿(function (app, $, ko, toast, moment) {
-    var vm = {
-        title : "Hello World"
-    };
-   
-    var brewery = new app.Brewery("Goose Island", "Chicago", "IL", []);
-    brewery.beers.push(new app.Beer("Honker's Ale", 4.3, "http://cdn.beeradvocate.com/im/beers/1157.jpg", "English Bitter", "Pint"));
-    
-    vm.brewery = new app.BreweryVM([brewery]);
-    app.init = function() {
-        ko.applyBindings(vm);
-        toast.success(vm.title);
+﻿var pourcast = pourcast || {};
+
+pourcast.app = (function ($, ko) {
+    var pub = {};
+
+    pub.taps = ko.observableArray();
+
+    var loadTaps = function () {
+        $.get("/api/tap",
+            function (tapsJSON) {
+                tapsJSON.forEach(function (tapJSON) {
+                    var tap = new pourcast.Tap(tapJSON);
+                    pub.taps.push(tap);
+                });
+            }
+        );
     };
 
-}(window.pourcast = window.pourcast || {}, jQuery, ko, toastr, moment));
+    pub.init = function () {
+        loadTaps();
+
+        ko.applyBindings(pub);
+    };
+
+    return pub;
+}(jQuery, ko));
