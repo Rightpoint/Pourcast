@@ -2,10 +2,9 @@
 {
     using Microsoft.AspNet.SignalR.Infrastructure;
 
-    using RightpointLabs.Pourcast.Application.EventHandlers;
     using RightpointLabs.Pourcast.Domain.Events;
 
-    public class KegRemovedFromTapClientHandler : TransactionDependentEventHandler<KegRemovedFromTap>
+    public class KegRemovedFromTapClientHandler : IEventHandler<KegRemovedFromTap>
     {
         private readonly IConnectionManager _connectionManager;
 
@@ -14,7 +13,7 @@
             _connectionManager = connectionManager;
         }
 
-        protected override void HandleAfterTransaction(KegRemovedFromTap domainEvent)
+        public void Handle(KegRemovedFromTap domainEvent)
         {
             var context = _connectionManager.GetHubContext<EventsHub>();
 

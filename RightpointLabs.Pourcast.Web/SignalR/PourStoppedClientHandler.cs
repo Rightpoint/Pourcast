@@ -2,10 +2,9 @@
 {
     using Microsoft.AspNet.SignalR.Infrastructure;
 
-    using RightpointLabs.Pourcast.Application.EventHandlers;
     using RightpointLabs.Pourcast.Domain.Events;
 
-    public class PourStoppedClientHandler : TransactionDependentEventHandler<PourStopped>
+    public class PourStoppedClientHandler : IEventHandler<PourStopped>
     {
         private readonly IConnectionManager _connectionManager;
 
@@ -14,7 +13,7 @@
             _connectionManager = connectionManager;
         }
 
-        protected override void HandleAfterTransaction(PourStopped domainEvent)
+        public void Handle(PourStopped domainEvent)
         {
             var context = _connectionManager.GetHubContext<EventsHub>();
 
