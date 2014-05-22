@@ -42,6 +42,8 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
             var roles = _roleRepository.GetAll();
             var user = _userRepository.GetByUsername(username);
 
+            if (user == null) return new List<Role>();
+
             return roles.Where(r => r.HasUser(user.Id));
         }
 
@@ -106,6 +108,8 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
         public IEnumerable<User> GetUsersInRole(string roleName)
         {
             var role = _roleRepository.GetByName(roleName);
+
+            if (role == null) return new List<User>();
 
             return _userRepository.GetUsersInRole(role.Id);
         }
