@@ -7,7 +7,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@Html.Raw(string.Format("{0} - {1}", Resources.Application, Resources.Description))</title>
-    @Styles.Render("~/Content/themes/base/css")
+    @Styles.Render("~/Content/css/bootstrap")
+    @Styles.Render("~/Content/css/bootstrap-theme")
+    <link href="~/Content/bubbles.css" rel="stylesheet" /> @* The bundler hates this file for some reason *@
+    @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizer")
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 </head>
