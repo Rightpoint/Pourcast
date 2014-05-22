@@ -85,6 +85,10 @@
     <None Include="Schema.json" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\RightpointLabs.Pourcast.Application\RightpointLabs.Pourcast.Application.csproj">
+      <Project>{15f3381d-cf8b-46e5-a323-6454a4e7d2c3}</Project>
+      <Name>RightpointLabs.Pourcast.Application</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RightpointLabs.Pourcast.Domain\RightpointLabs.Pourcast.Domain.csproj">
       <Project>{86a90834-4fda-40e7-810f-f1ab0ade8fe0}</Project>
       <Name>RightpointLabs.Pourcast.Domain</Name>

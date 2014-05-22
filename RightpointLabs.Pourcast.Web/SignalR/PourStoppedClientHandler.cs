@@ -2,6 +2,7 @@
 {
     using Microsoft.AspNet.SignalR.Infrastructure;
 
+    using RightpointLabs.Pourcast.Application.Transactions;
     using RightpointLabs.Pourcast.Domain.Events;
 
     public class PourStoppedClientHandler : IEventHandler<PourStopped>
@@ -17,7 +18,7 @@
         {
             var context = _connectionManager.GetHubContext<EventsHub>();
 
-            context.Clients.All.BeerPourStopped(domainEvent);
+            TransactionExtensions.WaitForTransactionCompleted(() => context.Clients.All.PourStopped(domainEvent));
         }
     }
 }

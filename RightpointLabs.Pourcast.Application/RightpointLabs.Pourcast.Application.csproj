@@ -79,6 +79,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Transactions\TransactionalCallHandler.cs" />
+    <Compile Include="Transactions\TransactionExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

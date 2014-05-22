@@ -2,6 +2,7 @@
 {
     using Microsoft.AspNet.SignalR.Infrastructure;
 
+    using RightpointLabs.Pourcast.Application.Transactions;
     using RightpointLabs.Pourcast.Domain.Events;
 
     public class KegTappedClientHandler : IEventHandler<KegTapped>
@@ -17,7 +18,7 @@
         {
             var context = _connectionManager.GetHubContext<EventsHub>();
 
-            context.Clients.All.KegTapped(domainEvent);
+            TransactionExtensions.WaitForTransactionCompleted(() => context.Clients.All.KegTapped(domainEvent));
         }
     }
 }
