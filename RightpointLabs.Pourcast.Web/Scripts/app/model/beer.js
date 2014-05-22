@@ -8,6 +8,11 @@ pourcast.Beer = (function ($, ko) {
         self.name = ko.observable(beerJSON.Name);
         self.abv = ko.observable(beerJSON.ABV);
         self.color = ko.observable(beerJSON.Color);
+
+        self.backgroundColor = ko.computed(function() {
+            return self.color();
+        });
+
         self.glass = ko.observable(beerJSON.Glass);
         self.style = ko.observable(beerJSON.Style);
 

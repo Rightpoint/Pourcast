@@ -2,10 +2,10 @@
 {
     using Microsoft.AspNet.SignalR.Infrastructure;
 
-    using RightpointLabs.Pourcast.Application.EventHandlers;
+    using RightpointLabs.Pourcast.Application.Transactions;
     using RightpointLabs.Pourcast.Domain.Events;
 
-    public class KegTappedClientHandler : TransactionDependentEventHandler<KegTapped>
+    public class KegTappedClientHandler : IEventHandler<KegTapped>
     {
         private readonly IConnectionManager _connectionManager;
 
@@ -14,11 +14,11 @@
             _connectionManager = connectionManager;
         }
 
-        protected override void HandleAfterTransaction(KegTapped domainEvent)
+        public void Handle(KegTapped domainEvent)
         {
             var context = _connectionManager.GetHubContext<EventsHub>();
 
-            context.Clients.All.KegTapped(domainEvent);
+            TransactionExtensions.WaitForTransactionCompleted(() => context.Clients.All.KegTapped(domainEvent));
         }
     }
 }
