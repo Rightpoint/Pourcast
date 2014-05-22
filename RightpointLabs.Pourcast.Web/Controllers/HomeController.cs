@@ -10,8 +10,6 @@ namespace RightpointLabs.Pourcast.Web.Controllers
 
         private readonly IIdentityOrchestrator _identityOrchestrator;
 
-        public HomeController() { }
-
         public HomeController(ITapOrchestrator tapOrchestrator, IIdentityOrchestrator identityOrchestrator)
         {
             _tapOrchestrator = tapOrchestrator;
