@@ -14,6 +14,7 @@ pourcast.Keg = (function ($, ko) {
         pourcast.events.on("PourStarted", function(e) {
             self.pourStarted(e);
         });
+
         pourcast.events.on("PourStopped", function(e) {
             self.pourStopped(e);
         });
