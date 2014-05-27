@@ -213,9 +213,6 @@
     <Content Include="Content\pourcast.css">
       <DependentUpon>pourcast.less</DependentUpon>
     </Content>
-    <Content Include="Content\pourcast.min.css">
-      <DependentUpon>pourcast.css</DependentUpon>
-    </Content>
     <Content Include="Content\themes\base\images\animated-overlay.gif" />
     <Content Include="Content\themes\base\images\bubble-green.png" />
     <Content Include="Content\themes\base\images\bubble-red.png" />
@@ -320,6 +317,7 @@
     <Content Include="Areas\Admin\Views\Beer\Index.cshtml" />
     <Content Include="Scripts\app\events.js" />
     <Content Include="Content\pourcast.less" />
+    <None Include="Properties\PublishProfiles\Production.pubxml" />
     <None Include="Scripts\libs\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\app\admin.js" />
     <Content Include="Scripts\app\model\tap.js" />

@@ -10,8 +10,13 @@ pourcast.Tap = (function ($, ko) {
         self.hasKeg = ko.observable(tapJSON.HasKeg);
         self.keg = ko.observable();
 
-        pourcast.events.on("KegRemovedFromTap", self.kegRemovedFromTap);
-        pourcast.events.on("KegTapped", self.kegTapped);
+        pourcast.events.on("KegRemovedFromTap", function(e) {
+            self.kegRemovedFromTap(e);
+        });
+
+        pourcast.events.on("KegTapped", function(e) {
+            self.kegTapped(e);
+        });
 
         self.loadKeg();
     };
@@ -35,11 +40,13 @@ pourcast.Tap = (function ($, ko) {
 
         $.get("/api/beerOnTap/" + self.id(),
             function (beerOnTapJSON) {
-                console.log(beerOnTapJSON);
+                var keg, beer, brewery;
 
-                var brewery = new pourcast.Brewery(beerOnTapJSON.Brewery);
-                var beer = new pourcast.Beer(beerOnTapJSON.Beer, brewery);
-                var keg = new pourcast.Keg(beerOnTapJSON.Keg, beer);
+                if (beerOnTapJSON.Keg != null) {
+                    brewery = new pourcast.Brewery(beerOnTapJSON.Brewery);
+                    beer = new pourcast.Beer(beerOnTapJSON.Beer, brewery);
+                    keg = new pourcast.Keg(beerOnTapJSON.Keg, beer);
+                }
 
                 self.keg(keg);
             }

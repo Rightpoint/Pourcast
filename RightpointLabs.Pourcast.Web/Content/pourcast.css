@@ -52,6 +52,7 @@ body,
   float: left;
   width: 50%;
   height: 100%;
+    float: left;
 }
 .tap .keg-info {
   width: 100%;
