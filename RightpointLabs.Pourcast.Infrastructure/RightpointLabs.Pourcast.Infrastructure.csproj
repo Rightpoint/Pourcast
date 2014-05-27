@@ -63,6 +63,7 @@
     <Compile Include="Persistence\Collections\KegCollectionDefinition.cs" />
     <Compile Include="Persistence\Collections\RoleCollectionDefinition.cs" />
     <Compile Include="Persistence\Collections\StoredEventCollectionDefinition.cs" />
+    <Compile Include="Persistence\Collections\StyleCollectionDefinition.cs" />
     <Compile Include="Persistence\Collections\TapCollectionDefinition.cs" />
     <Compile Include="Persistence\Collections\UserCollectionDefinition.cs" />
     <Compile Include="Persistence\IMongoConnectionHandler.cs" />
@@ -74,6 +75,7 @@
     <Compile Include="Persistence\Repositories\KegRepository.cs" />
     <Compile Include="Persistence\Repositories\RoleRepository.cs" />
     <Compile Include="Persistence\Repositories\StoredEventRepository.cs" />
+    <Compile Include="Persistence\Repositories\StyleRepository.cs" />
     <Compile Include="Persistence\Repositories\TapRepository.cs" />
     <Compile Include="Persistence\Repositories\UserRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
