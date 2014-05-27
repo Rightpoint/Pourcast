@@ -49,6 +49,7 @@ body,
 .tap {
   position: relative;
   top: 0;
+  float: left;
   width: 50%;
   height: 100%;
 }
@@ -72,19 +73,34 @@ body,
   float: left;
   width: 20%;
 }
-.tap .keg-info .status .bits .bit .remaining {
+.tap .keg-info .status .bits .remaining {
   position: absolute;
-  top: -50px;
+  top: 120px;
 }
-.tap .keg-info .status .bits .bit .remaining .fa {
+.tap .keg-info .status .bits .remaining .percent {
   position: absolute;
-  top: 0;
-  font-size: 10em;
+  top: 25%;
+  right: 25%;
+  font-size: 2em;
+  font-weight: bold;
+  margin-right: -5%;
+  margin-top: 10px;
 }
-.tap .keg-info .status .bits .bit .remaining .percent {
-  position: absolute;
-  top: 45px;
-  font-size: 2.5em;
+.tap .keg-info .status .bits .remaining.high {
+  height: 8vw;
+  width: 8vw;
+  background: url('/Content/themes/base/images/bubble-green.png') no-repeat;
+  -moz-background-size: contain;
+  -webkit-background-size: contain;
+  background-size: contain;
+}
+.tap .keg-info .status .bits .remaining.low {
+  background: url('/Content/themes/base/images/bubble-red.png') no-repeat;
+  height: 8vw;
+  width: 8vw;
+  -moz-background-size: contain;
+  -webkit-background-size: contain;
+  background-size: contain;
 }
 .tap .keg-info .status .profile {
   width: 30vw;
@@ -105,7 +121,7 @@ body,
   display: block;
   position: absolute;
   margin: auto;
-  bottom: -2vw;
+  bottom: -0.5vw;
   left: 0;
   right: 0;
 }
@@ -134,11 +150,27 @@ body,
 }
 .tap .keg-info .beer h1.name {
   font-weight: bold;
-  font-size: 4em;
+  font-size: 3em;
 }
 .tap .keg-info .beer h1.brewery {
   letter-spacing: 1px;
   font-size: 2em;
+}
+.tap:nth-child(odd) .remaining {
+  left: 8vw;
+  -moz-transform: scaleX(-1);
+  -o-transform: scaleX(-1);
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
+.tap:nth-child(odd) .remaining .percent {
+  -moz-transform: scaleX(-1);
+  -o-transform: scaleX(-1);
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
+.tap:nth-child(even) .remaining {
+  right: 8vw;
 }
 .style {
   font-size: 1.6em;
@@ -151,4 +183,3 @@ body,
 .side-right .intro-content h1 > span:nth-child(2):before {
   background: #fff;
 }
-/*# sourceMappingURL=pourcast.css.map */

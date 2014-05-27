@@ -58,6 +58,7 @@ html, body,
 .tap {
     position: relative;
     top: 0;
+    float: left;
     width: 50%;
     height: 100%;
 
@@ -80,23 +81,38 @@ html, body,
                     display: block;
                     float: left;
                     width: 20%;
+                }
 
-                    .remaining {
+                .remaining {
+                    position: absolute;
+                    top: 120px;
+
+                    .percent {
                         position: absolute;
-                        top: -50px;
-
-                        .fa {
-                            position: absolute;
-                            top: 0;
-                            font-size: 10em;
-                        }
-
-                        .percent {
-                            position: absolute;
-                            top: 45px;
-                            font-size: 2.5em;
-                        }
+                        top: 25%;
+                        right: 25%;
+                        font-size: 2em;
+                        font-weight: bold;
+                        margin-right: -5%;
+                        margin-top: 10px;
                     }
+                }
+                
+                .remaining.high {
+                    height: 8vw;
+                    width: 8vw;
+                    background: url('/Content/themes/base/images/bubble-green.png') no-repeat;
+                    -moz-background-size: contain;
+                    -webkit-background-size: contain;
+                    background-size: contain;
+                }
+                .remaining.low {
+                    background: url('/Content/themes/base/images/bubble-red.png') no-repeat;
+                    height: 8vw;
+                    width: 8vw;
+                    -moz-background-size: contain;
+                    -webkit-background-size: contain;
+                    background-size: contain;
                 }
             }
 
@@ -119,7 +135,7 @@ html, body,
                     display: block;
                     position: absolute;
                     margin: auto;
-                    bottom: -2vw;
+                    bottom: -.5vw;
                     left: 0;
                     right: 0;
 
@@ -154,7 +170,7 @@ html, body,
 
             h1.name {
                 font-weight: bold;
-                font-size: 4em;
+                font-size: 3em;
             }
 
             h1.brewery {
@@ -166,9 +182,27 @@ html, body,
 }
 
 .tap:nth-child(odd) {
+    .remaining {
+        left: 8vw;
+
+        -moz-transform: scaleX(-1);
+        -o-transform: scaleX(-1);
+        -webkit-transform: scaleX(-1);
+        transform: scaleX(-1);
+
+        .percent {
+            -moz-transform: scaleX(-1);
+        -o-transform: scaleX(-1);
+        -webkit-transform: scaleX(-1);
+        transform: scaleX(-1);
+        }
+    }
 }
 
 .tap:nth-child(even) {
+    .remaining {
+        right: 8vw;
+    }
 }
 
 .style {
