@@ -59,6 +59,7 @@
     <Compile Include="Events\TapCreated.cs" />
     <Compile Include="Models\Entity.cs" />
     <Compile Include="Models\Role.cs" />
+    <Compile Include="Models\Style.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\ValueObject.cs" />
     <Compile Include="Repositories\IBeerRepository.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="Models\Keg.cs" />
     <Compile Include="Models\Tap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\IStyleRepository.cs" />
     <Compile Include="Repositories\ITapRepository.cs" />
     <Compile Include="Repositories\IUserRepository.cs" />
     <Compile Include="Services\IDateTimeProvider.cs" />
