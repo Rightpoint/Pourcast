@@ -11,13 +11,12 @@ pourcast.Keg = (function ($, ko) {
         self.capacity = ko.observable(kegJSON.Capacity);
         self.beer = ko.observable(beer);
 
-        pourcast.events.on("PourStarted", function(e) {
-            self.pourStarted(e);
+        self.percentRemainingBubble = ko.computed(function () {
+            return (kegJSON.PercentRemaining * 100) > 25 ? "high" : "low";
         });
 
-        pourcast.events.on("PourStopped", function(e) {
-            self.pourStopped(e);
-        });
+        pourcast.events.on("PourStarted", self.pourStarted);
+        pourcast.events.on("PourStopped", self.pourStopped);
     };
 
     Keg.prototype.pourStarted = function(e) {

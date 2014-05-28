@@ -214,6 +214,8 @@
       <DependentUpon>pourcast.less</DependentUpon>
     </Content>
     <Content Include="Content\themes\base\images\animated-overlay.gif" />
+    <Content Include="Content\themes\base\images\bubble-green.png" />
+    <Content Include="Content\themes\base\images\bubble-red.png" />
     <Content Include="Content\themes\base\images\face-happy.png" />
     <Content Include="Content\themes\base\images\face-sad.png" />
     <Content Include="Content\themes\base\images\keg.png" />
