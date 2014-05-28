@@ -290,8 +290,6 @@
     <Content Include="Content\toastr.less" />
     <Content Include="Scripts\app\bindings.js" />
     <Content Include="Scripts\app\bubbles.js" />
-    <Content Include="AppSettings.config" />
-    <Content Include="ConnectionStrings.config" />
     <Content Include="Scripts\app\model\beer.js" />
     <Content Include="Scripts\app\model\brewery.js" />
     <Content Include="Areas\Admin\Views\web.config" />
@@ -315,8 +313,6 @@
     <Content Include="Areas\Admin\Views\Tap\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Tap\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Tap\Create.cshtml" />
-    <Content Include="AppSettings.config" />
-    <Content Include="ConnectionStrings.config" />
     <Content Include="Areas\Admin\Views\Beer\Index.cshtml" />
     <Content Include="Scripts\app\events.js" />
     <Content Include="Content\pourcast.less" />
