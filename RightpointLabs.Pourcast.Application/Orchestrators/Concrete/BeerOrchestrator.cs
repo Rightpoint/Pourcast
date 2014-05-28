@@ -93,9 +93,6 @@
                 ABV = abv,
                 BAScore = baScore,
                 BreweryId = breweryId,
-                Color = color,
-                Glass = glass,
-                Style = style,
                 RPScore = 0
             };
             _beerRepository.Add(beer);
