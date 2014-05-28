@@ -29,7 +29,7 @@ function bubbles($container, params) {
         var delay_rand = Math.floor(Math.random() * 16);
 
         // Randomise their speed (3-8s)
-        var speed_rand = 4 + Math.floor(Math.random() * 12);
+        var speed_rand = 3 + Math.floor(Math.random() * 7);
 
         // Cache the this selector
         var $this = $(this);

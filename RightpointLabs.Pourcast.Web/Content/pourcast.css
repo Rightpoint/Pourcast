@@ -49,10 +49,10 @@ body,
 .tap {
   position: relative;
   top: 0;
-  float: left;
   width: 50%;
   height: 100%;
-    float: left;
+  float: left;
+  overflow: hidden;
 }
 .tap .keg-info {
   width: 100%;
@@ -111,7 +111,7 @@ body,
   border-radius: 50%;
   margin: 0 auto;
   background: #fff;
-  border: 10px solid #fff;
+  border: 6px solid #fff;
   position: relative;
   overflow: hidden;
   clear: both;
@@ -155,7 +155,7 @@ body,
 }
 .tap .keg-info .beer h1.brewery {
   letter-spacing: 1px;
-  font-size: 2em;
+  font-size: 1.5em;
 }
 .tap:nth-child(odd) .remaining {
   left: 8vw;
@@ -174,12 +174,15 @@ body,
   right: 8vw;
 }
 .style {
+  margin-top: 50px;
+}
+.style span {
   font-size: 1.6em;
-  border: 4px solid #fff;
-  width: 50%;
+  text-transform: uppercase;
+  border: 3px solid rgba(255, 255, 255, 0.3);
   margin: 0 auto;
-  padding: 10px;
-  border-radius: 20px;
+  padding: 15px 30px;
+  border-radius: 50px;
 }
 .side-right .intro-content h1 > span:nth-child(2):before {
   background: #fff;
