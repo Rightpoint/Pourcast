@@ -1,13 +1,46 @@
+/* variables */
+/* media query variables*/
 body {
-  /*padding-top: 50px;
-    padding-bottom: 20px;*/
+  font-size: 14px;
 }
+@media only screen and (min-width: 530px) and (max-width: 949px) {
+  body {
+    font-size: 10px;
+  }
+}
+@media only screen and (max-width: 529px) {
+  body {
+    font-size: 8px;
+  }
+}
+
 footer {
   position: absolute;
   bottom: 0;
   color: #ffffff;
   display: none;
   /*fuck your footer*/
+}
+.navbar {
+  height: 8vh;
+}
+.navbar-header {
+  width: 100%;
+}
+.header-bubble {
+  height: 6vh;
+  margin: 1vh 20px;
+}
+.header-bubble.right {
+  float: right;
+}
+.header-bubble.left {
+  float: left;
+}
+.header-ribbon {
+  position: absolute;
+  right: 50%;
+  margin-right: -48px;
 }
 /* Set width on the form input elements since they're 100% wide by default */
 input[type="text"],
@@ -61,7 +94,7 @@ body,
   color: #fff;
 }
 .tap .keg-info .status {
-  margin-top: 50px;
+  margin-top: 8vh;
 }
 .tap .keg-info .status .bits {
   height: 18vw;
@@ -76,16 +109,33 @@ body,
 }
 .tap .keg-info .status .bits .remaining {
   position: absolute;
-  top: 120px;
+  top: 130px;
 }
 .tap .keg-info .status .bits .remaining .percent {
   position: absolute;
+  width: 100%;
   top: 25%;
-  right: 25%;
+  right: 0;
   font-size: 2em;
   font-weight: bold;
-  margin-right: -5%;
   margin-top: 10px;
+}
+@media only screen and (min-width: 1129px) and (max-width: 1349px) {
+  .tap .keg-info .status .bits .remaining .percent {
+    font-size: 1.8em;
+  }
+}
+@media only screen and (min-width: 950px) and (max-width: 1128px) {
+  .tap .keg-info .status .bits .remaining .percent {
+    font-size: 1.5em;
+    margin-top: 5px;
+  }
+}
+@media only screen and (min-width: 530px) and (max-width: 949px) {
+  .tap .keg-info .status .bits .remaining .percent {
+    font-size: 1.8em;
+    margin-top: 5px;
+  }
 }
 .tap .keg-info .status .bits .remaining.high {
   height: 8vw;
@@ -110,11 +160,19 @@ body,
   max-height: 35vh;
   border-radius: 50%;
   margin: 0 auto;
-  background: #fff;
-  border: 6px solid #fff;
   position: relative;
   overflow: hidden;
   clear: both;
+}
+.tap .keg-info .status .profile .ring {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 }
 .tap .keg-info .status .profile .keg {
   width: 70%;
@@ -183,6 +241,7 @@ body,
   margin: 0 auto;
   padding: 15px 30px;
   border-radius: 50px;
+  font-weight: bold;
 }
 .side-right .intro-content h1 > span:nth-child(2):before {
   background: #fff;
