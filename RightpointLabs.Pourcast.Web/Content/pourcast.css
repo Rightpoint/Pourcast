@@ -1,7 +1,7 @@
 ﻿body {
   /*padding-top: 50px;
     padding-bottom: 20px;*/
-  font-family: "proxima-nova";
+  font-family: "proxima-nova", Arial, Helvetica, sans-serif;
 }
 footer {
   position: absolute;
