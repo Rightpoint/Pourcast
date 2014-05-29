@@ -13,7 +13,6 @@ body {
     font-size: 8px;
   }
 }
-
 footer {
   position: absolute;
   bottom: 0;
@@ -160,6 +159,7 @@ body,
   max-height: 35vh;
   border-radius: 50%;
   margin: 0 auto;
+  background: #fff;
   position: relative;
   overflow: hidden;
   clear: both;
