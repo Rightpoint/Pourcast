@@ -1,7 +1,24 @@
-﻿body {
-    /*padding-top: 50px;
-    padding-bottom: 20px;*/
+﻿/* variables */
+@top-margin: 8vh;
+
+/* media query variables*/
+@mobile:      ~"only screen and (max-width: 529px)";
+@tablet:      ~"only screen and (min-width: 530px) and (max-width: 949px)";
+@desktop:     ~"only screen and (min-width: 950px) and (max-width: 1128px)";
+@desktop-md:  ~"only screen and (min-width: 1129px) and (max-width: 1349px)";
+@desktop-xl:  ~"only screen and (min-width: 1350px)";
+
+
+body {
+    font-size: 14px;
     font-family: "proxima-nova", Arial, Helvetica, sans-serif;
+
+    @media @tablet {
+        font-size: 10px;
+    }
+    @media @mobile {
+        font-size: 8px;
+    }
 }
 
 footer {
@@ -9,6 +26,29 @@ footer {
     bottom: 0;
     color: #ffffff;
     display: none; /*fuck your footer*/
+}
+
+.navbar {
+    height: @top-margin;
+}
+.navbar-header {
+    width: 100%;
+}
+
+.header-bubble {
+    height: 6vh;
+    margin: 1vh 20px;
+}
+.header-bubble.right {
+    float: right;
+}
+.header-bubble.left {
+    float: left;
+}
+.header-ribbon {
+    position: absolute;
+    right: 50%;
+    margin-right: -48px;
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
@@ -72,7 +112,7 @@ html, body,
         color: #fff;
 
         .status {
-            margin-top: 50px;
+            margin-top: @top-margin;
 
             .bits {
                 height: 18vw;
@@ -88,16 +128,30 @@ html, body,
 
                 .remaining {
                     position: absolute;
-                    top: 120px;
+                    top: 130px;
 
                     .percent {
                         position: absolute;
+                        width: 100%;
                         top: 25%;
-                        right: 25%;
+                        right: 0;
                         font-size: 2em;
                         font-weight: bold;
-                        margin-right: -5%;
+                        //margin-right: -5%;
                         margin-top: 10px;
+
+                        @media @desktop-md {
+                            font-size: 1.8em;
+                    }
+                        @media @desktop {
+                            font-size: 1.5em;
+                            margin-top: 5px;
+                }
+                        @media @tablet {
+                            font-size: 1.8em;
+                            margin-top: 5px;
+                        }
+                
                     }
                 }
                 
@@ -126,11 +180,22 @@ html, body,
                 max-height: 35vh;
                 border-radius: 50%;
                 margin: 0 auto;
-                background: #fff;
-                border: 6px solid #fff;
+                //background: #fff;
+                //border: 4px solid #fff;
                 position: relative;
                 overflow: hidden;
                 clear: both;
+
+                .ring {
+                    height: 100%;
+                    width: 100%;
+                    position: absolute;
+                    margin: auto;
+                    top: 0;
+                    right: 0;
+                    bottom: 0;
+                    left: 0;
+                }
 
                 .keg {
                     width: 70%;
@@ -218,6 +283,7 @@ html, body,
         margin: 0 auto;
         padding: 15px 30px;
         border-radius: 50px;
+        font-weight: bold;
     }
 }
 
