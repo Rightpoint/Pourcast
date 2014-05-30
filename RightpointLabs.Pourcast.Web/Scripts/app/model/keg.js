@@ -1,6 +1,4 @@
-﻿var pourcast = pourcast || {};
-
-pourcast.Keg = (function ($, ko) {
+﻿define('Keg', ['jquery', 'ko', 'events'], function($, ko, events) {
     function Keg(kegJSON, beer) {
         var self = this;
 
@@ -11,21 +9,21 @@ pourcast.Keg = (function ($, ko) {
         self.capacity = ko.observable(kegJSON.Capacity);
         self.beer = ko.observable(beer);
 
-        self.percentRemainingBubble = ko.computed(function () {
+        self.percentRemainingBubble = ko.computed(function() {
             return (kegJSON.PercentRemaining * 100) > 25 ? "high" : "low";
         });
 
-        pourcast.events.on("PourStarted", self.pourStarted);
-        pourcast.events.on("PourStopped", self.pourStopped);
+        events.on("PourStarted", self.pourStarted);
+        events.on("PourStopped", self.pourStopped);
     };
 
     Keg.prototype.pourStarted = function(e) {
         console.log("PourStarted");
     };
 
-    Keg.prototype.pourStopped = function (e) {
+    Keg.prototype.pourStopped = function(e) {
         console.log("PourStopped");
     };
 
     return Keg;
-}(jQuery, ko));
+});
