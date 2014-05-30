@@ -7,6 +7,9 @@
         self.city = ko.observable(breweryJSON.City);
         self.state = ko.observable(breweryJSON.State);
         self.website = ko.observable(breweryJSON.Website);
+        self.location = ko.computed(function() {
+            return self.city() + ", " + self.state();
+        });
     };
 
     return Brewery;
