@@ -3,7 +3,7 @@
         var self = this;
 
         self.id = ko.observable(kegJSON.Id);
-        self.percentRemaining = ko.observable(kegJSON.PercentRemaining * 100 + "%");
+        self.percentRemaining = ko.observable(Math.floor(kegJSON.PercentRemaining * 100) + "%");
         self.isEmpty = ko.observable(kegJSON.IsEmpty);
         self.isPouring = ko.observable(kegJSON.IsPouring);
         self.capacity = ko.observable(kegJSON.Capacity);
