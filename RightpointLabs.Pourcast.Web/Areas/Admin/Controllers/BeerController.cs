@@ -92,7 +92,7 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
             string id = _beerOrchestrator.CreateBeer(model.Name, model.ABV, model.BAScore, model.Style, model.Color, model.Glass,
                 model.BreweryId);
 
-            return RedirectToAction("Details", id);
+            return RedirectToAction("Details", "Beer", new { id = id});
         }
 
         //
@@ -123,7 +123,7 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
             }
 
             _beerOrchestrator.Save(AutoMapper.Mapper.Map<EditBeerViewModel, Beer>(model));
-            return RedirectToAction("Details", new {id = model.Id});
+            return RedirectToAction("Details", "Beer", new {id = model.Id});
         }
 
         public ActionResult Import(string breweryId)
