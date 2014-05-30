@@ -213,6 +213,9 @@
     <Content Include="Content\pourcast.css">
       <DependentUpon>pourcast.less</DependentUpon>
     </Content>
+    <Content Include="Content\pourcast.min.css">
+      <DependentUpon>pourcast.css</DependentUpon>
+    </Content>
     <Content Include="Content\themes\base\images\animated-overlay.gif" />
     <Content Include="Content\themes\base\images\bubble-green.png" />
     <Content Include="Content\themes\base\images\bubble-red.png" />
