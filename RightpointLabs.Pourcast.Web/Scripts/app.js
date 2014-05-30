@@ -15,6 +15,7 @@
     }
 });
 
-requirejs(['app/pourcast'],function (pourcast) {
+requirejs(['app/bindings', 'app/pourcast'], function (bindings, pourcast) {
+    bindings.init();
     pourcast.init();
 });
