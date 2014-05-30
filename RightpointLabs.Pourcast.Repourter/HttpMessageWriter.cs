@@ -10,6 +10,7 @@ namespace RightpointLabs.Pourcast.Repourter
     {
         public static void SendStartAsync(int tapId)
         {
+            //SendMessage(tapId);
             var thread = new Thread(() => SendMessage(tapId));
             thread.Start();
         }
@@ -22,33 +23,47 @@ namespace RightpointLabs.Pourcast.Repourter
 
         private static void SendMessage(int tapId, double volume = 0.0, bool isStart = true)
         {
-            WiFlyGSX WifiModule = new WiFlyGSX();
+            WiFlyGSX WifiModule = new WiFlyGSX(DebugMode:true);
             WifiModule.EnableDHCP();
-            WifiModule.JoinNetwork("The Password is 1234", 0, WiFlyGSX.AuthMode.WPA2_PSK, "I lied, it's not.");
+            //var test = WiFlyGSX.AuthMode.WPA2_PSK.ToString();
+            
+            //WifiModule.JoinNetwork("AndroidAP");
+
+            Debug.Print("Local IP: " + WifiModule.LocalIP);
+            Debug.Print("MAC address: " + WifiModule.MacAddress);
 
             // Creates a socket
-            SimpleSocket Socket = new WiFlySocket("/rpc-cdeclue/", 80, WifiModule);
-
-            // Connects to the socket
-            Socket.Connect();
-            var controller = "/api/reportertest/"; // TODO: change
+            var controller = "/api/repourtertest/"; // TODO: change
             //var controller = "/api/tap/";
-            var action = isStart ? "startpourt" : "stoppour";
+            var action = isStart ? "startpour" : "stoppour";
             var parameters = "?tapId=" + tapId + (isStart ? "" : "&volume=" + volume);
-            // Does a plain HTTP request
-            Socket.Send("GET " + controller + action + parameters + " HTTP/1.1\r\n");
-            Socket.Send("Host: " + Socket.Hostname + "\r\n");
-            Socket.Send("Connection: Close\r\n");
-            Socket.Send("\r\n");
-
-            // Prints all received data to the debug window, until the connection is terminated
-            while (Socket.IsConnected)
+            var request = "GET " + controller + action + parameters + " HTTP/1.1\r\n";
+            //SimpleSocket socket = new WiFlySocket("google.com", 80, WifiModule);
+            SimpleSocket socket = new WiFlySocket("192.168.137.1", 80, WifiModule);
+            try
             {
-                Debug.Print(Socket.Receive());
-            }
+                // Connects to the socket
+                socket.Connect();
+                // Does a plain HTTP request
+                socket.Send(request);
+                socket.Send("Host: " + socket.Hostname + "\r\n");
+                socket.Send("Connection: Close\r\n");
+                socket.Send("\r\n");
 
-            // Closes down the socket
-            Socket.Close();
+                // Prints all received data to the debug window, until the connection is terminated
+                //while (Socket.IsConnected)
+                //{
+                //    var line = Socket.Receive().Trim();
+                //    if (line != "" && line != null)
+                //    {
+                //        Debug.Print(line);
+                //    }
+                //}
+            }
+            finally
+            {
+                //socket.Close();
+            }
         }
     }
 }

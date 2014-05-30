@@ -36,6 +36,10 @@
     <Compile Include="HttpMessageWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="SimpleSocket.cs" />
+    <Compile Include="Tools.cs" />
+    <Compile Include="WiFlyGSX.cs" />
+    <Compile Include="WiFlySocket.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.SPOT.Hardware" />
@@ -43,10 +47,6 @@
     <Reference Include="Microsoft.SPOT.Hardware.SerialPort" />
     <Reference Include="Microsoft.SPOT.Native" />
     <Reference Include="Microsoft.SPOT.Net" />
-    <Reference Include="SecretLabs.NETMF.Hardware" />
-    <Reference Include="SecretLabs.NETMF.Hardware.Netduino" />
     <Reference Include="System" />
-    <Reference Include="Toolbox.NETMF.Hardware.WiFlyGSX, Version=4.2.0.0, Culture=neutral, processorArchitecture=MSIL" />
-    <Reference Include="Toolbox.NETMF.NET.Core, Version=4.2.0.0, Culture=neutral, processorArchitecture=MSIL" />
   </ItemGroup>
 </Project>
