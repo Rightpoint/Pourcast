@@ -11,7 +11,7 @@
                     beerOnTapJson.forEach(function(data) {
                         var tap = new Tap(data.Tap),
                             brewery, beer, keg;
-                        if (data.keg != null) {
+                        if (data.Keg != null) {
                             brewery = new Brewery(data.Brewery);
                             beer = new Beer(data.Beer, brewery);
                             keg = new Keg(data.Keg, beer);

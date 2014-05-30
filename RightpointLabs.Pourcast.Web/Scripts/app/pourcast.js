@@ -3,8 +3,7 @@
 
     pub.init = function () {
         pub.tapViewModel = new TapViewModel();
-        pub.tapViewModel.init();
-        ko.applyBindings(pub);
+        pub.tapViewModel.init().done(ko.applyBindings(pub));
     };
 
     return pub;

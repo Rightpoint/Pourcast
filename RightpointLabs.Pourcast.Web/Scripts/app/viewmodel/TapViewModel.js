@@ -18,12 +18,17 @@
         });
 
 
-        self.init = function() {
+        self.init = function () {
+            var df = $.Deferred();
+
             dataService.getCurrentTaps().done(function(taps) {
                 for (var i = 0; i < taps.length; i++) {
                     self.taps.push(taps[i]);
                 }
+                df.resolve();
             });
+
+            return df.promise();
         };
 
     };
