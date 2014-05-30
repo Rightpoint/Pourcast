@@ -1,9 +1,11 @@
-﻿<div class="taps" data-bind="foreach: taps">
-    <div class="tap">
-        <!-- ko if: keg -->
+﻿<div class="taps" data-bind="with: tapViewModel">
+    <div data-bind="foreach: taps">
+        <div class="tap" data-bind="visible: hasKeg">
+            <!-- ko if: keg -->
             <!-- ko with: keg  -->
-                @Html.Partial("Keg")
+            @Html.Partial("Keg")
             <!-- /ko -->
-        <!-- /ko -->
+            <!-- /ko -->
+        </div>
     </div>
 </div>

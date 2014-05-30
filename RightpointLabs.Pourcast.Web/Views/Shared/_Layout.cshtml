@@ -41,17 +41,8 @@
     
     @RenderSection("templates", required: false)
     
-    @Scripts.Render("~/bundles/jquery", "~/bundles/bootstrap", "~/bundles/jqueryUI", "~/bundles/knockout", "~/bundles/toastr", "~/bundles/moment", "~/bundles/signalr")
-    <script src="~/signalr/hubs"></script>
-    @Scripts.Render("~/bundles/app")
+    <script src="~/Scripts/libs/require.js"></script>
+    <script src="~/Scripts/app.js"></script>
     @RenderSection("scripts", required: false)
-    
-    <script type="text/javascript">
-        $(function() {
-            if (pourcast) {
-                pourcast.app.init();
-            }
-        });
-    </script>
 </body>
 </html>

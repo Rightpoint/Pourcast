@@ -1,26 +1,10 @@
-﻿var pourcast = pourcast || {};
-
-pourcast.app = (function ($, ko) {
-    var pub = {};
-
-    pub.taps = ko.observableArray();
-
-    var loadTaps = function () {
-        $.get("/api/tap",
-            function (tapsJSON) {
-                tapsJSON.forEach(function (tapJSON) {
-                    var tap = new pourcast.Tap(tapJSON);
-                    pub.taps.push(tap);
-                });
-            }
-        );
-    };
+﻿define(['jquery', 'ko', 'TapViewModel'], function($, ko, TapViewModel) {
+    var pub = { };
 
     pub.init = function () {
-        loadTaps();
-
-        ko.applyBindings(pub);
+        pub.tapViewModel = new TapViewModel();
+        pub.tapViewModel.init().done(ko.applyBindings(pub));
     };
 
     return pub;
-}(jQuery, ko));
+});
