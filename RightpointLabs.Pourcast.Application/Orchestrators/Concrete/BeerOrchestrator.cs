@@ -1,4 +1,6 @@
-﻿namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
+﻿using System.Net.NetworkInformation;
+
+namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
 {
     using System;
     using System.Collections.Generic;
@@ -18,18 +20,21 @@
         private readonly ITapRepository _tapRepository;
 
         private readonly IKegRepository _kegRepository;
+        private readonly IStyleRepository _styleRepository;
 
-        public BeerOrchestrator(IBeerRepository beerRepository, IBreweryRepository breweryRepository, ITapRepository tapRepository, IKegRepository kegRepository)
+        public BeerOrchestrator(IBeerRepository beerRepository, IBreweryRepository breweryRepository, ITapRepository tapRepository, IKegRepository kegRepository, IStyleRepository styleRepository)
         {
             if (beerRepository == null) throw new ArgumentNullException("beerRepository");
             if(breweryRepository == null) throw new ArgumentNullException("breweryRepository");
             if (tapRepository == null) throw new ArgumentNullException("tapRepository");
             if (kegRepository == null) throw new ArgumentNullException("kegRepository");
+            if(null == styleRepository) throw new ArgumentException("styleRepository");
 
             _beerRepository = beerRepository;
             _breweryRepository = breweryRepository;
             _tapRepository = tapRepository;
             _kegRepository = kegRepository;
+            _styleRepository = styleRepository;
         }
 
         public IEnumerable<Beer> GetBeers()
@@ -58,7 +63,9 @@
                 var keg = _kegRepository.GetById(tap.KegId);
                 var beer = _beerRepository.GetById(keg.BeerId);
                 var brewery = _breweryRepository.GetById(beer.BreweryId);
-
+                var style = (string.IsNullOrEmpty(beer.StyleId)) ? null : _styleRepository.GetById(beer.StyleId);
+                //TODO Maybe add a default color
+                beer.Color = (null == style) ? string.Empty : style.Color;
                 return new BeerOnTap() { Tap = tap, Keg = keg, Beer = beer, Brewery = brewery };
             }
             else
