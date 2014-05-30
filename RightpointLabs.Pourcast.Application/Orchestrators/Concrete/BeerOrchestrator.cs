@@ -83,7 +83,7 @@
         }
 
         [Transactional]
-        public string CreateBeer(string name, double abv, double baScore, string style, string color, string glass, string breweryId)
+        public string CreateBeer(string name, double abv, double baScore, string styleId, string breweryId)
         {
             var id = string.Empty;
 
@@ -93,7 +93,8 @@
                 ABV = abv,
                 BAScore = baScore,
                 BreweryId = breweryId,
-                RPScore = 0
+                RPScore = 0,
+                StyleId = styleId
             };
             _beerRepository.Add(beer);
 

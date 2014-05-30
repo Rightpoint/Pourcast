@@ -6,7 +6,7 @@
 
     public class StyleRepository : EntityRepository<Style>, IStyleRepository
     {
-        public StyleRepository(EntityCollectionDefinition<Style> collectionDefinition)
+        public StyleRepository(StyleCollectionDefinition collectionDefinition)
             : base(collectionDefinition)
         {
         }
