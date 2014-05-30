@@ -66,6 +66,7 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
                 var style = (string.IsNullOrEmpty(beer.StyleId)) ? null : _styleRepository.GetById(beer.StyleId);
                 //TODO Maybe add a default color
                 beer.Color = (null == style) ? string.Empty : style.Color;
+                beer.Style = (null == style) ? string.Empty : style.Name;
                 return new BeerOnTap() { Tap = tap, Keg = keg, Beer = beer, Brewery = brewery };
             }
             else
