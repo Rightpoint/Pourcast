@@ -59,7 +59,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EventHandlers\TransactionDependentEventHandler.cs" />
     <Compile Include="EventHandlers\EventStoreHandler.cs" />
     <Compile Include="EventHandlers\KegEmptiedNotificationHandler.cs" />
     <Compile Include="EventHandlers\KegNearingEmptyNotificationHandler.cs" />
@@ -67,11 +66,13 @@
     <Compile Include="Orchestrators\Abstract\IBeerOrchestrator.cs" />
     <Compile Include="Orchestrators\Abstract\IBreweryOrchestrator.cs" />
     <Compile Include="Orchestrators\Abstract\IKegOrchestrator.cs" />
+    <Compile Include="Orchestrators\Abstract\IStyleOrchestrator.cs" />
     <Compile Include="Orchestrators\Abstract\ITapOrchestrator.cs" />
     <Compile Include="Orchestrators\Abstract\IIdentityOrchestrator.cs" />
     <Compile Include="Orchestrators\Concrete\BeerOrchestrator.cs" />
     <Compile Include="Orchestrators\Concrete\BreweryOrchestrator.cs" />
     <Compile Include="Orchestrators\Concrete\KegOrchestrator.cs" />
+    <Compile Include="Orchestrators\Concrete\StyleOrchestrator.cs" />
     <Compile Include="Orchestrators\Concrete\TapOrchestrator.cs" />
     <Compile Include="Orchestrators\Concrete\IdentityOrchestrator.cs" />
     <Compile Include="Payloads\BeerOnTap.cs" />
@@ -80,6 +81,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Transactions\TransactionalCallHandler.cs" />
+    <Compile Include="Transactions\TransactionExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

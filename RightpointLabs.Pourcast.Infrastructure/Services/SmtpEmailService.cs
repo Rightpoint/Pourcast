@@ -2,8 +2,10 @@
 
 namespace RightpointLabs.Pourcast.Infrastructure.Services
 {
+    using System.Collections.Generic;
     using System.Net.Mail;
 
+    using RightpointLabs.Pourcast.Application.Transactions;
     using RightpointLabs.Pourcast.Domain.Services;
 
     public class SmtpEmailService : IEmailService
@@ -21,7 +23,7 @@ namespace RightpointLabs.Pourcast.Infrastructure.Services
         {
             if (email == null) return;
 
-            _client.SendMailAsync(email);
+            TransactionExtensions.WaitForTransactionCompleted(() => _client.SendMailAsync(email));
         }
     }
 }

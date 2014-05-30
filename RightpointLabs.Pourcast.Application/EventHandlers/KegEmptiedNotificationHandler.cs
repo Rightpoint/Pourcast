@@ -9,7 +9,7 @@
     using RightpointLabs.Pourcast.Domain.Repositories;
     using RightpointLabs.Pourcast.Domain.Services;
 
-    public class KegEmptiedNotificationHandler : TransactionDependentEventHandler<KegEmptied>
+    public class KegEmptiedNotificationHandler : IEventHandler<KegEmptied>
     {
         private readonly IEmailService _emailService;
 
@@ -32,7 +32,7 @@
             _beerRepository = beerRepository;
         }
 
-        protected override void HandleAfterTransaction(KegEmptied domainEvent)
+        public void Handle(KegEmptied domainEvent)
         {
             var kegId = domainEvent.KegId;
             var keg = _kegRepository.GetById(kegId);

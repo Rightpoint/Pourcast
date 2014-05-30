@@ -21,6 +21,6 @@
 
         void Save(Beer beer);
 
-        string CreateBeer(string name, double abv, double baScore, string style, string color, string glass, string breweryId);
+        string CreateBeer(string name, double abv, double baScore, string styleId, string breweryId);
     }
 }
