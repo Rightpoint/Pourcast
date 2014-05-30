@@ -26,13 +26,16 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
         }
         private readonly IBeerOrchestrator _beerOrchestrator;
         private readonly IBreweryOrchestrator _breweryOrchestrator;
+        private readonly IStyleOrchestrator _styleOrchestrator;
 
-        public BeerController(IBeerOrchestrator beerOrchestrator, IBreweryOrchestrator breweryOrchestrator)
+        public BeerController(IBeerOrchestrator beerOrchestrator, IBreweryOrchestrator breweryOrchestrator, IStyleOrchestrator styleOrchestrator)
         {
             if (beerOrchestrator == null) throw new ArgumentNullException("beerOrchestrator");
             if (null == breweryOrchestrator) throw new ArgumentNullException("breweryOrchestrator");
+            if(null == styleOrchestrator) throw new ArgumentNullException("styleOrchestrator");
             _beerOrchestrator = beerOrchestrator;
             _breweryOrchestrator = breweryOrchestrator;
+            _styleOrchestrator = styleOrchestrator;
         }
 
         //
@@ -67,11 +70,15 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
         public ActionResult Create(string breweryId)
         {
             var brewery = _breweryOrchestrator.GetById(breweryId);
+            var styles = _styleOrchestrator.GetStyles();
             if (null != brewery)
-                return View("Create", new CreateBeerViewModel() {BreweryId = brewery.Id, BreweryName = brewery.Name});
+            {
+                var vm = new CreateBeerViewModel(styles) {BreweryId = brewery.Id, BreweryName = brewery.Name};
+                return View(vm);
+            }
 
             ModelState.AddModelError("Brewery", "Brewery with that id does not exist.");
-            return View("Create", new CreateBeerViewModel(){BreweryId = breweryId});
+            return View(new CreateBeerViewModel(){BreweryId = breweryId});
         }
 
         //
@@ -80,17 +87,16 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
         public ActionResult Create(CreateBeerViewModel model)
         {
             if (!ModelState.IsValid)
-                return View("Create", model);
+                return View(model);
 
             var existing = _beerOrchestrator.GetByBrewery(model.BreweryId);
             if (existing.Any(b => b.Name == model.Name))
             {
                 ModelState.AddModelError("BeerName", "A beer with that name already exists for this brewery.");
-                return View("Create", model);
+                return View(model);
             }
 
-            string id = _beerOrchestrator.CreateBeer(model.Name, model.ABV, model.BAScore, model.Style, model.Color, model.Glass,
-                model.BreweryId);
+            string id = _beerOrchestrator.CreateBeer(model.Name, model.ABV, model.BAScore, model.StyleId, model.BreweryId);
 
             return RedirectToAction("Details", "Beer", new { id = id});
         }
@@ -100,7 +106,7 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
         public ActionResult Edit(string id)
         {
             var beer = _beerOrchestrator.GetById(id);
-
+            var styles = _styleOrchestrator.GetStyles();
             if (null == beer)
             {
                 ViewBag.Error = "No beer with that id exists";
@@ -108,6 +114,9 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
             }
             var brewery = _breweryOrchestrator.GetById(beer.BreweryId);
             var model = AutoMapper.Mapper.Map<Beer, EditBeerViewModel>(beer);
+            model.Styles =
+                styles.Select(s => new SelectListItem() {Text = s.Name, Value = s.Id, Selected = (s.Id == beer.StyleId)});
+
             model.BreweryName = brewery.Name;
             return View(model);
         }
@@ -152,6 +161,7 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
 
             if (model.File.FileName.Contains("csv"))
             {
+                throw new NotImplementedException();
                 try
                 {
                     var beers = new List<ImportBeerModel>();
@@ -168,8 +178,7 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
                         var existing = _beerOrchestrator.GetByBrewery(model.BreweryId);
                         if (false == existing.Any(beer => beer.Name == b.Name))
                         {
-                            _beerOrchestrator.CreateBeer(b.Name, b.ABV?? 0, b.BAScore?? 0, b.Style, string.Empty, string.Empty,
-                                model.BreweryId);
+                            //_beerOrchestrator.CreateBeer(b.Name, b.ABV?? 0, b.BAScore?? 0, b.Style, string.Empty, string.Empty, model.BreweryId);
                         }
                     });
 
