@@ -292,7 +292,7 @@
     <Content Include="Scripts\app.js" />
     <Content Include="Scripts\app\bindings.js" />
     <Content Include="Scripts\app\bubbles.js" />
-    <Content Include="Scripts\app\dataService.js" />
+    <Content Include="Scripts\app\dataservice.js" />
     <Content Include="Scripts\app\model\beer.js" />
     <Content Include="Scripts\app\model\brewery.js" />
     <Content Include="Areas\Admin\Views\web.config" />

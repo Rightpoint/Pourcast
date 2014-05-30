@@ -1,4 +1,4 @@
-﻿define('Tap', ['jquery', 'ko'], function ($, ko) {
+﻿define(['jquery', 'ko'], function ($, ko) {
     
     function Tap(tapJSON) {
         var self = this;

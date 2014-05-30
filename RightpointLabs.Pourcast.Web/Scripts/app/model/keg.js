@@ -1,4 +1,4 @@
-﻿define('Keg', ['jquery', 'ko', 'events'], function($, ko, events) {
+﻿define(['jquery', 'ko', 'events'], function($, ko, events) {
     function Keg(kegJSON, beer) {
         var self = this;
 

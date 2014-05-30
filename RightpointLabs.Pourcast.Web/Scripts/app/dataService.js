@@ -1,4 +1,4 @@
-﻿require(['jquery'], function ($) {
+﻿define(['jquery', 'app/model/tap', 'app/model/keg', 'app/model/beer', 'app/model/brewery'], function ($, Tap, Keg, Beer, Brewery) {
     var dataService = {};
 
     dataService.getCurrentTaps = function () {
@@ -9,12 +9,12 @@
                 function(beerOnTapJson) {
                     var taps = [];
                     beerOnTapJson.forEach(function(data) {
-                        var tap = new pourcast.Tap(data.Tap),
+                        var tap = new Tap(data.Tap),
                             brewery, beer, keg;
                         if (data.keg != null) {
-                            brewery = new pourcast.Brewery(data.Brewery);
-                            beer = new pourcast.Beer(data.Beer, brewery);
-                            keg = new pourcast.Keg(data.Keg, beer);
+                            brewery = new Brewery(data.Brewery);
+                            beer = new Beer(data.Beer, brewery);
+                            keg = new Keg(data.Keg, beer);
                             tap.loadKeg(tap.id(), keg);
                         }
                         taps.push(tap);
@@ -33,9 +33,9 @@
             var brewery, beer, keg;
 
             if (data.keg != null) {
-                brewery = new pourcast.Brewery(data.Brewery);
-                beer = new pourcast.Beer(data.Beer, brewery);
-                keg = new pourcast.Keg(data.Keg, beer);
+                brewery = new Brewery(data.Brewery);
+                beer = new Beer(data.Beer, brewery);
+                keg = new Keg(data.Keg, beer);
             }
             df.resolve(keg);
         }).fail(df.reject);

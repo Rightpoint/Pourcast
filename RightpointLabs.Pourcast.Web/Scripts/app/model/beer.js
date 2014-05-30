@@ -1,4 +1,4 @@
-﻿define('Beer', ['jquery', 'ko'], function($, ko) {
+﻿define(['jquery', 'ko'], function($, ko) {
     function Beer(beerJSON, brewery) {
         var self = this;
 

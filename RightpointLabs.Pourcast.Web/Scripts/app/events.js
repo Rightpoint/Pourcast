@@ -1,7 +1,6 @@
-﻿define(['jquery', 'toastr', 'signalr.hubs'], function ($, toastr, hub) {
+﻿define(['jquery', 'toastr', 'signalr', 'signalr.hubs'], function ($, toastr, sigr, hub) {
 
-    hub.start();
-    $.connection.hub.start();
+    $.connection.hub.start({ waitForPageLoad: false });
 
     var pub = {
         on: function(event, callback) {
