@@ -22,8 +22,14 @@ namespace RightpointLabs.Pourcast.Repourter
         /// </summary>
         public static void Main()
         {
-            var writer = new HttpMessageWriter();
-            if (!writer.Start("Rightpoint", "CHANGETHIS", WiFlyGSX.AuthMode.MixedWPA1_WPA2))
+            //var writer = new WifiHttpMessageWriter();
+            //if (!writer.Start("Rightpoint", "CHANGETHIS", WiFlyGSX.AuthMode.MixedWPA1_WPA2))
+            //{
+            //    // didn't get an IP
+            //    return;
+            //}
+            var writer = new EthernetHttpMessageWriter();
+            if (!writer.Start())
             {
                 // didn't get an IP
                 return;
@@ -56,18 +62,18 @@ namespace RightpointLabs.Pourcast.Repourter
 
 
             //HttpMessageWriter.SendStartAsync(1);
-            Debug.Print("Starting");
-            {
-                var port = new InterruptPort(Pins.GPIO_PIN_D13, false, Port.ResistorMode.Disabled,
-                    Port.InterruptMode.InterruptEdgeBoth);
-                port.OnInterrupt += (i, ii, iii) => Debug.Print("Pressed 13: " + port.Read() + " -- " + i + " - " + ii + " - " + iii);
-            }
-            Debug.Print("Middle");
-            {
-                var port = new InterruptPort(Pins.GPIO_PIN_D12, false, Port.ResistorMode.Disabled,
-                    Port.InterruptMode.InterruptEdgeBoth);
-                port.OnInterrupt += (i, ii, iii) => Debug.Print("Pressed 12: " + port.Read() + " -- " + i + " - " + ii + " - " + iii);
-            }
+            //Debug.Print("Starting");
+            //{
+            //    var port = new InterruptPort(Pins.GPIO_PIN_D13, false, Port.ResistorMode.Disabled,
+            //        Port.InterruptMode.InterruptEdgeBoth);
+            //    port.OnInterrupt += (i, ii, iii) => Debug.Print("Pressed 13: " + port.Read() + " -- " + i + " - " + ii + " - " + iii);
+            //}
+            //Debug.Print("Middle");
+            //{
+            //    var port = new InterruptPort(Pins.GPIO_PIN_D12, false, Port.ResistorMode.Disabled,
+            //        Port.InterruptMode.InterruptEdgeBoth);
+            //    port.OnInterrupt += (i, ii, iii) => Debug.Print("Pressed 12: " + port.Read() + " -- " + i + " - " + ii + " - " + iii);
+            //}
 
             //Debug.Print("Sleeping");
 
@@ -75,19 +81,22 @@ namespace RightpointLabs.Pourcast.Repourter
 
             //Debug.Print("Done");
 
-            //var sensors = new FlowSensor[NUMBER_OF_TAPS];
-            //// Flow sensor plugged into pin 13, no resistor necessary, fire on the rising edge of the pulse
-            //sensors[0] = new FlowSensor(new InterruptPort(Pins.GPIO_PIN_D13, false, Port.ResistorMode.Disabled, Port.InterruptMode.InterruptEdgeHigh), writer, 1);
-            //// Flow sensor plugged into pin 12, no resistor necessary, fire on the rising edge of the pulse
-            //sensors[1] = new FlowSensor(new InterruptPort(Pins.GPIO_PIN_D12, false, Port.ResistorMode.Disabled, Port.InterruptMode.InterruptEdgeHigh), writer, 2);
-            //while (true)
-            //{
-            //    foreach (var flowSensor in sensors)
-            //    {
-            //        flowSensor.CheckPulses();
-            //    }
-            //    Thread.Sleep(MILLISECONDS_BETWEEN_COUNT);
-            //}
+            var sensors = new FlowSensor[NUMBER_OF_TAPS];
+            // Flow sensor plugged into pin 13, no resistor necessary, fire on the rising edge of the pulse
+            sensors[0] = new FlowSensor(new InterruptPort(Pins.GPIO_PIN_D13, false, Port.ResistorMode.Disabled, Port.InterruptMode.InterruptEdgeHigh), writer, 1);
+            // Flow sensor plugged into pin 12, no resistor necessary, fire on the rising edge of the pulse
+            sensors[1] = new FlowSensor(new InterruptPort(Pins.GPIO_PIN_D12, false, Port.ResistorMode.Disabled, Port.InterruptMode.InterruptEdgeHigh), writer, 2);
+            Debug.Print("Starting");
+            for (var i = 0; i < 100; i++)
+            {
+                foreach (var flowSensor in sensors)
+                {
+                    flowSensor.CheckPulses();
+                }
+                Thread.Sleep(MILLISECONDS_BETWEEN_COUNT);
+            }
+
+            Debug.Print("Exiting");
         }
     }
 }

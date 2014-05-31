@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Threading;
 using Microsoft.SPOT;
@@ -7,7 +6,7 @@ using Toolbox.NETMF.NET;
 
 namespace RightpointLabs.Pourcast.Repourter
 {
-    public class HttpMessageWriter
+    public class WifiHttpMessageWriter : HttpMessageWriterBase
     {
         private WiFlyGSX WifiModule = new WiFlyGSX(DebugMode: true);
 
@@ -39,43 +38,7 @@ namespace RightpointLabs.Pourcast.Repourter
             _queue.Add(null);
         }
 
-        public void SendStartAsync(int tapId)
-        {
-            _queue.Add(new Message() { IsStart = true, TapId = tapId });
-        }
-
-        public void SendStopAsync(int tapId, double ounces)
-        {
-            _queue.Add(new Message() { IsStart = true, TapId = tapId, Volume = ounces });
-        }
-
-        private BoundedBuffer _queue = new BoundedBuffer();
-        private class Message
-        {
-            public int TapId { get; set; }
-            public double Volume { get; set; }
-            public bool IsStart { get; set; }
-        }
-
-        private void SendMessages()
-        {
-            while (true)
-            {
-                var msg = (Message) _queue.Take();
-                if (null == msg)
-                    return;
-                try
-                {
-                    SendMessage(msg);
-                }
-                catch (Exception ex)
-                {
-                    Debug.Print("Couldn't send message: " + ex.ToString());
-                }
-            }
-        }
-
-        private void SendMessage(Message message)
+        protected override void SendMessage(Message message)
         {
             // Creates a socket
             var controller = "/api/repourtertest/"; // TODO: change

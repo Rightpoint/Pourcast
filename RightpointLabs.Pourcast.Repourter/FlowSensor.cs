@@ -24,9 +24,9 @@ namespace RightpointLabs.Pourcast.Repourter
 
         private readonly int _tapId;
 
-        private readonly HttpMessageWriter _httpMessageWriter;
+        private readonly IHttpMessageWriter _httpMessageWriter;
 
-        public FlowSensor(InterruptPort port, HttpMessageWriter httpMessageWriter, int tapId)
+        public FlowSensor(InterruptPort port, IHttpMessageWriter httpMessageWriter, int tapId)
         {
             _port = port;
             _port.OnInterrupt += FlowDetected;
