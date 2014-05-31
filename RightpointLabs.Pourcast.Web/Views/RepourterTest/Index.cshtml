@@ -8,9 +8,9 @@
 
 @section scripts {
     <script>
-        $(function() {
-            pourcast.events.on("StartPour", function (e) { document.write("StartPour:" + JSON.stringify(e) + "</br>"); });
-            pourcast.events.on("StopPour", function (e) { document.write("StopPour:" + JSON.stringify(e) + "</br>"); });
+        define(['events'], function(events) {
+            events.on("StartPour", function (e) { document.write("StartPour:" + JSON.stringify(e) + "</br>"); });
+            events.on("StopPour", function (e) { document.write("StopPour:" + JSON.stringify(e) + "</br>"); });
         });
     </script>
 }
