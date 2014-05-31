@@ -1,9 +1,11 @@
 using System;
+using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using Microsoft.SPOT;
+using Microsoft.SPOT.Net.NetworkInformation;
 
 namespace RightpointLabs.Pourcast.Repourter
 {
@@ -22,23 +24,25 @@ namespace RightpointLabs.Pourcast.Repourter
 
             var req = (HttpWebRequest)WebRequest.Create(uri);
             var resp = req.GetResponse();
-            using(var s = resp.GetResponseStream())
+            using(var tr = new StreamReader(resp.GetResponseStream()))
             {
-                byte[] buffer = new byte[16 * 1024];
-                var read = s.Read(buffer, 0, buffer.Length); // betting we don't need more than 16k to read the response because I'm too lazy to write array-merge code
-                Debug.Print("Response: " + new string(Encoding.UTF8.GetChars(buffer, 0, read)));
+                Debug.Print("Response: " + tr.ReadToEnd());
             }
         }
 
         public bool Start()
         {
-            new Thread(SendMessages).Start();
-            return true;
-        }
+            foreach(var ni in NetworkInterface.GetAllNetworkInterfaces())
+            {
+                if(ni.IPAddress != "0.0.0.0")
+                {
+                    Debug.Print("Have IP: " + ni.IPAddress);
+                    StartThread();
+                    return true;
+                }
+            }
 
-        public void Stop()
-        {
-            _queue.Add(null);
+            return false;
         }
     }
 }

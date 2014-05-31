@@ -29,13 +29,8 @@ namespace RightpointLabs.Pourcast.Repourter
                 return false;
             }
 
-            new Thread(SendMessages).Start();
+            StartThread();
             return true;
-        }
-
-        public void Stop()
-        {
-            _queue.Add(null);
         }
 
         protected override void SendMessage(Message message)

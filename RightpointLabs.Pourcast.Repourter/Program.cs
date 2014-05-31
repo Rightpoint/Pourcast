@@ -96,6 +96,7 @@ namespace RightpointLabs.Pourcast.Repourter
                 Thread.Sleep(MILLISECONDS_BETWEEN_COUNT);
             }
 
+            writer.Stop();
             Debug.Print("Exiting");
         }
     }
