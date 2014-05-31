@@ -5,6 +5,8 @@ using System.Threading;
 using Microsoft.SPOT;
 using Microsoft.SPOT.Hardware;
 using Toolbox.NETMF.Hardware;
+using SecretLabs.NETMF.Hardware;
+using SecretLabs.NETMF.Hardware.Netduino;
 
 namespace RightpointLabs.Pourcast.Repourter
 {
@@ -27,7 +29,7 @@ namespace RightpointLabs.Pourcast.Repourter
                 return;
             }
 
-            writer.SendStartAsync(1);
+            //writer.SendStartAsync(1);
 
             //while (true)
             //{
@@ -56,27 +58,28 @@ namespace RightpointLabs.Pourcast.Repourter
             //HttpMessageWriter.SendStartAsync(1);
             Debug.Print("Starting");
             {
-                var port = new InterruptPort(Cpu.Pin.GPIO_Pin13, false, Port.ResistorMode.PullUp,
+                var port = new InterruptPort(Pins.GPIO_PIN_D13, false, Port.ResistorMode.Disabled,
                     Port.InterruptMode.InterruptEdgeBoth);
-                port.OnInterrupt += (i, ii, iii) => Debug.Print("Pressed");
-                port.EnableInterrupt();
+                port.OnInterrupt += (i, ii, iii) => Debug.Print("Pressed 13: " + port.Read() + " -- " + i + " - " + ii + " - " + iii);
             }
             Debug.Print("Middle");
             {
-                var x = new InputPort(Cpu.Pin.GPIO_Pin12, false, Port.ResistorMode.Disabled);
-                x.OnInterrupt += (data1, data2, time) => Debug.Print("12");
+                var port = new InterruptPort(Pins.GPIO_PIN_D12, false, Port.ResistorMode.Disabled,
+                    Port.InterruptMode.InterruptEdgeBoth);
+                port.OnInterrupt += (i, ii, iii) => Debug.Print("Pressed 12: " + port.Read() + " -- " + i + " - " + ii + " - " + iii);
             }
 
-            Debug.Print("Sleeping");
+            //Debug.Print("Sleeping");
 
-            Thread.Sleep(10000000);
+            //Thread.Sleep(30000);
 
+            //Debug.Print("Done");
 
             //var sensors = new FlowSensor[NUMBER_OF_TAPS];
             //// Flow sensor plugged into pin 13, no resistor necessary, fire on the rising edge of the pulse
-            //sensors[0] = new FlowSensor(new InterruptPort(Cpu.Pin.GPIO_Pin13, false, Port.ResistorMode.Disabled, Port.InterruptMode.InterruptEdgeHigh), writer, 1);
+            //sensors[0] = new FlowSensor(new InterruptPort(Pins.GPIO_PIN_D13, false, Port.ResistorMode.Disabled, Port.InterruptMode.InterruptEdgeHigh), writer, 1);
             //// Flow sensor plugged into pin 12, no resistor necessary, fire on the rising edge of the pulse
-            //sensors[1] = new FlowSensor(new InterruptPort(Cpu.Pin.GPIO_Pin12, false, Port.ResistorMode.Disabled, Port.InterruptMode.InterruptEdgeHigh), writer, 2);
+            //sensors[1] = new FlowSensor(new InterruptPort(Pins.GPIO_PIN_D12, false, Port.ResistorMode.Disabled, Port.InterruptMode.InterruptEdgeHigh), writer, 2);
             //while (true)
             //{
             //    foreach (var flowSensor in sensors)
