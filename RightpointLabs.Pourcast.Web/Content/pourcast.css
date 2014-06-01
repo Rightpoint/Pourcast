@@ -21,26 +21,32 @@ footer {
   display: none;
   /*fuck your footer*/
 }
-.navbar {
-  height: 8vh;
-}
-.navbar-header {
+.foam {
+  height: 12vmin;
+  background: #fff;
+  position: fixed;
   width: 100%;
+  z-index: 1;
 }
-.header-bubble {
-  height: 6vh;
-  margin: 1vh 20px;
-}
-.header-bubble.right {
-  float: right;
-}
-.header-bubble.left {
-  float: left;
-}
-.header-ribbon {
+.foam .foam-bubbles {
+  height: 6vmin;
   position: absolute;
-  right: 50%;
-  margin-right: -48px;
+  margin: auto;
+  bottom: 2vmin;
+}
+.foam .foam-bubbles.left {
+  left: 2vmin;
+}
+.foam .foam-bubbles.right {
+  right: 2vmin;
+}
+.foam .ribbon {
+  position: absolute;
+  margin: 0 auto;
+  display: block;
+  width: 14vmin;
+  left: 0;
+  right: .5vmin;
 }
 /* Set width on the form input elements since they're 100% wide by default */
 input[type="text"],
@@ -93,8 +99,15 @@ body,
   text-align: center;
   color: #fff;
 }
+.tap .keg-info .background {
+  background: #fff;
+  height: 100%;
+  position: absolute;
+  width: 100%;
+  opacity: .25;
+}
 .tap .keg-info .status {
-  margin-top: 8vh;
+  padding-top: 12vmin;
 }
 .tap .keg-info .status .bits {
   height: 18vw;
@@ -157,6 +170,7 @@ body,
   width: 30vmin;
   height: 30vmin;
   border-radius: 50%;
+  -webkit-mask-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC);
   margin: 0 auto;
   background: #fff;
   position: relative;

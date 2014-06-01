@@ -18,26 +18,10 @@
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet"> @* temp til we get images for speach bubbles*@
 </head>
 <body>
-    <div class="navbar navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <img class="header-bubble left" src="/Content/themes/base/images/foam-bubbles-left.png" />
-                <img class="header-ribbon" src="/Content/themes/base/images/pourcast-ribbon.png" />
-                <img class="header-bubble right" src="/Content/themes/base/images/foam-bubbles-right.png" />
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <div class="container body-content">
-        @RenderBody()
-        <footer>
-            <p>@Html.Raw(string.Format("&copy; {0} - {1} {2} <br /> {3}", DateTime.Now.Year, Resources.Company, Resources.Application, Resources.Made))</p>
-        </footer>
-    </div>
+    @RenderBody()
+    <footer>
+        <p>@Html.Raw(string.Format("&copy; {0} - {1} {2} <br /> {3}", DateTime.Now.Year, Resources.Company, Resources.Application, Resources.Made))</p>
+    </footer>
     
     @RenderSection("templates", required: false)
     

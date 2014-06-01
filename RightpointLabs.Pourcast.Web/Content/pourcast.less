@@ -1,5 +1,5 @@
 ﻿/* variables */
-@top-margin: 8vh;
+@top-margin: 12vmin;
 
 /* media query variables*/
 @mobile:      ~"only screen and (max-width: 529px)";
@@ -28,27 +28,34 @@ footer {
     display: none; /*fuck your footer*/
 }
 
-.navbar {
+.foam {
     height: @top-margin;
-}
-.navbar-header {
+    background: #fff;
+    position: fixed;
     width: 100%;
-}
+    z-index: 1;
 
-.header-bubble {
-    height: 6vh;
-    margin: 1vh 20px;
-}
-.header-bubble.right {
-    float: right;
-}
-.header-bubble.left {
-    float: left;
-}
-.header-ribbon {
-    position: absolute;
-    right: 50%;
-    margin-right: -48px;
+    .foam-bubbles {
+        height: 6vmin;
+        position: absolute;
+        margin: auto;
+        bottom: 2vmin;
+    }
+    .foam-bubbles.left {
+        left: 2vmin;
+    }
+    .foam-bubbles.right { 
+        right: 2vmin;
+    }
+
+    .ribbon {
+        position: absolute;
+        margin: 0 auto;
+        display: block;
+        width: 14vmin;
+        left: 0;
+        right: .5vmin;
+    }
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
@@ -111,8 +118,16 @@ html, body,
         text-align: center;
         color: #fff;
 
+        .background {
+            background: #fff;
+            height: 100%;
+            position: absolute;
+            width: 100%;
+            opacity: .25;
+        }
+
         .status {
-            margin-top: @top-margin;
+            padding-top: @top-margin;
 
             .bits {
                 height: 18vw;
@@ -177,6 +192,7 @@ html, body,
                 width: 30vmin;
                 height: 30vmin;
                 border-radius: 50%;
+                -webkit-mask-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC);
                 margin: 0 auto;
                 background: #fff;
                 //border: 4px solid #fff;
