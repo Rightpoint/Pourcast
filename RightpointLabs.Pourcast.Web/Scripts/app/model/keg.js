@@ -25,7 +25,9 @@
         events.on("PourStopped", function(e) {
             console.log("PourStopped");
 
-            self.percentRemaining(Math.floor(e.PercentRemaining * 100));
+            if (e.KegId === self.id()) {
+                self.percentRemaining(Math.floor(e.PercentRemaining * 100));
+            }
         });
     };
 
