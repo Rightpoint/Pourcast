@@ -24,11 +24,14 @@ namespace RightpointLabs.Pourcast.Repourter
 
         private readonly int _tapId;
 
-        public FlowSensor(InterruptPort port, int tapId)
+        private readonly IHttpMessageWriter _httpMessageWriter;
+
+        public FlowSensor(InterruptPort port, IHttpMessageWriter httpMessageWriter, int tapId)
         {
-            _tapId = tapId;
             _port = port;
             _port.OnInterrupt += FlowDetected;
+            _httpMessageWriter = httpMessageWriter;
+            _tapId = tapId;
         }
 
         public void CheckPulses()
@@ -49,19 +52,20 @@ namespace RightpointLabs.Pourcast.Repourter
                 {
                     _flowing = true;
                     _flowStart = lastMeasuredTime;
-                    HttpMessageWriter.SendStartAsync(_tapId);
+                    _httpMessageWriter.SendStartAsync(_tapId);
                 }
             }
             else if(_totalLiters > 0) // it didn't flow, but we have finished a pour. Report it.
             {
                 var ounces = _totalLiters*OUNCES_PER_LITER;
-                HttpMessageWriter.SendStopAsync(_tapId, ounces);
+                _httpMessageWriter.SendStopAsync(_tapId, ounces);
                 _totalLiters = 0;
             }
         }
 
         private void FlowDetected(uint port, uint data, DateTime time)
         {
+            Debug.Print("Flow detected - " + _tapId);
             _pulseCount++;
             _lastFlowDetected = time;
         }
