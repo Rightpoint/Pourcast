@@ -1,5 +1,5 @@
 ﻿/* variables */
-@top-margin: 12vmin;
+@foam-height: 12vmin;
 @profile-diameter: 30vmin;
 
 /* media query variables*/
@@ -31,7 +31,7 @@ footer {
 }
 
 .foam {
-    height: @top-margin;
+    height: @foam-height;
     background: #fff;
     position: fixed;
     width: 100%;
@@ -114,7 +114,6 @@ html, body,
     width: 50%;
     height: 100%;
     float: left;
-    overflow: hidden;
 
     .keg-info {
         width: 100%;
@@ -123,16 +122,20 @@ html, body,
         color: #fff;
 
         .background {
-            background: #fff;
             height: 100%;
-            position: absolute;
+            position: fixed;
             width: 100%;
-            opacity: .25;
+
+            .shade {
+                background: #fff;
+                width: 100%;
+                height: 100%;
+                opacity: .25;
+            }
         }
 
         .status {
-            padding-top: 19vmin;
-            margin-top: @top-margin;
+            padding-top: 19vmin + @foam-height;
 
             .bits {
                 height: 30vmin;
@@ -147,9 +150,17 @@ html, body,
                     right: 0;
                     bottom: 0;
                     top: 0;
+                    -moz-transform: rotate(45deg) translateY(-10vmin) translateY(-@profile-diameter / 2) rotate(-45deg);
+                    -ms-transform: rotate(45deg) translateY(-10vmin) translateY(-@profile-diameter / 2) rotate(-45deg);
+                    -o-transform: rotate(45deg) translateY(-10vmin) translateY(-@profile-diameter / 2) rotate(-45deg);
+                    -webkit-transform: rotate(45deg) translateY(-10vmin) translateY(-@profile-diameter / 2) rotate(-45deg);
                     transform: rotate(45deg) translateY(-10vmin) translateY(-@profile-diameter / 2) rotate(-45deg);
 
                     @media @mobile {
+                        -moz-transform: translateY(-10vmin) translateY(-@profile-diameter / 2) rotate(-45deg);
+                        -ms-transform: translateY(-10vmin) translateY(-@profile-diameter / 2) rotate(-45deg);
+                        -o-transform: translateY(-10vmin) translateY(-@profile-diameter / 2) rotate(-45deg);
+                        -webkit-transform: translateY(-10vmin) translateY(-@profile-diameter / 2) rotate(-45deg);
                         transform: translateY(-10vmin) translateY(-@profile-diameter / 2) rotate(-45deg);
                     }
 
@@ -158,6 +169,10 @@ html, body,
                         height: 100%;
 
                         @media @mobile {
+                            -moz-transform: rotate(45deg);
+                            -ms-transform: rotate(45deg);
+                            -o-transform: rotate(45deg);
+                            -webkit-transform: rotate(45deg);
                             transform: rotate(45deg);
                         }
                     }
@@ -267,6 +282,7 @@ html, body,
 
         .beer {
             margin: 2vw;
+            position: relative;
 
             h1.name {
                 font-weight: bold;
@@ -282,16 +298,32 @@ html, body,
 }
 
 .taps .tap:nth-child(odd) .keg-info .status .bits .bit {
+    -moz-transform: rotate(-45deg) translateY(-10vmin) translateY(-@profile-diameter / 2) rotate(-45deg);
+    -ms-transform: rotate(-45deg) translateY(-10vmin) translateY(-@profile-diameter / 2) rotate(-45deg);
+    -o-transform: rotate(-45deg) translateY(-10vmin) translateY(-@profile-diameter / 2) rotate(-45deg);
+    -webkit-transform: rotate(-45deg) translateY(-10vmin) translateY(-@profile-diameter / 2) rotate(-45deg);
     transform: rotate(-45deg) translateY(-10vmin) translateY(-@profile-diameter / 2) rotate(-45deg);
 
     @media @mobile {
+        -moz-transform: translateY(-10vmin) translateY(-@profile-diameter / 2) rotate(-45deg);
+        -ms-transform: translateY(-10vmin) translateY(-@profile-diameter / 2) rotate(-45deg);
+        -o-transform: translateY(-10vmin) translateY(-@profile-diameter / 2) rotate(-45deg);
+        -webkit-transform: translateY(-10vmin) translateY(-@profile-diameter / 2) rotate(-45deg);
         transform: translateY(-10vmin) translateY(-@profile-diameter / 2) rotate(-45deg);
     }
 
     .inner-contents {
+        -moz-transform: rotate(90deg);
+        -ms-transform: rotate(90deg);
+        -o-transform: rotate(90deg);
+        -webkit-transform: rotate(90deg);
         transform: rotate(90deg);
 
         @media @mobile {
+            -moz-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            -o-transform: rotate(45deg);
+            -webkit-transform: rotate(45deg);
             transform: rotate(45deg);
         }
     }

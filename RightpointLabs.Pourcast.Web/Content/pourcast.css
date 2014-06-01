@@ -91,7 +91,6 @@ body,
   width: 50%;
   height: 100%;
   float: left;
-  overflow: hidden;
 }
 .tap .keg-info {
   width: 100%;
@@ -100,15 +99,18 @@ body,
   color: #fff;
 }
 .tap .keg-info .background {
-  background: #fff;
   height: 100%;
-  position: absolute;
+  position: fixed;
   width: 100%;
+}
+.tap .keg-info .background .shade {
+  background: #fff;
+  width: 100%;
+  height: 100%;
   opacity: .25;
 }
 .tap .keg-info .status {
-  padding-top: 19vmin;
-  margin-top: 12vmin;
+  padding-top: 31vmin;
 }
 .tap .keg-info .status .bits {
   height: 30vmin;
@@ -123,10 +125,18 @@ body,
   right: 0;
   bottom: 0;
   top: 0;
+  -moz-transform: rotate(45deg) translateY(-10vmin) translateY(-15vmin) rotate(-45deg);
+  -ms-transform: rotate(45deg) translateY(-10vmin) translateY(-15vmin) rotate(-45deg);
+  -o-transform: rotate(45deg) translateY(-10vmin) translateY(-15vmin) rotate(-45deg);
+  -webkit-transform: rotate(45deg) translateY(-10vmin) translateY(-15vmin) rotate(-45deg);
   transform: rotate(45deg) translateY(-10vmin) translateY(-15vmin) rotate(-45deg);
 }
 @media only screen and (max-width: 529px) {
   .tap .keg-info .status .bits .bit {
+    -moz-transform: translateY(-10vmin) translateY(-15vmin) rotate(-45deg);
+    -ms-transform: translateY(-10vmin) translateY(-15vmin) rotate(-45deg);
+    -o-transform: translateY(-10vmin) translateY(-15vmin) rotate(-45deg);
+    -webkit-transform: translateY(-10vmin) translateY(-15vmin) rotate(-45deg);
     transform: translateY(-10vmin) translateY(-15vmin) rotate(-45deg);
   }
 }
@@ -136,6 +146,10 @@ body,
 }
 @media only screen and (max-width: 529px) {
   .tap .keg-info .status .bits .bit .inner-contents {
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
     transform: rotate(45deg);
   }
 }
@@ -226,6 +240,7 @@ body,
 }
 .tap .keg-info .beer {
   margin: 2vw;
+  position: relative;
 }
 .tap .keg-info .beer h1.name {
   font-weight: bold;
@@ -236,18 +251,34 @@ body,
   font-size: 1.5em;
 }
 .taps .tap:nth-child(odd) .keg-info .status .bits .bit {
+  -moz-transform: rotate(-45deg) translateY(-10vmin) translateY(-15vmin) rotate(-45deg);
+  -ms-transform: rotate(-45deg) translateY(-10vmin) translateY(-15vmin) rotate(-45deg);
+  -o-transform: rotate(-45deg) translateY(-10vmin) translateY(-15vmin) rotate(-45deg);
+  -webkit-transform: rotate(-45deg) translateY(-10vmin) translateY(-15vmin) rotate(-45deg);
   transform: rotate(-45deg) translateY(-10vmin) translateY(-15vmin) rotate(-45deg);
 }
 @media only screen and (max-width: 529px) {
   .taps .tap:nth-child(odd) .keg-info .status .bits .bit {
+    -moz-transform: translateY(-10vmin) translateY(-15vmin) rotate(-45deg);
+    -ms-transform: translateY(-10vmin) translateY(-15vmin) rotate(-45deg);
+    -o-transform: translateY(-10vmin) translateY(-15vmin) rotate(-45deg);
+    -webkit-transform: translateY(-10vmin) translateY(-15vmin) rotate(-45deg);
     transform: translateY(-10vmin) translateY(-15vmin) rotate(-45deg);
   }
 }
 .taps .tap:nth-child(odd) .keg-info .status .bits .bit .inner-contents {
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  -webkit-transform: rotate(90deg);
   transform: rotate(90deg);
 }
 @media only screen and (max-width: 529px) {
   .taps .tap:nth-child(odd) .keg-info .status .bits .bit .inner-contents {
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
     transform: rotate(45deg);
   }
 }
