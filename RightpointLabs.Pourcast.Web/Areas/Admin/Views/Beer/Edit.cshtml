@@ -41,26 +41,10 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Style, new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.StyleId, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Style)
-                @Html.ValidationMessageFor(model => model.Style)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Color, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Color)
-                @Html.ValidationMessageFor(model => model.Color)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Glass, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Glass)
-                @Html.ValidationMessageFor(model => model.Glass)
+                @Html.DropDownListFor(m => m.StyleId, Model.Styles)
+                @Html.ValidationMessageFor(model => model.StyleId)
             </div>
         </div>
         @Html.HiddenFor(m => m.BreweryId)

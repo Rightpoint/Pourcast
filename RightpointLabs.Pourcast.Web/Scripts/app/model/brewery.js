@@ -1,6 +1,4 @@
-﻿var pourcast = pourcast || {};
-
-pourcast.Brewery = (function ($, ko) {
+﻿define(['jquery', 'ko'], function($, ko) {
     function Brewery(breweryJSON) {
         var self = this;
 
@@ -9,7 +7,10 @@ pourcast.Brewery = (function ($, ko) {
         self.city = ko.observable(breweryJSON.City);
         self.state = ko.observable(breweryJSON.State);
         self.website = ko.observable(breweryJSON.Website);
+        self.location = ko.computed(function() {
+            return self.city() + ", " + self.state();
+        });
     };
 
     return Brewery;
-}(jQuery, ko));
+});

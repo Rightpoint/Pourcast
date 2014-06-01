@@ -1,13 +1,12 @@
-﻿var pourcast = pourcast || {};
+﻿define(['jquery', 'toastr', 'signalr.hubs'], function ($, toastr) {
 
-pourcast.events = (function ($, toastr) {
-    $.connection.hub.start();
+    $.connection.hub.start({ waitForPageLoad: false });
 
     var pub = {
-        on: function (event, callback) {
+        on: function(event, callback) {
             $.connection.eventsHub.on(event, callback);
         },
-        off: function (event, callback) {
+        off: function(event, callback) {
             $.connection.eventsHub.off(event, callback);
         }
     };
@@ -18,7 +17,7 @@ pourcast.events = (function ($, toastr) {
     var isDisconnected = false;
     var disconnectedToast;
 
-    $.connection.hub.stateChanged(function (e) {
+    $.connection.hub.stateChanged(function(e) {
         if (e.newState === $.connection.connectionState.connected) {
             if (isDisconnected) {
                 toastr.clear(disconnectedToast);
@@ -39,8 +38,8 @@ pourcast.events = (function ($, toastr) {
         }
     });
 
-    $.connection.hub.disconnected(function () {
-        setTimeout(function () {
+    $.connection.hub.disconnected(function() {
+        setTimeout(function() {
             $.connection.hub.start();
         }, Math.pow(2, retryCount) * 1000);
 
@@ -49,9 +48,9 @@ pourcast.events = (function ($, toastr) {
 
 
     // admin refresh
-    pub.on("refresh", function () {
+    pub.on("refresh", function() {
         window.location.reload();
     });
 
     return pub;
-}(jQuery, toastr));
+});

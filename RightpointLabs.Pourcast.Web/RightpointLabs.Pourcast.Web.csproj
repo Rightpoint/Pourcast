@@ -292,8 +292,10 @@
     <Content Include="Fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\toastr.less" />
+    <Content Include="Scripts\app.js" />
     <Content Include="Scripts\app\bindings.js" />
     <Content Include="Scripts\app\bubbles.js" />
+    <Content Include="Scripts\app\dataservice.js" />
     <Content Include="Scripts\app\model\beer.js" />
     <Content Include="Scripts\app\model\brewery.js" />
     <Content Include="Areas\Admin\Views\web.config" />
@@ -320,6 +322,9 @@
     <Content Include="Areas\Admin\Views\Beer\Index.cshtml" />
     <Content Include="Scripts\app\events.js" />
     <Content Include="Content\pourcast.less" />
+    <Content Include="Areas\Admin\Views\Style\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Style\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Style\Create.cshtml" />
     <None Include="Properties\PublishProfiles\Production.pubxml" />
     <None Include="Scripts\libs\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\app\admin.js" />
@@ -327,6 +332,7 @@
     <Content Include="Scripts\app\model\tap.js" />
     <Content Include="Scripts\app\pourcast.js" />
     <Content Include="Scripts\app\model\keg.js" />
+    <Content Include="Scripts\app\viewmodel\TapViewModel.js" />
     <Content Include="Scripts\libs\bootstrap.js" />
     <Content Include="Scripts\libs\bootstrap.min.js" />
     <None Include="Scripts\libs\jquery-2.1.0.intellisense.js" />
@@ -370,6 +376,7 @@
     <Compile Include="Areas\Admin\Controllers\BreweryController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\KegController.cs" />
+    <Compile Include="Areas\Admin\Controllers\StyleController.cs" />
     <Compile Include="Areas\Admin\Controllers\TapController.cs" />
     <Compile Include="Areas\Admin\Models\BeerIndexViewModel.cs" />
     <Compile Include="Areas\Admin\Models\BeerViewModel.cs" />
@@ -377,6 +384,7 @@
     <Compile Include="Areas\Admin\Models\CreateBeerViewModel.cs" />
     <Compile Include="Areas\Admin\Models\CreateBreweryViewModel.cs" />
     <Compile Include="Areas\Admin\Models\CreateKegViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\CreateStyleViewModel.cs" />
     <Compile Include="Areas\Admin\Models\CreateTapViewModel.cs" />
     <Compile Include="Areas\Admin\Models\EditBeerViewModel.cs" />
     <Compile Include="Areas\Admin\Models\EditBreweryViewModel.cs" />
