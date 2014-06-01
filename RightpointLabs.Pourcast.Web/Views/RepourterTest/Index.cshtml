@@ -5,12 +5,17 @@
 }
 
 <h2>Repourter Tests</h2>
+<div id="log"></div>
 
 @section scripts {
     <script>
-        $(function() {
-            pourcast.events.on("StartPour", function (e) { document.write("StartPour:" + JSON.stringify(e) + "</br>"); });
-            pourcast.events.on("StopPour", function (e) { document.write("StopPour:" + JSON.stringify(e) + "</br>"); });
+        require(['app/events'], function(events) {
+            events.on("StartPour", function (e) {
+                $("#log").append($("<div/>").text("StartPour:" + JSON.stringify(e)));
+            });
+            events.on("StopPour", function (e) {
+                $("#log").append($("<div/>").text("StopPour:" + JSON.stringify(e)));
+            });
         });
     </script>
 }

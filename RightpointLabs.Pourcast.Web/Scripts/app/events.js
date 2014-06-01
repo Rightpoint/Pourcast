@@ -1,5 +1,9 @@
 ﻿define(['jquery', 'toastr', 'signalr.hubs'], function ($, toastr) {
 
+    // in order to get the client to actually subscribe for events on a hub, we have to register at least one client-side call for that hub...
+    // logging (the next line) will help show that if you need further details
+    $.connection.eventsHub.client.dummyClientCallback = function () { };
+    //$.connection.hub.logging = true;
     $.connection.hub.start({ waitForPageLoad: false });
 
     var pub = {
