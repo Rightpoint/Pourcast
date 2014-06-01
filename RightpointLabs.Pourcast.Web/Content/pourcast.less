@@ -1,12 +1,13 @@
 ﻿/* variables */
-@top-margin: 8vh;
+@foam-height: 12vmin;
+@profile-diameter: 30vmin;
 
 /* media query variables*/
-@mobile:      ~"only screen and (max-width: 529px)";
-@tablet:      ~"only screen and (min-width: 530px) and (max-width: 949px)";
-@desktop:     ~"only screen and (min-width: 950px) and (max-width: 1128px)";
-@desktop-md:  ~"only screen and (min-width: 1129px) and (max-width: 1349px)";
-@desktop-xl:  ~"only screen and (min-width: 1350px)";
+@mobile: ~"only screen and (max-width: 529px)";
+@tablet: ~"only screen and (min-width: 530px) and (max-width: 949px)";
+@desktop: ~"only screen and (min-width: 950px) and (max-width: 1128px)";
+@desktop-md: ~"only screen and (min-width: 1129px) and (max-width: 1349px)";
+@desktop-xl: ~"only screen and (min-width: 1350px)";
 
 
 body {
@@ -16,6 +17,7 @@ body {
     @media @tablet {
         font-size: 10px;
     }
+
     @media @mobile {
         font-size: 8px;
     }
@@ -28,27 +30,36 @@ footer {
     display: none; /*fuck your footer*/
 }
 
-.navbar {
-    height: @top-margin;
-}
-.navbar-header {
+.foam {
+    height: @foam-height;
+    background: #fff;
+    position: fixed;
     width: 100%;
-}
+    z-index: 1;
 
-.header-bubble {
-    height: 6vh;
-    margin: 1vh 20px;
-}
-.header-bubble.right {
-    float: right;
-}
-.header-bubble.left {
-    float: left;
-}
-.header-ribbon {
-    position: absolute;
-    right: 50%;
-    margin-right: -48px;
+    .foam-bubbles {
+        height: 6vmin;
+        position: absolute;
+        margin: auto;
+        bottom: 2vmin;
+    }
+
+    .foam-bubbles.left {
+        left: 2vmin;
+    }
+
+    .foam-bubbles.right {
+        right: 2vmin;
+    }
+
+    .ribbon {
+        position: absolute;
+        margin: 0 auto;
+        display: block;
+        width: 14vmin;
+        left: 0;
+        right: .5vmin;
+    }
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
@@ -103,7 +114,6 @@ html, body,
     width: 50%;
     height: 100%;
     float: left;
-    overflow: hidden;
 
     .keg-info {
         width: 100%;
@@ -111,62 +121,102 @@ html, body,
         text-align: center;
         color: #fff;
 
+        .background {
+            height: 100%;
+            position: fixed;
+            width: 100%;
+
+            .shade {
+                background: #fff;
+                width: 100%;
+                height: 100%;
+                opacity: .25;
+            }
+        }
+
         .status {
-            margin-top: @top-margin;
+            padding-top: 19vmin + @foam-height;
+            position: relative;
+            z-index: 2;
 
             .bits {
-                height: 18vw;
-                max-height: 30vh;
-                margin-bottom: -6vw;
+                height: 30vmin;
+                position: absolute;
+                width: 100%;
 
                 .bit {
-                    position: relative;
+                    position: absolute;
                     display: block;
-                    float: left;
-                    width: 20%;
+                    left: 0;
+                    margin: auto;
+                    right: 0;
+                    bottom: 0;
+                    top: 0;
+                    -moz-transform: rotate(45deg) translateY(-10vmin) translateY(-@profile-diameter / 2) rotate(-45deg);
+                    -ms-transform: rotate(45deg) translateY(-10vmin) translateY(-@profile-diameter / 2) rotate(-45deg);
+                    -o-transform: rotate(45deg) translateY(-10vmin) translateY(-@profile-diameter / 2) rotate(-45deg);
+                    -webkit-transform: rotate(45deg) translateY(-10vmin) translateY(-@profile-diameter / 2) rotate(-45deg);
+                    transform: rotate(45deg) translateY(-10vmin) translateY(-@profile-diameter / 2) rotate(-45deg);
+
+                    @media @mobile {
+                        -moz-transform: translateY(-10vmin) translateY(-@profile-diameter / 2) rotate(-45deg);
+                        -ms-transform: translateY(-10vmin) translateY(-@profile-diameter / 2) rotate(-45deg);
+                        -o-transform: translateY(-10vmin) translateY(-@profile-diameter / 2) rotate(-45deg);
+                        -webkit-transform: translateY(-10vmin) translateY(-@profile-diameter / 2) rotate(-45deg);
+                        transform: translateY(-10vmin) translateY(-@profile-diameter / 2) rotate(-45deg);
+                    }
+
+                    .inner-contents {
+                        width: 100%;
+                        height: 100%;
+
+                        @media @mobile {
+                            -moz-transform: rotate(45deg);
+                            -ms-transform: rotate(45deg);
+                            -o-transform: rotate(45deg);
+                            -webkit-transform: rotate(45deg);
+                            transform: rotate(45deg);
+                        }
+                    }
                 }
 
                 .remaining {
-                    position: absolute;
-                    top: 130px;
+                    @width: 12vmin;
 
                     .percent {
                         position: absolute;
                         width: 100%;
-                        top: 25%;
+                        line-height: 100%;
+                        margin: auto;
                         right: 0;
-                        font-size: 2em;
+                        left: 0;
+                        font-size: 3vmin;
                         font-weight: bold;
-                        //margin-right: -5%;
-                        margin-top: 10px;
+                        bottom: 0;
+                        top: 0;
+                        height: 3vmin;
 
-                        @media @desktop-md {
-                            font-size: 1.8em;
-                    }
-                        @media @desktop {
-                            font-size: 1.5em;
-                            margin-top: 5px;
-                }
-                        @media @tablet {
-                            font-size: 1.8em;
-                            margin-top: 5px;
+                        .symbol {
+                            font-size: .5em;
+                            position: relative;
+                            top: -.6em;
                         }
-                
                     }
                 }
-                
+
                 .remaining.high {
-                    height: 8vw;
-                    width: 8vw;
+                    height: 12vmin;
+                    width: 12vmin;
                     background: url('/Content/themes/base/images/bubble-green.png') no-repeat;
                     -moz-background-size: contain;
                     -webkit-background-size: contain;
                     background-size: contain;
                 }
+
                 .remaining.low {
                     background: url('/Content/themes/base/images/bubble-red.png') no-repeat;
-                    height: 8vw;
-                    width: 8vw;
+                    height: 12vmin;
+                    width: 12vmin;
                     -moz-background-size: contain;
                     -webkit-background-size: contain;
                     background-size: contain;
@@ -174,9 +224,10 @@ html, body,
             }
 
             .profile {
-                width: 30vmin;
-                height: 30vmin;
+                width: @profile-diameter;
+                height: @profile-diameter;
                 border-radius: 50%;
+                -webkit-mask-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC);
                 margin: 0 auto;
                 background: #fff;
                 //border: 4px solid #fff;
@@ -233,6 +284,8 @@ html, body,
 
         .beer {
             margin: 2vw;
+            position: relative;
+            z-index: 2;
 
             h1.name {
                 font-weight: bold;
@@ -247,32 +300,41 @@ html, body,
     }
 }
 
-.tap:nth-child(odd) {
-    .remaining {
-        left: 8vw;
+.taps .tap:nth-child(odd) .keg-info .status .bits .bit {
+    -moz-transform: rotate(-45deg) translateY(-10vmin) translateY(-@profile-diameter / 2) rotate(-45deg);
+    -ms-transform: rotate(-45deg) translateY(-10vmin) translateY(-@profile-diameter / 2) rotate(-45deg);
+    -o-transform: rotate(-45deg) translateY(-10vmin) translateY(-@profile-diameter / 2) rotate(-45deg);
+    -webkit-transform: rotate(-45deg) translateY(-10vmin) translateY(-@profile-diameter / 2) rotate(-45deg);
+    transform: rotate(-45deg) translateY(-10vmin) translateY(-@profile-diameter / 2) rotate(-45deg);
 
-        -moz-transform: scaleX(-1);
-        -o-transform: scaleX(-1);
-        -webkit-transform: scaleX(-1);
-        transform: scaleX(-1);
+    @media @mobile {
+        -moz-transform: translateY(-10vmin) translateY(-@profile-diameter / 2) rotate(-45deg);
+        -ms-transform: translateY(-10vmin) translateY(-@profile-diameter / 2) rotate(-45deg);
+        -o-transform: translateY(-10vmin) translateY(-@profile-diameter / 2) rotate(-45deg);
+        -webkit-transform: translateY(-10vmin) translateY(-@profile-diameter / 2) rotate(-45deg);
+        transform: translateY(-10vmin) translateY(-@profile-diameter / 2) rotate(-45deg);
+    }
 
-        .percent {
-            -moz-transform: scaleX(-1);
-        -o-transform: scaleX(-1);
-        -webkit-transform: scaleX(-1);
-        transform: scaleX(-1);
+    .inner-contents {
+        -moz-transform: rotate(90deg);
+        -ms-transform: rotate(90deg);
+        -o-transform: rotate(90deg);
+        -webkit-transform: rotate(90deg);
+        transform: rotate(90deg);
+
+        @media @mobile {
+            -moz-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            -o-transform: rotate(45deg);
+            -webkit-transform: rotate(45deg);
+            transform: rotate(45deg);
         }
     }
 }
 
-.tap:nth-child(even) {
-    .remaining {
-        right: 8vw;
-    }
-}
 
 .style {
-    margin-top: 50px;
+    margin-top: 30px;
 
     span {
         font-size: 1.6em;
@@ -282,6 +344,7 @@ html, body,
         padding: 15px 30px;
         border-radius: 50px;
         font-weight: bold;
+        display: inline-block;
     }
 }
 
@@ -289,4 +352,3 @@ html, body,
 .side-right .intro-content h1 > span:nth-child(2):before {
     background: #fff;
 }
-
