@@ -111,6 +111,8 @@ body,
 }
 .tap .keg-info .status {
   padding-top: 31vmin;
+  position: relative;
+  z-index: 2;
 }
 .tap .keg-info .status .bits {
   height: 30vmin;
@@ -241,6 +243,7 @@ body,
 .tap .keg-info .beer {
   margin: 2vw;
   position: relative;
+  z-index: 2;
 }
 .tap .keg-info .beer h1.name {
   font-weight: bold;
