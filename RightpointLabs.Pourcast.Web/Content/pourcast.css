@@ -107,52 +107,50 @@ body,
   opacity: .25;
 }
 .tap .keg-info .status {
-  padding-top: 12vmin;
+  padding-top: 19vmin;
+  margin-top: 12vmin;
 }
 .tap .keg-info .status .bits {
-  height: 18vw;
-  max-height: 30vh;
-  margin-bottom: -6vw;
+  height: 30vmin;
+  position: absolute;
+  width: 100%;
 }
 .tap .keg-info .status .bits .bit {
-  position: relative;
-  display: block;
-  float: left;
-  width: 20%;
-}
-.tap .keg-info .status .bits .remaining {
   position: absolute;
-  top: 130px;
+  display: block;
+  left: 0;
+  margin: auto;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  transform: rotate(45deg) translateY(-10vmin) translateY(-15vmin) rotate(-45deg);
+}
+@media only screen and (max-width: 529px) {
+  .tap .keg-info .status .bits .bit {
+    transform: translateY(-10vmin) translateY(-15vmin) rotate(-45deg);
+  }
 }
 .tap .keg-info .status .bits .remaining .percent {
   position: absolute;
   width: 100%;
-  top: 25%;
+  line-height: 100%;
+  margin: auto;
   right: 0;
-  font-size: 2em;
+  left: 0;
+  font-size: 3vmin;
   font-weight: bold;
-  margin-top: 10px;
+  bottom: 0;
+  top: 0;
+  height: 3vmin;
 }
-@media only screen and (min-width: 1129px) and (max-width: 1349px) {
+@media only screen and (max-width: 529px) {
   .tap .keg-info .status .bits .remaining .percent {
-    font-size: 1.8em;
-  }
-}
-@media only screen and (min-width: 950px) and (max-width: 1128px) {
-  .tap .keg-info .status .bits .remaining .percent {
-    font-size: 1.5em;
-    margin-top: 5px;
-  }
-}
-@media only screen and (min-width: 530px) and (max-width: 949px) {
-  .tap .keg-info .status .bits .remaining .percent {
-    font-size: 1.8em;
-    margin-top: 5px;
+    transform: rotate(45deg);
   }
 }
 .tap .keg-info .status .bits .remaining.high {
-  height: 8vw;
-  width: 8vw;
+  height: 12vmin;
+  width: 12vmin;
   background: url('/Content/themes/base/images/bubble-green.png') no-repeat;
   -moz-background-size: contain;
   -webkit-background-size: contain;
@@ -160,8 +158,8 @@ body,
 }
 .tap .keg-info .status .bits .remaining.low {
   background: url('/Content/themes/base/images/bubble-red.png') no-repeat;
-  height: 8vw;
-  width: 8vw;
+  height: 12vmin;
+  width: 12vmin;
   -moz-background-size: contain;
   -webkit-background-size: contain;
   background-size: contain;
@@ -228,24 +226,24 @@ body,
   letter-spacing: 1px;
   font-size: 1.5em;
 }
-.tap:nth-child(odd) .remaining {
-  left: 8vw;
-  -moz-transform: scaleX(-1);
-  -o-transform: scaleX(-1);
-  -webkit-transform: scaleX(-1);
-  transform: scaleX(-1);
+.taps .tap:nth-child(odd) .keg-info .status .bits .remaining {
+  transform: rotate(-45deg) translateY(-10vmin) translateY(-15vmin) rotate(-45deg);
 }
-.tap:nth-child(odd) .remaining .percent {
-  -moz-transform: scaleX(-1);
-  -o-transform: scaleX(-1);
-  -webkit-transform: scaleX(-1);
-  transform: scaleX(-1);
+@media only screen and (max-width: 529px) {
+  .taps .tap:nth-child(odd) .keg-info .status .bits .remaining {
+    transform: translateY(-10vmin) translateY(-15vmin) rotate(-45deg);
+  }
 }
-.tap:nth-child(even) .remaining {
-  right: 8vw;
+.taps .tap:nth-child(odd) .keg-info .status .bits .remaining .percent {
+  transform: rotate(90deg);
+}
+@media only screen and (max-width: 529px) {
+  .taps .tap:nth-child(odd) .keg-info .status .bits .remaining .percent {
+    transform: rotate(45deg);
+  }
 }
 .style {
-  margin-top: 50px;
+  margin-top: 30px;
 }
 .style span {
   font-size: 1.6em;
@@ -255,6 +253,7 @@ body,
   padding: 15px 30px;
   border-radius: 50px;
   font-weight: bold;
+  display: inline-block;
 }
 .side-right .intro-content h1 > span:nth-child(2):before {
   background: #fff;
