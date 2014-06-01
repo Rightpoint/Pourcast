@@ -19,16 +19,14 @@
             return self.percentRemaining() > 25 ? "high" : "low";
         });
 
-        events.on("PourStarted", self.pourStarted);
-        events.on("PourStopped", self.pourStopped);
-    };
+        events.on("PourStarted", function(e) {
+            console.log("PourStarted");
+        });
+        events.on("PourStopped", function(e) {
+            console.log("PourStopped");
 
-    Keg.prototype.pourStarted = function(e) {
-        console.log("PourStarted");
-    };
-
-    Keg.prototype.pourStopped = function(e) {
-        console.log("PourStopped");
+            self.percentRemaining(Math.floor(e.PercentRemaining * 100));
+        });
     };
 
     return Keg;
