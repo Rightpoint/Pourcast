@@ -323,6 +323,7 @@
     <None Include="Properties\PublishProfiles\Production.pubxml" />
     <None Include="Scripts\libs\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\app\admin.js" />
+    <Content Include="Scripts\app\model\style.js" />
     <Content Include="Scripts\app\model\tap.js" />
     <Content Include="Scripts\app\pourcast.js" />
     <Content Include="Scripts\app\model\keg.js" />

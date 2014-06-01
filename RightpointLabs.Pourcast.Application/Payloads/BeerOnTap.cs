@@ -11,5 +11,7 @@
         public Beer Beer { get; set; }
 
         public Brewery Brewery { get; set; }
+
+        public Style Style { get; set; }
     }
 }

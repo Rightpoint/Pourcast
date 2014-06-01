@@ -19,17 +19,21 @@
 
         private readonly IKegRepository _kegRepository;
 
-        public BeerOrchestrator(IBeerRepository beerRepository, IBreweryRepository breweryRepository, ITapRepository tapRepository, IKegRepository kegRepository)
+        private readonly IStyleRepository _styleRepository;
+
+        public BeerOrchestrator(IBeerRepository beerRepository, IBreweryRepository breweryRepository, ITapRepository tapRepository, IKegRepository kegRepository, IStyleRepository styleRepository)
         {
             if (beerRepository == null) throw new ArgumentNullException("beerRepository");
             if(breweryRepository == null) throw new ArgumentNullException("breweryRepository");
             if (tapRepository == null) throw new ArgumentNullException("tapRepository");
             if (kegRepository == null) throw new ArgumentNullException("kegRepository");
+            if (styleRepository == null) throw new ArgumentNullException("styleRepository");
 
             _beerRepository = beerRepository;
             _breweryRepository = breweryRepository;
             _tapRepository = tapRepository;
             _kegRepository = kegRepository;
+            _styleRepository = styleRepository;
         }
 
         public IEnumerable<Beer> GetBeers()
@@ -58,8 +62,9 @@
                 var keg = _kegRepository.GetById(tap.KegId);
                 var beer = _beerRepository.GetById(keg.BeerId);
                 var brewery = _breweryRepository.GetById(beer.BreweryId);
+                var style = _styleRepository.GetById(beer.StyleId);
 
-                return new BeerOnTap() { Tap = tap, Keg = keg, Beer = beer, Brewery = brewery };
+                return new BeerOnTap() { Tap = tap, Keg = keg, Beer = beer, Brewery = brewery, Style = style };
             }
             else
             {
