@@ -152,6 +152,15 @@ html, body,
                     @media @mobile {
                         transform: translateY(-10vmin) translateY(-@profile-diameter / 2) rotate(-45deg);
                     }
+
+                    .inner-contents {
+                        width: 100%;
+                        height: 100%;
+
+                        @media @mobile {
+                            transform: rotate(45deg);
+                        }
+                    }
                 }
 
                 .remaining {
@@ -170,8 +179,10 @@ html, body,
                         top: 0;
                         height: 3vmin;
 
-                        @media @mobile {
-                            transform: rotate(45deg);
+                        .symbol {
+                            font-size: .5em;
+                            position: relative;
+                            top: -.6em;
                         }
                     }
                 }
@@ -270,14 +281,14 @@ html, body,
     }
 }
 
-.taps .tap:nth-child(odd) .keg-info .status .bits .remaining {
+.taps .tap:nth-child(odd) .keg-info .status .bits .bit {
     transform: rotate(-45deg) translateY(-10vmin) translateY(-@profile-diameter / 2) rotate(-45deg);
 
     @media @mobile {
         transform: translateY(-10vmin) translateY(-@profile-diameter / 2) rotate(-45deg);
     }
 
-    .percent {
+    .inner-contents {
         transform: rotate(90deg);
 
         @media @mobile {
