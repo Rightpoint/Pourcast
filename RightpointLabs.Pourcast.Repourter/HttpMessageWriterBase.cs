@@ -15,7 +15,7 @@ namespace RightpointLabs.Pourcast.Repourter
         public void SendStopAsync(int tapId, double ounces)
         {
             Debug.Print("Queing: stop " + tapId + " " + ounces);
-            _queue.Add(new Message() { IsStart = true, TapId = tapId, Volume = ounces });
+            _queue.Add(new Message() { IsStart = false, TapId = tapId, Volume = ounces });
         }
 
         protected readonly BoundedBuffer _queue = new BoundedBuffer();
