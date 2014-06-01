@@ -218,5 +218,7 @@ pip-log.txt
 #Mr Developer
 .mr.developer.cfg
 
-#Elmah
+# logging
 RightpointLabs.Pourcast.Web/App_Data/error-*.xml
+RightpointLabs.Pourcast.Web/transports.log.txt
+RightpointLabs.Pourcast.Web/*etransports.log.txt
