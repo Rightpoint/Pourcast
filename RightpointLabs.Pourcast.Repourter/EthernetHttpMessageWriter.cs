@@ -23,10 +23,17 @@ namespace RightpointLabs.Pourcast.Repourter
             Debug.Print("Requesting " + uri.AbsoluteUri);
 
             var req = (HttpWebRequest)WebRequest.Create(uri);
-            var resp = req.GetResponse();
-            using(var tr = new StreamReader(resp.GetResponseStream()))
+            var resp = (HttpWebResponse)req.GetResponse();
+            using(resp)
             {
-                Debug.Print("Response: " + tr.ReadToEnd());
+                Debug.Print("Http response: " + resp.StatusCode);
+                if (resp.StatusCode != HttpStatusCode.NoContent)
+                {
+                    using (var tr = new StreamReader(resp.GetResponseStream()))
+                    {
+                        Debug.Print("Response: " + tr.ReadToEnd());
+                    }
+                }
             }
         }
 
