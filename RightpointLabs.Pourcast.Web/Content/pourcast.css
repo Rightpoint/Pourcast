@@ -128,19 +128,19 @@ body,
   right: 0;
   bottom: 0;
   top: 0;
-  -moz-transform: rotate(45deg) translateY(-10vmin) translateY(-15vmin) rotate(-45deg);
-  -ms-transform: rotate(45deg) translateY(-10vmin) translateY(-15vmin) rotate(-45deg);
-  -o-transform: rotate(45deg) translateY(-10vmin) translateY(-15vmin) rotate(-45deg);
-  -webkit-transform: rotate(45deg) translateY(-10vmin) translateY(-15vmin) rotate(-45deg);
-  transform: rotate(45deg) translateY(-10vmin) translateY(-15vmin) rotate(-45deg);
+  -moz-transform: rotate(45deg) translateY(-208%) rotate(-45deg);
+  -ms-transform: rotate(45deg) translateY(-208%) rotate(-45deg);
+  -o-transform: rotate(45deg) translateY(-208%) rotate(-45deg);
+  -webkit-transform: rotate(45deg) translateY(-208%) rotate(-45deg);
+  transform: rotate(45deg) translateY(-208%) rotate(-45deg);
 }
 @media only screen and (max-width: 529px) {
   .tap .keg-info .status .bits .bit {
-    -moz-transform: translateY(-10vmin) translateY(-15vmin) rotate(-45deg);
-    -ms-transform: translateY(-10vmin) translateY(-15vmin) rotate(-45deg);
-    -o-transform: translateY(-10vmin) translateY(-15vmin) rotate(-45deg);
-    -webkit-transform: translateY(-10vmin) translateY(-15vmin) rotate(-45deg);
-    transform: translateY(-10vmin) translateY(-15vmin) rotate(-45deg);
+    -moz-transform: translateY(-208%) rotate(-45deg);
+    -ms-transform: translateY(-208%) rotate(-45deg);
+    -o-transform: translateY(-208%) rotate(-45deg);
+    -webkit-transform: translateY(-208%) rotate(-45deg);
+    transform: translateY(-208%) rotate(-45deg);
   }
 }
 .tap .keg-info .status .bits .bit .inner-contents {
@@ -255,19 +255,19 @@ body,
   font-size: 1.5em;
 }
 .taps .tap:nth-child(odd) .keg-info .status .bits .bit {
-  -moz-transform: rotate(-45deg) translateY(-10vmin) translateY(-15vmin) rotate(-45deg);
-  -ms-transform: rotate(-45deg) translateY(-10vmin) translateY(-15vmin) rotate(-45deg);
-  -o-transform: rotate(-45deg) translateY(-10vmin) translateY(-15vmin) rotate(-45deg);
-  -webkit-transform: rotate(-45deg) translateY(-10vmin) translateY(-15vmin) rotate(-45deg);
-  transform: rotate(-45deg) translateY(-10vmin) translateY(-15vmin) rotate(-45deg);
+  -moz-transform: rotate(-45deg) translateY(-208%) rotate(-45deg);
+  -ms-transform: rotate(-45deg) translateY(-208%) rotate(-45deg);
+  -o-transform: rotate(-45deg) translateY(-208%) rotate(-45deg);
+  -webkit-transform: rotate(-45deg) translateY(-208%) rotate(-45deg);
+  transform: rotate(-45deg) translateY(-208%) rotate(-45deg);
 }
 @media only screen and (max-width: 529px) {
   .taps .tap:nth-child(odd) .keg-info .status .bits .bit {
-    -moz-transform: translateY(-10vmin) translateY(-15vmin) rotate(-45deg);
-    -ms-transform: translateY(-10vmin) translateY(-15vmin) rotate(-45deg);
-    -o-transform: translateY(-10vmin) translateY(-15vmin) rotate(-45deg);
-    -webkit-transform: translateY(-10vmin) translateY(-15vmin) rotate(-45deg);
-    transform: translateY(-10vmin) translateY(-15vmin) rotate(-45deg);
+    -moz-transform: translateY(-208%) rotate(-45deg);
+    -ms-transform: translateY(-208%) rotate(-45deg);
+    -o-transform: translateY(-208%) rotate(-45deg);
+    -webkit-transform: translateY(-208%) rotate(-45deg);
+    transform: translateY(-208%) rotate(-45deg);
   }
 }
 .taps .tap:nth-child(odd) .keg-info .status .bits .bit .inner-contents {
