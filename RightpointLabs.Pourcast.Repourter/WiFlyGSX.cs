@@ -73,6 +73,14 @@ namespace Toolbox.NETMF.Hardware
             this._CommandMode_Stop();
         }
 
+        /// <summary>
+        /// Reboots the Wifi Module - recommend disposing it immediately (if this even works...)
+        /// </summary>
+        public void Reboot()
+        {
+            this._CommandMode_Start();
+            this._SerialPort_Write("reboot\r");
+        }
 
         /// <summary>Disposes this object</summary>
         public void Dispose()
@@ -191,8 +199,10 @@ namespace Toolbox.NETMF.Hardware
         /// <param name="Authentication">The method for authentication</param>
         /// <param name="Key">The shared key required to join the network (WEP / WPA)</param>
         /// <param name="KeyIndex">The index of the key (WEP only)</param>
-        public void JoinNetwork(string SSID, int Channel = 0, AuthMode Authentication = AuthMode.Open, string Key = "", int KeyIndex = 1)
+        public bool JoinNetwork(string SSID, int Channel = 0, AuthMode Authentication = AuthMode.Open, string Key = "", int KeyIndex = 1)
         {
+            var retVal = false;
+
             // Enterring command mode
             this._CommandMode_Start();
             // Configures the network
@@ -208,10 +218,21 @@ namespace Toolbox.NETMF.Hardware
             {
                 if (!this._CommandMode_Exec("set wlan phrase " + Key)) throw new SystemException(this._CommandMode_Response);
             }
+
             // Actually joins the network
-            this._SerialPort_Write("join\r");
+            if (this._CommandMode_Exec("join"))
+            {
+                retVal = true;
+            }
+            else
+            {
+                this._DebugPrint('D', "Failed to join network: " + this._CommandMode_Response);
+            }
+
             // Closes down command mode
             this._CommandMode_Stop();
+
+            return retVal;
         }
         #endregion
 
