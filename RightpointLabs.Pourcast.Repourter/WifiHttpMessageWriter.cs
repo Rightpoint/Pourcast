@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Threading;
 using Microsoft.SPOT;
@@ -6,15 +7,27 @@ using Toolbox.NETMF.NET;
 
 namespace RightpointLabs.Pourcast.Repourter
 {
-    public class WifiHttpMessageWriter : HttpMessageWriterBase
+    public class WifiHttpMessageWriter : HttpMessageWriterBase, IDisposable
     {
-        private WiFlyGSX WifiModule = new WiFlyGSX(DebugMode: true);
+        private WiFlyGSX WifiModule = new WiFlyGSX(DebugMode: false);
 
         public bool Start(string ssid, string password, WiFlyGSX.AuthMode securityMode)
         {
             WifiModule.EnableDHCP();
 
-            WifiModule.JoinNetwork(ssid, 0, securityMode, password, 1);
+            var isConnected = false;
+
+            for (var i = 0; i < 3 && !(isConnected = WifiModule.JoinNetwork(ssid, 0, securityMode, password)); i++ )
+            {
+                Thread.Sleep(1000);
+            }
+
+            Debug.Print("isConnected: " + isConnected);
+
+            if (!isConnected)
+            {
+                return false;
+            }
 
             for (var i = 0; i < 10 && WifiModule.LocalIP == "0.0.0.0"; i++)
             {
@@ -31,6 +44,14 @@ namespace RightpointLabs.Pourcast.Repourter
 
             StartThread();
             return true;
+        }
+
+        /// <summary>
+        /// Reboots the Wifi module.  Recommend dispoing this object ASAP afterwards.
+        /// </summary>
+        public void Reboot()
+        {
+            WifiModule.Reboot();
         }
 
         protected override void SendMessage(Message message)
@@ -69,6 +90,11 @@ namespace RightpointLabs.Pourcast.Repourter
             {
                 socket.Close();
             }
+        }
+
+        public void Dispose()
+        {
+            WifiModule.Dispose();
         }
     }
 }

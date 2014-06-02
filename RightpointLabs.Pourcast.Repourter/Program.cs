@@ -22,18 +22,26 @@ namespace RightpointLabs.Pourcast.Repourter
         /// </summary>
         public static void Main()
         {
-            //var writer = new WifiHttpMessageWriter();
-            //if (!writer.Start("Rightpoint", "CHANGETHIS", WiFlyGSX.AuthMode.MixedWPA1_WPA2))
+            var writer = new WifiHttpMessageWriter();
+            do
+            {
+                if (writer.Start("Rightpoint", "CHANGETHIS", WiFlyGSX.AuthMode.MixedWPA1_WPA2))
+                {
+                    break;
+                }
+                Debug.Print("Well, let's try reboot/reconect....");
+                // didn't get an IP - wonder if rebooting the module will help?
+                writer.Reboot();
+                writer.Dispose();
+                writer = new WifiHttpMessageWriter();
+            } while (true);
+
+            //var writer = new EthernetHttpMessageWriter();
+            //if (!writer.Start())
             //{
             //    // didn't get an IP
             //    return;
             //}
-            var writer = new EthernetHttpMessageWriter();
-            if (!writer.Start())
-            {
-                // didn't get an IP
-                return;
-            }
 
             //writer.SendStartAsync(1);
 
