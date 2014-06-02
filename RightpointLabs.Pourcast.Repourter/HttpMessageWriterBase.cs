@@ -39,6 +39,10 @@ namespace RightpointLabs.Pourcast.Repourter
                 {
                     SendMessage(msg);
                 }
+                catch (ThreadAbortException)
+                {
+                    throw;
+                }
                 catch (Exception ex)
                 {
                     Debug.Print("Couldn't send message: " + ex.ToString());
