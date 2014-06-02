@@ -29,6 +29,7 @@ namespace RightpointLabs.Pourcast.Repourter
                 {
                     break;
                 }
+                Debug.Print("Well, let's try reboot/reconect....");
                 // didn't get an IP - wonder if rebooting the module will help?
                 writer.Reboot();
                 writer.Dispose();
