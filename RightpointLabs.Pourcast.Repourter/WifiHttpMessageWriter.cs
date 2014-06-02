@@ -9,7 +9,7 @@ namespace RightpointLabs.Pourcast.Repourter
 {
     public class WifiHttpMessageWriter : HttpMessageWriterBase, IDisposable
     {
-        private WiFlyGSX WifiModule = new WiFlyGSX(DebugMode: true);
+        private WiFlyGSX WifiModule = new WiFlyGSX(DebugMode: false);
 
         public bool Start(string ssid, string password, WiFlyGSX.AuthMode securityMode)
         {
@@ -17,7 +17,7 @@ namespace RightpointLabs.Pourcast.Repourter
 
             var isConnected = false;
 
-            for (var i = 0; i < 10 && !(isConnected = WifiModule.JoinNetwork(ssid, 0, securityMode, password)); i++ )
+            for (var i = 0; i < 3 && !(isConnected = WifiModule.JoinNetwork(ssid, 0, securityMode, password)); i++ )
             {
                 Thread.Sleep(1000);
             }
