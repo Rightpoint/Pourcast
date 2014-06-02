@@ -73,6 +73,14 @@ namespace Toolbox.NETMF.Hardware
             this._CommandMode_Stop();
         }
 
+        /// <summary>
+        /// Reboots the Wifi Module - recommend disposing it immediately (if this even works...)
+        /// </summary>
+        public void Reboot()
+        {
+            this._CommandMode_Start();
+            this._SerialPort_Write("reboot\r");
+        }
 
         /// <summary>Disposes this object</summary>
         public void Dispose()
@@ -191,7 +199,7 @@ namespace Toolbox.NETMF.Hardware
         /// <param name="Authentication">The method for authentication</param>
         /// <param name="Key">The shared key required to join the network (WEP / WPA)</param>
         /// <param name="KeyIndex">The index of the key (WEP only)</param>
-        public void JoinNetwork(string SSID, int Channel = 0, AuthMode Authentication = AuthMode.Open, string Key = "", int KeyIndex = 1)
+        public bool JoinNetwork(string SSID, int Channel = 0, AuthMode Authentication = AuthMode.Open, string Key = "", int KeyIndex = 1)
         {
             // Enterring command mode
             this._CommandMode_Start();
@@ -208,10 +216,49 @@ namespace Toolbox.NETMF.Hardware
             {
                 if (!this._CommandMode_Exec("set wlan phrase " + Key)) throw new SystemException(this._CommandMode_Response);
             }
+
+            // Auto-Assoc Rightpoint chan=6 mode=MIXED SCAN OK\r\n
+            // Auto-Assoc Rightpoint!! chan=6 mode=NONE FAILED\r\n
+            var joinComplete = false;
+            var joinSuccessful = false;
+            var joinHandler = new Tools.StringEventHandler((text, time) =>
+            {
+                if (text.IndexOf("AUTH-ERR") >= 0)
+                {
+                    joinComplete = true;
+                    joinSuccessful = false;
+                    _DebugPrint('D', "Authentication error");
+                }
+
+                if (text.IndexOf("Auto-Assoc") >= 0 && text.IndexOf("NONE FAILED") >= 0)
+                {
+                    joinComplete = true;
+                    joinSuccessful = false;
+                    _DebugPrint('D', "Couldn't find network");
+                }
+
+                if (text.IndexOf("Associated!") >= 0)
+                {
+                    joinComplete = true;
+                    joinSuccessful = true;
+                }
+            });
+
             // Actually joins the network
+            this._lineRecieved += joinHandler;
             this._SerialPort_Write("join\r");
+
+            for(var i =0; i< 40 && !joinComplete; i++)
+            {
+                Thread.Sleep(250);
+            }
+
+            this._lineRecieved -= joinHandler;
+
             // Closes down command mode
             this._CommandMode_Stop();
+
+            return joinSuccessful;
         }
         #endregion
 
@@ -497,7 +544,14 @@ namespace Toolbox.NETMF.Hardware
                 string[] Values = Text.Split("=".ToCharArray(), 2);
                 if (Values[0].ToLower() == this._CommandMode_ReadKey) this._CommandMode_ReadKeyValue = Values[1];
             }
+
+            if (null != _lineRecieved)
+            {
+                _lineRecieved(Text, DateTime.Now);
+            }
         }
+
+        private event Tools.StringEventHandler _lineRecieved;
 
         // This is the amount of info lines we still require
         private int _CommandMode_GetInfoLines = 0;

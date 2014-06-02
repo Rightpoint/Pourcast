@@ -222,3 +222,7 @@ pip-log.txt
 RightpointLabs.Pourcast.Web/App_Data/error-*.xml
 RightpointLabs.Pourcast.Web/transports.log.txt
 RightpointLabs.Pourcast.Web/*etransports.log.txt
+
+# flash something
+RightpointLabs.Pourcast.Repourter/OnBoardFlash.dat*
+

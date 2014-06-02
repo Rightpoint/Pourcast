@@ -60,6 +60,7 @@ namespace RightpointLabs.Pourcast.Repourter
                 var ounces = _totalLiters*OUNCES_PER_LITER;
                 _httpMessageWriter.SendStopAsync(_tapId, ounces);
                 _totalLiters = 0;
+                _flowing = false;
             }
         }
 
