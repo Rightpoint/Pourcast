@@ -129,19 +129,19 @@ body,
   right: 0;
   bottom: 0;
   top: 0;
-  -moz-transform: rotate(45deg) translateY(-208%) rotate(-45deg);
-  -ms-transform: rotate(45deg) translateY(-208%) rotate(-45deg);
-  -o-transform: rotate(45deg) translateY(-208%) rotate(-45deg);
-  -webkit-transform: rotate(45deg) translateY(-208%) rotate(-45deg);
-  transform: rotate(45deg) translateY(-208%) rotate(-45deg);
+  -moz-transform: rotate(45deg) translateY(-220%) rotate(-45deg);
+  -ms-transform: rotate(45deg) translateY(-220%) rotate(-45deg);
+  -o-transform: rotate(45deg) translateY(-220%) rotate(-45deg);
+  -webkit-transform: rotate(45deg) translateY(-220%) rotate(-45deg);
+  transform: rotate(45deg) translateY(-220%) rotate(-45deg);
 }
 @media only screen and (max-width: 529px) {
   .tap .keg-info .status .bits .bit {
-    -moz-transform: translateY(-208%) rotate(-45deg);
-    -ms-transform: translateY(-208%) rotate(-45deg);
-    -o-transform: translateY(-208%) rotate(-45deg);
-    -webkit-transform: translateY(-208%) rotate(-45deg);
-    transform: translateY(-208%) rotate(-45deg);
+    -moz-transform: translateY(-220%) rotate(-45deg);
+    -ms-transform: translateY(-220%) rotate(-45deg);
+    -o-transform: translateY(-220%) rotate(-45deg);
+    -webkit-transform: translateY(-220%) rotate(-45deg);
+    transform: translateY(-220%) rotate(-45deg);
   }
 }
 .tap .keg-info .status .bits .bit .inner-contents {
@@ -156,6 +156,14 @@ body,
     -webkit-transform: rotate(45deg);
     transform: rotate(45deg);
   }
+}
+.tap .keg-info .status .bits .remaining {
+  height: 11vmin;
+  width: 11vmin;
+  -moz-background-size: contain;
+  -webkit-background-size: contain;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 .tap .keg-info .status .bits .remaining .percent {
   position: absolute;
@@ -176,20 +184,10 @@ body,
   top: -0.6em;
 }
 .tap .keg-info .status .bits .remaining.high {
-  height: 12vmin;
-  width: 12vmin;
-  background: url('/Content/themes/base/images/bubble-green.png') no-repeat;
-  -moz-background-size: contain;
-  -webkit-background-size: contain;
-  background-size: contain;
+  background-image: url('/Content/themes/base/images/bubble-green.png');
 }
 .tap .keg-info .status .bits .remaining.low {
-  background: url('/Content/themes/base/images/bubble-red.png') no-repeat;
-  height: 12vmin;
-  width: 12vmin;
-  -moz-background-size: contain;
-  -webkit-background-size: contain;
-  background-size: contain;
+  background-image: url('/Content/themes/base/images/bubble-red.png');
 }
 .tap .keg-info .status .profile {
   width: 30vmin;
@@ -213,12 +211,12 @@ body,
   left: 0;
 }
 .tap .keg-info .status .profile .keg {
-  width: 70%;
-  height: 85%;
+  width: 64%;
+  height: 79%;
   display: block;
   position: absolute;
   margin: auto;
-  bottom: -0.5vw;
+  bottom: 0;
   left: 0;
   right: 0;
 }
@@ -228,8 +226,8 @@ body,
   position: relative;
 }
 .tap .keg-info .status .profile .keg .face {
-  height: 17%;
-  width: 30%;
+  height: 15%;
+  width: 26%;
   position: absolute;
   margin: auto;
   top: 0;
@@ -257,19 +255,19 @@ body,
   margin-top: .8em;
 }
 .taps .tap:nth-child(odd) .keg-info .status .bits .bit {
-  -moz-transform: rotate(-45deg) translateY(-208%) rotate(-45deg);
-  -ms-transform: rotate(-45deg) translateY(-208%) rotate(-45deg);
-  -o-transform: rotate(-45deg) translateY(-208%) rotate(-45deg);
-  -webkit-transform: rotate(-45deg) translateY(-208%) rotate(-45deg);
-  transform: rotate(-45deg) translateY(-208%) rotate(-45deg);
+  -moz-transform: rotate(-45deg) translateY(-220%) rotate(-45deg);
+  -ms-transform: rotate(-45deg) translateY(-220%) rotate(-45deg);
+  -o-transform: rotate(-45deg) translateY(-220%) rotate(-45deg);
+  -webkit-transform: rotate(-45deg) translateY(-220%) rotate(-45deg);
+  transform: rotate(-45deg) translateY(-220%) rotate(-45deg);
 }
 @media only screen and (max-width: 529px) {
   .taps .tap:nth-child(odd) .keg-info .status .bits .bit {
-    -moz-transform: translateY(-208%) rotate(-45deg);
-    -ms-transform: translateY(-208%) rotate(-45deg);
-    -o-transform: translateY(-208%) rotate(-45deg);
-    -webkit-transform: translateY(-208%) rotate(-45deg);
-    transform: translateY(-208%) rotate(-45deg);
+    -moz-transform: translateY(-220%) rotate(-45deg);
+    -ms-transform: translateY(-220%) rotate(-45deg);
+    -o-transform: translateY(-220%) rotate(-45deg);
+    -webkit-transform: translateY(-220%) rotate(-45deg);
+    transform: translateY(-220%) rotate(-45deg);
   }
 }
 .taps .tap:nth-child(odd) .keg-info .status .bits .bit .inner-contents {

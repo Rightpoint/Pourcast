@@ -154,18 +154,18 @@ html, body,
                     right: 0;
                     bottom: 0;
                     top: 0;
-                    -moz-transform: rotate(45deg) translateY(-208%) rotate(-45deg);
-                    -ms-transform: rotate(45deg) translateY(-208%) rotate(-45deg);
-                    -o-transform: rotate(45deg) translateY(-208%) rotate(-45deg);
-                    -webkit-transform: rotate(45deg) translateY(-208%) rotate(-45deg);
-                    transform: rotate(45deg) translateY(-208%) rotate(-45deg);
+                    -moz-transform: rotate(45deg) translateY(-220%) rotate(-45deg);
+                    -ms-transform: rotate(45deg) translateY(-220%) rotate(-45deg);
+                    -o-transform: rotate(45deg) translateY(-220%) rotate(-45deg);
+                    -webkit-transform: rotate(45deg) translateY(-220%) rotate(-45deg);
+                    transform: rotate(45deg) translateY(-220%) rotate(-45deg);
 
                     @media @mobile {
-                        -moz-transform: translateY(-208%) rotate(-45deg);
-                        -ms-transform: translateY(-208%) rotate(-45deg);
-                        -o-transform: translateY(-208%) rotate(-45deg);
-                        -webkit-transform: translateY(-208%) rotate(-45deg);
-                        transform: translateY(-208%) rotate(-45deg);
+                        -moz-transform: translateY(-220%) rotate(-45deg);
+                        -ms-transform: translateY(-220%) rotate(-45deg);
+                        -o-transform: translateY(-220%) rotate(-45deg);
+                        -webkit-transform: translateY(-220%) rotate(-45deg);
+                        transform: translateY(-220%) rotate(-45deg);
                     }
 
                     .inner-contents {
@@ -183,7 +183,13 @@ html, body,
                 }
 
                 .remaining {
-                    @width: 12vmin;
+                    @diameter: 11vmin;
+                    height: @diameter;
+                    width: @diameter;
+                    -moz-background-size: contain;
+                    -webkit-background-size: contain;
+                    background-size: contain;
+                    background-repeat: no-repeat;
 
                     .percent {
                         position: absolute;
@@ -207,21 +213,11 @@ html, body,
                 }
 
                 .remaining.high {
-                    height: 12vmin;
-                    width: 12vmin;
-                    background: url('/Content/themes/base/images/bubble-green.png') no-repeat;
-                    -moz-background-size: contain;
-                    -webkit-background-size: contain;
-                    background-size: contain;
+                    background-image: url('/Content/themes/base/images/bubble-green.png');
                 }
 
                 .remaining.low {
-                    background: url('/Content/themes/base/images/bubble-red.png') no-repeat;
-                    height: 12vmin;
-                    width: 12vmin;
-                    -moz-background-size: contain;
-                    -webkit-background-size: contain;
-                    background-size: contain;
+                    background-image: url('/Content/themes/base/images/bubble-red.png');
                 }
             }
 
@@ -249,12 +245,12 @@ html, body,
                 }
 
                 .keg {
-                    width: 70%;
-                    height: 85%;
+                    width: 64%;
+                    height: 79%;
                     display: block;
                     position: absolute;
                     margin: auto;
-                    bottom: -.5vw;
+                    bottom: 0;
                     left: 0;
                     right: 0;
 
@@ -265,8 +261,8 @@ html, body,
                     }
 
                     .face {
-                        height: 17%;
-                        width: 30%;
+                        height: 15%;
+                        width: 26%;
                         position: absolute;
                         margin: auto;
                         top: 0;
@@ -304,18 +300,18 @@ html, body,
 }
 
 .taps .tap:nth-child(odd) .keg-info .status .bits .bit {
-    -moz-transform: rotate(-45deg) translateY(-208%) rotate(-45deg);
-    -ms-transform: rotate(-45deg) translateY(-208%) rotate(-45deg);
-    -o-transform: rotate(-45deg) translateY(-208%) rotate(-45deg);
-    -webkit-transform: rotate(-45deg) translateY(-208%) rotate(-45deg);
-    transform: rotate(-45deg) translateY(-208%) rotate(-45deg);
+    -moz-transform: rotate(-45deg) translateY(-220%) rotate(-45deg);
+    -ms-transform: rotate(-45deg) translateY(-220%) rotate(-45deg);
+    -o-transform: rotate(-45deg) translateY(-220%) rotate(-45deg);
+    -webkit-transform: rotate(-45deg) translateY(-220%) rotate(-45deg);
+    transform: rotate(-45deg) translateY(-220%) rotate(-45deg);
 
     @media @mobile {
-        -moz-transform: translateY(-208%) rotate(-45deg);
-        -ms-transform: translateY(-208%) rotate(-45deg);
-        -o-transform: translateY(-208%) rotate(-45deg);
-        -webkit-transform: translateY(-208%) rotate(-45deg);
-        transform: translateY(-208%) rotate(-45deg);
+        -moz-transform: translateY(-220%) rotate(-45deg);
+        -ms-transform: translateY(-220%) rotate(-45deg);
+        -o-transform: translateY(-220%) rotate(-45deg);
+        -webkit-transform: translateY(-220%) rotate(-45deg);
+        transform: translateY(-220%) rotate(-45deg);
     }
 
     .inner-contents {
