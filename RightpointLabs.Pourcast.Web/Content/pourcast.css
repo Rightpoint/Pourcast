@@ -228,8 +228,8 @@ body,
   position: relative;
 }
 .tap .keg-info .status .profile .keg .face {
-  height: 19%;
-  width: 33%;
+  height: 17%;
+  width: 30%;
   position: absolute;
   margin: auto;
   top: 0;
@@ -291,14 +291,19 @@ body,
   margin-top: 30px;
 }
 .style span {
-  font-size: 1.6em;
+  font-size: 1.5em;
   text-transform: uppercase;
   border: 3px solid rgba(255, 255, 255, 0.3);
   margin: 0 auto;
-  padding: 15px 30px;
+  padding: 8px 17px;
   border-radius: 50px;
   font-weight: bold;
   display: inline-block;
+}
+@media only screen and (max-width: 529px) {
+  .style span {
+    border-width: 2px;
+  }
 }
 .side-right .intro-content h1 > span:nth-child(2):before {
   background: #fff;

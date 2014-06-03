@@ -265,8 +265,8 @@ html, body,
                     }
 
                     .face {
-                        height: 19%;
-                        width: 33%;
+                        height: 17%;
+                        width: 30%;
                         position: absolute;
                         margin: auto;
                         top: 0;
@@ -339,14 +339,18 @@ html, body,
     margin-top: 30px;
 
     span {
-        font-size: 1.6em;
+        font-size: 1.5em;
         text-transform: uppercase;
         border: 3px solid rgba(255,255,255,.3);
         margin: 0 auto;
-        padding: 15px 30px;
+        padding: 8px 17px;
         border-radius: 50px;
         font-weight: bold;
         display: inline-block;
+
+        @media @mobile {
+            border-width: 2px;
+        }
     }
 }
 
