@@ -10,12 +10,18 @@ using WebGrease.Css.Extensions;
 
 namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
 {
+    using Microsoft.AspNet.SignalR.Infrastructure;
+
+    using RightpointLabs.Pourcast.Web.SignalR;
+
     [Authorize(Roles = "Administrators")]
     public class HomeController : Controller
     {
         private readonly ITapOrchestrator _tapOrchestrator;
         private readonly IKegOrchestrator _kegOrchestrator;
         private readonly IBeerOrchestrator _beerOrchestrator;
+
+        private readonly IConnectionManager _connectionManager;
 
         static HomeController()
         {
@@ -26,15 +32,16 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
             AutoMapper.Mapper.CreateMap<TapModel, Tap>();
         }
 
-        public HomeController(ITapOrchestrator tapOrchestrator, IKegOrchestrator kegOrchestrator,
-            IBeerOrchestrator beerOrchestrator)
+        public HomeController(ITapOrchestrator tapOrchestrator, IKegOrchestrator kegOrchestrator, IBeerOrchestrator beerOrchestrator, IConnectionManager connectionManager)
         {
-            if(tapOrchestrator == null) throw new ArgumentNullException("tapOrchestrator");
-            if(kegOrchestrator == null) throw new ArgumentNullException("kegOrchestrator");
-            if(beerOrchestrator == null) throw new ArgumentNullException("beerOrchestrator");
+            if (tapOrchestrator == null) throw new ArgumentNullException("tapOrchestrator");
+            if (kegOrchestrator == null) throw new ArgumentNullException("kegOrchestrator");
+            if (beerOrchestrator == null) throw new ArgumentNullException("beerOrchestrator");
+            if (connectionManager == null) throw new ArgumentNullException("connectionManager");
             _tapOrchestrator = tapOrchestrator;
             _kegOrchestrator = kegOrchestrator;
             _beerOrchestrator = beerOrchestrator;
+            _connectionManager = connectionManager;
         }
 
         //
@@ -55,6 +62,15 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
                 vm.Add(tap);
             });
             return View("Index", vm);
+        }
+
+        public ActionResult Refresh()
+        {
+            var context = _connectionManager.GetHubContext<EventsHub>();
+
+            context.Clients.All.Refresh();
+
+            return null;
         }
 	}
 }

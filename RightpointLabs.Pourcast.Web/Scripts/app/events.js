@@ -52,7 +52,7 @@
 
 
     // admin refresh
-    pub.on("refresh", function() {
+    pub.on("Refresh", function() {
         window.location.reload();
     });
 

@@ -254,6 +254,7 @@ body,
 .tap .keg-info .beer h1.brewery {
   letter-spacing: 1px;
   font-size: 1.5em;
+  margin-top: .8em;
 }
 .taps .tap:nth-child(odd) .keg-info .status .bits .bit {
   -moz-transform: rotate(-45deg) translateY(-208%) rotate(-45deg);
