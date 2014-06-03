@@ -24,21 +24,9 @@ namespace RightpointLabs.Pourcast.Repourter
         /// </summary>
         public static void Main()
         {
-            var watchdog = new Watchdog(new TimeSpan(0, 1, 0));
-            watchdog.Start();
-            var writer = new WifiHttpMessageWriter(watchdog);
-            do
-            {
-                if (writer.Start("Rightpoint", "CHANGEME", WiFlyGSX.AuthMode.MixedWPA1_WPA2))
-                {
-                    break;
-                }
-                Debug.Print("Well, let's try reboot/reconect....");
-                // didn't get an IP - wonder if rebooting the module will help?
-                writer.Reboot();
-                writer.Dispose();
-                writer = new WifiHttpMessageWriter(watchdog);
-            } while (true);
+            var sender = new WifiMessageSender("Rightpoint", "CHANGEME", WiFlyGSX.AuthMode.MixedWPA1_WPA2);
+            sender.Initalize();
+            var writer = new HttpMessageWriter(sender);
 
             var sensors = new FlowSensor[NUMBER_OF_TAPS];
             // Flow sensor plugged into pin 13, no resistor necessary, fire on the rising edge of the pulse
@@ -48,7 +36,7 @@ namespace RightpointLabs.Pourcast.Repourter
             Debug.Print("Starting");
 
             DateTime lastWatchdogTrigger = DateTime.MinValue;
-            for (var i = 0; i < 2000; i++)
+            for (var i = 0; i < 200; i++)
             {
                 if (DateTime.UtcNow.Subtract(lastWatchdogTrigger) >= ResetWatchdogEvery)
                 {

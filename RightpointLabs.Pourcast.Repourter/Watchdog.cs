@@ -9,9 +9,12 @@ namespace RightpointLabs.Pourcast.Repourter
     {
         private ExtendedTimer _timer;
         private TimeSpan _duration;
-        public Watchdog(TimeSpan duration)
+        private readonly ThreadStart _triggerAction;
+
+        public Watchdog(TimeSpan duration, ThreadStart triggerAction)
         {
             _duration = duration;
+            _triggerAction = triggerAction;
         }
 
         public void Start()
@@ -31,14 +34,25 @@ namespace RightpointLabs.Pourcast.Repourter
 
         private void TriggerReboot(object state)
         {
-            Debug.Print("Rebooting....");
-            Thread.Sleep(200);
-            PowerState.RebootDevice(false);
+            _triggerAction();
         }
 
         public void Dispose()
         {
             _timer.Dispose();
+        }
+    }
+
+    public class RebootWatchdog : Watchdog
+    {
+        public RebootWatchdog(TimeSpan duration) : base(duration, () =>
+        {
+            Debug.Print("Rebooting...");
+            Thread.Sleep(200);
+            PowerState.RebootDevice(false);
+            Debug.Print("Reboot didn't seem to take... this was after the reboot command....");
+        })
+        {
         }
     }
 }

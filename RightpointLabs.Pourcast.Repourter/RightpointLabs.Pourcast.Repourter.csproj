@@ -33,16 +33,17 @@
   <Import Project="$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets" />
   <ItemGroup>
     <Compile Include="BoundedBuffer.cs" />
-    <Compile Include="EthernetHttpMessageWriter.cs" />
+    <Compile Include="EthernetMessageSender.cs" />
     <Compile Include="FlowSensor.cs" />
+    <Compile Include="IMessageSender.cs" />
     <Compile Include="Watchdog.cs" />
-    <Compile Include="WifiHttpMessageWriter.cs" />
     <Compile Include="HttpMessageWriterBase.cs" />
     <Compile Include="IHttpMessageWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="SimpleSocket.cs" />
     <Compile Include="Tools.cs" />
+    <Compile Include="WifiMessageSender.cs" />
     <Compile Include="WiFlyGSX.cs" />
     <Compile Include="WiFlySocket.cs" />
   </ItemGroup>
