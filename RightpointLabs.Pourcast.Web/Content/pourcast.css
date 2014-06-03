@@ -24,12 +24,12 @@ footer {
 .foam {
   height: 12vmin;
   background: #fff;
-  position: fixed;
+  position: absolute;
   width: 100%;
   z-index: 2;
 }
 .foam .foam-bubbles {
-  height: 6vmin;
+  height: 5vmin;
   position: absolute;
   margin: auto;
   bottom: 2vmin;
@@ -46,7 +46,7 @@ footer {
   display: block;
   width: 14vmin;
   left: 0;
-  right: .5vmin;
+  right: 0;
 }
 /* Set width on the form input elements since they're 100% wide by default */
 input[type="text"],
@@ -103,7 +103,7 @@ body,
 .tap .keg-info .background {
   height: 100%;
   position: fixed;
-  width: 100%;
+  width: 50%;
 }
 .tap .keg-info .background .shade {
   background: #fff;
