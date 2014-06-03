@@ -37,7 +37,7 @@
     <Compile Include="FlowSensor.cs" />
     <Compile Include="IMessageSender.cs" />
     <Compile Include="Watchdog.cs" />
-    <Compile Include="HttpMessageWriterBase.cs" />
+    <Compile Include="HttpMessageWriter.cs" />
     <Compile Include="IHttpMessageWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
