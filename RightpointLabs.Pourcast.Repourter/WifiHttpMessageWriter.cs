@@ -9,7 +9,11 @@ namespace RightpointLabs.Pourcast.Repourter
 {
     public class WifiHttpMessageWriter : HttpMessageWriterBase, IDisposable
     {
-        private WiFlyGSX WifiModule = new WiFlyGSX(DebugMode: false);
+        private WiFlyGSX WifiModule = new WiFlyGSX(DebugMode: true);
+
+        public WifiHttpMessageWriter(Watchdog watchdog) : base(watchdog)
+        {
+        }
 
         public bool Start(string ssid, string password, WiFlyGSX.AuthMode securityMode)
         {

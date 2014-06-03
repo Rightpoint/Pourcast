@@ -11,6 +11,10 @@ namespace RightpointLabs.Pourcast.Repourter
 {
     public class EthernetHttpMessageWriter : HttpMessageWriterBase
     {
+        public EthernetHttpMessageWriter(Watchdog watchdog) : base(watchdog)
+        {
+        }
+
         protected override void SendMessage(Message message)
         {
             var uri = new Uri(

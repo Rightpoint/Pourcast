@@ -35,6 +35,7 @@
     <Compile Include="BoundedBuffer.cs" />
     <Compile Include="EthernetHttpMessageWriter.cs" />
     <Compile Include="FlowSensor.cs" />
+    <Compile Include="Watchdog.cs" />
     <Compile Include="WifiHttpMessageWriter.cs" />
     <Compile Include="HttpMessageWriterBase.cs" />
     <Compile Include="IHttpMessageWriter.cs" />

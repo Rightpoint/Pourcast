@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using Microsoft.SPOT;
 using Microsoft.SPOT.Hardware;
 
@@ -8,15 +9,15 @@ namespace RightpointLabs.Pourcast.Repourter
     {
         private readonly InterruptPort _port;
 
-        private DateTime _flowStart;
+        //private DateTime _flowStart;
 
         private DateTime _lastFlowDetected;
 
-        private double _pulseCount = 0.0;
+        private int _pulseCount = 0;
 
         private double _totalLiters = 0.0;
         
-        private const int PULSES_PER_LITER = 5600;
+        private const double PULSES_PER_LITER = 5600.0;
 
         private const double OUNCES_PER_LITER = 33.814;
 
@@ -37,12 +38,14 @@ namespace RightpointLabs.Pourcast.Repourter
         public void CheckPulses()
         {
             // Disable interrupts while we read so that we don't mess with a triggering interrput.
-            _port.DisableInterrupt();
-            var pulses = _pulseCount;
-            var lastMeasuredTime = _lastFlowDetected;
-            _pulseCount = 0;
+            //_port.DisableInterrupt();
+            //var pulses = _pulseCount;
+            ////var lastMeasuredTime = _lastFlowDetected;
+            //_pulseCount = 0;
 
-            _port.EnableInterrupt();
+            //_port.EnableInterrupt();
+
+            var pulses = Interlocked.Exchange(ref _pulseCount, 0);
 
             var liters = pulses/PULSES_PER_LITER;
             if (liters > 0) // it actually flowed during this timespan
@@ -51,7 +54,7 @@ namespace RightpointLabs.Pourcast.Repourter
                 if (!_flowing)
                 {
                     _flowing = true;
-                    _flowStart = lastMeasuredTime;
+                    //_flowStart = lastMeasuredTime;
                     _httpMessageWriter.SendStartAsync(_tapId);
                 }
             }
@@ -66,9 +69,12 @@ namespace RightpointLabs.Pourcast.Repourter
 
         private void FlowDetected(uint port, uint data, DateTime time)
         {
-            Debug.Print("Flow detected - " + _tapId);
-            _pulseCount++;
-            _lastFlowDetected = time;
+            var pulses = Interlocked.Increment(ref _pulseCount);
+            //_pulseCount++;
+            //_lastFlowDetected = time;
+            if (pulses % 100 == 0)
+                Debug.Print("Flow detected - " + _tapId + ": " + pulses);
+
         }
     }
 }

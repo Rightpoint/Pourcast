@@ -6,6 +6,13 @@ namespace RightpointLabs.Pourcast.Repourter
 {
     public abstract class HttpMessageWriterBase : IHttpMessageWriter
     {
+        private readonly Watchdog _watchdog;
+
+        protected HttpMessageWriterBase(Watchdog watchdog)
+        {
+            _watchdog = watchdog;
+        }
+
         public void SendStartAsync(int tapId)
         {
             Debug.Print("Queing: start " + tapId);
@@ -18,6 +25,12 @@ namespace RightpointLabs.Pourcast.Repourter
             _queue.Add(new Message() { IsStart = false, TapId = tapId, Volume = ounces });
         }
 
+        public void SendHeartbeatAsync()
+        {
+            Debug.Print("Queing: heartbeat");
+            _queue.Add(new Message() { IsHeartbeat = true});
+        }
+
         protected readonly BoundedBuffer _queue = new BoundedBuffer();
         private Thread _sendThread = null;
 
@@ -26,6 +39,7 @@ namespace RightpointLabs.Pourcast.Repourter
             public int TapId { get; set; }
             public double Volume { get; set; }
             public bool IsStart { get; set; }
+            public bool IsHeartbeat { get; set; }
         }
 
         protected void SendMessages()
@@ -37,6 +51,9 @@ namespace RightpointLabs.Pourcast.Repourter
                     return;
                 try
                 {
+                    _watchdog.Reset();
+                    if (msg.IsHeartbeat)
+                        continue;
                     SendMessage(msg);
                 }
                 catch (ThreadAbortException)
