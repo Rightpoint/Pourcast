@@ -9,14 +9,18 @@
         self.capacity = ko.observable(kegJSON.Capacity);
         self.beer = ko.observable(beer);
 
+        self.isLow = ko.computed(function () {
+            return self.percentRemaining() < 25;
+        });
+
         self.percentRemainingStyle = ko.computed(function () {
             return self.percentRemaining() + '%';
         });
         self.percentRemainingHtml = ko.computed(function() {
             return self.percentRemaining() + '<span class="symbol">%</span>';
         });
-        self.percentRemainingBubble = ko.computed(function() {
-            return self.percentRemaining() > 25 ? "high" : "low";
+        self.percentRemainingClass = ko.computed(function() {
+            return self.isLow() ? "low" : "high";
         });
 
         events.on("PourStarted", function(e) {

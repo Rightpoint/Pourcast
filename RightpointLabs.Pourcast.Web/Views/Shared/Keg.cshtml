@@ -1,11 +1,11 @@
-﻿<div class="keg-info side" data-bind="bubbles: {}">
+﻿<div class="keg-info side" style="display: none" data-bind="bubbles: {}, visible: true">
     <div class="background" data-bind="style: { background: beer().style().color }">
         <div class="shade"></div>
     </div>
 
     <div class="status">
         <div class="bits">
-            <div class="remaining bit" data-bind="css: percentRemainingBubble">
+            <div class="remaining bit" data-bind="css: percentRemainingClass">
                 <div class="inner-contents">
                     <span class="percent" data-bind="html: percentRemainingHtml"></span>
                 </div>
@@ -16,7 +16,14 @@
             <div class="beer-level" data-bind="style: { height: percentRemainingStyle, background: beer().style().color }"></div>
             <div class="keg">
                 <img class="body" src="/Content/themes/base/images/keg.png" />
-                <img class="face" src="/Content/themes/base/images/face-happy.png" />
+
+                <!-- ko ifnot: isLow -->
+                <img class="face" src="/Content/themes/base/images/face-happy.png" data-bind="ifnot: isLow" />
+                <!-- /ko -->
+
+                <!-- ko if: isLow -->
+                <img class="face" src="/Content/themes/base/images/face-sad.png" data-bind="if: isLow"/>
+                <!-- /ko -->
             </div>
             <img class="ring" src="/Content/themes/base/images/ring.png">
         </div>
