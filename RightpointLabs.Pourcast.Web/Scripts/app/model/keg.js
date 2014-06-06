@@ -3,26 +3,36 @@
         var self = this;
 
         self.id = ko.observable(kegJSON.Id);
-        self.percentRemaining = ko.observable(Math.floor(kegJSON.PercentRemaining * 100) + "%");
+        self.percentRemaining = ko.observable(Math.floor(kegJSON.PercentRemaining * 100));
         self.isEmpty = ko.observable(kegJSON.IsEmpty);
         self.isPouring = ko.observable(kegJSON.IsPouring);
         self.capacity = ko.observable(kegJSON.Capacity);
         self.beer = ko.observable(beer);
 
-        self.percentRemainingBubble = ko.computed(function() {
-            return (kegJSON.PercentRemaining * 100) > 25 ? "high" : "low";
+        self.isLow = ko.computed(function () {
+            return self.percentRemaining() < 25;
         });
 
-        events.on("PourStarted", self.pourStarted);
-        events.on("PourStopped", self.pourStopped);
-    };
+        self.percentRemainingStyle = ko.computed(function () {
+            return self.percentRemaining() + '%';
+        });
+        self.percentRemainingHtml = ko.computed(function() {
+            return self.percentRemaining() + '<span class="symbol">%</span>';
+        });
+        self.percentRemainingClass = ko.computed(function() {
+            return self.isLow() ? "low" : "high";
+        });
 
-    Keg.prototype.pourStarted = function(e) {
-        console.log("PourStarted");
-    };
+        events.on("PourStarted", function(e) {
+            console.log("PourStarted");
+        });
+        events.on("PourStopped", function(e) {
+            console.log("PourStopped");
 
-    Keg.prototype.pourStopped = function(e) {
-        console.log("PourStopped");
+            if (e.KegId === self.id()) {
+                self.percentRemaining(Math.floor(e.PercentRemaining * 100));
+            }
+        });
     };
 
     return Keg;

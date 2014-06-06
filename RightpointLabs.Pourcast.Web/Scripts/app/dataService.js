@@ -1,4 +1,4 @@
-﻿define(['jquery', 'app/model/tap', 'app/model/keg', 'app/model/beer', 'app/model/brewery'], function ($, Tap, Keg, Beer, Brewery) {
+﻿define(['jquery', 'app/model/tap', 'app/model/keg', 'app/model/beer', 'app/model/brewery', 'app/model/style'], function ($, Tap, Keg, Beer, Brewery, Style) {
     var dataService = {};
 
     dataService.getCurrentTaps = function () {
@@ -10,10 +10,11 @@
                     var taps = [];
                     beerOnTapJson.forEach(function(data) {
                         var tap = new Tap(data.Tap),
-                            brewery, beer, keg;
+                            brewery, style,  beer, keg;
                         if (data.Keg != null) {
                             brewery = new Brewery(data.Brewery);
-                            beer = new Beer(data.Beer, brewery);
+                            style = new Style(data.Style);
+                            beer = new Beer(data.Beer, brewery, style);
                             keg = new Keg(data.Keg, beer);
                             tap.loadKeg(tap.id(), keg);
                         }
@@ -30,11 +31,12 @@
         var df = $.Deferred();
 
         $.get('/api/beerOnTap/' + tapId).done(function(data) {
-            var brewery, beer, keg;
+            var brewery, style, beer, keg;
 
             if (data.keg != null) {
                 brewery = new Brewery(data.Brewery);
-                beer = new Beer(data.Beer, brewery);
+                style = new Style(data.Style);
+                beer = new Beer(data.Beer, brewery, style);
                 keg = new Keg(data.Keg, beer);
             }
             df.resolve(keg);

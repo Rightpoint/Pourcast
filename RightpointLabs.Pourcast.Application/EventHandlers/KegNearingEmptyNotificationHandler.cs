@@ -11,7 +11,7 @@
 
     public class KegNearingEmptyNotificationHandler : IEventHandler<PourStopped>
     {
-        private const double PercentageThreshold = 10;
+        private const double PercentageThreshold = .1;
 
         private readonly IEmailService _emailService;
 
