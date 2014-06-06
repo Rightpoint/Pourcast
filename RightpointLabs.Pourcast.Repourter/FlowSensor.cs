@@ -23,11 +23,11 @@ namespace RightpointLabs.Pourcast.Repourter
 
         private bool _flowing = false;
 
-        private readonly int _tapId;
+        private readonly string _tapId;
 
         private readonly IHttpMessageWriter _httpMessageWriter;
 
-        public FlowSensor(InterruptPort port, IHttpMessageWriter httpMessageWriter, int tapId)
+        public FlowSensor(InterruptPort port, IHttpMessageWriter httpMessageWriter, string tapId)
         {
             _port = port;
             _port.OnInterrupt += FlowDetected;
