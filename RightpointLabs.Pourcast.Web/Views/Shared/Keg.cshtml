@@ -1,6 +1,8 @@
 ﻿<div class="keg-info side" style="display: none" data-bind="bubbles: {}, visible: true">
     <div class="background" data-bind="style: { background: beer().style().color }">
         <div class="shade"></div>
+        <div data-bind="bubbles: { minBubbleCount: 20, maxBubbleCount: 50, minBubbleSize: 20, maxBubbleSize: 40}, visible: isPouring" style="position: absolute; top: 0; right: 0; bottom: 0; left: 0">
+        </div>
     </div>
 
     <div class="status">
