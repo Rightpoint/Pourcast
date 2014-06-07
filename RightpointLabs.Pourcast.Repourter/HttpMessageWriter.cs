@@ -7,10 +7,9 @@ namespace RightpointLabs.Pourcast.Repourter
     public class HttpMessageWriter : IHttpMessageWriter
     {
         private readonly IMessageSender _messageSender;
+        //http://pourcast.labs.rightpoint.com/api/Tap/535c61a951aa0405287989ec/StartPour
+        //http://pourcast.labs.rightpoint.com/api/Tap/535c61a951aa0405287989ec/StopPour?volume=xxxx
         private readonly string _baseUrl = "http://pourcast.labs.rightpoint.com/api/Tap/";
-
-//http://pourcast.labs.rightpoint.com/api/Tap/535c61a951aa0405287989ec/StartPour
-//http://pourcast.labs.rightpoint.com/api/Tap/535c61a951aa0405287989ec/StopPour?volume=xxxx
 
         public HttpMessageWriter(IMessageSender messageSender)
         {
@@ -22,6 +21,12 @@ namespace RightpointLabs.Pourcast.Repourter
         {
             Debug.Print("Queing: start " + tapId);
             _queue.Add(new Uri(_baseUrl + tapId + "/StartPour"));
+        }
+
+        public void SendPouringAsync(string tapId, double ounces)
+        {
+            Debug.Print("Queing: pouring " + tapId + " " + ounces);
+            _queue.Add(new Uri(_baseUrl + tapId + "/Pouring?volume=" + ounces));
         }
 
         public void SendStopAsync(string tapId, double ounces)

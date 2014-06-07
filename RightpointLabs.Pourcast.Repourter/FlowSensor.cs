@@ -9,7 +9,7 @@ namespace RightpointLabs.Pourcast.Repourter
     {
         private readonly InterruptPort _port;
 
-        //private DateTime _flowStart;
+        private object _lockObject = new object();
 
         private DateTime _lastFlowDetected;
 
@@ -38,13 +38,6 @@ namespace RightpointLabs.Pourcast.Repourter
         public void CheckPulses()
         {
             // Disable interrupts while we read so that we don't mess with a triggering interrput.
-            //_port.DisableInterrupt();
-            //var pulses = _pulseCount;
-            ////var lastMeasuredTime = _lastFlowDetected;
-            //_pulseCount = 0;
-
-            //_port.EnableInterrupt();
-
             var pulses = Interlocked.Exchange(ref _pulseCount, 0);
 
             var liters = pulses/PULSES_PER_LITER;
@@ -54,27 +47,27 @@ namespace RightpointLabs.Pourcast.Repourter
                 if (!_flowing)
                 {
                     _flowing = true;
-                    //_flowStart = lastMeasuredTime;
                     _httpMessageWriter.SendStartAsync(_tapId);
+                }
+                else
+                {
+                    _httpMessageWriter.SendPouringAsync(_tapId, _totalLiters * OUNCES_PER_LITER);
                 }
             }
             else if(_totalLiters > 0) // it didn't flow, but we have finished a pour. Report it.
             {
                 var ounces = _totalLiters*OUNCES_PER_LITER;
                 _httpMessageWriter.SendStopAsync(_tapId, ounces);
-                _totalLiters = 0;
                 _flowing = false;
+                _totalLiters = 0;
             }
         }
 
         private void FlowDetected(uint port, uint data, DateTime time)
         {
             var pulses = Interlocked.Increment(ref _pulseCount);
-            //_pulseCount++;
-            //_lastFlowDetected = time;
             if (pulses % 100 == 0)
                 Debug.Print("Flow detected - " + _tapId + ": " + pulses);
-
         }
     }
 }
