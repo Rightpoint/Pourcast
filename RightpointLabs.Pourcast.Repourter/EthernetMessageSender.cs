@@ -1,3 +1,4 @@
+#if ETHERNET
 using System;
 using System.IO;
 using System.Net;
@@ -45,3 +46,4 @@ namespace RightpointLabs.Pourcast.Repourter
         }
     }
 }
+#endif

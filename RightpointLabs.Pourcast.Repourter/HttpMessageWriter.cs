@@ -1,19 +1,24 @@
 using System;
 using System.Threading;
 using Microsoft.SPOT;
+using Microsoft.SPOT.Hardware;
 
 namespace RightpointLabs.Pourcast.Repourter
 {
     public class HttpMessageWriter : IHttpMessageWriter
     {
-        private readonly IMessageSender _messageSender;
         //http://pourcast.labs.rightpoint.com/api/Tap/535c61a951aa0405287989ec/StartPour
         //http://pourcast.labs.rightpoint.com/api/Tap/535c61a951aa0405287989ec/StopPour?volume=xxxx
-        private readonly string _baseUrl = "http://pourcast.labs.rightpoint.com/api/Tap/";
 
-        public HttpMessageWriter(IMessageSender messageSender)
+        private readonly IMessageSender _messageSender;
+        private readonly string _baseUrl;
+        private readonly OutputPort _light;
+
+        public HttpMessageWriter(IMessageSender messageSender, string baseUrl, OutputPort light)
         {
             _messageSender = messageSender;
+            _baseUrl = baseUrl;
+            _light = light;
             StartThread();
         }
 
@@ -53,6 +58,7 @@ namespace RightpointLabs.Pourcast.Repourter
                     return;
                 try
                 {
+                    _light.Write(true);
                     _messageSender.FetchURL(uri);
                 }
                 catch (ThreadAbortException)
@@ -62,6 +68,10 @@ namespace RightpointLabs.Pourcast.Repourter
                 catch (Exception ex)
                 {
                     Debug.Print("Couldn't fetch URL: " + uri.AbsoluteUri + ": " + ex.ToString());
+                }
+                finally
+                {
+                    _light.Write(false);
                 }
             }
         }

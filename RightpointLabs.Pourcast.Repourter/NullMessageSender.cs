@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if NO_NETWORKING
+using System;
 using Microsoft.SPOT;
 
 namespace RightpointLabs.Pourcast.Repourter
@@ -15,3 +16,4 @@ namespace RightpointLabs.Pourcast.Repourter
         }
     }
 }
+#endif

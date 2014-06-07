@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Net;
-using System.Net.Sockets;
 using System.Threading;
 using Microsoft.SPOT;
 using Microsoft.SPOT.Hardware;
-using Toolbox.NETMF.Hardware;
-using SecretLabs.NETMF.Hardware;
 using SecretLabs.NETMF.Hardware.Netduino;
 
 namespace RightpointLabs.Pourcast.Repourter
@@ -17,24 +13,54 @@ namespace RightpointLabs.Pourcast.Repourter
 
         private static readonly TimeSpan ResetWatchdogEvery = new TimeSpan(0, 0, 45);
 
-        private const int NUMBER_OF_TAPS = 2;
+        public class TapConfig
+        {
+            public Cpu.Pin Input { get; set; }
+            public Cpu.Pin Light { get; set; }
+            public string TapId { get; set; }
+        }
 
         /// <summary>
         /// Main method runs on startup
         /// </summary>
         public static void Main()
         {
-            //var sender = new WifiMessageSender("Rightpoint", "Cha", WiFlyGSX.AuthMode.MixedWPA1_WPA2);
-            var sender = new EthernetMessageSender();
-            //var sender = new NullMessageSender();
-            sender.Initalize();
-            var writer = new HttpMessageWriter(sender);
+            // START CONFIG
+#if WIFI
+            string wifiSSID = "Rightpoint";
+            string wifiPassword = "ChangeThis";
+            var wifiSecurityMode = Toolbox.NETMF.Hardware.WiFlyGSX.AuthMode.MixedWPA1_WPA2;
+#endif
+            var baseUrl = "http://pourcast.labs.rightpoint.com/api/Tap/";
+            var httpLight = Pins.GPIO_PIN_D9;
+            var taps =
+                new[]
+                    {
+                        new TapConfig {Input = Pins.GPIO_PIN_D13, Light = Pins.GPIO_PIN_D11, TapId = "535c61a951aa0405287989ec"},
+                        new TapConfig {Input = Pins.GPIO_PIN_D12, Light = Pins.GPIO_PIN_D10, TapId = "537d28db51aa04289027cde5"},
+                    };
+            // END CONFIG
 
-            var sensors = new FlowSensor[NUMBER_OF_TAPS];
-            // Flow sensor plugged into pin 13, no resistor necessary, fire on the rising edge of the pulse
-            sensors[0] = new FlowSensor(new InterruptPort(Pins.GPIO_PIN_D13, false, Port.ResistorMode.Disabled, Port.InterruptMode.InterruptEdgeHigh), writer, "535c61a951aa0405287989ec");
-            // Flow sensor plugged into pin 12, no resistor necessary, fire on the rising edge of the pulse
-            sensors[1] = new FlowSensor(new InterruptPort(Pins.GPIO_PIN_D12, false, Port.ResistorMode.Disabled, Port.InterruptMode.InterruptEdgeHigh), writer, "537d28db51aa04289027cde5");
+#if WIFI
+            var sender = new WifiMessageSender(wifiSSID, wifiPassword, wifiSecurityMode);
+#elif ETHERNET
+            var sender = new EthernetMessageSender();
+#elif NO_NETWORKING
+            var sender = new NullMessageSender();
+#endif
+            sender.Initalize();
+
+            var writer = new HttpMessageWriter(sender, baseUrl, new OutputPort(httpLight, false));
+            var sensors = new FlowSensor[taps.Length];
+            for(var i=0; i<taps.Length; i++)
+            {
+                sensors[i] = new FlowSensor(
+                    new InterruptPort(taps[i].Input, false, Port.ResistorMode.Disabled, Port.InterruptMode.InterruptEdgeHigh), 
+                    new OutputPort(taps[i].Light, false),
+                    writer, 
+                    taps[i].TapId);
+            }
+
             Debug.Print("Starting");
 
             DateTime lastWatchdogTrigger = DateTime.MinValue;

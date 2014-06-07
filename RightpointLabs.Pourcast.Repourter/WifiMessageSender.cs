@@ -1,3 +1,4 @@
+#if WIFI
 using System;
 using System.Threading;
 using Microsoft.SPOT;
@@ -158,3 +159,4 @@ namespace RightpointLabs.Pourcast.Repourter
         }
     }
 }
+#endif

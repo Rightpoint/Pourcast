@@ -8,6 +8,7 @@ namespace RightpointLabs.Pourcast.Repourter
     public class FlowSensor
     {
         private readonly InterruptPort _port;
+        private readonly OutputPort _light;
 
         private object _lockObject = new object();
 
@@ -27,9 +28,10 @@ namespace RightpointLabs.Pourcast.Repourter
 
         private readonly IHttpMessageWriter _httpMessageWriter;
 
-        public FlowSensor(InterruptPort port, IHttpMessageWriter httpMessageWriter, string tapId)
+        public FlowSensor(InterruptPort port, OutputPort light, IHttpMessageWriter httpMessageWriter, string tapId)
         {
             _port = port;
+            _light = light;
             _port.OnInterrupt += FlowDetected;
             _httpMessageWriter = httpMessageWriter;
             _tapId = tapId;
@@ -47,10 +49,12 @@ namespace RightpointLabs.Pourcast.Repourter
                 if (!_flowing)
                 {
                     _flowing = true;
+                    _light.Write(true);
                     _httpMessageWriter.SendStartAsync(_tapId);
                 }
                 else
                 {
+                    _light.Write(false);
                     _httpMessageWriter.SendPouringAsync(_tapId, _totalLiters * OUNCES_PER_LITER);
                 }
             }
