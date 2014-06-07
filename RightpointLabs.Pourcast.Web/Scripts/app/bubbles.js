@@ -1,13 +1,17 @@
 ﻿define(['jquery'], function () {
-    var bubbles = function($container, params) {
-        params = params || {};
-        var minBubbleCount = params.minBubbleCount || 5; // Minimum number of bubbles
-        var maxBubbleCount = params.maxBubbleCount || 20; // Maximum number of bubbles
-        var minBubbleSize = params.minBubbleSize || 2; // Smallest possible bubble diameter (px)
-        var maxBubbleSize = params.maxBubbleSize || 6; // Largest possible bubble diameter (px)
+    var bubbles = function($container, p) {
+        p = $.extend({
+            minBubbleCount: 5, // Minimum number of bubbles
+            maxBubbleCount: 20, // Maximum number of bubbles
+            minBubbleSize: 2, // Smallest possible bubble diameter (px)
+            maxBubbleSize: 8, // Largest possible bubble diameter (px)
+            minRiseTime: 5,
+            maxRiseTime: 12,
+            maxWaitTime: 15 //
+        }, p || {});
 
         // Calculate a random number of bubbles based on our min/max
-        var bubbleCount = minBubbleCount + Math.floor(Math.random() * (maxBubbleCount + 1));
+        var bubbleCount = p.minBubbleCount + Math.floor(Math.random() * (p.maxBubbleCount + 1));
 
         // Create the bubbles
         for (var i = 0; i < bubbleCount; i++) {
@@ -21,13 +25,15 @@
             var pos_rand = Math.floor(Math.random() * 101);
 
             // Randomise their size
-            var size_rand = minBubbleSize + Math.floor(Math.random() * (maxBubbleSize + 1));
+            var size_rand = p.minBubbleSize + Math.floor(Math.random() * (p.maxBubbleSize - p.minBubbleSize + 1));
 
             // Randomise the time they start rising (0-15s)
-            var delay_rand = Math.floor(Math.random() * 16);
+            var delay_rand = Math.random() * (p.maxWaitTime + 1);
 
             // Randomise their speed (5-12s)
-            var speed_rand = 5 + Math.floor(Math.random() * 12);
+            var speed_rand = p.minRiseTime + Math.random() * (p.maxRiseTime - p.minRiseTime);
+
+            console.log(speed_rand);
 
             // Cache the this selector
             var $this = $(this);
