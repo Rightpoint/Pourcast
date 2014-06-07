@@ -54,7 +54,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'NoNetworking|AnyCPU'">
     <OutputPath>bin\NoNetworking\</OutputPath>
-    <DefineConstants>TRACE,MF_FRAMEWORK_VERSION_V4_3,NO_NETWORKING</DefineConstants>
+    <DefineConstants>DEBUG;TRACE,MF_FRAMEWORK_VERSION_V4_3,NO_NETWORKING</DefineConstants>
     <Optimize>true</Optimize>
     <NoStdLib>true</NoStdLib>
     <DebugType>pdbonly</DebugType>
@@ -70,6 +70,7 @@
     <Compile Include="FlowSensor.cs" />
     <Compile Include="IMessageSender.cs" />
     <Compile Include="NullMessageSender.cs" />
+    <Compile Include="TapConfig.cs" />
     <Compile Include="Watchdog.cs" />
     <Compile Include="HttpMessageWriter.cs" />
     <Compile Include="IHttpMessageWriter.cs" />

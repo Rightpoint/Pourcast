@@ -29,7 +29,7 @@ namespace RightpointLabs.Pourcast.Repourter
             if (null == _timer)
                 throw new ArgumentException("Cannot reset a non-running watchdog");
             _timer.Change(_duration, _duration);
-            Debug.Print("Watchdog reset");
+            //Debug.Print("Watchdog reset");
         }
 
         private void TriggerReboot(object state)
@@ -47,9 +47,10 @@ namespace RightpointLabs.Pourcast.Repourter
     {
         public RebootWatchdog(TimeSpan duration) : base(duration, () =>
         {
-            Debug.Print("Rebooting...");
+            Debug.Print("Watchdown triggering reboot...");
             Thread.Sleep(200);
-            PowerState.RebootDevice(false);
+            PowerState.RebootDevice(false, 1);
+            Thread.Sleep(200);
             Debug.Print("Reboot didn't seem to take... this was after the reboot command....");
         })
         {

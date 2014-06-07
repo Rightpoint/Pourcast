@@ -8,18 +8,6 @@ namespace RightpointLabs.Pourcast.Repourter
 {
     public class Program
     {
-        // count flow every half a second
-        private const int MILLISECONDS_BETWEEN_COUNT = 500;
-
-        private static readonly TimeSpan ResetWatchdogEvery = new TimeSpan(0, 0, 45);
-
-        public class TapConfig
-        {
-            public Cpu.Pin Input { get; set; }
-            public Cpu.Pin Light { get; set; }
-            public string TapId { get; set; }
-        }
-
         /// <summary>
         /// Main method runs on startup
         /// </summary>
@@ -39,7 +27,14 @@ namespace RightpointLabs.Pourcast.Repourter
                         new TapConfig {Input = Pins.GPIO_PIN_D13, Light = Pins.GPIO_PIN_D11, TapId = "535c61a951aa0405287989ec"},
                         new TapConfig {Input = Pins.GPIO_PIN_D12, Light = Pins.GPIO_PIN_D10, TapId = "537d28db51aa04289027cde5"},
                     };
+            var watchdogCheckInterval = new TimeSpan(0, 15, 0);
             // END CONFIG
+
+            // turn on the tap lights on - they'll turn off as they initialize
+            LightsOn(taps);
+            // turn the HTTP light *off*, it'll go on as it initializes
+            LightOff(httpLight);
+
 
 #if WIFI
             var sender = new WifiMessageSender(wifiSSID, wifiPassword, wifiSecurityMode);
@@ -50,7 +45,13 @@ namespace RightpointLabs.Pourcast.Repourter
 #endif
             sender.Initalize();
 
-            var writer = new HttpMessageWriter(sender, baseUrl, new OutputPort(httpLight, false));
+            HttpMessageWriter writer = null;
+            // first watchdog makes sure we send *something* every watchdogCheckInterval.  Second reboots us 30s later if the message hasn't been sent yet (ie. if networking dies)
+            // sending *any* message resets both watchdogs
+            var heartbeatWatchdog = new Watchdog(watchdogCheckInterval, () => writer.SendHeartbeatAsync());
+            var rebootWatchdog = new RebootWatchdog(watchdogCheckInterval + new TimeSpan(0, 0, 30));
+
+            writer = new HttpMessageWriter(sender, baseUrl, new OutputPort(httpLight, true), new [] { heartbeatWatchdog, rebootWatchdog });
             var sensors = new FlowSensor[taps.Length];
             for(var i=0; i<taps.Length; i++)
             {
@@ -61,25 +62,36 @@ namespace RightpointLabs.Pourcast.Repourter
                     taps[i].TapId);
             }
 
+            heartbeatWatchdog.Start();
+            rebootWatchdog.Start();
             Debug.Print("Starting");
 
-            DateTime lastWatchdogTrigger = DateTime.MinValue;
             while(true)
             {
-                if (DateTime.UtcNow.Subtract(lastWatchdogTrigger) >= ResetWatchdogEvery)
-                {
-                    writer.SendHeartbeatAsync();
-                    lastWatchdogTrigger = DateTime.UtcNow;
-                }
-                foreach (var flowSensor in sensors)
-                {
-                    flowSensor.CheckPulses();
-                }
-                Thread.Sleep(MILLISECONDS_BETWEEN_COUNT);
+                Thread.Sleep(Timeout.Infinite);
             }
+        }
 
-            writer.Stop();
-            Debug.Print("Exiting");
+        /// <summary>
+        /// Turns on the lights for the passed stuff
+        /// </summary>
+        private static void LightsOn(TapConfig[] taps)
+        {
+            foreach (var tap in taps)
+            {
+                using (var p = new OutputPort(tap.Light, true))
+                {
+                    p.Write(true);
+                }
+            }
+        }
+
+        private static void LightOff(Cpu.Pin httpLight)
+        {
+            using (var p = new OutputPort(httpLight, false))
+            {
+                p.Write(false);
+            }
         }
     }
 }

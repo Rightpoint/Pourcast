@@ -13,12 +13,14 @@ namespace RightpointLabs.Pourcast.Repourter
         private readonly IMessageSender _messageSender;
         private readonly string _baseUrl;
         private readonly OutputPort _light;
+        private readonly Watchdog[] _resetWatchdogsOnSend;
 
-        public HttpMessageWriter(IMessageSender messageSender, string baseUrl, OutputPort light)
+        public HttpMessageWriter(IMessageSender messageSender, string baseUrl, OutputPort light, Watchdog[] resetWatchdogsOnSend)
         {
             _messageSender = messageSender;
             _baseUrl = baseUrl;
             _light = light;
+            _resetWatchdogsOnSend = resetWatchdogsOnSend ?? new Watchdog[] {};
             StartThread();
         }
 
@@ -58,7 +60,7 @@ namespace RightpointLabs.Pourcast.Repourter
                     return;
                 try
                 {
-                    _light.Write(true);
+                    _light.Write(false);
                     _messageSender.FetchURL(uri);
                 }
                 catch (ThreadAbortException)
@@ -71,7 +73,11 @@ namespace RightpointLabs.Pourcast.Repourter
                 }
                 finally
                 {
-                    _light.Write(false);
+                    _light.Write(true);
+                    foreach(var wd in _resetWatchdogsOnSend)
+                    {
+                        wd.Reset();
+                    }
                 }
             }
         }
