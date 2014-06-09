@@ -8,7 +8,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - @Resources.Application</title>
-    @Styles.Render("~/Content/themes/base/css")
+    @Styles.Render("~/Content/css/bootstrap")
+    @Styles.Render("~/Content/css/bootstrap-theme")
     @Scripts.Render("~/bundles/modernizer")
 </head>
 <body>
@@ -29,6 +30,7 @@
                     <li>@Html.ActionLink("Manage Kegs", "Index", "Keg", null, new { @class = "navbar-btn" })</li>
                     <li>@Html.ActionLink("Manage Breweries", "Index", "Brewery", null, new { @class = "navbar-btn" })</li>
                     <li>@Html.ActionLink("Manage Beers", "Index", "Beer", null, new { @class = "navbar-btn" })</li>
+                    <li>@Html.ActionLink("Manage Styles", "Index", "Style", null, new { @class = "navbar-btn" })</li>
                 </ul>
             </div>
         </div>

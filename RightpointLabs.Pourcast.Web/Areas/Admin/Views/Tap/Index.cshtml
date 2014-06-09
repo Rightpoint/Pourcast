@@ -24,11 +24,42 @@
             </p>
         }
         <p>
-            @Html.ActionLink("Edit", "Edit", new {id = tap.Id})
+            @Html.ActionLink("Edit", "Edit", new {id = tap.Id}, new { @class = "btn"})
+            @if (null != tap.Keg)
+            {
+                <a class="btn btn-pour" data-tap-id="@tap.Id" href="#">Pour</a>
+            }
         </p>
     </div>
 }
 <p>
-     |
+    @Html.ActionLink("Add Tap", "Create")
+    |
     @Html.ActionLink("Back to List", "Index")
 </p>
+
+
+
+@section scripts {
+    <script type="text/javascript">
+        $(function () {
+            $(".btn-pour").each(function() {
+                var $t = $(this);
+                var tapId = $t.attr("data-tap-id");
+                var timer = null;
+                var start = null;
+                $t.mousedown(function () {
+                    $.getJSON("/api/tap/" + tapId + "/StartPour");
+                    start = new Date().getTime();
+                    timer = setInterval(function () {
+                        $.getJSON("/api/tap/" + tapId + "/Pouring?volume=" + ((new Date().getTime() - start) / 500));
+                    }, 250);
+                });
+                $t.mouseup(function () {
+                    clearInterval(timer);
+                    $.getJSON("/api/tap/" + tapId + "/StopPour?volume=" + ((new Date().getTime() - start) / 500));
+                });
+            });
+        });
+    </script>
+}

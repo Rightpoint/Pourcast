@@ -1,3 +1,4 @@
+#if WIFI
 using System;
 
 using Microsoft.SPOT;
@@ -422,3 +423,4 @@ namespace Toolbox.NETMF
         public delegate void StringEventHandler(string text, DateTime time);
     }
 }
+#endif

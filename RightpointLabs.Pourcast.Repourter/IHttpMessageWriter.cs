@@ -2,7 +2,8 @@ namespace RightpointLabs.Pourcast.Repourter
 {
     public interface IHttpMessageWriter
     {
-        void SendStartAsync(int tapId);
-        void SendStopAsync(int tapId, double ounces);
+        void SendStartAsync(string tapId);
+        void SendPouringAsync(string tapId, double ounces);
+        void SendStopAsync(string tapId, double ounces);
     }
 }

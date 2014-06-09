@@ -29,9 +29,19 @@ namespace RightpointLabs.Pourcast.Web.Controllers.Api
         }
 
         [HttpGet]
+        public void Heartbeat()
+        {
+        }
+
+        [HttpGet]
         public void StartPour(string id)
         {
             _tapOrchestrator.StartPourFromTap(id);
+        }
+
+        [HttpGet]
+        public void Pouring([FromUri]string id, [FromUri]double volume)
+        {
         }
 
         [HttpGet]

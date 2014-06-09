@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using Microsoft.SPOT;
 using Microsoft.SPOT.Hardware;
 
@@ -7,68 +8,89 @@ namespace RightpointLabs.Pourcast.Repourter
     public class FlowSensor
     {
         private readonly InterruptPort _port;
+        private readonly OutputPort _light;
 
-        private DateTime _flowStart;
+        private object _lockObject = new object();
 
-        private DateTime _lastFlowDetected;
+        private int _pulseCount = 0;
 
-        private double _pulseCount = 0.0;
-
-        private double _totalLiters = 0.0;
-        
-        private const int PULSES_PER_LITER = 5600;
+        private const double PULSES_PER_LITER = 5600.0;
 
         private const double OUNCES_PER_LITER = 33.814;
 
-        private bool _flowing = false;
+#if true
+        // real
+        private const int POUR_STOPPED_DELAY = 250;
+        private const int PULSES_PER_STOPPED_EXTENSION = 50;
+        private const int PULSES_PER_POURING = 250;
+#else
+        // fake w/ buttons
+        private const int POUR_STOPPED_DELAY = 1000;
+        private const int PULSES_PER_STOPPED_EXTENSION = 3;
+        private const int PULSES_PER_POURING = 5;
+#endif
 
-        private readonly int _tapId;
+        private readonly string _tapId;
 
         private readonly IHttpMessageWriter _httpMessageWriter;
+        
+        private Timer _timer;
 
-        public FlowSensor(InterruptPort port, IHttpMessageWriter httpMessageWriter, int tapId)
+        public FlowSensor(InterruptPort port, OutputPort light, IHttpMessageWriter httpMessageWriter, string tapId)
         {
             _port = port;
+            _light = light;
             _port.OnInterrupt += FlowDetected;
             _httpMessageWriter = httpMessageWriter;
             _tapId = tapId;
         }
 
-        public void CheckPulses()
+        private void FlowDetected(uint port, uint data, DateTime time)
         {
-            // Disable interrupts while we read so that we don't mess with a triggering interrput.
-            _port.DisableInterrupt();
-            var pulses = _pulseCount;
-            var lastMeasuredTime = _lastFlowDetected;
-            _pulseCount = 0;
-
-            _port.EnableInterrupt();
-
-            var liters = pulses/PULSES_PER_LITER;
-            if (liters > 0) // it actually flowed during this timespan
+            var pulses = Interlocked.Increment(ref _pulseCount);
+            if(pulses == 1)
             {
-                _totalLiters += liters;
-                if (!_flowing)
+                lock(_lockObject)
                 {
-                    _flowing = true;
-                    _flowStart = lastMeasuredTime;
+                    _light.Write(true);
                     _httpMessageWriter.SendStartAsync(_tapId);
+                    _timer = new Timer(PourCompleted, null, POUR_STOPPED_DELAY, Timeout.Infinite);
+                    Debug.Print("Started pour");
                 }
             }
-            else if(_totalLiters > 0) // it didn't flow, but we have finished a pour. Report it.
+            else if (pulses % PULSES_PER_STOPPED_EXTENSION == 0)
             {
-                var ounces = _totalLiters*OUNCES_PER_LITER;
-                _httpMessageWriter.SendStopAsync(_tapId, ounces);
-                _totalLiters = 0;
-                _flowing = false;
+                lock (_lockObject)
+                {
+                    if (null != _timer)
+                    {
+                        _timer.Change(POUR_STOPPED_DELAY, Timeout.Infinite);
+                        Debug.Print("Extended");
+                    }
+                }
+            }
+            else if (pulses % PULSES_PER_POURING == 0)
+            {
+                lock (_lockObject)
+                {
+                    if (null != _timer)
+                    {
+                        _httpMessageWriter.SendPouringAsync(_tapId, pulses / PULSES_PER_LITER * OUNCES_PER_LITER);
+                    }
+                }
             }
         }
 
-        private void FlowDetected(uint port, uint data, DateTime time)
+        private void PourCompleted(object state)
         {
-            Debug.Print("Flow detected - " + _tapId);
-            _pulseCount++;
-            _lastFlowDetected = time;
+            lock(_lockObject)
+            {
+                _timer.Dispose();
+                _timer = null;
+                var pulses = Interlocked.Exchange(ref _pulseCount, 0);
+                _light.Write(false);
+                _httpMessageWriter.SendStopAsync(_tapId, pulses / PULSES_PER_LITER * OUNCES_PER_LITER);
+            }
         }
     }
 }

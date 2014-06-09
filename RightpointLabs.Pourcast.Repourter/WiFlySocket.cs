@@ -1,3 +1,4 @@
+#if WIFI
 using System;
 using Toolbox.NETMF.Hardware;
 
@@ -147,3 +148,4 @@ namespace Toolbox.NETMF.NET
         public override uint BytesAvailable { get { return this._NetworkInterface.SocketBufferLength; } }
     }
 }
+#endif

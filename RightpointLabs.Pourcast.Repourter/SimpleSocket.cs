@@ -1,3 +1,4 @@
+#if WIFI
 using System;
 
 /*
@@ -131,3 +132,4 @@ namespace Toolbox.NETMF.NET
         }
     }
 }
+#endif
