@@ -35,6 +35,11 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
             return style;
         }
 
+        public void Save(Style style)
+        {
+            _styleRepository.Update(style);
+        }
+
         public Style GetStyleByColor(string hexValue)
         {
             throw new System.NotImplementedException();

@@ -1,3 +1,4 @@
+#if WIFI
 using System;
 using System.Threading;
 using System.IO.Ports;
@@ -702,3 +703,4 @@ namespace Toolbox.NETMF.Hardware
 
     }
 }
+#endif
