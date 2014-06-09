@@ -1,5 +1,6 @@
 ﻿#if NO_NETWORKING
 using System;
+using System.Threading;
 using Microsoft.SPOT;
 
 namespace RightpointLabs.Pourcast.Repourter
@@ -9,6 +10,7 @@ namespace RightpointLabs.Pourcast.Repourter
         public void FetchURL(Uri url)
         {
             Debug.Print("Asked to fetch " + url.AbsoluteUri);
+            Thread.Sleep(400);
         }
 
         public void Initalize()
