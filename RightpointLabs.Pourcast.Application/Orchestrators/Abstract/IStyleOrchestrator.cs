@@ -11,5 +11,6 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Abstract
         Style GetStyleByColor(string hexValue);
         IEnumerable<Style> GetStyles();
         IEnumerable<Style> GetStylesByName(string name);
+        void Save(Style style);
     }
 }
