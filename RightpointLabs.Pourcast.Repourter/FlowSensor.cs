@@ -17,8 +17,18 @@ namespace RightpointLabs.Pourcast.Repourter
         private const double PULSES_PER_LITER = 5600.0;
 
         private const double OUNCES_PER_LITER = 33.814;
+
+#if true
+        // real
         private const int POUR_STOPPED_DELAY = 250;
         private const int PULSES_PER_STOPPED_EXTENSION = 50;
+        private const int PULSES_PER_POURING = 250;
+#else
+        // fake w/ buttons
+        private const int POUR_STOPPED_DELAY = 1000;
+        private const int PULSES_PER_STOPPED_EXTENSION = 3;
+        private const int PULSES_PER_POURING = 5;
+#endif
 
         private readonly string _tapId;
 
@@ -55,6 +65,16 @@ namespace RightpointLabs.Pourcast.Repourter
                     if (null != _timer)
                     {
                         _timer.Change(POUR_STOPPED_DELAY, Timeout.Infinite);
+                        Debug.Print("Extended");
+                    }
+                }
+            }
+            else if (pulses % PULSES_PER_POURING == 0)
+            {
+                lock (_lockObject)
+                {
+                    if (null != _timer)
+                    {
                         _httpMessageWriter.SendPouringAsync(_tapId, pulses / PULSES_PER_LITER * OUNCES_PER_LITER);
                     }
                 }
