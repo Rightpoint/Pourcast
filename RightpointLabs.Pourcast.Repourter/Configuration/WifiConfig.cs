@@ -1,3 +1,4 @@
+#if WIFI
 using Toolbox.NETMF.Hardware;
 
 namespace RightpointLabs.Pourcast.Repourter.Configuration
@@ -10,3 +11,4 @@ namespace RightpointLabs.Pourcast.Repourter.Configuration
         public WiFlyGSX.AuthMode SecurityMode { get; set; }
     }
 }
+#endif

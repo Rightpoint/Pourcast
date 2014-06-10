@@ -39,7 +39,8 @@ namespace RightpointLabs.Pourcast.Repourter
 
         public void Dispose()
         {
-            _timer.Dispose();
+            if (null != _timer)
+                _timer.Dispose();
         }
     }
 

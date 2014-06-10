@@ -1,3 +1,4 @@
+#if ETHERNET
 namespace RightpointLabs.Pourcast.Repourter.Configuration
 {
     public class EthernetConfig
@@ -5,3 +6,4 @@ namespace RightpointLabs.Pourcast.Repourter.Configuration
         public bool Enabled { get; set; }
     }
 }
+#endif
