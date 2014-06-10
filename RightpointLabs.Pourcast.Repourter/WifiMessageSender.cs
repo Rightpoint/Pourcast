@@ -13,12 +13,14 @@ namespace RightpointLabs.Pourcast.Repourter
         private readonly string _ssid;
         private readonly string _password;
         private readonly WiFlyGSX.AuthMode _securityMode;
+        private readonly bool _debugMode;
 
-        public WifiMessageSender(string ssid, string password, WiFlyGSX.AuthMode securityMode)
+        public WifiMessageSender(string ssid, string password, WiFlyGSX.AuthMode securityMode, bool debugMode)
         {
             _ssid = ssid;
             _password = password;
             _securityMode = securityMode;
+            _debugMode = debugMode;
         }
 
         public void Initalize()
@@ -29,7 +31,7 @@ namespace RightpointLabs.Pourcast.Repourter
         WiFlyGSX _module;
         private WiFlyGSX GetModule()
         {
-            using (var initWatchdog = new Watchdog(new TimeSpan(0, 5, 0), () =>
+            using (var initWatchdog = new Watchdog(new TimeSpan(0, 5, 0), false, () =>
             {
                 Debug.Print("Spent 5 minutes trying to initialize, giving up....");
                 PowerState.RebootDevice(false, 1000);
@@ -50,14 +52,16 @@ namespace RightpointLabs.Pourcast.Repourter
 
             var thread = new Thread(() =>
             {
-                var module = new WiFlyGSX(DebugMode: true);
+                var module = new WiFlyGSX(DebugMode: _debugMode);
                 try
                 {
                     module.EnableDHCP();
 
                     var isConnected = false;
 
-                    for (var i = 0; i < 3 && !(isConnected = module.JoinNetwork(_ssid, 0, _securityMode, _password)); i++)
+                    for (var i = 0;
+                        i < 3 && !(isConnected = module.JoinNetwork(_ssid, 0, _securityMode, _password));
+                        i++)
                     {
                         Thread.Sleep(1000);
                     }
@@ -85,32 +89,27 @@ namespace RightpointLabs.Pourcast.Repourter
                         module.Dispose();
                         return;
                     }
+
+                    workingModule = module;
+                    return;
                 }
                 catch(ThreadAbortException)
                 {
-                    module.Dispose();
-                    Debug.Print("Our watchdog got fired - sleep a bit and try rebooting the module before we return");
-                    Thread.Sleep(2000);
-                    using(module = new WiFlyGSX(DebugMode: true))
-                    {
-                        module.Reboot();
-                    }
+                    DisposeAndReset(module);
                     throw;
                 }
-
-                workingModule = module;
+                catch (Exception)
+                {
+                    DisposeAndReset(module);
+                    throw;
+                }
             });
             thread.Start();
 
-            var fired = false;
-            using (var setupWatchdog = new Watchdog(new TimeSpan(0, 0, 30), () =>
+            using (var setupWatchdog = new Watchdog(new TimeSpan(0, 0, 30), false, () =>
             {
-                if (!fired)
-                {
-                    Debug.Print("Triggering setup watchdog");
-                    thread.Abort();
-                    fired = true;
-                }
+                Debug.Print("Triggering setup watchdog");
+                thread.Abort();
             }))
             {
                 setupWatchdog.Start();
@@ -118,6 +117,17 @@ namespace RightpointLabs.Pourcast.Repourter
             }
 
             return workingModule;
+        }
+
+        private void DisposeAndReset(WiFlyGSX module)
+        {
+            module.Dispose();
+            Debug.Print("Our watchdog got fired - sleep a bit and try rebooting the module before we return");
+            Thread.Sleep(2000);
+            using (module = new WiFlyGSX(DebugMode: _debugMode))
+            {
+                module.Reboot();
+            }
         }
 
         public void FetchURL(Uri url)
@@ -164,14 +174,13 @@ namespace RightpointLabs.Pourcast.Repourter
                 });
                 thread.Start();
 
-                using (var fetchWatchdog = new Watchdog(new TimeSpan(0, 0, 5), () =>
+                using (var fetchWatchdog = new Watchdog(new TimeSpan(0, 0, 5), false, () =>
                 {
                     Debug.Print("Triggering fetch watchdog");
                     thread.Abort();
-                    Thread.Sleep(500);
-                    module.Reboot();
-                    module.Dispose();
+                    thread.Join();
                     _module = null;
+                    DisposeAndReset(module);
                 }))
                 {
                     thread.Join();

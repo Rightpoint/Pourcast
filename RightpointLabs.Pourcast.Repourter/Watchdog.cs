@@ -8,12 +8,14 @@ namespace RightpointLabs.Pourcast.Repourter
     public class Watchdog : IDisposable
     {
         private ExtendedTimer _timer;
-        private TimeSpan _duration;
+        private int _duration;
+        private readonly bool _fireOnce;
         private readonly ThreadStart _triggerAction;
 
-        public Watchdog(TimeSpan duration, ThreadStart triggerAction)
+        public Watchdog(TimeSpan duration, bool fireOnce, ThreadStart triggerAction)
         {
-            _duration = duration;
+            _duration = (int)(duration.Ticks / 10000);
+            _fireOnce = fireOnce;
             _triggerAction = triggerAction;
         }
 
@@ -21,18 +23,17 @@ namespace RightpointLabs.Pourcast.Repourter
         {
             if(null != _timer)
                 throw new ArgumentException("Cannot start an already running watchdog");
-            _timer = new ExtendedTimer(TriggerReboot, null, _duration, _duration);
+            _timer = new ExtendedTimer(TriggerAction, null, _duration, _fireOnce ? Timeout.Infinite : _duration);
         }
 
         public void Reset()
         {
             if (null == _timer)
                 throw new ArgumentException("Cannot reset a non-running watchdog");
-            _timer.Change(_duration, _duration);
-            //Debug.Print("Watchdog reset");
+            _timer.Change(_duration, _fireOnce ? Timeout.Infinite : _duration);
         }
 
-        private void TriggerReboot(object state)
+        private void TriggerAction(object state)
         {
             _triggerAction();
         }
@@ -46,7 +47,7 @@ namespace RightpointLabs.Pourcast.Repourter
 
     public class RebootWatchdog : Watchdog
     {
-        public RebootWatchdog(TimeSpan duration) : base(duration, () =>
+        public RebootWatchdog(TimeSpan duration) : base(duration, false, () =>
         {
             Debug.Print("Watchdown triggering reboot...");
             Thread.Sleep(200);
