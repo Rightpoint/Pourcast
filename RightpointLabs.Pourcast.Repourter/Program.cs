@@ -14,6 +14,23 @@ namespace RightpointLabs.Pourcast.Repourter
         /// </summary>
         public static void Main()
         {
+            try
+            {
+                RealMain();
+            }
+            catch (Exception ex)
+            {
+                Debug.Print("Crashing...");
+                Debug.Print(ex.ToString());
+            }
+        }
+
+        /// <summary>
+        /// Main method runs on startup
+        /// </summary>
+        public static void RealMain()
+        {
+            Debug.EnableGCMessages(true);
             // START CONFIG
             var sf800pulseConfig = new PulseConfig()
             {
@@ -73,12 +90,15 @@ namespace RightpointLabs.Pourcast.Repourter
             {
                 Connectivity = new ConnectivityConfig
                 {
-                    Ethernet = new EthernetConfig
-                    {
-                        Enabled = true
-                    },
-                    BaseUrl = "http://192.168.25.141:23456/api/Tap/",
-#if false
+                    Wifi = new WifiConfig()
+                               {
+                                   Enabled = true,
+                                   SSID = "XXX",
+                                   Password = "XXX",
+                                   SecurityMode = Toolbox.NETMF.Hardware.WiFlyGSX.AuthMode.MixedWPA1_WPA2,
+                               },
+                    BaseUrl = "http://192.168.25.107:23456/api/Tap/",
+#if true
                     HttpLight = Pins.GPIO_PIN_D9,
                 },
                 Taps = new[]
@@ -87,14 +107,14 @@ namespace RightpointLabs.Pourcast.Repourter
                     {
                         Input = Pins.GPIO_PIN_D13, 
                         Light = Pins.GPIO_PIN_D11, 
-                        TapId = "539638b03885a838541b880c",
+                        TapId = "5396779faa6179467050c33a",
                         PulseConfig = localButtonConfig,
                     },
                     new TapConfig
                     {
                         Input = Pins.GPIO_PIN_D12, 
                         Light = Pins.GPIO_PIN_D10, 
-                        TapId = "539638bd3885a838541b8810",
+                        TapId = "539677a4aa6179467050c33d",
                         PulseConfig = localButtonConfig,
                     },
 #else
@@ -116,8 +136,8 @@ namespace RightpointLabs.Pourcast.Repourter
                         TapId = "539638bd3885a838541b8810",
                         PulseConfig = localButtonConfig,
                     },
-                },
 #endif
+                },
                 WatchdogCheckInterval = new TimeSpan(0, 15, 0)
             };
 #endif
