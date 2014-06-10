@@ -2,6 +2,7 @@ using System;
 using System.Threading;
 using Microsoft.SPOT;
 using Microsoft.SPOT.Hardware;
+using RightpointLabs.Pourcast.Repourter.Configuration;
 
 namespace RightpointLabs.Pourcast.Repourter
 {
@@ -9,40 +10,22 @@ namespace RightpointLabs.Pourcast.Repourter
     {
         private readonly InterruptPort _port;
         private readonly OutputPort _light;
+        private readonly IHttpMessageWriter _httpMessageWriter;
+        private readonly string _tapId;
+        private readonly PulseConfig _pulseConfig;
 
+        private Timer _timer;
         private object _lockObject = new object();
-
         private int _pulseCount = 0;
 
-        private const double PULSES_PER_LITER = 5600.0;
-
-        private const double OUNCES_PER_LITER = 33.814;
-
-#if true
-        // real
-        private const int POUR_STOPPED_DELAY = 250;
-        private const int PULSES_PER_STOPPED_EXTENSION = 50;
-        private const int PULSES_PER_POURING = 250;
-#else
-        // fake w/ buttons
-        private const int POUR_STOPPED_DELAY = 1000;
-        private const int PULSES_PER_STOPPED_EXTENSION = 3;
-        private const int PULSES_PER_POURING = 5;
-#endif
-
-        private readonly string _tapId;
-
-        private readonly IHttpMessageWriter _httpMessageWriter;
-        
-        private Timer _timer;
-
-        public FlowSensor(InterruptPort port, OutputPort light, IHttpMessageWriter httpMessageWriter, string tapId)
+        public FlowSensor(InterruptPort port, OutputPort light, IHttpMessageWriter httpMessageWriter, string tapId, PulseConfig pulseConfig)
         {
             _port = port;
             _light = light;
             _port.OnInterrupt += FlowDetected;
             _httpMessageWriter = httpMessageWriter;
             _tapId = tapId;
+            _pulseConfig = pulseConfig;
         }
 
         private void FlowDetected(uint port, uint data, DateTime time)
@@ -54,28 +37,28 @@ namespace RightpointLabs.Pourcast.Repourter
                 {
                     _light.Write(true);
                     _httpMessageWriter.SendStartAsync(_tapId);
-                    _timer = new Timer(PourCompleted, null, POUR_STOPPED_DELAY, Timeout.Infinite);
+                    _timer = new Timer(PourCompleted, null, _pulseConfig.PourStoppedDelay, Timeout.Infinite);
                     Debug.Print("Started pour");
                 }
             }
-            else if (pulses % PULSES_PER_STOPPED_EXTENSION == 0)
+            else if (pulses % _pulseConfig.PulsesPerStoppedExtension == 0)
             {
                 lock (_lockObject)
                 {
                     if (null != _timer)
                     {
-                        _timer.Change(POUR_STOPPED_DELAY, Timeout.Infinite);
+                        _timer.Change(_pulseConfig.PourStoppedDelay, Timeout.Infinite);
                         Debug.Print("Extended");
                     }
                 }
             }
-            else if (pulses % PULSES_PER_POURING == 0)
+            else if (pulses % _pulseConfig.PulsesPerPouring == 0)
             {
                 lock (_lockObject)
                 {
                     if (null != _timer)
                     {
-                        _httpMessageWriter.SendPouringAsync(_tapId, pulses / PULSES_PER_LITER * OUNCES_PER_LITER);
+                        _httpMessageWriter.SendPouringAsync(_tapId, pulses / _pulseConfig.PulsesPerOunce);
                     }
                 }
             }
@@ -89,7 +72,7 @@ namespace RightpointLabs.Pourcast.Repourter
                 _timer = null;
                 var pulses = Interlocked.Exchange(ref _pulseCount, 0);
                 _light.Write(false);
-                _httpMessageWriter.SendStopAsync(_tapId, pulses / PULSES_PER_LITER * OUNCES_PER_LITER);
+                _httpMessageWriter.SendStopAsync(_tapId, pulses / _pulseConfig.PulsesPerOunce);
             }
         }
     }

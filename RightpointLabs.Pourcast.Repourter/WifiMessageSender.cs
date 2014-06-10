@@ -35,9 +35,10 @@ namespace RightpointLabs.Pourcast.Repourter
                 PowerState.RebootDevice(false, 1000);
             }))
             {
+                initWatchdog.Start();
                 while (null == _module)
                 {
-                    _module = GetModule();
+                    _module = SetupModule();
                 }
                 return _module;
             }
@@ -50,49 +51,69 @@ namespace RightpointLabs.Pourcast.Repourter
             var thread = new Thread(() =>
             {
                 var module = new WiFlyGSX(DebugMode: true);
-                module.EnableDHCP();
-
-                var isConnected = false;
-
-                for (var i = 0; i < 3 && !(isConnected = module.JoinNetwork(_ssid, 0, _securityMode, _password)); i++ )
+                try
                 {
-                    Thread.Sleep(1000);
+                    module.EnableDHCP();
+
+                    var isConnected = false;
+
+                    for (var i = 0; i < 3 && !(isConnected = module.JoinNetwork(_ssid, 0, _securityMode, _password)); i++)
+                    {
+                        Thread.Sleep(1000);
+                    }
+
+                    Debug.Print("isConnected: " + isConnected);
+
+                    if (!isConnected)
+                    {
+                        module.Reboot();
+                        module.Dispose();
+                        return;
+                    }
+
+                    for (var i = 0; i < 10 && module.LocalIP == "0.0.0.0"; i++)
+                    {
+                        Thread.Sleep(1000);
+                    }
+
+                    Debug.Print("Local IP: " + module.LocalIP);
+                    Debug.Print("MAC address: " + module.MacAddress);
+
+                    if (module.LocalIP == "0.0.0.0")
+                    {
+                        module.Reboot();
+                        module.Dispose();
+                        return;
+                    }
                 }
-
-                Debug.Print("isConnected: " + isConnected);
-
-                if (!isConnected)
+                catch(ThreadAbortException)
                 {
-                    module.Reboot();
                     module.Dispose();
-                    return;
-                }
-
-                for (var i = 0; i < 10 && module.LocalIP == "0.0.0.0"; i++)
-                {
-                    Thread.Sleep(1000);
-                }
-
-                Debug.Print("Local IP: " + module.LocalIP);
-                Debug.Print("MAC address: " + module.MacAddress);
-
-                if (module.LocalIP == "0.0.0.0")
-                {
-                    module.Reboot();
-                    module.Dispose();
-                    return;
+                    Debug.Print("Our watchdog got fired - sleep a bit and try rebooting the module before we return");
+                    Thread.Sleep(2000);
+                    using(module = new WiFlyGSX(DebugMode: true))
+                    {
+                        module.Reboot();
+                    }
+                    throw;
                 }
 
                 workingModule = module;
             });
             thread.Start();
 
-            using (var setupWatchdog = new Watchdog(new TimeSpan(0, 0, 5), () =>
+            var fired = false;
+            using (var setupWatchdog = new Watchdog(new TimeSpan(0, 0, 30), () =>
             {
-                Debug.Print("Triggering setup watchdog");
-                thread.Abort();
+                if (!fired)
+                {
+                    Debug.Print("Triggering setup watchdog");
+                    thread.Abort();
+                    fired = true;
+                }
             }))
             {
+                setupWatchdog.Start();
                 thread.Join();
             }
 
