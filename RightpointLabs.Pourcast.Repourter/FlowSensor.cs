@@ -48,7 +48,7 @@ namespace RightpointLabs.Pourcast.Repourter
                     if (null != _timer)
                     {
                         _timer.Change(_pulseConfig.PourStoppedDelay, Timeout.Infinite);
-                        Debug.Print("Extended");
+                        Debug.Print("Extended @ " + pulses);
                     }
                 }
             }
@@ -58,6 +58,7 @@ namespace RightpointLabs.Pourcast.Repourter
                 {
                     if (null != _timer)
                     {
+                        Debug.Print("Pouring @ " + pulses);
                         _httpMessageWriter.SendPouringAsync(_tapId, pulses / _pulseConfig.PulsesPerOunce);
                     }
                 }
