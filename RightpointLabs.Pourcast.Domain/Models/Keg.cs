@@ -56,6 +56,20 @@
             DomainEvents.Raise(new PourStarted(tapId, Id));
         }
 
+        public void PouringFromTap(string tapId, double volume)
+        {
+            if (!IsPouring)
+                throw new Exception("Keg isn't currently pouring.");
+
+            if (volume <= 0)
+                throw new ArgumentOutOfRangeException("volume", "Volume must be a positive number.");
+
+            if (AmountOfBeerRemaining <= 0) return;
+
+            var pctRemaining = (AmountOfBeerRemaining - volume)/Capacity;
+            DomainEvents.Raise(new Pouring(tapId, Id, volume, pctRemaining));
+        }
+
         public void StopPourFromTap(string tapId, double volume)
         {
             if (!IsPouring)

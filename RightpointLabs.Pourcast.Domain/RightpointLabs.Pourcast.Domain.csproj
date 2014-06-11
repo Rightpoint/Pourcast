@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Events\BeerCreated.cs" />
+    <Compile Include="Events\Pouring.cs" />
     <Compile Include="Events\PourStopped.cs" />
     <Compile Include="Events\PourStarted.cs" />
     <Compile Include="Events\BreweryCreated.cs" />

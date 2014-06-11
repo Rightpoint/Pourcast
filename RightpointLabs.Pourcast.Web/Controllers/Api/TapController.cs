@@ -42,6 +42,7 @@ namespace RightpointLabs.Pourcast.Web.Controllers.Api
         [HttpGet]
         public void Pouring([FromUri]string id, [FromUri]double volume)
         {
+            _tapOrchestrator.PouringFromTap(id, volume);
         }
 
         [HttpGet]

@@ -416,6 +416,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="SignalR\PouringClientHandler.cs" />
     <Compile Include="SignalR\PourStartedClientHandler.cs" />
     <Compile Include="SignalR\PourStoppedClientHandler.cs" />
     <Compile Include="SignalR\EventsHub.cs" />

@@ -50,6 +50,17 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
         }
 
         [Transactional]
+        public void PouringFromTap(string tapId, double volume)
+        {
+            var tap = _tapRepository.GetById(tapId);
+            var keg = _kegRepository.GetById(tap.KegId);
+
+            keg.PouringFromTap(tap.Id, volume);
+
+            _kegRepository.Update(keg);
+        }
+
+        [Transactional]
         public void StopPourFromTap(string tapId, double volume)
         {
             var tap = _tapRepository.GetById(tapId);
