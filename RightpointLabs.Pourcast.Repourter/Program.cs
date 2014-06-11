@@ -40,7 +40,7 @@ namespace RightpointLabs.Pourcast.Repourter
             var sf800pulseConfig = new PulseConfig()
             {
                 PulsesPerOunce = PulseConfig.SF800_PULSES_PER_OUNCE,
-                PourStoppedDelay = 250,
+                PourStoppedDelay = 1000,
                 PulsesPerStoppedExtension = 50,
                 PulsesPerPouring = 250,
             };
@@ -52,7 +52,7 @@ namespace RightpointLabs.Pourcast.Repourter
                     //{
                     //    Enabled = true,
                     //    SSID = "Rightpoint",
-                    //    Password = "ChangeThis",
+                    //    Password = "NotWorking",
                     //    SecurityMode = Toolbox.NETMF.Hardware.WiFlyGSX.AuthMode.MixedWPA1_WPA2
                     //},
                     Ethernet = new EthernetConfig
@@ -82,7 +82,7 @@ namespace RightpointLabs.Pourcast.Repourter
                 WatchdogCheckInterval = new TimeSpan(0, 15, 0)
             };
 
-#if true
+#if false
             // a configuration for testing with a local server, buttons, and even the emulator
             var localButtonConfig = new PulseConfig()
             {

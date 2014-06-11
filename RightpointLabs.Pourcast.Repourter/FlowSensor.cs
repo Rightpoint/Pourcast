@@ -38,27 +38,27 @@ namespace RightpointLabs.Pourcast.Repourter
                     _light.Write(true);
                     _httpMessageWriter.SendStartAsync(_tapId);
                     _timer = new Timer(PourCompleted, null, _pulseConfig.PourStoppedDelay, Timeout.Infinite);
-                    Debug.Print("Started pour");
+                    Debug.Print("Started pour " + DateTime.Now.ToString("s"));
                 }
             }
-            else if (pulses % _pulseConfig.PulsesPerStoppedExtension == 0)
+            if (pulses % _pulseConfig.PulsesPerStoppedExtension == 0)
             {
                 lock (_lockObject)
                 {
                     if (null != _timer)
                     {
                         _timer.Change(_pulseConfig.PourStoppedDelay, Timeout.Infinite);
-                        Debug.Print("Extended @ " + pulses);
+                        Debug.Print("Extended @ " + pulses + ": " + DateTime.Now.ToString("s"));
                     }
                 }
             }
-            else if (pulses % _pulseConfig.PulsesPerPouring == 0)
+            if (pulses % _pulseConfig.PulsesPerPouring == 0)
             {
                 lock (_lockObject)
                 {
                     if (null != _timer)
                     {
-                        Debug.Print("Pouring @ " + pulses);
+                        Debug.Print("Pouring @ " + pulses + ": " + DateTime.Now.ToString("s"));
                         _httpMessageWriter.SendPouringAsync(_tapId, pulses / _pulseConfig.PulsesPerOunce);
                     }
                 }
@@ -73,6 +73,7 @@ namespace RightpointLabs.Pourcast.Repourter
                 _timer = null;
                 var pulses = Interlocked.Exchange(ref _pulseCount, 0);
                 _light.Write(false);
+                Debug.Print("Stopped pour @ " + pulses + ": " + DateTime.Now.ToString("s"));
                 _httpMessageWriter.SendStopAsync(_tapId, pulses / _pulseConfig.PulsesPerOunce);
             }
         }
