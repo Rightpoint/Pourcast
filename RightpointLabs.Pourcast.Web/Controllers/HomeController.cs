@@ -23,6 +23,7 @@ namespace RightpointLabs.Pourcast.Web.Controllers
             // Replace this with a Mock so it doesn't blow up the app
             //_tapOrchestrator.PourBeerFromTap("534a14b1aed2bf2a00045509", .01);
 
+#if DEBUG
             // TODO : remove this so users aren't added to admin automatically!
             var roleName = "Administrators";
             var username = Request.LogonUserIdentity.Name;
@@ -34,17 +35,17 @@ namespace RightpointLabs.Pourcast.Web.Controllers
 
             if (!_identityOrchestrator.RoleExists(roleName))
             {
-                _identityOrchestrator.CreateRole(roleName);   
+                _identityOrchestrator.CreateRole(roleName);
             }
 
             if (!_identityOrchestrator.IsUserInRole(username, roleName))
             {
                 _identityOrchestrator.AddUserToRole(username, roleName);
             }
-            
+#endif
 
             return View();
         }
 
-	}
+    }
 }
