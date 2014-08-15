@@ -30,7 +30,7 @@
         {
             get
             {
-                return Capacity - AmountOfBeerPoured;
+                return Math.Max(Capacity - AmountOfBeerPoured, 0);
             }
         }
 
@@ -63,8 +63,6 @@
 
             if (volume <= 0)
                 throw new ArgumentOutOfRangeException("volume", "Volume must be a positive number.");
-
-            if (AmountOfBeerRemaining <= 0) return;
             
             AmountOfBeerPoured += volume;
             IsPouring = false;

@@ -3,7 +3,7 @@
         var self = this;
 
         self.id = ko.observable(kegJSON.Id);
-        self.percentRemaining = ko.observable((kegJSON.PercentRemaining * 100).toFixed(2));
+        self.percentRemaining = ko.observable((kegJSON.PercentRemaining * 100));
         self.isEmpty = ko.observable(kegJSON.IsEmpty);
         self.isPouring = ko.observable(kegJSON.IsPouring);
         self.capacity = ko.observable(kegJSON.Capacity);
@@ -17,7 +17,7 @@
             return Math.floor(self.percentRemaining()) + '%';
         });
         self.percentRemainingHtml = ko.computed(function() {
-            return parseFloat(self.percentRemaining()).toFixed(2) + '<span class="symbol">%</span>';
+            return parseFloat(self.percentRemaining()) + '<span class="symbol">%</span>';
         });
         self.percentRemainingClass = ko.computed(function() {
             return self.isLow() ? "low" : "high";
@@ -34,7 +34,7 @@
 
             if (e.KegId === self.id()) {
                 self.isPouring(false);
-                self.percentRemaining((e.PercentRemaining * 100).toFixed(2));
+                self.percentRemaining((e.PercentRemaining * 100));
             }
         });
     };
