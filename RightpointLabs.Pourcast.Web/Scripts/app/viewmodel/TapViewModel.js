@@ -2,6 +2,15 @@
     var TapViewModel = function() {
         var self = this;
         self.taps = ko.observableArray();
+        self.dataService = dataService;
+
+        var reloadKeg = function (tapId) {
+            self.dataService.getKegFromTapId(tapId).done(function (keg) {
+                for (var i = 0; i < self.taps.length; i++) {
+                    self.taps()[i].loadKeg(tapId, keg);
+                }
+            });
+        }
 
         events.on("KegRemovedFromTap", function (e) {
             for (var i = 0; i < self.taps.length; i++) {
@@ -10,10 +19,11 @@
         });
 
         events.on("KegTapped", function (e) {
-            self.dataService.getKegFromTapId(e.TapId).done(function (keg) {
-                for (var i = 0; i < self.taps.length; i++) {
-                    self.taps()[i].loadKeg(e.TapId, keg);
-                }
+            reloadKeg(e.TapId);
+        });
+        events.on("Reconnected", function (e) {
+            self.taps().forEach(function (tap) {
+                reloadKeg(tap.id);
             });
         });
 

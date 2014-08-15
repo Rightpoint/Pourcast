@@ -1,5 +1,7 @@
 ﻿define(['jquery', 'toastr', 'signalr.hubs'], function ($, toastr) {
 
+    var subscribers = {};
+
     // in order to get the client to actually subscribe for events on a hub, we have to register at least one client-side call for that hub...
     // logging (the next line) will help show that if you need further details
     $.connection.eventsHub.client.dummyClientCallback = function () { };
@@ -9,35 +11,57 @@
     var pub = {
         on: function(event, callback) {
             $.connection.eventsHub.on(event, callback);
+
+            if (!subscribers[event]) {
+                subscribers[event] = [];
+            }
+
+            subscribers[event].push(callback);
         },
         off: function(event, callback) {
             $.connection.eventsHub.off(event, callback);
+
+            var eventSubscribers = subscribers[event];
+            var index = eventSubscribers.indexOf(callback);
+
+            if (index > -1) {
+                eventSubscribers.splice(index, 1);
+            }
+        },
+        raise: function(event, args) {
+            subscribers[event].forEach(function(callback) {
+                callback(args);
+            });
         }
     };
 
 
     // reconnect
     var retryCount = 0;
-    var isDisconnected = false;
+    var wasDisconnected = false;
     var disconnectedToast;
 
     $.connection.hub.stateChanged(function(e) {
-        if (e.newState === $.connection.connectionState.connected) {
-            if (isDisconnected) {
+        var isConnected = e.newState === $.connection.connectionState.connected;
+        var isDisconnected = e.newState === $.connection.connectionState.disconnected;
+
+        if (isConnected) {
+            if (wasDisconnected) {
                 toastr.clear(disconnectedToast);
                 toastr.success("Reconnected");
+                pub.raise("Reconnected");
 
-                isDisconnected = false;
+                wasDisconnected = false;
             }
-        } else if (e.newState === $.connection.connectionState.disconnected) {
-            if (!isDisconnected) {
+        } else if (isDisconnected) {
+            if (!wasDisconnected) {
                 disconnectedToast = toastr.error("Disconnected", "", {
                     timeOut: 0,
                     extendedTimeOut: 0
                 });
 
                 retryCount = 0;
-                isDisconnected = true;
+                wasDisconnected = true;
             }
         }
     });
