@@ -74,6 +74,8 @@
     <Compile Include="Configuration\WifiConfig.cs" />
     <Compile Include="EthernetMessageSender.cs" />
     <Compile Include="FlowSensor.cs" />
+    <Compile Include="Logger.cs" />
+    <Compile Include="ILogger.cs" />
     <Compile Include="IMessageSender.cs" />
     <Compile Include="NullMessageSender.cs" />
     <Compile Include="PulseMaker.cs" />

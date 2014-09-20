@@ -400,6 +400,7 @@
     <Compile Include="Areas\Admin\Models\TapModel.cs" />
     <Compile Include="Controllers\Api\BeerOnTapController.cs" />
     <Compile Include="Controllers\Api\BreweryController.cs" />
+    <Compile Include="Controllers\Api\StatusController.cs" />
     <Compile Include="Controllers\Api\RepourterTestController.cs" />
     <Compile Include="Controllers\Api\TapController.cs" />
     <Compile Include="Controllers\HomeController.cs" />

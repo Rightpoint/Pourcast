@@ -47,13 +47,13 @@ namespace RightpointLabs.Pourcast.Repourter
 
     public class RebootWatchdog : Watchdog
     {
-        public RebootWatchdog(TimeSpan duration) : base(duration, false, () =>
+        public RebootWatchdog(TimeSpan duration, ILogger logger) : base(duration, false, () =>
         {
-            Debug.Print("Watchdown triggering reboot...");
+            logger.Log("Watchdown triggering reboot...");
             Thread.Sleep(200);
             PowerState.RebootDevice(false, 1);
             Thread.Sleep(200);
-            Debug.Print("Reboot didn't seem to take... this was after the reboot command....");
+            logger.Log("Reboot didn't seem to take... this was after the reboot command....");
         })
         {
         }

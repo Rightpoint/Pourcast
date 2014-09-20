@@ -59,7 +59,7 @@ namespace RightpointLabs.Pourcast.Repourter
                     {
                         Enabled = true
                     },
-                    BaseUrl = "http://pourcast.labs.rightpoint.com/api/Tap/",
+                    BaseUrl = "http://pourcast.labs.rightpoint.com/api/",
                     HttpLight = Pins.GPIO_PIN_D9
                 },
                 Taps = new[]
@@ -82,7 +82,7 @@ namespace RightpointLabs.Pourcast.Repourter
                 WatchdogCheckInterval = new TimeSpan(0, 15, 0)
             };
 
-#if false
+#if true
             // a configuration for testing with a local server, buttons, and even the emulator
             var localButtonConfig = new PulseConfig()
             {
@@ -95,6 +95,7 @@ namespace RightpointLabs.Pourcast.Repourter
             {
                 Connectivity = new ConnectivityConfig
                 {
+#if false
                     Wifi = new WifiConfig()
                                {
                                    Enabled = true,
@@ -103,8 +104,14 @@ namespace RightpointLabs.Pourcast.Repourter
                                    SecurityMode = Toolbox.NETMF.Hardware.WiFlyGSX.AuthMode.MixedWPA1_WPA2,
                                    DebugMode = true,
                                },
-                    BaseUrl = "http://192.168.25.107:23456/api/Tap/",
-#if true
+#else
+                    Ethernet = new EthernetConfig()
+                    {
+                        Enabled = true,
+                    },
+#endif
+                    BaseUrl = "http://192.168.25.141:23456/api/",
+#if false
                     HttpLight = Pins.GPIO_PIN_D9,
                 },
                 Taps = new[]
@@ -132,14 +139,14 @@ namespace RightpointLabs.Pourcast.Repourter
                     {
                         Input = Cpu.Pin.GPIO_Pin2, // emulator up
                         Light = Cpu.Pin.GPIO_Pin1,
-                        TapId = "539638b03885a838541b880c",
+                        TapId = "53cd261e3885a87ba4b43ea0",
                         PulseConfig = localButtonConfig,
                     },
                     new TapConfig
                     {
                         Input = Cpu.Pin.GPIO_Pin4, // emulator down
                         Light = Cpu.Pin.GPIO_Pin3,
-                        TapId = "539638bd3885a838541b8810",
+                        TapId = "53cd26223885a87ba4b43ea2",
                         PulseConfig = localButtonConfig,
                     },
 #endif
@@ -158,12 +165,14 @@ namespace RightpointLabs.Pourcast.Repourter
             sender.Initalize();
 
             HttpMessageWriter writer = null;
+            var logger = new Logger();
             // first watchdog makes sure we send *something* every watchdogCheckInterval.  Second reboots us 30s later if the message hasn't been sent yet (ie. if networking dies)
             // sending *any* message resets both watchdogs
             var heartbeatWatchdog = new Watchdog(config.WatchdogCheckInterval, true, () => writer.SendHeartbeatAsync());
-            var rebootWatchdog = new RebootWatchdog(config.WatchdogCheckInterval + new TimeSpan(0, 0, 30));
+            var rebootWatchdog = new RebootWatchdog(config.WatchdogCheckInterval + new TimeSpan(0, 0, 30), logger);
 
-            writer = new HttpMessageWriter(sender, config.Connectivity.BaseUrl, new OutputPort(config.Connectivity.HttpLight, true), new[] { heartbeatWatchdog, rebootWatchdog });
+            writer = new HttpMessageWriter(sender, config.Connectivity.BaseUrl, new OutputPort(config.Connectivity.HttpLight, true), logger, new[] { heartbeatWatchdog, rebootWatchdog });
+            logger.SetWriter(writer);
             var sensors = new FlowSensor[config.Taps.Length];
             for (var i = 0; i < config.Taps.Length; i++)
             {
@@ -173,12 +182,13 @@ namespace RightpointLabs.Pourcast.Repourter
                     new OutputPort(tapConfig.Light, false),
                     writer,
                     tapConfig.TapId,
-                    tapConfig.PulseConfig);
+                    tapConfig.PulseConfig,
+                    logger);
             }
 
             heartbeatWatchdog.Start();
             rebootWatchdog.Start();
-            Debug.Print("Starting");
+            logger.Log("Starting");
 
             while (true)
             {
