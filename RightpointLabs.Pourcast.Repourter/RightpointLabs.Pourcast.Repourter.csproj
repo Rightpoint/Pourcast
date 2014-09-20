@@ -76,6 +76,7 @@
     <Compile Include="FlowSensor.cs" />
     <Compile Include="IMessageSender.cs" />
     <Compile Include="NullMessageSender.cs" />
+    <Compile Include="PulseMaker.cs" />
     <Compile Include="Watchdog.cs" />
     <Compile Include="HttpMessageWriter.cs" />
     <Compile Include="IHttpMessageWriter.cs" />

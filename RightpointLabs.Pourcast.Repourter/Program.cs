@@ -14,14 +14,19 @@ namespace RightpointLabs.Pourcast.Repourter
         /// </summary>
         public static void Main()
         {
-            try
+            while (true)
             {
-                RealMain();
-            }
-            catch (Exception ex)
-            {
-                Debug.Print("Crashing...");
-                Debug.Print(ex.ToString());
+                try
+                {
+                    RealMain();
+                }
+                catch (Exception ex)
+                {
+                    Debug.Print("Crashing...");
+                    Debug.Print(ex.ToString());
+                }
+                Debug.Print("Exited RealMain - rebooting");
+                PowerState.RebootDevice(false, 1);
             }
         }
 
@@ -35,7 +40,7 @@ namespace RightpointLabs.Pourcast.Repourter
             var sf800pulseConfig = new PulseConfig()
             {
                 PulsesPerOunce = PulseConfig.SF800_PULSES_PER_OUNCE,
-                PourStoppedDelay = 250,
+                PourStoppedDelay = 1000,
                 PulsesPerStoppedExtension = 50,
                 PulsesPerPouring = 250,
             };
@@ -47,7 +52,7 @@ namespace RightpointLabs.Pourcast.Repourter
                     //{
                     //    Enabled = true,
                     //    SSID = "Rightpoint",
-                    //    Password = "ChangeThis",
+                    //    Password = "NotWorking",
                     //    SecurityMode = Toolbox.NETMF.Hardware.WiFlyGSX.AuthMode.MixedWPA1_WPA2
                     //},
                     Ethernet = new EthernetConfig
@@ -77,7 +82,7 @@ namespace RightpointLabs.Pourcast.Repourter
                 WatchdogCheckInterval = new TimeSpan(0, 15, 0)
             };
 
-#if true
+#if false
             // a configuration for testing with a local server, buttons, and even the emulator
             var localButtonConfig = new PulseConfig()
             {
@@ -96,6 +101,7 @@ namespace RightpointLabs.Pourcast.Repourter
                                    SSID = "XXX",
                                    Password = "XXX",
                                    SecurityMode = Toolbox.NETMF.Hardware.WiFlyGSX.AuthMode.MixedWPA1_WPA2,
+                                   DebugMode = true,
                                },
                     BaseUrl = "http://192.168.25.107:23456/api/Tap/",
 #if true
@@ -154,7 +160,7 @@ namespace RightpointLabs.Pourcast.Repourter
             HttpMessageWriter writer = null;
             // first watchdog makes sure we send *something* every watchdogCheckInterval.  Second reboots us 30s later if the message hasn't been sent yet (ie. if networking dies)
             // sending *any* message resets both watchdogs
-            var heartbeatWatchdog = new Watchdog(config.WatchdogCheckInterval, () => writer.SendHeartbeatAsync());
+            var heartbeatWatchdog = new Watchdog(config.WatchdogCheckInterval, true, () => writer.SendHeartbeatAsync());
             var rebootWatchdog = new RebootWatchdog(config.WatchdogCheckInterval + new TimeSpan(0, 0, 30));
 
             writer = new HttpMessageWriter(sender, config.Connectivity.BaseUrl, new OutputPort(config.Connectivity.HttpLight, true), new[] { heartbeatWatchdog, rebootWatchdog });
@@ -190,8 +196,7 @@ namespace RightpointLabs.Pourcast.Repourter
                 {
                     throw new ApplicationException("Cannot configure multiple connectivity methods");
                 }
-                sender = new WifiMessageSender(config.Wifi.SSID, config.Wifi.Password,
-                    config.Wifi.SecurityMode);
+                sender = new WifiMessageSender(config.Wifi.SSID, config.Wifi.Password, config.Wifi.SecurityMode, config.Wifi.DebugMode);
             }
 #endif
 #if ETHERNET

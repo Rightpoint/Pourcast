@@ -12,6 +12,8 @@
 
         void StartPourFromTap(string tapId);
 
+        void PouringFromTap(string id, double volume);
+
         void StopPourFromTap(string tapId, double volume);
 
         void RemoveKegFromTap(string tapId);

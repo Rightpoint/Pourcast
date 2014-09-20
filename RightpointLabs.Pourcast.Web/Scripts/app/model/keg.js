@@ -29,7 +29,14 @@
                 self.isPouring(true);
             }
         });
-        events.on("PourStopped", function (e) {
+        events.on("Pouring", function(e) {
+            console.log("Pouring");
+
+            if (e.KegId === self.id()) {
+                self.percentRemaining((e.PercentRemaining * 100).toFixed(2));
+            }
+        });
+        events.on("PourStopped", function(e) {
             console.log("PourStopped");
 
             if (e.KegId === self.id()) {
