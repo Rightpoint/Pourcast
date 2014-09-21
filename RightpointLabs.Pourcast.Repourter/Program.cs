@@ -82,7 +82,7 @@ namespace RightpointLabs.Pourcast.Repourter
                 WatchdogCheckInterval = new TimeSpan(0, 15, 0)
             };
 
-#if true
+#if false
             // a configuration for testing with a local server, buttons, and even the emulator
             var localButtonConfig = new PulseConfig()
             {
