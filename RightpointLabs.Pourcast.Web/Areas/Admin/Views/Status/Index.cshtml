@@ -1,0 +1,62 @@
+﻿@model dynamic
+<style type="text/css">
+    .statusMessages {
+        overflow: scroll;
+        word-wrap: normal;
+    }
+</style>
+
+<pre class="statusMessages" data-bind="foreach: statusMessages">
+    <span><span data-bind="text: type"></span><span>: </span><span data-bind="text: json"></span></span>
+</pre>
+
+@section Scripts {
+    <script src="~/Scripts/libs/require.js"></script>
+    <script type="text/javascript">
+        requirejs.config({
+            baseUrl: '/Scripts/libs/',
+            paths: {
+                app: '../app',
+                jquery: 'jquery-2.1.0',
+                TapViewModel: '../app/viewmodel/TapViewModel',
+                ko: 'knockout-3.1.0',
+                signalr: 'jquery.signalR-2.0.3',
+                'signalr.hubs': '/signalr/hubs?'
+            },
+            shim: {
+                jquery: { exports: '$' },
+                signalr: { deps: ['jquery'] },
+                'signalr.hubs': { deps: ['signalr'] }
+            }
+        });
+
+        requirejs(['ko', 'app/events'], function(ko, events) {
+            var vm = {
+                statusMessages: ko.observableArray([])
+            };
+            var eventNames = ["BeerCreated", "BreweryCreated", "Heartbeat", "KegCreated", "KegEmptied", "KegRemovedFromTap", "KegTapped", "LogMessage", "Pouring", "PourStarted", "PourStopped", "TapCreated"];
+            for (var i in eventNames) {
+                (function() {
+                    var eventName = eventNames[i];
+                    events.on(eventName, function (e) {
+                        vm.statusMessages.unshift({ type: eventName, json: ko.toJSON(e) });
+                        while (vm.statusMessages().length > 100) {
+                            vm.statusMessages.pop();
+                        }
+                    });
+                })();
+            }
+            ko.applyBindings(vm);
+        });
+
+        $(function() {
+            var container = $(".statusMessages");
+            function updateHeight() {
+                container.height($(window).height() - 200);
+            }
+
+            $(window).resize(updateHeight);
+            updateHeight();
+        });
+    </script>
+}
