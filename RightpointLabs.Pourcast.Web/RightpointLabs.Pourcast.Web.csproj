@@ -326,6 +326,7 @@
     <Content Include="Areas\Admin\Views\Style\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Style\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Style\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Status\Index.cshtml" />
     <None Include="Properties\PublishProfiles\Production.pubxml" />
     <None Include="Scripts\libs\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\app\admin.js" />
@@ -377,6 +378,7 @@
     <Compile Include="Areas\Admin\Controllers\BreweryController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\KegController.cs" />
+    <Compile Include="Areas\Admin\Controllers\StatusController.cs" />
     <Compile Include="Areas\Admin\Controllers\StyleController.cs" />
     <Compile Include="Areas\Admin\Controllers\TapController.cs" />
     <Compile Include="Areas\Admin\Models\BeerIndexViewModel.cs" />
@@ -400,6 +402,7 @@
     <Compile Include="Areas\Admin\Models\TapModel.cs" />
     <Compile Include="Controllers\Api\BeerOnTapController.cs" />
     <Compile Include="Controllers\Api\BreweryController.cs" />
+    <Compile Include="Controllers\Api\StatusController.cs" />
     <Compile Include="Controllers\Api\RepourterTestController.cs" />
     <Compile Include="Controllers\Api\TapController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -416,6 +419,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="SignalR\HeartbeatClientHandler.cs" />
+    <Compile Include="SignalR\LogMessageClientHandler.cs" />
     <Compile Include="SignalR\PouringClientHandler.cs" />
     <Compile Include="SignalR\PourStartedClientHandler.cs" />
     <Compile Include="SignalR\PourStoppedClientHandler.cs" />

@@ -13,12 +13,13 @@ namespace RightpointLabs.Pourcast.Repourter
         private readonly IHttpMessageWriter _httpMessageWriter;
         private readonly string _tapId;
         private readonly PulseConfig _pulseConfig;
+        private readonly ILogger _logger;
 
         private Timer _timer;
         private object _lockObject = new object();
         private int _pulseCount = 0;
 
-        public FlowSensor(InterruptPort port, OutputPort light, IHttpMessageWriter httpMessageWriter, string tapId, PulseConfig pulseConfig)
+        public FlowSensor(InterruptPort port, OutputPort light, IHttpMessageWriter httpMessageWriter, string tapId, PulseConfig pulseConfig, ILogger logger)
         {
             _port = port;
             _light = light;
@@ -26,6 +27,7 @@ namespace RightpointLabs.Pourcast.Repourter
             _httpMessageWriter = httpMessageWriter;
             _tapId = tapId;
             _pulseConfig = pulseConfig;
+            _logger = logger;
         }
 
         private void FlowDetected(uint port, uint data, DateTime time)
@@ -38,7 +40,7 @@ namespace RightpointLabs.Pourcast.Repourter
                     _light.Write(true);
                     _httpMessageWriter.SendStartAsync(_tapId);
                     _timer = new Timer(PourCompleted, null, _pulseConfig.PourStoppedDelay, Timeout.Infinite);
-                    Debug.Print("Started pour " + DateTime.Now.ToString("s"));
+                    _logger.Log("Started pour " + DateTime.Now.ToString("s"));
                 }
             }
             if (pulses % _pulseConfig.PulsesPerStoppedExtension == 0)
@@ -48,7 +50,7 @@ namespace RightpointLabs.Pourcast.Repourter
                     if (null != _timer)
                     {
                         _timer.Change(_pulseConfig.PourStoppedDelay, Timeout.Infinite);
-                        Debug.Print("Extended @ " + pulses + ": " + DateTime.Now.ToString("s"));
+                        _logger.Log("Extended @ " + pulses + ": " + DateTime.Now.ToString("s"));
                     }
                 }
             }
@@ -58,7 +60,7 @@ namespace RightpointLabs.Pourcast.Repourter
                 {
                     if (null != _timer)
                     {
-                        Debug.Print("Pouring @ " + pulses + ": " + DateTime.Now.ToString("s"));
+                        _logger.Log("Pouring @ " + pulses + ": " + DateTime.Now.ToString("s"));
                         _httpMessageWriter.SendPouringAsync(_tapId, pulses / _pulseConfig.PulsesPerOunce);
                     }
                 }
@@ -73,7 +75,7 @@ namespace RightpointLabs.Pourcast.Repourter
                 _timer = null;
                 var pulses = Interlocked.Exchange(ref _pulseCount, 0);
                 _light.Write(false);
-                Debug.Print("Stopped pour @ " + pulses + ": " + DateTime.Now.ToString("s"));
+                _logger.Log("Stopped pour @ " + pulses + ": " + DateTime.Now.ToString("s"));
                 _httpMessageWriter.SendStopAsync(_tapId, pulses / _pulseConfig.PulsesPerOunce);
             }
         }

@@ -96,6 +96,8 @@ namespace RightpointLabs.Pourcast.Web
             container.RegisterType<IEventHandler<PourStopped>, PourStoppedClientHandler>("BeerPourStoppedClientHandler", new PerRequestLifetimeManager());
             container.RegisterType<IEventHandler<KegRemovedFromTap>, KegRemovedFromTapClientHandler>("KegRemovedFromTapClientHandler", new PerRequestLifetimeManager());
             container.RegisterType<IEventHandler<KegTapped>, KegTappedClientHandler>("KegTappedClientHandler", new PerRequestLifetimeManager());
+            container.RegisterType<IEventHandler<Heartbeat>, HeartbeatClientHandler>("HeartbeatClientHandler", new PerRequestLifetimeManager());
+            container.RegisterType<IEventHandler<LogMessage>, LogMessageClientHandler>("LogMessageClientHandler", new PerRequestLifetimeManager());
 
             // misc
             container.RegisterType<SmtpClient>(new PerRequestLifetimeManager(), new InjectionConstructor());

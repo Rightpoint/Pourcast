@@ -13,13 +13,15 @@ namespace RightpointLabs.Pourcast.Repourter
         private readonly IMessageSender _messageSender;
         private readonly string _baseUrl;
         private readonly OutputPort _light;
+        private readonly ILogger _logger;
         private readonly Watchdog[] _resetWatchdogsOnSend;
 
-        public HttpMessageWriter(IMessageSender messageSender, string baseUrl, OutputPort light, Watchdog[] resetWatchdogsOnSend)
+        public HttpMessageWriter(IMessageSender messageSender, string baseUrl, OutputPort light, ILogger logger, Watchdog[] resetWatchdogsOnSend)
         {
             _messageSender = messageSender;
             _baseUrl = baseUrl;
             _light = light;
+            _logger = logger;
             _resetWatchdogsOnSend = resetWatchdogsOnSend ?? new Watchdog[] {};
             StartThread();
         }
@@ -27,25 +29,31 @@ namespace RightpointLabs.Pourcast.Repourter
         public void SendStartAsync(string tapId)
         {
             Debug.Print("Queing: start " + tapId);
-            _queue.Add(new Uri(_baseUrl + tapId + "/StartPour"));
+            _queue.Add(new Uri(_baseUrl + "Tap/" + tapId + "/StartPour"));
         }
 
         public void SendPouringAsync(string tapId, double ounces)
         {
             Debug.Print("Queing: pouring " + tapId + " " + ounces);
-            _queue.Add(new Uri(_baseUrl + tapId + "/Pouring?volume=" + ounces));
+            _queue.Add(new Uri(_baseUrl + "Tap/" + tapId + "/Pouring?volume=" + ounces));
         }
 
         public void SendStopAsync(string tapId, double ounces)
         {
             Debug.Print("Queing: stop " + tapId + " " + ounces);
-            _queue.Add(new Uri(_baseUrl + tapId + "/StopPour?volume=" + ounces));
+            _queue.Add(new Uri(_baseUrl + "Tap/" + tapId + "/StopPour?volume=" + ounces));
         }
 
         public void SendHeartbeatAsync()
         {
             Debug.Print("Queing: heartbeat");
-            _queue.Add(new Uri(_baseUrl + "heartbeat"));
+            _queue.Add(new Uri(_baseUrl + "Status/heartbeat"));
+        }
+
+        public void SendLogMessageAsync(string message)
+        {
+            Debug.Print("Queing: logMessage");
+            _queue.Add(new Uri(_baseUrl + "Status/logMessage?message=" + Toolbox.NETMF.Tools.RawUrlEncode(message)));
         }
 
         protected readonly BoundedBuffer _queue = new BoundedBuffer();
@@ -69,7 +77,7 @@ namespace RightpointLabs.Pourcast.Repourter
                 }
                 catch (Exception ex)
                 {
-                    Debug.Print("Couldn't fetch URL: " + uri.AbsoluteUri + ": " + ex.ToString());
+                    _logger.Log("Couldn't fetch URL: " + uri.AbsoluteUri + ": " + ex.ToString());
                 }
                 finally
                 {
@@ -93,7 +101,7 @@ namespace RightpointLabs.Pourcast.Repourter
             _queue.Add(null);
             if(!_sendThread.Join(1000))
             {
-                Debug.Print("Failed to join sending thread - aborting");
+                _logger.Log("Failed to join sending thread - aborting");
                 _sendThread.Abort();
             }
         }

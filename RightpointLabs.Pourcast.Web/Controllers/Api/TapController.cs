@@ -34,6 +34,11 @@ namespace RightpointLabs.Pourcast.Web.Controllers.Api
         }
 
         [HttpGet]
+        public void LogMessage(string message)
+        {
+        }
+
+        [HttpGet]
         public void StartPour(string id)
         {
             _tapOrchestrator.StartPourFromTap(id);
