@@ -171,7 +171,7 @@ namespace RightpointLabs.Pourcast.Repourter
             var logger = new Logger();
             // first watchdog makes sure we send *something* every watchdogCheckInterval.  Second reboots us 30s later if the message hasn't been sent yet (ie. if networking dies)
             // sending *any* message resets both watchdogs
-            var heartbeatWatchdog = new Watchdog(config.WatchdogCheckInterval, true, () => writer.SendHeartbeatAsync());
+            var heartbeatWatchdog = new Watchdog(config.WatchdogCheckInterval, false, () => writer.SendHeartbeatAsync());
             var rebootWatchdog = new RebootWatchdog(config.WatchdogCheckInterval + new TimeSpan(0, 0, 30), logger);
 
             writer = new HttpMessageWriter(sender, config.Connectivity.BaseUrl, new OutputPort(config.Connectivity.HttpLight, true), logger, new[] { heartbeatWatchdog, rebootWatchdog });
