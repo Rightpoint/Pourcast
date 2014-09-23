@@ -60,14 +60,14 @@ namespace RightpointLabs.Pourcast.Repourter
                         Enabled = true
                     },
                     BaseUrl = "http://pourcast.labs.rightpoint.com/api/",
-                    HttpLight = Pins.GPIO_PIN_D9
+                    HttpLight = Pins.GPIO_PIN_D11
                 },
                 Taps = new[]
                 {
                     new TapConfig
                     {
                         Input = Pins.GPIO_PIN_D13, 
-                        Light = Pins.GPIO_PIN_D11, 
+                        Light = Pins.GPIO_PIN_D9, 
                         TapId = "535c61a951aa0405287989ec",
                         PulseConfig = sf800pulseConfig,
                     },
@@ -156,10 +156,13 @@ namespace RightpointLabs.Pourcast.Repourter
 #endif
             // END CONFIG
 
+            Debug.Print("Configuration loaded");
             // turn on the tap lights on - they'll turn off as they initialize
             LightsOn(config.Taps);
             // turn the HTTP light *off*, it'll go on as it initializes
             LightOff(config.Connectivity.HttpLight);
+
+            Debug.Print("Lights initialized");
 
             var sender = BuildMessageSender(config.Connectivity);
             sender.Initalize();
