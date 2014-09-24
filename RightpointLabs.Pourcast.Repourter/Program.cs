@@ -79,7 +79,7 @@ namespace RightpointLabs.Pourcast.Repourter
                         PulseConfig = sf800pulseConfig,
                     },
                 },
-                WatchdogCheckInterval = new TimeSpan(0, 15, 0)
+                WatchdogCheckInterval = new TimeSpan(0, 5, 0)
             };
 
 #if false
