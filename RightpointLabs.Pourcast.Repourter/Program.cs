@@ -43,6 +43,7 @@ namespace RightpointLabs.Pourcast.Repourter
                 PourStoppedDelay = 1000,
                 PulsesPerStoppedExtension = 50,
                 PulsesPerPouring = 250,
+                MinPulsesRequired = 40, // about 1/4 of an oz
             };
             var config = new Config
             {
@@ -88,8 +89,9 @@ namespace RightpointLabs.Pourcast.Repourter
             {
                 PulsesPerOunce = 0.1,
                 PourStoppedDelay = 1000,
-                PulsesPerStoppedExtension = 1,
+                PulsesPerStoppedExtension = 3,
                 PulsesPerPouring = 5,
+                MinPulsesRequired = 2,
             };
             config = new Config
             {
@@ -110,7 +112,7 @@ namespace RightpointLabs.Pourcast.Repourter
                         Enabled = true,
                     },
 #endif
-                    BaseUrl = "http://192.168.25.141:23456/api/",
+                    BaseUrl = "http://10.17.56.157:23456/api/",
 #if false
                     HttpLight = Pins.GPIO_PIN_D9,
                 },

@@ -33,13 +33,22 @@ namespace RightpointLabs.Pourcast.Repourter
         private void FlowDetected(uint port, uint data, DateTime time)
         {
             var pulses = Interlocked.Increment(ref _pulseCount);
-            if(pulses == 1)
+            if (pulses == 1)
+            {
+                lock (_lockObject)
+                {
+                    _timer = new Timer(IgnorePour, null, _pulseConfig.PourStoppedDelay, Timeout.Infinite);
+                }
+            }
+            if (pulses == _pulseConfig.MinPulsesRequired)
             {
                 lock(_lockObject)
                 {
+                    if(null != _timer)
+                        _timer.Dispose();
                     _light.Write(true);
-                    _httpMessageWriter.SendStartAsync(_tapId);
                     _timer = new Timer(PourCompleted, null, _pulseConfig.PourStoppedDelay, Timeout.Infinite);
+                    _httpMessageWriter.SendStartAsync(_tapId);
                     _logger.Log("Started pour " + DateTime.Now.ToString("s"));
                 }
             }
@@ -67,6 +76,17 @@ namespace RightpointLabs.Pourcast.Repourter
             }
         }
 
+        private void IgnorePour(object state)
+        {
+            lock (_lockObject)
+            {
+                _timer.Dispose();
+                _timer = null;
+                var pulses = Interlocked.Exchange(ref _pulseCount, 0);
+                _logger.Log("Ignored pour @ " + pulses + ": " + DateTime.Now.ToString("s"));
+            }
+        }
+
         private void PourCompleted(object state)
         {
             lock(_lockObject)
@@ -74,9 +94,16 @@ namespace RightpointLabs.Pourcast.Repourter
                 _timer.Dispose();
                 _timer = null;
                 var pulses = Interlocked.Exchange(ref _pulseCount, 0);
-                _light.Write(false);
-                _logger.Log("Stopped pour @ " + pulses + ": " + DateTime.Now.ToString("s"));
-                _httpMessageWriter.SendStopAsync(_tapId, pulses / _pulseConfig.PulsesPerOunce);
+                if (pulses >= _pulseConfig.MinPulsesRequired)
+                {
+                    _light.Write(false);
+                    _logger.Log("Stopped pour @ " + pulses + ": " + DateTime.Now.ToString("s"));
+                    _httpMessageWriter.SendStopAsync(_tapId, pulses/_pulseConfig.PulsesPerOunce);
+                }
+                else
+                {
+                    _logger.Log("Ignored pour @ " + pulses + ": " + DateTime.Now.ToString("s"));
+                }
             }
         }
     }

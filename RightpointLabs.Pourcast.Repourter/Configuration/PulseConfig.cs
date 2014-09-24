@@ -26,5 +26,10 @@ namespace RightpointLabs.Pourcast.Repourter.Configuration
         /// Trigger a 'Pouring' event once every this number of pulses during a pour.
         /// </summary>
         public int PulsesPerPouring { get; set; }
+
+        /// <summary>
+        /// If we don't get this many pulses, we won't trigger a 'pouring'
+        /// </summary>
+        public int MinPulsesRequired { get; set; }
     }
 }
