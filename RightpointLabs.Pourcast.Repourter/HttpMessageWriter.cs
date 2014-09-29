@@ -48,6 +48,8 @@ namespace RightpointLabs.Pourcast.Repourter
         {
             Debug.Print("Queing: heartbeat");
             _queue.Add(new Uri(_baseUrl + "Status/heartbeat"));
+            var result = Debug.GC(true);
+            _logger.Log("GC complete, free bytes: " + result);
         }
 
         public void SendLogMessageAsync(string message)

@@ -173,10 +173,15 @@ namespace RightpointLabs.Pourcast.Repourter
             var logger = new Logger();
             // first watchdog makes sure we send *something* every watchdogCheckInterval.  Second reboots us 30s later if the message hasn't been sent yet (ie. if networking dies)
             // sending *any* message resets both watchdogs
-            var heartbeatWatchdog = new Watchdog(config.WatchdogCheckInterval, false, () => writer.SendHeartbeatAsync());
+            Watchdog heartbeatWatchdog = null;
+            heartbeatWatchdog = new Watchdog(config.WatchdogCheckInterval, false, () =>
+            {
+                writer.SendHeartbeatAsync();
+                heartbeatWatchdog.Reset();
+            });
             var rebootWatchdog = new RebootWatchdog(config.WatchdogCheckInterval + new TimeSpan(0, 0, 30), logger);
 
-            writer = new HttpMessageWriter(sender, config.Connectivity.BaseUrl, new OutputPort(config.Connectivity.HttpLight, true), logger, new[] { heartbeatWatchdog, rebootWatchdog });
+            writer = new HttpMessageWriter(sender, config.Connectivity.BaseUrl, new OutputPort(config.Connectivity.HttpLight, true), logger, new[] { rebootWatchdog });
             logger.SetWriter(writer);
             var sensors = new FlowSensor[config.Taps.Length];
             for (var i = 0; i < config.Taps.Length; i++)
@@ -194,6 +199,7 @@ namespace RightpointLabs.Pourcast.Repourter
             heartbeatWatchdog.Start();
             rebootWatchdog.Start();
             logger.Log("Starting");
+            writer.SendHeartbeatAsync();
 
             while (true)
             {
