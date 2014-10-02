@@ -16,9 +16,10 @@ namespace RightpointLabs.Pourcast.Repourter
         private readonly ILogger _logger;
 
         private Timer _timer;
-        private object _lockObject = new object();
         private int _pulseCount = 0;
+        private int _lastPulseCount = 0;
 
+        // the goal here is to make sure that FlowDetected *never* has to take a lock, but yet we get a start message as soon as we cross the threshold.
         public FlowSensor(InterruptPort port, OutputPort light, IHttpMessageWriter httpMessageWriter, string tapId, PulseConfig pulseConfig, ILogger logger)
         {
             _port = port;
@@ -28,81 +29,70 @@ namespace RightpointLabs.Pourcast.Repourter
             _tapId = tapId;
             _pulseConfig = pulseConfig;
             _logger = logger;
+            _timer = new Timer(PourCheck, null, _pulseConfig.PourStoppedDelay, _pulseConfig.PourStoppedDelay);
         }
 
         private void FlowDetected(uint port, uint data, DateTime time)
         {
             var pulses = Interlocked.Increment(ref _pulseCount);
-            if (pulses == 1)
-            {
-                lock (_lockObject)
-                {
-                    _timer = new Timer(IgnorePour, null, _pulseConfig.PourStoppedDelay, Timeout.Infinite);
-                }
-            }
             if (pulses == _pulseConfig.MinPulsesRequired)
             {
-                lock(_lockObject)
-                {
-                    if(null != _timer)
-                        _timer.Dispose();
-                    _light.Write(true);
-                    _timer = new Timer(PourCompleted, null, _pulseConfig.PourStoppedDelay, Timeout.Infinite);
-                    _httpMessageWriter.SendStartAsync(_tapId);
-                    _logger.Log("Started pour " + DateTime.Now.ToString("s"));
-                }
-            }
-            if (pulses % _pulseConfig.PulsesPerStoppedExtension == 0)
-            {
-                lock (_lockObject)
-                {
-                    if (null != _timer)
-                    {
-                        _timer.Change(_pulseConfig.PourStoppedDelay, Timeout.Infinite);
-                        _logger.Log("Extended @ " + pulses + ": " + DateTime.Now.ToString("s"));
-                    }
-                }
-            }
-            if (pulses % _pulseConfig.PulsesPerPouring == 0)
-            {
-                lock (_lockObject)
-                {
-                    if (null != _timer)
-                    {
-                        _logger.Log("Pouring @ " + pulses + ": " + DateTime.Now.ToString("s"));
-                        _httpMessageWriter.SendPouringAsync(_tapId, pulses / _pulseConfig.PulsesPerOunce);
-                    }
-                }
+                _light.Write(true);
+                _httpMessageWriter.SendStartAsync(_tapId);
+                _logger.Log("Started pour " + DateTime.Now.ToString("s"));
             }
         }
 
-        private void IgnorePour(object state)
+        private void PourCheck(object state)
         {
-            lock (_lockObject)
+            var pulses = _pulseCount; // peek, but don't reset
+            if (pulses == 0 && _lastPulseCount == 0)
+                return;
+            if (_lastPulseCount == 0)
             {
-                _timer.Dispose();
-                _timer = null;
-                var pulses = Interlocked.Exchange(ref _pulseCount, 0);
-                _logger.Log("Ignored pour @ " + pulses + ": " + DateTime.Now.ToString("s"));
-            }
-        }
-
-        private void PourCompleted(object state)
-        {
-            lock(_lockObject)
-            {
-                _timer.Dispose();
-                _timer = null;
-                var pulses = Interlocked.Exchange(ref _pulseCount, 0);
+                // something happened, but we aren't in a pour
                 if (pulses >= _pulseConfig.MinPulsesRequired)
                 {
-                    _light.Write(false);
-                    _logger.Log("Stopped pour @ " + pulses + ": " + DateTime.Now.ToString("s"));
-                    _httpMessageWriter.SendStopAsync(_tapId, pulses/_pulseConfig.PulsesPerOunce);
+                    // we already sent the start message, so let's send a 'pouring' and keep going, but let's delay by a hair so we don't get the pouring to the server before the pourstart
+                    Thread.Sleep(50);
+                    _logger.Log("Pouring @ " + pulses + ": " + DateTime.Now.ToString("s"));
+                    _httpMessageWriter.SendPouringAsync(_tapId, pulses/_pulseConfig.PulsesPerOunce);
+                    _lastPulseCount = pulses;
                 }
                 else
                 {
-                    _logger.Log("Ignored pour @ " + pulses + ": " + DateTime.Now.ToString("s"));
+                    // but not enough enough happened to start the pour... let's reset the counter
+                    pulses = Interlocked.Exchange(ref _pulseCount, 0);
+                    if (pulses >= _pulseConfig.MinPulsesRequired)
+                    {
+                        // uh oh... between the two reads, we sent a start message, so now we have to send a stop one :(  Let's sleep for a hair so we know we won't beat the start message to the server
+                        Thread.Sleep(50);
+                        _logger.Log("Stopped pour (would have rather ignored though) @ " + pulses + ": " + DateTime.Now.ToString("s"));
+                        _httpMessageWriter.SendStopAsync(_tapId, pulses/_pulseConfig.PulsesPerOunce);
+                    }
+                    else
+                    {
+                        // ok, start message wasn't sent, and the counter is reset - we've sucessfully ignored the pour
+                        _logger.Log("Ignored pour @ " + pulses + ": " + DateTime.Now.ToString("s"));
+                    }
+                }
+            }
+            else
+            {
+                if (pulses - _lastPulseCount < _pulseConfig.PulsesPerStoppedExtension)
+                {
+                    // we didn't get enough pulses in to continue - complete the pour
+                    pulses = Interlocked.Exchange(ref _pulseCount, 0);
+                    _logger.Log("Stopped pour @ " + pulses + ": " + DateTime.Now.ToString("s"));
+                    _httpMessageWriter.SendStopAsync(_tapId, pulses/_pulseConfig.PulsesPerOunce);
+                    _lastPulseCount = 0;
+                }
+                else
+                {
+                    // we got enough to keep the pour alive, send the pouring message
+                    _logger.Log("Pouring @ " + pulses + ": " + DateTime.Now.ToString("s"));
+                    _httpMessageWriter.SendPouringAsync(_tapId, pulses / _pulseConfig.PulsesPerOunce);
+                    _lastPulseCount = pulses;
                 }
             }
         }
