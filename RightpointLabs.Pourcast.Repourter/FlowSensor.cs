@@ -34,13 +34,7 @@ namespace RightpointLabs.Pourcast.Repourter
 
         private void FlowDetected(uint port, uint data, DateTime time)
         {
-            var pulses = Interlocked.Increment(ref _pulseCount);
-            if (pulses == _pulseConfig.MinPulsesRequired)
-            {
-                _light.Write(true);
-                _httpMessageWriter.SendStartAsync(_tapId);
-                _logger.Log("Started pour " + DateTime.Now.ToString("s"));
-            }
+            Interlocked.Increment(ref _pulseCount);
         }
 
         private void PourCheck(object state)
@@ -53,28 +47,18 @@ namespace RightpointLabs.Pourcast.Repourter
                 // something happened, but we aren't in a pour
                 if (pulses >= _pulseConfig.MinPulsesRequired)
                 {
-                    // we already sent the start message, so let's send a 'pouring' and keep going, but let's delay by a hair so we don't get the pouring to the server before the pourstart
-                    Thread.Sleep(50);
-                    _logger.Log("Pouring @ " + pulses + ": " + DateTime.Now.ToString("s"));
-                    _httpMessageWriter.SendPouringAsync(_tapId, pulses/_pulseConfig.PulsesPerOunce);
+                    // start the pour
+                    _light.Write(true);
+                    _httpMessageWriter.SendStartAsync(_tapId);
+                    _logger.Log("Started pour " + DateTime.Now.ToString("s"));
                     _lastPulseCount = pulses;
                 }
                 else
                 {
                     // but not enough enough happened to start the pour... let's reset the counter
                     pulses = Interlocked.Exchange(ref _pulseCount, 0);
-                    if (pulses >= _pulseConfig.MinPulsesRequired)
-                    {
-                        // uh oh... between the two reads, we sent a start message, so now we have to send a stop one :(  Let's sleep for a hair so we know we won't beat the start message to the server
-                        Thread.Sleep(50);
-                        _logger.Log("Stopped pour (would have rather ignored though) @ " + pulses + ": " + DateTime.Now.ToString("s"));
-                        _httpMessageWriter.SendStopAsync(_tapId, pulses/_pulseConfig.PulsesPerOunce);
-                    }
-                    else
-                    {
-                        // ok, start message wasn't sent, and the counter is reset - we've sucessfully ignored the pour
-                        _logger.Log("Ignored pour @ " + pulses + ": " + DateTime.Now.ToString("s"));
-                    }
+                    // ok, start message wasn't sent, and the counter is reset - we've sucessfully ignored the pour (even if we got a few more pulses between the peek and the exchange
+                    _logger.Log("Ignored pour @ " + pulses + ": " + DateTime.Now.ToString("s"));
                 }
             }
             else
