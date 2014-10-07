@@ -34,7 +34,7 @@ namespace RightpointLabs.Pourcast.Repourter
 
         private void FlowDetected(uint port, uint data, DateTime time)
         {
-            Interlocked.Increment(ref _pulseCount);
+            _pulseCount++;
         }
 
         private void PourCheck(object state)
