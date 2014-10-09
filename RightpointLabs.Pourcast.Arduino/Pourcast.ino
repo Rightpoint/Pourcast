@@ -1,6 +1,6 @@
-volatile int _tap1Pulses = 0;
-volatile int _tap2Pulses = 0;
-const int _startThreshold = 50;
+volatile long _tap1Pulses = 0;
+volatile long _tap2Pulses = 0;
+const long _startThreshold = 50;
 
 // prep - initialize serial (TX on pin 1) and wire up the interrupts for pulses from the taps (pins 2 and 3)
 void setup() {
@@ -12,14 +12,14 @@ void setup() {
 
 // handle interrupt pulses from the taps and send the START message
 void tap1Pulse() {
-  int pulses = ++_tap1Pulses;
+  long pulses = ++_tap1Pulses;
   if(pulses == _startThreshold) {
     Serial.print("START 1 ");
     Serial.println(pulses, DEC);
   }
 }
 void tap2Pulse() {
-  int pulses = ++_tap2Pulses;
+  long pulses = ++_tap2Pulses;
   if(pulses == _startThreshold) {
     Serial.print("START 2 ");
     Serial.println(pulses, DEC);
@@ -29,10 +29,10 @@ void tap2Pulse() {
 // main loop - once a second, check the accumulated pulse counts and send the STOP/CONTINUE/IGNORE message as necessary
 // send an ALIVE message every loop to assist debugging
 void loop() {
-  int lastTap1Pulses = 0;
-  int lastTap2Pulses = 0;
+  long lastTap1Pulses = 0;
+  long lastTap2Pulses = 0;
   while(true) {
-    int tap1Pulses = _tap1Pulses;
+    long tap1Pulses = _tap1Pulses;
     if(lastTap1Pulses != 0 && lastTap1Pulses == tap1Pulses) {
       // complete
       _tap1Pulses = 0;
@@ -55,7 +55,7 @@ void loop() {
       }
     }
 
-    int tap2Pulses = _tap2Pulses;
+    long tap2Pulses = _tap2Pulses;
     if(lastTap2Pulses != 0 && lastTap2Pulses == tap2Pulses) {
       // complete
       _tap2Pulses = 0;
@@ -82,4 +82,3 @@ void loop() {
     delay(1000);
   }
 }
-
