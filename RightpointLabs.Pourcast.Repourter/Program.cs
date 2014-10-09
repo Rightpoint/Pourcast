@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO.Ports;
 using System.Threading;
 using Microsoft.SPOT;
 using Microsoft.SPOT.Hardware;
@@ -37,14 +38,6 @@ namespace RightpointLabs.Pourcast.Repourter
         {
             Debug.EnableGCMessages(true);
             // START CONFIG
-            var sf800pulseConfig = new PulseConfig()
-            {
-                PulsesPerOunce = PulseConfig.SF800_PULSES_PER_OUNCE,
-                PourStoppedDelay = 1000,
-                PulsesPerStoppedExtension = 50,
-                PulsesPerPouring = 250,
-                MinPulsesRequired = 40, // about 1/4 of an oz
-            };
             var config = new Config
             {
                 Connectivity = new ConnectivityConfig
@@ -67,22 +60,24 @@ namespace RightpointLabs.Pourcast.Repourter
                 {
                     new TapConfig
                     {
-                        Input = Pins.GPIO_PIN_D13, 
+                        PulsesPerOz = TapConfig.SF800_PULSES_PER_OUNCE,
+                        TapNumber = 1,
                         Light = Pins.GPIO_PIN_D9, 
                         TapId = "535c61a951aa0405287989ec",
-                        PulseConfig = sf800pulseConfig,
                     },
                     new TapConfig
                     {
-                        Input = Pins.GPIO_PIN_D12, 
+                        PulsesPerOz = TapConfig.SF800_PULSES_PER_OUNCE,
+                        TapNumber = 2,
                         Light = Pins.GPIO_PIN_D10, 
                         TapId = "537d28db51aa04289027cde5",
-                        PulseConfig = sf800pulseConfig,
                     },
                 },
                 WatchdogCheckInterval = new TimeSpan(0, 5, 0)
             };
 
+            config.Connectivity.BaseUrl = "http://192.168.25.107:57168/";
+            config.Connectivity.Ethernet.Enabled = false;
 #if false
             // a configuration for testing with a local server, buttons, and even the emulator
             var localButtonConfig = new PulseConfig()
@@ -181,6 +176,7 @@ namespace RightpointLabs.Pourcast.Repourter
             });
             var rebootWatchdog = new RebootWatchdog(config.WatchdogCheckInterval + new TimeSpan(0, 0, 30), logger);
 
+            var arduino = new ArduinoWrapper(new SerialPort("COM1", 9600));
             writer = new HttpMessageWriter(sender, config.Connectivity.BaseUrl, new OutputPort(config.Connectivity.HttpLight, true), logger, new[] { rebootWatchdog });
             logger.SetWriter(writer);
             var sensors = new FlowSensor[config.Taps.Length];
@@ -188,16 +184,18 @@ namespace RightpointLabs.Pourcast.Repourter
             {
                 var tapConfig = config.Taps[i];
                 sensors[i] = new FlowSensor(
-                    new InterruptPort(tapConfig.Input, false, Port.ResistorMode.Disabled, Port.InterruptMode.InterruptEdgeHigh),
+                    arduino,
                     new OutputPort(tapConfig.Light, false),
                     writer,
                     tapConfig.TapId,
-                    tapConfig.PulseConfig,
+                    tapConfig.TapNumber,
+                    tapConfig.PulsesPerOz,
                     logger);
             }
 
             heartbeatWatchdog.Start();
             rebootWatchdog.Start();
+            arduino.Start();
             logger.Log("Starting");
             writer.SendHeartbeatAsync();
 

@@ -65,11 +65,11 @@
   </PropertyGroup>
   <Import Project="$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets" />
   <ItemGroup>
+    <Compile Include="ArduinoWrapper.cs" />
     <Compile Include="BoundedBuffer.cs" />
     <Compile Include="Configuration\Config.cs" />
     <Compile Include="Configuration\ConnectivityConfig.cs" />
     <Compile Include="Configuration\EthernetConfig.cs" />
-    <Compile Include="Configuration\PulseConfig.cs" />
     <Compile Include="Configuration\TapConfig.cs" />
     <Compile Include="Configuration\WifiConfig.cs" />
     <Compile Include="EthernetMessageSender.cs" />
@@ -79,6 +79,7 @@
     <Compile Include="IMessageSender.cs" />
     <Compile Include="NullMessageSender.cs" />
     <Compile Include="PulseMaker.cs" />
+    <Compile Include="SerialPortEx.cs" />
     <Compile Include="Watchdog.cs" />
     <Compile Include="HttpMessageWriter.cs" />
     <Compile Include="IHttpMessageWriter.cs" />
