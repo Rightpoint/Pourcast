@@ -49,6 +49,12 @@ namespace RightpointLabs.Pourcast.Repourter
                 {
                     var message = exPort.ReadLine();
                     message = message.TrimEnd('\r', '\n');
+                    if (message.Trim() == "")
+                    {
+                        // blank message basically means we're just not connected
+                        continue;
+                    }
+
                     Debug.Print("Arduino message: " + message);
                     var parts = message.Split(' ');
                     if (message.IndexOf("START ") == 0 && parts.Length == 3)

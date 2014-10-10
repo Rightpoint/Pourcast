@@ -21,6 +21,8 @@ private:
 
 Tap::Tap(Reporter* reporter) {
   _reporter = reporter;
+  _pulses = 0;
+  _lastPulses = 0;
 }
 void Tap::HandlePulse() {
   _pulses++;
