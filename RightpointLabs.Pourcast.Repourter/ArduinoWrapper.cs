@@ -3,7 +3,6 @@ using System.IO.Ports;
 using System.Threading;
 using Bansky.Net;
 using Microsoft.SPOT;
-using Microsoft.SPOT.Hardware;
 
 namespace RightpointLabs.Pourcast.Repourter
 {
@@ -33,44 +32,65 @@ namespace RightpointLabs.Pourcast.Repourter
 
             while (true)
             {
-                var message = exPort.ReadLine();
-                message = message.TrimEnd('\r', '\n');
-                Debug.Print("Arduino message: " + message);
-                var parts = message.Split(' ');
-                if (message.IndexOf("START ") == 0 && parts.Length == 3)
+                while (!_port.IsOpen)
                 {
-                    OnStartPour(new TapEventArgs(int.Parse(parts[1]), int.Parse(parts[2])));
-                }
-                else if (message.IndexOf("CONTINUE ") == 0 && parts.Length == 3)
-                {
-                    OnContinuePour(new TapEventArgs(int.Parse(parts[1]), int.Parse(parts[2])));
-                }
-                else if (message.IndexOf("STOP ") == 0 && parts.Length == 3)
-                {
-                    OnStopPour(new TapEventArgs(int.Parse(parts[1]), int.Parse(parts[2])));
-                }
-                else if (message.IndexOf("IGNORE ") == 0 && parts.Length == 3)
-                {
-                    OnIgnorePour(new TapEventArgs(int.Parse(parts[1]), int.Parse(parts[2])));
-                }
-                else if (message.IndexOf("ALIVE") == 0 && parts.Length == 1)
-                {
-                    OnAlive(EventArgs.Empty);
-                    if (!isAlive)
+                    try
                     {
-                        isAlive = true;
-                        _logger.Log("Arduino has started up");
+                        _port.Open();
+                        _logger.Log("Opened serial port");
                     }
-                    alive++;
-                    alive %= 100;
-                    if (alive == 0)
+                    catch (Exception ex)
                     {
-                        _logger.Log("Got 100 alives from Arduino");
+                        _logger.Log("Error opening serial port: " + ex.Message);
+                        Thread.Sleep(1000);
                     }
                 }
-                else
+                try
                 {
-                    Debug.Print("Unknown message: " + message);
+                    var message = exPort.ReadLine();
+                    message = message.TrimEnd('\r', '\n');
+                    Debug.Print("Arduino message: " + message);
+                    var parts = message.Split(' ');
+                    if (message.IndexOf("START ") == 0 && parts.Length == 3)
+                    {
+                        OnStartPour(new TapEventArgs(int.Parse(parts[1]), int.Parse(parts[2])));
+                    }
+                    else if (message.IndexOf("CONTINUE ") == 0 && parts.Length == 3)
+                    {
+                        OnContinuePour(new TapEventArgs(int.Parse(parts[1]), int.Parse(parts[2])));
+                    }
+                    else if (message.IndexOf("STOP ") == 0 && parts.Length == 3)
+                    {
+                        OnStopPour(new TapEventArgs(int.Parse(parts[1]), int.Parse(parts[2])));
+                    }
+                    else if (message.IndexOf("IGNORE ") == 0 && parts.Length == 3)
+                    {
+                        OnIgnorePour(new TapEventArgs(int.Parse(parts[1]), int.Parse(parts[2])));
+                    }
+                    else if (message.IndexOf("ALIVE") == 0 && parts.Length == 1)
+                    {
+                        OnAlive(EventArgs.Empty);
+                        if (!isAlive)
+                        {
+                            isAlive = true;
+                            _logger.Log("Arduino has started up");
+                        }
+                        alive++;
+                        alive %= 100;
+                        if (alive == 0)
+                        {
+                            _logger.Log("Got 100 alives from Arduino");
+                        }
+                    }
+                    else
+                    {
+                        _logger.Log("Unknown message: " + message);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    _logger.Log("Error reading/processing message from serial port: " + ex.Message);
+                    Thread.Sleep(200);
                 }
             }
         }
