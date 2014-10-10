@@ -10,10 +10,12 @@ namespace RightpointLabs.Pourcast.Repourter
     public class ArduinoWrapper
     {
         private readonly SerialPort _port;
+        private readonly ILogger _logger;
 
-        public ArduinoWrapper(SerialPort port)
+        public ArduinoWrapper(SerialPort port, ILogger logger)
         {
             _port = port;
+            _logger = logger;
         }
 
         public void Start()
@@ -26,12 +28,14 @@ namespace RightpointLabs.Pourcast.Repourter
         {
             _port.Open();
             var exPort = new SerialPortEx(_port);
+            var alive = 0;
+            var isAlive = false;
 
             while (true)
             {
                 var message = exPort.ReadLine();
                 message = message.TrimEnd('\r', '\n');
-
+                Debug.Print("Arduino message: " + message);
                 var parts = message.Split(' ');
                 if (message.IndexOf("START ") == 0 && parts.Length == 3)
                 {
@@ -52,6 +56,17 @@ namespace RightpointLabs.Pourcast.Repourter
                 else if (message.IndexOf("ALIVE") == 0 && parts.Length == 1)
                 {
                     OnAlive(EventArgs.Empty);
+                    if (!isAlive)
+                    {
+                        isAlive = true;
+                        _logger.Log("Arduino has started up");
+                    }
+                    alive++;
+                    alive %= 100;
+                    if (alive == 0)
+                    {
+                        _logger.Log("Got 100 alives from Arduino");
+                    }
                 }
                 else
                 {

@@ -76,8 +76,6 @@ namespace RightpointLabs.Pourcast.Repourter
                 WatchdogCheckInterval = new TimeSpan(0, 5, 0)
             };
 
-            config.Connectivity.BaseUrl = "http://192.168.25.107:57168/";
-            config.Connectivity.Ethernet.Enabled = false;
 #if false
             // a configuration for testing with a local server, buttons, and even the emulator
             var localButtonConfig = new PulseConfig()
@@ -176,7 +174,7 @@ namespace RightpointLabs.Pourcast.Repourter
             });
             var rebootWatchdog = new RebootWatchdog(config.WatchdogCheckInterval + new TimeSpan(0, 0, 30), logger);
 
-            var arduino = new ArduinoWrapper(new SerialPort("COM1", 9600));
+            var arduino = new ArduinoWrapper(new SerialPort("COM1", 9600), logger);
             writer = new HttpMessageWriter(sender, config.Connectivity.BaseUrl, new OutputPort(config.Connectivity.HttpLight, true), logger, new[] { rebootWatchdog });
             logger.SetWriter(writer);
             var sensors = new FlowSensor[config.Taps.Length];
