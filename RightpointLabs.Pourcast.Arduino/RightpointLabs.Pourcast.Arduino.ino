@@ -281,7 +281,7 @@ void setup() {
   Serial.println("Starting");
   WiFly.begin();
   Serial.println("Joining");
-  if (!WiFly.join("Rightpoint-Guest", "RP@29NWacker")) {
+  if (!WiFly.join("Rightpoint-Guest", "PW")) {
      // Handle the failure
      Serial.println("Failed to connect");
   }
