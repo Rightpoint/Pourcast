@@ -36,6 +36,7 @@ void NetworkRequester::MakeRequest(String url){
 void NetworkRequester::Heartbeat(){
   MakeRequest("/api/Status/heartbeat");
 }
+// Dec2Hex + EscapeMessage based on Toolbox.NETMF.Tools.RawUrlEncode
 String Dec2Hex(char ch, int len) {
   char buf[6];
   snprintf(buf, 5, "%2x", ch);
