@@ -72,9 +72,9 @@ void setup() {
   http->LogMessage(wifiStatus);
 
   tap1 = new Tap(new MultiReporter(new SerialReporter(1), new LEDReporter(9), new NetworkReporter(http, "535c61a951aa0405287989ec")));
-  attachInterrupt(0, tap1Pulse, RISING);
+  attachInterrupt(2, tap1Pulse, RISING);
   tap2 = new Tap(new MultiReporter(new SerialReporter(2), new LEDReporter(10), new NetworkReporter(http, "537d28db51aa04289027cde5")));
-  attachInterrupt(1, tap2Pulse, RISING);
+  attachInterrupt(3, tap2Pulse, RISING);
 }
 
 void startupDelay() {
@@ -98,15 +98,17 @@ void loop() {
     tap1->Loop(cycle);
     tap2->Loop(cycle);
 
-    if(cycle % 600 == 0) {
-      http->Heartbeat();
+    if(cycle % 6000 == 0) {
       String wifiStatus = getWifiStatus();
       Serial.println(wifiStatus);
       http->LogMessage(wifiStatus);
+    }
+    if(cycle % 600 == 0) {
+      http->Heartbeat();
     } else if(cycle % 100 == 0) {
       Serial.println("ALIVE");
     }
-    cycle = (cycle + 1) % 600;
+    cycle = (cycle + 1) % 6000;
     delay(100);
   }
 }
@@ -119,7 +121,4 @@ String getWifiStatus() {
 
   return prefix + WiFi.SSID() + ", IP Address: " + buf + ", RSSI: " + WiFi.RSSI() + " dBm";
 }
-
-
-
 
