@@ -8,11 +8,11 @@
         // defines the markup to be used with this flair (required)
         self.template = template;
 
-        // provides a sortable rank value (required for emotions/attitudes)
+        // function that provides a sortable rank value (required for emotions/attitudes)
         // returns a number
         self.importance = ko.observable(1);
 
-        // indicates if the flair is active (required)
+        // function that indicates if the flair is active (required)
         // returns a boolean
         self.isActive = ko.observable(true);
 
