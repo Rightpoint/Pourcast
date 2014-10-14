@@ -43,39 +43,64 @@ void setup() {
   if( fv != "1.1.0" )
     Serial.println("Please upgrade the firmware");
 
-  int status = WL_IDLE_STATUS;
-  char* ssid = "XX";
-  const char* pass = "XX";
-  
+  int status = WiFi.status();
+  char* ssid = "";
+  const char* pass = "";
+
   // attempt to connect to Wifi network:
   while (status != WL_CONNECTED) { 
+    Serial.print("Wifi Status: ");
+    Serial.println(status);
     Serial.print("Attempting to connect to SSID: ");
     Serial.println(ssid);
     // Connect to WPA/WPA2 network. Change this line if using open or WEP network:    
     status = WiFi.begin(ssid, pass);
-  
+
     // wait 10 seconds for connection:
-    delay(10000);
+    for(int i=0; i<10; i++) {
+      status = WiFi.status();
+      if(status == WL_CONNECTED)
+        break;
+      delay(1000);
+    }
   } 
   Serial.println("Connected to wifi");
-  printWifiStatus();
-  
-  http = new NetworkRequester("pourcast.labs.rightpoint.com", 80, 9);
-  tap1 = new Tap(new MultiReporter(new SerialReporter(1), new LEDReporter(10), new NetworkReporter(http, "535c61a951aa0405287989ec")));
+  http = new NetworkRequester("pourcast.labs.rightpoint.com", 80, 11);
+
+  String wifiStatus = getWifiStatus();
+  Serial.println(wifiStatus);
+  http->LogMessage(wifiStatus);
+
+  tap1 = new Tap(new MultiReporter(new SerialReporter(1), new LEDReporter(9), new NetworkReporter(http, "535c61a951aa0405287989ec")));
   attachInterrupt(0, tap1Pulse, RISING);
-  tap2 = new Tap(new MultiReporter(new SerialReporter(2), new LEDReporter(11), new NetworkReporter(http, "537d28db51aa04289027cde5")));
+  tap2 = new Tap(new MultiReporter(new SerialReporter(2), new LEDReporter(10), new NetworkReporter(http, "537d28db51aa04289027cde5")));
   attachInterrupt(1, tap2Pulse, RISING);
+}
+
+void startupDelay() {
+  http->LogMessage("Begining startup delay");
+  delay(2000);
+  long tap1Pulses = tap1->Clear();
+  long tap2Pulses = tap2->Clear();
+  char buf[256];
+  snprintf(buf, 256, "Startup delay complete (ignored %li and %li)", tap1Pulses, tap2Pulses);
+  http->LogMessage(buf);
 }
 
 // main loop - once a second, check the accumulated pulse counts and send the START/STOP/CONTINUE/IGNORE message as necessary
 // send an ALIVE message every loop to assist debugging
 void loop() {
-  int cycle = 0;
+  startupDelay();
+    
+  int cycle = 0;  
+  http->LogMessage("Primary loop initialized");
   while(true) {
     tap1->Loop(cycle);
     tap2->Loop(cycle);
 
-    if(cycle % 10 == 0) {
+    if(cycle % 600 == 0) {
+      http->Heartbeat();
+    } else if(cycle % 100 == 0) {
       Serial.println("ALIVE");
     }
     cycle = (cycle + 1) % 600;
@@ -83,22 +108,15 @@ void loop() {
   }
 }
 
-void printWifiStatus() {
-  // print the SSID of the network you're attached to:
-  Serial.print("SSID: ");
-  Serial.println(WiFi.SSID());
-
-  // print your WiFi shield's IP address:
+String getWifiStatus() {
+  String prefix = "SSID: ";
   IPAddress ip = WiFi.localIP();
-  Serial.print("IP Address: ");
-  Serial.println(ip);
+  char buf[0x20];
+  snprintf(buf, sizeof(buf), "%3d.%3d.%3d.%3d", ip[0], ip[1], ip[2], ip[3]);
 
-  // print the received signal strength:
-  long rssi = WiFi.RSSI();
-  Serial.print("signal strength (RSSI):");
-  Serial.print(rssi);
-  Serial.println(" dBm");
+  return prefix + WiFi.SSID() + ", IP Address: " + buf + ", RSSI: " + WiFi.RSSI() + " dBm";
 }
+
 
 
 

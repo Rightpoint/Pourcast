@@ -8,6 +8,11 @@ Tap::Tap(Reporter* reporter) {
   _pulses = 0;
   _lastPulses = 0;
 }
+long Tap::Clear() {
+  long pulses = _pulses;
+  _pulses = 0;
+  return pulses;
+}
 void Tap::Loop(int cycle) {
   long pulses = _pulses;
   if(_lastPulses != 0 && cycle % 10 == 0) {

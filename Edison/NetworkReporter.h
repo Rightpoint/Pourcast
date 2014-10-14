@@ -9,7 +9,6 @@ public:
   virtual void ReportContinue(long pulses);
   virtual void ReportStart(long pulses);
   virtual void ReportIgnore(long pulses);
-  void Heartbeat();
 private:
   void MakeRequest(String url);
   String _tapId;
