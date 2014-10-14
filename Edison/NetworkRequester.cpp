@@ -14,24 +14,22 @@ NetworkRequester::NetworkRequester(const char* host, int port, byte pin) {
 void NetworkRequester::MakeRequest(String url){
   digitalWrite(_pin, LOW);
   Serial.println(url);
-  WiFiClient* client = new WiFiClient();
-  if (client->connect(_host, _port)) {
-    client->println("GET " + url + " HTTP/1.0");
-    client->println("HOST: " + (String)_host);
-    client->println();
+  WiFiClient client;
+  if (client.connect(_host, _port)) {
+    client.println("GET " + url + " HTTP/1.0");
+    client.println("HOST: " + (String)_host);
+    client.println();
 
     #if false
     byte buffer[128];
     int read = 0;
-    while(client->connected() && (read = client->read(buffer, 128)) > 0) {
+    while(client.connected() && (read = client.read(buffer, 128)) > 0) {
       Serial.write(buffer, read);
     #else
-    while(client->connected() && client->read() != -1) {
+    while(client.connected() && client.read() != -1) {
     #endif
     }
-
   }
-  delete client;
   digitalWrite(_pin, HIGH);
 }
 
