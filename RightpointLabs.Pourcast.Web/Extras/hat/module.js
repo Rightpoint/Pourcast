@@ -4,9 +4,8 @@
 
         self.keg = keg;
         self.template = template;
-        self.importance = ko.observable(1);
         self.isActive = ko.observable(true);
-        self.someValue = ko.observable(5);
+        self.someValue = ko.observable('omg hat!');
     };
 
     Hat.prototype = {
