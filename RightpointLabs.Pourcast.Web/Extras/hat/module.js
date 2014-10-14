@@ -3,7 +3,7 @@
         var self = this;
 
         self.keg = keg;
-        self.template = ko.observable(template);
+        self.template = template;
         self.importance = ko.observable(1);
         self.isActive = ko.observable(true);
         self.someValue = ko.observable(5);
