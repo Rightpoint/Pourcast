@@ -17,6 +17,7 @@ void NetworkRequester::MakeRequest(String url){
   WiFiClient* client = new WiFiClient();
   if (client->connect(_host, _port)) {
     client->println("GET " + url + " HTTP/1.0");
+    client->println("HOST: " + (String)_host);
     client->println();
 
     #if false
@@ -31,8 +32,6 @@ void NetworkRequester::MakeRequest(String url){
 
   }
   delete client;
-  Serial.print(url);
-  Serial.println(" COMPLETE");
   digitalWrite(_pin, HIGH);
 }
 

@@ -100,6 +100,9 @@ void loop() {
 
     if(cycle % 600 == 0) {
       http->Heartbeat();
+      String wifiStatus = getWifiStatus();
+      Serial.println(wifiStatus);
+      http->LogMessage(wifiStatus);
     } else if(cycle % 100 == 0) {
       Serial.println("ALIVE");
     }
