@@ -8,7 +8,7 @@
         // defines the markup to be used with this flair (required)
         self.template = template;
 
-        // provides a sortable rank value (only for emotions/attitudes for resolution)
+        // provides a sortable rank value (required for emotions/attitudes)
         // returns a number
         self.importance = ko.observable(1);
 
