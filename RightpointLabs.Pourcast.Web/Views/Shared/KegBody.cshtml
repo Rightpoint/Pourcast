@@ -1,0 +1,10 @@
+﻿<div class="keg">
+    <img class="body" src="/Content/themes/base/images/keg.png" />
+
+    <!-- ko ifnot: isLow -->
+    <img class="face" src="/Content/themes/base/images/face-happy.png" data-bind="ifnot: isLow" />
+    <!-- /ko -->
+    <!-- ko if: isLow -->
+    <img class="face" src="/Content/themes/base/images/face-sad.png" data-bind="if: isLow" />
+    <!-- /ko -->
+</div>

@@ -364,7 +364,7 @@
     <Content Include="Scripts\libs\toastr.min.js" />
     <Content Include="Scripts\libs\r.js" />
     <Content Include="Scripts\libs\require.js" />
-    <Content Include="Views\Shared\Keg.cshtml" />
+    <Content Include="Views\Shared\Tap.cshtml" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -446,6 +446,11 @@
     <Content Include="Scripts\libs\toastr.min.js.map" />
     <Content Include="Views\RepourterTest\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\BeerInfo.cshtml" />
+    <Content Include="Views\Shared\KegBody.cshtml" />
+    <Content Include="Views\Shared\Accessories.cshtml" />
+    <Content Include="Views\Shared\Background.cshtml" />
+    <Content Include="Views\Shared\Bits.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
