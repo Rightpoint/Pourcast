@@ -3,12 +3,13 @@
         var self = this;
 
         self.id = ko.observable(kegJSON.Id);
-        self.percentRemaining = ko.observable((kegJSON.PercentRemaining * 100).toFixed(1));
+        self.percentRemaining = ko.observable(this.decimalToPercent(kegJSON.PercentRemaining));
         self.isEmpty = ko.observable(kegJSON.IsEmpty);
         self.isPouring = ko.observable(kegJSON.IsPouring);
         self.capacity = ko.observable(kegJSON.Capacity);
         self.beer = ko.observable(beer);
-
+        self.accessories = ko.observableArray();
+        
         self.isLow = ko.computed(function () {
             return self.percentRemaining() < 25;
         });
@@ -33,7 +34,7 @@
             console.log("Pouring");
 
             if (e.KegId === self.id()) {
-                self.percentRemaining((e.PercentRemaining * 100).toFixed(2));
+                self.percentRemaining(this.decimalToPercent(e.PercentRemaining));
             }
         });
         events.on("PourStopped", function(e) {
@@ -41,9 +42,28 @@
 
             if (e.KegId === self.id()) {
                 self.isPouring(false);
-                self.percentRemaining((e.PercentRemaining * 100).toFixed(1));
+                self.percentRemaining(this.decimalToPercent(e.PercentRemaining));
             }
         });
+
+        this.loadAccessories(['/extras/hat/module.js']);
+    };
+
+    Keg.prototype = {
+        loadAccessories: function (accessories) {
+            var self = this;
+
+            accessories.forEach(function (accessoryModule) {
+                require([accessoryModule], function(Accessory) {
+                    var accessory = new Accessory(self);
+                    accessory.id = 'accessory-' + (Math.random() + '').split('.')[1];
+                    self.accessories.push(accessory);
+                });
+            });
+        },
+        decimalToPercent: function(decimal) {
+            return (decimal * 100).toFixed(1);
+        }
     };
 
     return Keg;

@@ -33,8 +33,6 @@
             // Randomise their speed (5-12s)
             var speed_rand = p.minRiseTime + Math.random() * (p.maxRiseTime - p.minRiseTime);
 
-            console.log(speed_rand);
-
             // Cache the this selector
             var $this = $(this);
 

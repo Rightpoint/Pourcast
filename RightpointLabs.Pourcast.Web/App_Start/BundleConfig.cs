@@ -26,10 +26,12 @@ namespace RightpointLabs.Pourcast.Web.App_Start
                 "~/Scripts/app/model/beer.js",
                 "~/Scripts/app/model/keg.js",
                 "~/Scripts/app/model/tap.js",
+                "~/Scripts/app/model/style.js",
                 "~/Scripts/app/events.js",
                 "~/Scripts/app/bindings.js", 
                 "~/Scripts/app/bubbles.js", 
-                "~/Scripts/app/pourcast.js"));
+                "~/Scripts/app/pourcast.js",
+                "~/Scripts/app.js"));
 
             bundles.Add(new StyleBundle("~/Content/css/bootstrap", "//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css")
                 .Include("~/Content/bootstrap.css"));
