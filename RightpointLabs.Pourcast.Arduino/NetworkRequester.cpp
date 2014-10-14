@@ -1,20 +1,26 @@
-#include "WiFlyHttp.h"
+#include "Arduino.h"
+#include "NetworkRequester.h"
 
-WiFlyHttp::WiFlyHttp(const char* host, int port, byte pin) { 
-  _client = new WiFlyClient(host, port);
+//#include <SPI.h>
+#include <WiFi.h>
+
+NetworkRequester::NetworkRequester(const char* host, int port, byte pin) { 
+  _host = host;
+  _port = port;
   _pin = pin;
   pinMode(_pin, OUTPUT);
   digitalWrite(_pin, HIGH);
 }
 
-void WiFlyHttp::MakeRequest(String url){
+void NetworkRequester::MakeRequest(String url){
   digitalWrite(_pin, LOW);
   Serial.println(url);
-  if (_client->connect()) {
-    _client->println("GET " + url + " HTTP/1.0");
-    _client->println();
-    while(_client->available() || _client->connected()) {
-      Serial.print(_client->read());
+  WiFiClient client;
+  if (client.connect(_host, _port)) {
+    client.println("GET " + url + " HTTP/1.0");
+    client.println();
+    while(client.available() || client.connected()) {
+      Serial.print(client.read());
     }
   }
   digitalWrite(_pin, HIGH);

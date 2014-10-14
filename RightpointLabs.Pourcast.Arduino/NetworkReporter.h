@@ -1,10 +1,10 @@
 #include "Arduino.h"
 #include "Reporter.h"
-#include "WiFlyHttp.h"
+#include "NetworkRequester.h"
 
-class WiFlyReporter: public Reporter {
+class NetworkReporter: public Reporter {
 public:
-  WiFlyReporter(WiFlyHttp* http, String tapId);
+  NetworkReporter(NetworkRequester* requester, String tapId);
   virtual void ReportStop(long pulses);
   virtual void ReportContinue(long pulses);
   virtual void ReportStart(long pulses);
@@ -13,6 +13,6 @@ public:
 private:
   void MakeRequest(String url);
   String _tapId;
-  WiFlyHttp* _http;
+  NetworkRequester* _requester;
 };
 

@@ -1,26 +1,26 @@
 #define DEBUG_LEVEL 5
-#include "WiFlyReporter.h"
+#include "NetworkReporter.h"
 
-WiFlyReporter::WiFlyReporter(WiFlyHttp* http, String tapId) { 
-  _http = http;
+  NetworkReporter::NetworkReporter(NetworkRequester* requester, String tapId) { 
+  _requester = requester;
   _tapId = tapId;
 }
 
-void WiFlyReporter::MakeRequest(String url){
-  _http->MakeRequest(url);
+void NetworkReporter::MakeRequest(String url){
+  _requester->MakeRequest(url);
 }
-void WiFlyReporter::ReportStop(long pulses){
+void NetworkReporter::ReportStop(long pulses){
   MakeRequest("/api/Tap/" + _tapId + "/StopPour?volume=" + (pulses / 1000));
 }
-void WiFlyReporter::ReportContinue(long pulses) {
+void NetworkReporter::ReportContinue(long pulses) {
   MakeRequest("/api/Tap/" + _tapId + "/Pouring?volume=" + (pulses / 1000));
 }
-void WiFlyReporter::ReportStart(long pulses){
+void NetworkReporter::ReportStart(long pulses){
   MakeRequest("/api/Tap/" + _tapId + "/StartPour");
 }
-void WiFlyReporter::ReportIgnore(long pulses){
+void NetworkReporter::ReportIgnore(long pulses){
 }
-void WiFlyReporter::Heartbeat(){
+void NetworkReporter::Heartbeat(){
   MakeRequest("/api/Status/heartbeat");
 }
 
