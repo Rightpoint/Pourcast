@@ -1,8 +1,7 @@
 #include "Arduino.h"
 #include "NetworkRequester.h"
-
-//#include <SPI.h>
 #include <WiFi.h>
+#include <WiFiClient.h>
 
 NetworkRequester::NetworkRequester(const char* host, int port, byte pin) { 
   _host = host;

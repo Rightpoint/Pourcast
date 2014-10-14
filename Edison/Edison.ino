@@ -1,5 +1,11 @@
 #include "Arduino.h"
+
+#include <Dhcp.h>
+#include <Dns.h>
 #include <WiFi.h>
+#include <WiFiClient.h>
+#include <WiFiServer.h>
+#include <WiFiUdp.h>
 
 #include "Tap.h"
 #include "MultiReporter.h"
@@ -11,15 +17,21 @@ Tap* tap1;
 Tap* tap2;
 NetworkRequester* http;
 
+// handle interrupt pulses from the taps
+void tap1Pulse() {
+  tap1->HandlePulse();
+}
+void tap2Pulse() {
+  tap2->HandlePulse();
+}
+
 // prep - initialize serial (TX on pin 1) and wire up the interrupts for pulses from the taps (pins 2 and 3)
 void setup() {
   Serial.begin(9600);
   while(!Serial);
 
-  byte mac[] = { 0xfc,0xc2,0xde,0x2f,0x58,0xe3 };
-  
   Serial.println("Starting");
-  
+
   // check for the presence of the shield:
   if (WiFi.status() == WL_NO_SHIELD) {
     Serial.println("WiFi shield not present"); 
@@ -30,6 +42,10 @@ void setup() {
   String fv = WiFi.firmwareVersion();
   if( fv != "1.1.0" )
     Serial.println("Please upgrade the firmware");
+
+  int status = WL_IDLE_STATUS;
+  char* ssid = "XX";
+  const char* pass = "XX";
   
   // attempt to connect to Wifi network:
   while (status != WL_CONNECTED) { 
@@ -51,6 +67,22 @@ void setup() {
   attachInterrupt(1, tap2Pulse, RISING);
 }
 
+// main loop - once a second, check the accumulated pulse counts and send the START/STOP/CONTINUE/IGNORE message as necessary
+// send an ALIVE message every loop to assist debugging
+void loop() {
+  int cycle = 0;
+  while(true) {
+    tap1->Loop(cycle);
+    tap2->Loop(cycle);
+
+    if(cycle % 10 == 0) {
+      Serial.println("ALIVE");
+    }
+    cycle = (cycle + 1) % 600;
+    delay(100);
+  }
+}
+
 void printWifiStatus() {
   // print the SSID of the network you're attached to:
   Serial.print("SSID: ");
@@ -68,28 +100,5 @@ void printWifiStatus() {
   Serial.println(" dBm");
 }
 
-// handle interrupt pulses from the taps
-void tap1Pulse() {
-  tap1->HandlePulse();
-}
-void tap2Pulse() {
-  tap2->HandlePulse();
-}
-
-// main loop - once a second, check the accumulated pulse counts and send the START/STOP/CONTINUE/IGNORE message as necessary
-// send an ALIVE message every loop to assist debugging
-void loop() {
-  int cycle = 0;
-  while(true) {
-    tap1->Loop(cycle);
-    tap2->Loop(cycle);
-
-    if(cycle % 10 == 0) {
-      Serial.println("ALIVE");
-    }
-    cycle = (cycle + 1) % 600;
-    delay(100);
-  }
-}
 
 
