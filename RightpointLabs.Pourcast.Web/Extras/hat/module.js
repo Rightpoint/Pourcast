@@ -10,7 +10,7 @@
     };
 
     Hat.prototype = {
-        tryCancel: function() {
+        cancel: function () {
             var deferred = new $.Deferred();
             deferred.success();
 
