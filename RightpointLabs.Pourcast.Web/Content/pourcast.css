@@ -103,8 +103,8 @@ body,
 }
 .tap .keg-info .background {
   height: 100%;
-  position: fixed;
-  width: 50%;
+  position: absolute;
+  width: 100%;
 }
 .tap .keg-info .background .shade {
   background: #fff;
@@ -193,21 +193,27 @@ body,
 .tap .keg-info .status .profile {
   width: 30vmin;
   height: 30vmin;
-  border-radius: 50%;
   margin: 0 auto;
-  background: #fff;
   position: relative;
-  overflow: hidden;
   clear: both;
 }
 .tap .keg-info .status .profile .ring {
+  background: #fff;
+  border-radius: 50%;
+  overflow: hidden;
+  position: absolute;
+  margin: auto;
+  top: 2px;
+  bottom: 2px;
+  left: 2px;
+  right: 2px;
+  z-index: 0;
+}
+.tap .keg-info .status .profile .border {
   height: 100%;
   width: 100%;
   position: absolute;
-  margin: auto;
   top: 0;
-  right: 0;
-  bottom: 0;
   left: 0;
 }
 .tap .keg-info .status .profile .keg {
