@@ -37,19 +37,21 @@ void setup() {
 
   char buf[32];
   PString pBuf(buf, 32);
+  
+  #include "Credentials.h"
 
   //wifi.setDebugChannel(&Serial);
   Serial.println(F("Starting"));
   wifi.begin();
   pBuf.begin();
-  pBuf << F("");
+  pBuf << wifiPassword;
   wifi.setPassphrase(pBuf);    
   
   wifi.getDeviceStatus();
   while (! wifi.isifUp() ) {
     Serial.println(F("Joining"));
     pBuf.begin();
-    pBuf << F("");
+    pBuf << wifiSSID;
     if (!wifi.join((char*)(const char*)pBuf)) {
       Serial.println(F("Failed to connect"));
     } else{
