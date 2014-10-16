@@ -109,9 +109,9 @@ void setup() {
   Serial << F("Free: ") << freeMemory() << endl;
   http = new NetworkRequester(&wifi, "pourcast.labs.rightpoint.com", 9);
   http->LogMessage("Initializing");
-  tap1 = new Tap(new MultiReporter(new LEDReporter(4), new LEDReporter(10), new NetworkReporter(http, "535c61a951aa0405287989ec")));
+  tap1 = new Tap(new MultiReporter(new LEDReporter(6), new LEDReporter(10), new NetworkReporter(http, "535c61a951aa0405287989ec")));
   attachInterrupt(0, tap1Pulse, RISING);
-  tap2 = new Tap(new MultiReporter(new LEDReporter(5), new LEDReporter(11), new NetworkReporter(http, "537d28db51aa04289027cde5")));
+  tap2 = new Tap(new MultiReporter(new LEDReporter(7), new LEDReporter(11), new NetworkReporter(http, "537d28db51aa04289027cde5")));
   attachInterrupt(1, tap2Pulse, RISING);
   http->LogMessage("DoneInitializing");
   Serial << F("Setup complete") << endl;
