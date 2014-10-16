@@ -25,17 +25,20 @@ void NetworkRequester::MakeRequest(const char* url){
      << F(" HTTP/1.0") << "\n"
      << F("Host: ") << _host << "\n"
      << "\n\n";
-  Serial << strRequest << endl;
-  Serial << F("Free: ") << freeMemory() << endl;
+  //Serial << strRequest << endl;
+  //Serial << F("Free: ") << freeMemory() << endl;
 
   if (_wiFly->openConnection(_host)) {
     Serial << F("Connected") << endl;
     *_wiFly << (const char*) strRequest << endl; 
+    _wiFly->drain();
+    /*
     while (  _wiFly->isConnectionOpen() ) {
       if (  _wiFly->available() > 0 ) {
         Serial << (char) _wiFly->read();
       }
     }
+    */
     _wiFly->closeConnection();
   } else {
     Serial.println(F("Connection failed"));
@@ -57,7 +60,7 @@ void Dec2Hex(PString* output, char ch, int len) {
   PString pBuf(buf, 4, F("%2x"));
   char outBuf[6];
   snprintf(outBuf, 6, buf, ch);
-  Serial << F("Dec2Hex ") << buf << F(" + ") << ch << F(" -> ") << outBuf << endl;
+  //Serial << F("Dec2Hex ") << buf << F(" + ") << ch << F(" -> ") << outBuf << endl;
   *output << outBuf;
 }
 void EscapeMessage(PString* output, const char* message) {
