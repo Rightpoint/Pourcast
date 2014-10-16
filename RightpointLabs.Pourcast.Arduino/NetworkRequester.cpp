@@ -90,7 +90,7 @@ void NetworkRequester::LogMessage(const __FlashStringHelper* message){
   pBuf << F("/api/Status/logMessage?message=");
   
   char *messageBuf = new char[128];
-  PString pMessageBuf(messageBuf, 128);
+  PString pMessageBuf(messageBuf, 128, message);
   EscapeMessage(&pBuf, messageBuf);
   delete messageBuf;
   

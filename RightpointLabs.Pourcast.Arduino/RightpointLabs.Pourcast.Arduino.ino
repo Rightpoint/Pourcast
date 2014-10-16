@@ -58,6 +58,9 @@ void setup() {
       Serial.println(F("Connected"));
       break;
     }
+    
+    // TODO: use an actual connection to confirm we got a good connection - maybe push this logic down to the network layer?
+    
     wifi.getDeviceStatus();
   }
     
