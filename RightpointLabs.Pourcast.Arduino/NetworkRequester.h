@@ -1,22 +1,14 @@
-#define DEBUG_LEVEL 5
+#include <WiFlySerial.h>
 
-#include "Arduino.h"
-#include <SPI.h>
-#include <Configuration.h>
-#include <Debug.h>
-#include <ParsedStream.h>
-#include <SpiUart.h>
-#include <WiFly.h>
-#include <WiFlyClient.h>
-#include <WiFlyDevice.h>
-#include <WiFlyServer.h>
-#include <_Spi.h>
-
-class WiFlyHttp  {
+class NetworkRequester  {
   public:
-    WiFlyHttp(const char* host, int port, byte pin);
+    NetworkRequester(WiFlySerial* wiFly, const char* host, int port, byte pin);
     void MakeRequest(String url);
+    void LogMessage(String message);
+    void Heartbeat();
   private:
-    WiFlyClient* _client;
+    WiFlySerial* _wiFly;
+    const char* _host;
+    int _port;
     byte _pin;
 };

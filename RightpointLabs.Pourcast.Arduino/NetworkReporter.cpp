@@ -1,26 +1,32 @@
 #define DEBUG_LEVEL 5
-#include "WiFlyReporter.h"
+#include "NetworkReporter.h"
 
-WiFlyReporter::WiFlyReporter(WiFlyHttp* http, String tapId) { 
-  _http = http;
+const double PULSES_PER_OZ = 5600.0 / 33.814;
+
+NetworkReporter::NetworkReporter(NetworkRequester* requester, String tapId) { 
+  _requester = requester;
   _tapId = tapId;
 }
 
-void WiFlyReporter::MakeRequest(String url){
-  _http->MakeRequest(url);
-}
-void WiFlyReporter::ReportStop(long pulses){
-  MakeRequest("/api/Tap/" + _tapId + "/StopPour?volume=" + (pulses / 1000));
-}
-void WiFlyReporter::ReportContinue(long pulses) {
-  MakeRequest("/api/Tap/" + _tapId + "/Pouring?volume=" + (pulses / 1000));
-}
-void WiFlyReporter::ReportStart(long pulses){
-  MakeRequest("/api/Tap/" + _tapId + "/StartPour");
-}
-void WiFlyReporter::ReportIgnore(long pulses){
-}
-void WiFlyReporter::Heartbeat(){
-  MakeRequest("/api/Status/heartbeat");
+String toString(double arg) {
+  char buf[128];
+  snprintf(buf, 128, "%f", arg);
+  return buf;
 }
 
+void NetworkReporter::MakeRequest(String url){
+  _requester->MakeRequest(url);
+}
+void NetworkReporter::ReportStop(long pulses){
+  double oz = pulses / PULSES_PER_OZ;
+  MakeRequest("/api/Tap/" + _tapId + "/StopPour?volume=" + toString(oz));
+}
+void NetworkReporter::ReportContinue(long pulses) {
+  double oz = pulses / PULSES_PER_OZ;
+  MakeRequest("/api/Tap/" + _tapId + "/Pouring?volume=" + toString(oz));
+}
+void NetworkReporter::ReportStart(long pulses){
+  MakeRequest("/api/Tap/" + _tapId + "/StartPour");
+}
+void NetworkReporter::ReportIgnore(long pulses){
+}
