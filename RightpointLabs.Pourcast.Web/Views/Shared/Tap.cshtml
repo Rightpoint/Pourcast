@@ -1,0 +1,23 @@
+﻿<div class="keg-info side" style="display: none" data-bind="bubbles: {}, visible: true">
+    @Html.Partial("Background")
+
+    <div class="status">
+        @Html.Partial("Bits")
+        
+        <!-- with: resolved module model -->
+        <!-- template: module model template name -->
+        <div class="profile">
+            <div class="ring">
+                <div class="beer-level" data-bind="style: { height: percentRemainingStyle, background: beer().style().color }"></div>
+
+                @Html.Partial("Accessories")
+
+                @Html.Partial("KegBody")
+            </div>
+            
+            <img class="border" src="/Content/themes/base/images/ring.png">
+        </div>
+    </div>
+
+    @Html.Partial("BeerInfo")
+</div>
