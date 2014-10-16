@@ -44,8 +44,7 @@ void setup() {
     Serial.println("Please upgrade the firmware");
 
   int status = WiFi.status();
-  char* ssid = "";
-  const char* pass = "";
+  #include "Credentials.h"
 
   // attempt to connect to Wifi network:
   while (status != WL_CONNECTED) { 
