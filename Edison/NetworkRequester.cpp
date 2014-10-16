@@ -2,6 +2,8 @@
 #include "NetworkRequester.h"
 #include <WiFi.h>
 #include <WiFiClient.h>
+#include <Streaming.h>
+#include <PString.h>
 
 NetworkRequester::NetworkRequester(const char* host, int port, byte pin) { 
   _host = host;
@@ -11,14 +13,15 @@ NetworkRequester::NetworkRequester(const char* host, int port, byte pin) {
   digitalWrite(_pin, HIGH);
 }
 
-void NetworkRequester::MakeRequest(String url){
+void NetworkRequester::MakeRequest(const char* url){
   digitalWrite(_pin, LOW);
   Serial.println(url);
   WiFiClient client;
   if (client.connect(_host, _port)) {
-    client.println("GET " + url + " HTTP/1.0");
-    client.println("HOST: " + (String)_host);
-    client.println();
+    client 
+        << "GET " << url << " HTTP/1.0" << endl
+        << "HOST: " << _host << endl 
+        << endl;
 
     #if false
     byte buffer[128];
@@ -37,15 +40,15 @@ void NetworkRequester::Heartbeat(){
   MakeRequest("/api/Status/heartbeat");
 }
 // Dec2Hex + EscapeMessage based on Toolbox.NETMF.Tools.RawUrlEncode
-String Dec2Hex(char ch, int len) {
+void Dec2Hex(PString* output, char ch, int len) {
   char buf[6];
   snprintf(buf, 5, "%2x", ch);
-  return buf;
+  *output << buf;
 }
-String EscapeMessage(String message) {
-  String retVal = "";
-  for(int i = 0; i < message.length(); i++) {
-    char ch = message.charAt(i);
+void EscapeMessage(PString* output, const char* message) {
+  int len = strlen(message);
+  for(int i = 0; i < len; i++) {
+    char ch = message[i];
     if (
        ch == 0x2d                  // -
        || ch == 0x5f               // _
@@ -56,16 +59,21 @@ String EscapeMessage(String message) {
        || (ch > 0x60 && ch < 0x7b) // a-z
        )
     {
-        retVal += ch;
+        *output << ch;
     }
     else
     {
         // Calculates the hex value in some way
-        retVal += "%" + Dec2Hex(ch, 2);
+        *output << "%";
+        Dec2Hex(output, ch, 2);
     }
   }
-  return retVal;
 }
-void NetworkRequester::LogMessage(String message){
-  MakeRequest("/api/Status/logMessage?message=" + EscapeMessage(message));
+
+void NetworkRequester::LogMessage(const char* message){
+  char buf[256];
+  PString pBuf(buf, 256, "/api/Status/logMessage?message=");
+  EscapeMessage(&pBuf, message);  
+  
+  MakeRequest(buf);
 }

@@ -1,9 +1,11 @@
 #define DEBUG_LEVEL 5
 #include "NetworkReporter.h"
+#include <Streaming.h>
+#include <PString.h>
 
 const double PULSES_PER_OZ = 5600.0 / 33.814;
 
-NetworkReporter::NetworkReporter(NetworkRequester* requester, String tapId) { 
+NetworkReporter::NetworkReporter(NetworkRequester* requester, const char* tapId) { 
   _requester = requester;
   _tapId = tapId;
 }
@@ -14,19 +16,30 @@ String toString(double arg) {
   return buf;
 }
 
-void NetworkReporter::MakeRequest(String url){
-  _requester->MakeRequest(url);
-}
 void NetworkReporter::ReportStop(long pulses){
   double oz = pulses / PULSES_PER_OZ;
-  MakeRequest("/api/Tap/" + _tapId + "/StopPour?volume=" + toString(oz));
+  
+  char buf[128];
+  PString pBuf(buf, 128);
+  pBuf << "/api/Tap/" << _tapId << "/StopPour?volume=" << oz;
+  
+  _requester->MakeRequest(buf);
 }
 void NetworkReporter::ReportContinue(long pulses) {
   double oz = pulses / PULSES_PER_OZ;
-  MakeRequest("/api/Tap/" + _tapId + "/Pouring?volume=" + toString(oz));
+  
+  char buf[128];
+  PString pBuf(buf, 128);
+  pBuf << "/api/Tap/" << _tapId << "/Pouring?volume=" << oz;
+  
+  _requester->MakeRequest(buf);
 }
 void NetworkReporter::ReportStart(long pulses){
-  MakeRequest("/api/Tap/" + _tapId + "/StartPour");
+  char buf[128];
+  PString pBuf(buf, 128);
+  pBuf << "/api/Tap/" << _tapId << "/StartPour";
+  
+  _requester->MakeRequest(buf);
 }
 void NetworkReporter::ReportIgnore(long pulses){
 }

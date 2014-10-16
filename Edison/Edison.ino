@@ -6,7 +6,10 @@
 #include <WiFiClient.h>
 #include <WiFiServer.h>
 #include <WiFiUdp.h>
+#include <Streaming.h>
+#include <PString.h>
 
+//#include "MemoryFree.h" // doesn't work for edison :(
 #include "Tap.h"
 #include "MultiReporter.h"
 #include "LEDReporter.h"
@@ -66,7 +69,7 @@ void setup() {
   Serial.println("Connected to wifi");
   http = new NetworkRequester("pourcast.labs.rightpoint.com", 80, 11);
 
-  String wifiStatus = getWifiStatus();
+  const char* wifiStatus = getWifiStatus();
   Serial.println(wifiStatus);
   http->LogMessage(wifiStatus);
 
@@ -86,6 +89,13 @@ void startupDelay() {
   http->LogMessage(buf);
 }
 
+void writeStatus( ){
+  char buffer[512];
+  PString pBuffer(buffer, 512);
+  pBuffer << "WIFI: " << getWifiStatus();
+  http->LogMessage(buffer);
+}
+
 // main loop - once a second, check the accumulated pulse counts and send the START/STOP/CONTINUE/IGNORE message as necessary
 // send an ALIVE message every loop to assist debugging
 void loop() {
@@ -97,10 +107,8 @@ void loop() {
     tap1->Loop(cycle);
     tap2->Loop(cycle);
 
-    if(cycle % 6000 == 0) {
-      String wifiStatus = getWifiStatus();
-      Serial.println(wifiStatus);
-      http->LogMessage(wifiStatus);
+    if(cycle % 600 == 0) {
+      writeStatus();
     }
     if(cycle % 600 == 0) {
       http->Heartbeat();
@@ -112,12 +120,17 @@ void loop() {
   }
 }
 
-String getWifiStatus() {
+char wifiStatusBuffer[256];
+const char* getWifiStatus() {
+  PString output(wifiStatusBuffer, 256);
+  
   String prefix = "SSID: ";
   IPAddress ip = WiFi.localIP();
   char buf[0x20];
   snprintf(buf, sizeof(buf), "%3d.%3d.%3d.%3d", ip[0], ip[1], ip[2], ip[3]);
 
-  return prefix + WiFi.SSID() + ", IP Address: " + buf + ", RSSI: " + WiFi.RSSI() + " dBm";
+  output << prefix << WiFi.SSID() << ", IP Address: " << buf << ", RSSI: " << WiFi.RSSI() << " dBm";
+  
+  return wifiStatusBuffer;
 }
 

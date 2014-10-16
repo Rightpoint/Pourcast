@@ -3,8 +3,8 @@
 class NetworkRequester  {
   public:
     NetworkRequester(const char* host, int port, byte pin);
-    void MakeRequest(String url);
-    void LogMessage(String message);
+    void MakeRequest(const char* url);
+    void LogMessage(const char* message);
     void Heartbeat();
   private:
     const char* _host;

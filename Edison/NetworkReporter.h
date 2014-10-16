@@ -4,14 +4,14 @@
 
 class NetworkReporter: public Reporter {
 public:
-  NetworkReporter(NetworkRequester* requester, String tapId);
+  NetworkReporter(NetworkRequester* requester, const char* tapId);
   virtual void ReportStop(long pulses);
   virtual void ReportContinue(long pulses);
   virtual void ReportStart(long pulses);
   virtual void ReportIgnore(long pulses);
 private:
   void MakeRequest(String url);
-  String _tapId;
+  const char* _tapId;
   NetworkRequester* _requester;
 };
 
