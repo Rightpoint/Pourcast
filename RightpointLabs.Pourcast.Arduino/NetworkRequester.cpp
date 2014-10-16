@@ -24,7 +24,6 @@ void NetworkRequester::MakeRequest(const char* url){
   strRequest << F("GET ") << url 
      << F(" HTTP/1.0") << "\n"
      << F("Host: ") << _host << "\n"
-//     << F("Connection: close") << "\n"
      << "\n\n";
   Serial << strRequest << endl;
   Serial << F("Free: ") << freeMemory() << endl;
@@ -37,8 +36,7 @@ void NetworkRequester::MakeRequest(const char* url){
         Serial << (char) _wiFly->read();
       }
     }
-    Serial << F("Close") << _wiFly->closeConnection() << F(" ") << _wiFly->StartCommandMode() << endl;
-    Serial << _wiFly->SendCommandSimple("set",">") << endl;
+    _wiFly->closeConnection();
   } else {
     Serial.println(F("Connection failed"));
   }
@@ -85,6 +83,19 @@ void EscapeMessage(PString* output, const char* message) {
       Dec2Hex(output, ch, 2);
     }
   }
+}
+void NetworkRequester::LogMessage(const __FlashStringHelper* message){
+  char buf[128];
+  PString pBuf(buf, 128);
+  pBuf << F("/api/Status/logMessage?message=");
+  
+  char *messageBuf = new char[128];
+  PString pMessageBuf(messageBuf, 128);
+  EscapeMessage(&pBuf, messageBuf);
+  delete messageBuf;
+  
+  Serial << F("Free: ") << freeMemory() << endl;
+  MakeRequest(buf);
 }
 void NetworkRequester::LogMessage(const char* message){
   char buf[128];

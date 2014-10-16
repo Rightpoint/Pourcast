@@ -39,43 +39,26 @@ void setup() {
   PString pBuf(buf, 32);
 
   //wifi.setDebugChannel(&Serial);
-  
-  pinMode(6, OUTPUT);
-  pinMode(7, OUTPUT);
-  digitalWrite(6, HIGH);
-  digitalWrite(7, HIGH);
-//  delay(1000);
-  digitalWrite(6, LOW);
-  digitalWrite(7, HIGH);
-  //delay(1000);
-  digitalWrite(6, HIGH);
-  digitalWrite(7, LOW);
-  //delay(1000);
-  digitalWrite(6, HIGH);
-  digitalWrite(7, HIGH);
-  
   Serial.println(F("Starting"));
   wifi.begin();
   pBuf.begin();
   pBuf << F("");
   wifi.setPassphrase(pBuf);    
-  Serial.println(F("Joining"));
   
-  digitalWrite(6, LOW);
-  digitalWrite(7, HIGH);
-  pBuf.begin();
-  pBuf << F("");
-  if (!wifi.join((char*)(const char*)pBuf)) {
-     // Handle the failure
-     
-    Serial.println(F("Failed to connect"));
-    digitalWrite(7, HIGH);
-  } else{
-    Serial.println(F("Connected"));
-    digitalWrite(7, LOW);
+  wifi.getDeviceStatus();
+  while (! wifi.isifUp() ) {
+    Serial.println(F("Joining"));
+    pBuf.begin();
+    pBuf << F("");
+    if (!wifi.join((char*)(const char*)pBuf)) {
+      Serial.println(F("Failed to connect"));
+    } else{
+      Serial.println(F("Connected"));
+      break;
+    }
+    wifi.getDeviceStatus();
   }
-  digitalWrite(6, HIGH);
-
+    
   Serial << F("Free: ") << freeMemory() << endl;
   setNoCommRemote();
   Serial << F("Free: ") << freeMemory() << endl;
@@ -108,12 +91,12 @@ void setup() {
   Serial << F("Starting network stuff") << endl;
   Serial << F("Free: ") << freeMemory() << endl;
   http = new NetworkRequester(&wifi, "pourcast.labs.rightpoint.com", 9);
-  http->LogMessage("Initializing");
+  http->LogMessage(F("Initializing"));
   tap1 = new Tap(new MultiReporter(new LEDReporter(6), new LEDReporter(10), new NetworkReporter(http, "535c61a951aa0405287989ec")));
   attachInterrupt(0, tap1Pulse, RISING);
   tap2 = new Tap(new MultiReporter(new LEDReporter(7), new LEDReporter(11), new NetworkReporter(http, "537d28db51aa04289027cde5")));
   attachInterrupt(1, tap2Pulse, RISING);
-  http->LogMessage("DoneInitializing");
+  http->LogMessage(F("Done Initializing"));
   Serial << F("Setup complete") << endl;
   Serial << F("Free: ") << freeMemory() << endl;
 }
@@ -126,17 +109,11 @@ void tap2Pulse() {
   tap2->HandlePulse();
 }
 
-void startingMainLoop() {
-  char buf[32];
-  PString pBuf(buf, 32, F("StartingMainLoop"));
-  http->LogMessage(pBuf);
-}
-
 // main loop - once a second, check the accumulated pulse counts and send the START/STOP/CONTINUE/IGNORE message as necessary
 // send an ALIVE message every loop to assist debugging
-  void loop() {
-    Serial << F("Free: ") << freeMemory() << endl;
-  startingMainLoop();
+void loop() {
+  Serial << F("Free: ") << freeMemory() << endl;
+  http->LogMessage(F("Starting Main Loop"));
   return;
   int cycle = 0;
   while(true) {
