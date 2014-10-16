@@ -5,27 +5,27 @@ SerialReporter::SerialReporter(byte number) {
 }
 
 void SerialReporter::ReportStop(long pulses){
-  Serial.print("STOP ");
+  Serial.print(F("STOP ")  );
   Serial.print(_number, DEC);
-  Serial.print(" ");
+  Serial.print(F(" "));
   Serial.println(pulses, DEC);
 }
 void SerialReporter::ReportContinue(long pulses) {
-  Serial.print("CONTINUE ");
+  Serial.print(F("CONTINUE "));
   Serial.print(_number, DEC);
-  Serial.print(" ");
+  Serial.print(F(" "));
   Serial.println(pulses, DEC);
 }
 void SerialReporter::ReportStart(long pulses){
-  Serial.print("START ");
+  Serial.print(F("START "));
   Serial.print(_number, DEC);
-  Serial.print(" ");
+  Serial.print(F(" "));
   Serial.println(pulses, DEC);
 }
 void SerialReporter::ReportIgnore(long pulses){
-  Serial.print("IGNORE ");
+  Serial.print(F("IGNORE "));
   Serial.print(_number, DEC);
-  Serial.print(" ");
+  Serial.print(F(" "));
   Serial.println(pulses, DEC);
 }
 

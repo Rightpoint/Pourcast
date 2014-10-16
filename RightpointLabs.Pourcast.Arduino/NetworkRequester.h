@@ -2,13 +2,12 @@
 
 class NetworkRequester  {
   public:
-    NetworkRequester(WiFlySerial* wiFly, const char* host, int port, byte pin);
-    void MakeRequest(String url);
-    void LogMessage(String message);
+    NetworkRequester(WiFlySerial* wiFly, const char* host, byte pin);
+    void MakeRequest(const char* url);
+    void LogMessage(const char* message);
     void Heartbeat();
   private:
     WiFlySerial* _wiFly;
     const char* _host;
-    int _port;
     byte _pin;
 };

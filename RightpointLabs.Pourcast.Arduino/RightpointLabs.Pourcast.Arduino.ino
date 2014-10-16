@@ -16,13 +16,15 @@ Tap* tap1;
 Tap* tap2;
 NetworkRequester* http;
 
-#define REQUEST_BUFFER_SIZE 180
-char bufRequest[REQUEST_BUFFER_SIZE];
-
 time_t GetSyncTime() {
   time_t tCurrent = (time_t) wifi.getTime();
   wifi.exitCommandMode();
   return tCurrent;
+}
+
+void setNoCommRemote() {
+  char bufRequest[60];
+  wifi.SendCommand("set comm remote 0", ">",bufRequest, 60);
 }
 
 // prep - initialize serial (TX on pin 1) and wire up the interrupts for pulses from the taps (pins 2 and 3)
@@ -30,6 +32,11 @@ void setup() {
   Serial.begin(9600);
   while(!Serial);
   Serial.println("setup");
+  
+  Serial << F("Free: ") << freeMemory() << endl;
+
+  char buf[32];
+  PString pBuf(buf, 32);
 
   //wifi.setDebugChannel(&Serial);
   
@@ -47,30 +54,45 @@ void setup() {
   digitalWrite(6, HIGH);
   digitalWrite(7, HIGH);
   
-  Serial.println("Starting");
+  Serial.println(F("Starting"));
   wifi.begin();
-  wifi.setPassphrase("");    
-  Serial.println("Joining");
+  pBuf.begin();
+  pBuf << F("");
+  wifi.setPassphrase(pBuf);    
+  Serial.println(F("Joining"));
   
   digitalWrite(6, LOW);
   digitalWrite(7, HIGH);
-  //Serial.println("Joining");
-  if (!wifi.join("")) {
+  pBuf.begin();
+  pBuf << F("");
+  if (!wifi.join((char*)(const char*)pBuf)) {
      // Handle the failure
-    Serial.println("Failed to connect");
+     
+    Serial.println(F("Failed to connect"));
     digitalWrite(7, HIGH);
   } else{
-    Serial.println("Connected");
+    Serial.println(F("Connected"));
     digitalWrite(7, LOW);
   }
   digitalWrite(6, HIGH);
 
-  Serial << "Free: " << freeMemory() << endl;
+  Serial << F("Free: ") << freeMemory() << endl;
+  setNoCommRemote();
+  Serial << F("Free: ") << freeMemory() << endl;
 
-  wifi.SendCommand("set comm remote 0", ">",bufRequest, REQUEST_BUFFER_SIZE);
-  wifi.setNTP("nist1-la.ustiming.org"); 
-  wifi.setNTP_Update_Frequency(" 15");
+  Serial << F("Enabling NTP") << endl;
+  Serial << F("Free: ") << freeMemory() << endl;
+  pBuf.begin();
+  pBuf << F("nist1-la.ustiming.org");
+  wifi.setNTP(pBuf); 
+  pBuf.begin();
+  pBuf << F(" 15");
+  wifi.setNTP_Update_Frequency(pBuf);
+  Serial << F("Getting status") << endl;
+  Serial << F("Free: ") << freeMemory() << endl;
   wifi.getDeviceStatus();
+  Serial << F("Configuring time") << endl;
+  Serial << F("Free: ") << freeMemory() << endl;
   setTime( wifi.getTime() );
   delay(1000);
   setSyncProvider( GetSyncTime );
@@ -83,12 +105,17 @@ void setup() {
 
 //  Serial.println(WiFly.ip());
 
-  http = new NetworkRequester(&wifi, "pourcast.labs.rightpoint.com", 80, 9);
+  Serial << F("Starting network stuff") << endl;
+  Serial << F("Free: ") << freeMemory() << endl;
+  http = new NetworkRequester(&wifi, "pourcast.labs.rightpoint.com", 9);
   http->LogMessage("Initializing");
   tap1 = new Tap(new MultiReporter(new LEDReporter(4), new LEDReporter(10), new NetworkReporter(http, "535c61a951aa0405287989ec")));
   attachInterrupt(0, tap1Pulse, RISING);
   tap2 = new Tap(new MultiReporter(new LEDReporter(5), new LEDReporter(11), new NetworkReporter(http, "537d28db51aa04289027cde5")));
   attachInterrupt(1, tap2Pulse, RISING);
+  http->LogMessage("DoneInitializing");
+  Serial << F("Setup complete") << endl;
+  Serial << F("Free: ") << freeMemory() << endl;
 }
 
 // handle interrupt pulses from the taps
@@ -99,11 +126,17 @@ void tap2Pulse() {
   tap2->HandlePulse();
 }
 
+void startingMainLoop() {
+  char buf[32];
+  PString pBuf(buf, 32, F("StartingMainLoop"));
+  http->LogMessage(pBuf);
+}
+
 // main loop - once a second, check the accumulated pulse counts and send the START/STOP/CONTINUE/IGNORE message as necessary
 // send an ALIVE message every loop to assist debugging
-void loop() {
-  Serial << "Free: " << freeMemory() << endl;
-  http->LogMessage("Starting main loop");
+  void loop() {
+    Serial << F("Free: ") << freeMemory() << endl;
+  startingMainLoop();
   return;
   int cycle = 0;
   while(true) {

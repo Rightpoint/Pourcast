@@ -3,60 +3,69 @@
 #include <Streaming.h>
 #include <PString.h>
 #include <WiFlySerial.h>
+#include "MemoryFree.h"
 
-NetworkRequester::NetworkRequester(WiFlySerial* wiFly, const char* host, int port, byte pin) { 
+NetworkRequester::NetworkRequester(WiFlySerial* wiFly, const char* host, byte pin) { 
   _wiFly = wiFly;
   _host = host;
-  _port = port;
   _pin = pin;
   pinMode(_pin, OUTPUT);
   digitalWrite(_pin, HIGH);
 }
 
-void NetworkRequester::MakeRequest(String url){
+void NetworkRequester::MakeRequest(const char* url){
   digitalWrite(_pin, LOW);
   Serial.println(url);
   // Build GET expression
   
-  char bufRequest[512];
-  PString strRequest(bufRequest, 512);
+  char bufRequest[192];
+  PString strRequest(bufRequest, 192);
 
   strRequest << F("GET ") << url 
-     << F(" HTTP/1.1") << "\n"
+     << F(" HTTP/1.0") << "\n"
      << F("Host: ") << _host << "\n"
-     << F("Connection: close") << "\n"
+//     << F("Connection: close") << "\n"
      << "\n\n";
+  Serial << strRequest << endl;
+  Serial << F("Free: ") << freeMemory() << endl;
 
   if (_wiFly->openConnection(_host)) {
-    Serial << strRequest << endl;
+    Serial << F("Connected") << endl;
     *_wiFly << (const char*) strRequest << endl; 
     while (  _wiFly->isConnectionOpen() ) {
       if (  _wiFly->available() > 0 ) {
         Serial << (char) _wiFly->read();
       }
     }
+    Serial << F("Close") << _wiFly->closeConnection() << F(" ") << _wiFly->StartCommandMode() << endl;
+    Serial << _wiFly->SendCommandSimple("set",">") << endl;
   } else {
-    Serial.println("Connection failed");
+    Serial.println(F("Connection failed"));
   }
 
   Serial.print(url);
-  Serial.println(" COMPLETE");
+  Serial.println(F(" COMPLETE"));
   digitalWrite(_pin, HIGH);
 }
 
 void NetworkRequester::Heartbeat(){
-  MakeRequest("/api/Status/heartbeat");
+  char buf[32];
+  PString(buf, 32, F("/api/Status/heartbeat"));
+  MakeRequest(buf);
 }
 // Dec2Hex + EscapeMessage based on Toolbox.NETMF.Tools.RawUrlEncode
-String Dec2Hex(char ch, int len) {
-  char buf[6];
-  snprintf(buf, 5, "%2x", ch);
-  return buf;
+void Dec2Hex(PString* output, char ch, int len) {
+  char buf[4];
+  PString pBuf(buf, 4, F("%2x"));
+  char outBuf[6];
+  snprintf(outBuf, 6, buf, ch);
+  Serial << F("Dec2Hex ") << buf << F(" + ") << ch << F(" -> ") << outBuf << endl;
+  *output << outBuf;
 }
-String EscapeMessage(String message) {
-  String retVal = "";
-  for(int i = 0; i < message.length(); i++) {
-    char ch = message.charAt(i);
+void EscapeMessage(PString* output, const char* message) {
+  int len = strlen(message);
+  for(int i = 0; i < len; i++) {
+    char ch = message[i];
     if (
        ch == 0x2d                  // -
        || ch == 0x5f               // _
@@ -67,16 +76,22 @@ String EscapeMessage(String message) {
        || (ch > 0x60 && ch < 0x7b) // a-z
        )
     {
-        retVal += ch;
+      *output << ch;
     }
     else
     {
         // Calculates the hex value in some way
-        retVal += "%" + Dec2Hex(ch, 2);
+      *output << F("%");
+      Dec2Hex(output, ch, 2);
     }
   }
-  return retVal;
 }
-void NetworkRequester::LogMessage(String message){
-  MakeRequest("/api/Status/logMessage?message=" + EscapeMessage(message));
+void NetworkRequester::LogMessage(const char* message){
+  char buf[128];
+  PString pBuf(buf, 128);
+  pBuf << F("/api/Status/logMessage?message=");
+  EscapeMessage(&pBuf, message);
+  
+  Serial << F("Free: ") << freeMemory() << endl;
+  MakeRequest(buf);
 }
