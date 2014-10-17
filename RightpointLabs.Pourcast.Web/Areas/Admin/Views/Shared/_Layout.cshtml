@@ -28,9 +28,9 @@
                 <ul class="nav navbar-nav">
                     <li @Html.Raw(this.ViewContext.Controller.GetType() == (typeof(TapController)) ? "class='active'" : "")>@Html.ActionLink("Manage Taps", "Index", "Tap")</li>
                     <li @Html.Raw(this.ViewContext.Controller.GetType() == (typeof(KegController)) ? "class='active'" : "")>@Html.ActionLink("Manage Kegs", "Index", "Keg")</li>
-                    <li @Html.Raw(this.ViewContext.Controller.GetType() == (typeof(BreweryController)) ? "class='active'" : "")>@Html.ActionLink("Manage Breweries", "Index", "Brewery")</li>
                     <li @Html.Raw(this.ViewContext.Controller.GetType() == (typeof(BeerController)) ? "class='active'" : "")>@Html.ActionLink("Manage Beers", "Index", "Beer")</li>
                     <li @Html.Raw(this.ViewContext.Controller.GetType() == (typeof(StyleController)) ? "class='active'" : "")>@Html.ActionLink("Manage Styles", "Index", "Style")</li>
+                    <li @Html.Raw(this.ViewContext.Controller.GetType() == (typeof(BreweryController)) ? "class='active'" : "")>@Html.ActionLink("Manage Breweries", "Index", "Brewery")</li>
                 </ul>
             </div>
         </div>
