@@ -880,7 +880,8 @@ boolean WiFlySerial::openConnection(const char* pURL, const unsigned long iWaitT
   itoa( iRemotePort, strchr(bufCommand, '\0'), 10);
   DebugPrint("openConnection:");
   DebugPrint(bufCommand);
-  bWiFlyConnectionOpen = SendCommand(bufCommand,WiFlyFixedPrompts[WIFLY_MSG_OPEN], bufOpen, INDICATOR_BUFFER_SIZE, false, iWaitTime , true, false); 
+  // change from stock - do *not* pass bClear - it results in waiting for DEFAULT_WAIT_TIME (1s) after the connection is established - we want speed
+  bWiFlyConnectionOpen = SendCommand(bufCommand,WiFlyFixedPrompts[WIFLY_MSG_OPEN], bufOpen, INDICATOR_BUFFER_SIZE, false, iWaitTime , false, false); 
   if( bWiFlyConnectionOpen) {
 	  bWiFlyInCommandMode = false;
   }
