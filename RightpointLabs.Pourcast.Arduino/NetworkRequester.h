@@ -8,8 +8,6 @@ class NetworkRequester  {
     void LogMessage(const __FlashStringHelper* message);
     void Heartbeat();
   private:
-    bool ResolveIP();
-    char _ip[32];
     WiFlySerial* _wiFly;
     const char* _host;
     byte _pin;
