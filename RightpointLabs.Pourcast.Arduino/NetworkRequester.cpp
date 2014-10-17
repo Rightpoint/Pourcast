@@ -7,6 +7,8 @@
 
 NetworkRequester::NetworkRequester(WiFlySerial* wiFly, const char* host, byte pin) { 
   _ip[0] = '\0';
+  //strcpy(_ip, "64.68.29.134");
+  //strcpy(_ip, "192.168.25.1");
   _wiFly = wiFly;
   _host = host;
   _pin = pin;
@@ -20,16 +22,54 @@ NetworkRequester::NetworkRequester(WiFlySerial* wiFly, const char* host, byte pi
 bool NetworkRequester::ResolveIP() {
   if(_ip[0] != '\0')
     return true;
+    
+  // whoa... format is name=IP - bleh, don't want to parse all that...
+    
+  char readBuffer[48];
   
-  char buf[32];
-  PString pBuf(buf, 32, "lookup " );
+  char buf[48];
+  PString pBuf(buf, 48, "lookup " );
   pBuf << _host;
   
-  if(!_wiFly->SendCommand(buf, ">", _ip, 32))
-    _ip[0] = '\0';
-    
-  Serial << F("Resolved ") << _host << " to " << _ip  << endl;
+  if(!_wiFly->SendCommand(buf, ">", readBuffer, 48))
+    readBuffer[0] = '\0';
+  Serial << F("Raw lookup response: ") << readBuffer << endl;
   
+  bool isValid = true;
+  byte len = strlen(readBuffer);
+  byte dots = 0;
+  bool wasLastDot = true;
+  for(byte i=0; i<len; i++) {
+    if(readBuffer[i] == '.') {
+      if(wasLastDot) {
+        //Serial << F("Extra dot @ ") << i << endl;
+        isValid = false;
+        break;
+      } else{
+        //Serial << F("Valid dot @ ") << i << endl;
+        dots++;
+        wasLastDot = true;
+      }
+    } else if(readBuffer[i] >= '0' && readBuffer[i] <= '9') {
+      wasLastDot = false;
+      //Serial << F("Valid digit @ ") << i << endl;
+    } else {
+      // terminate here
+      readBuffer[i] = '\0';
+      break;
+    }
+  }
+  isValid &= dots == 3;
+    
+  if(isValid) {
+    strncpy(_ip, readBuffer, 32);
+    Serial << F("Resolved ") << _host << " to " << _ip << endl;
+  } else{
+    Serial << F("Ignored resolution of  ") << _host << " to " << readBuffer  << endl;
+    Serial << F("Command was: ") << buf << endl;
+    _ip[0] = '\0';
+  }
+    
   return _ip[0] != '\0';
 }
 
@@ -37,7 +77,10 @@ void NetworkRequester::MakeRequest(const char* url){
   digitalWrite(_pin, LOW);
   Serial.println(url);
   
-  ResolveIP();
+  
+  while(!ResolveIP()){
+    delay(100);
+  }
   
   // Build GET expression
   
@@ -54,7 +97,10 @@ void NetworkRequester::MakeRequest(const char* url){
   if (_wiFly->openConnection(_ip)) {
     Serial << F("Connected") << endl;
     *_wiFly << (const char*) strRequest << endl; 
-    _wiFly->drain();
+    Serial << F("Request sent") << endl;
+    while (_wiFly->isConnectionOpen())
+      _wiFly->drain();
+    Serial << F("response drained") << endl;
     /*
     while (  _wiFly->isConnectionOpen() ) {
       if (  _wiFly->available() > 0 ) {
@@ -63,6 +109,7 @@ void NetworkRequester::MakeRequest(const char* url){
     }
     */
     _wiFly->closeConnection();
+    Serial << F("connection closed") << endl;
   } else {
     Serial.println(F("Connection failed"));
   }
