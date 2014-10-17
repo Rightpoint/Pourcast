@@ -6,16 +6,39 @@
 #include "MemoryFree.h"
 
 NetworkRequester::NetworkRequester(WiFlySerial* wiFly, const char* host, byte pin) { 
+  _ip[0] = '\0';
   _wiFly = wiFly;
   _host = host;
   _pin = pin;
   pinMode(_pin, OUTPUT);
+  
+  ResolveIP();
+  
   digitalWrite(_pin, HIGH);
+}
+
+bool NetworkRequester::ResolveIP() {
+  if(_ip[0] != '\0')
+    return true;
+  
+  char buf[32];
+  PString pBuf(buf, 32, "lookup " );
+  pBuf << _host;
+  
+  if(!_wiFly->SendCommand(buf, ">", _ip, 32))
+    _ip[0] = '\0';
+    
+  Serial << F("Resolved ") << _host << " to " << _ip  << endl;
+  
+  return _ip[0] != '\0';
 }
 
 void NetworkRequester::MakeRequest(const char* url){
   digitalWrite(_pin, LOW);
   Serial.println(url);
+  
+  ResolveIP();
+  
   // Build GET expression
   
   char bufRequest[192];
@@ -28,7 +51,7 @@ void NetworkRequester::MakeRequest(const char* url){
   //Serial << strRequest << endl;
   //Serial << F("Free: ") << freeMemory() << endl;
 
-  if (_wiFly->openConnection(_host)) {
+  if (_wiFly->openConnection(_ip)) {
     Serial << F("Connected") << endl;
     *_wiFly << (const char*) strRequest << endl; 
     _wiFly->drain();
