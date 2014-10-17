@@ -22,6 +22,8 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
         {
             AutoMapper.Mapper.CreateMap<Keg, KegModel>();
             AutoMapper.Mapper.CreateMap<KegModel, Keg>();
+            AutoMapper.Mapper.CreateMap<Keg, EditKegViewModel>();
+            AutoMapper.Mapper.CreateMap<EditKegViewModel, Keg>();
         }
 
         public KegController(IKegOrchestrator kegOrchestrator, IBeerOrchestrator beerOrchestrator,
@@ -82,6 +84,30 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
 
             var id = _kegOrchestrator.CreateKeg(model.BeerId, model.Capacity);
             return RedirectToAction("Details", new {id = id});
+        }
+
+        // GET: Admin/Keg/Edit/5
+        public ActionResult Edit(string id)
+        {
+            var keg = _kegOrchestrator.GetKeg(id);
+            if (null == keg)
+                return RedirectToAction("Index");
+
+            var model = AutoMapper.Mapper.Map<Keg, EditKegViewModel>(keg);
+            var beer = _beerOrchestrator.GetById(keg.BeerId);
+            model.BeerName = beer.Name;
+            return View(model);
+        }
+
+        // POST: Admin/Keg/Edit/5
+        [HttpPost]
+        public ActionResult Edit(EditKegViewModel model)
+        {
+            var keg = _kegOrchestrator.GetKeg(model.Id);
+            AutoMapper.Mapper.Map(model, keg);
+            //_kegOrchestrator.(keg);
+            throw new NotImplementedException();
+            return RedirectToAction("Details", new { id = model.Id });
         }
 	}
 }
