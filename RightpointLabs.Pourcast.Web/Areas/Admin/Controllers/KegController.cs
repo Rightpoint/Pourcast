@@ -67,7 +67,7 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
 
         public ActionResult Create()
         {
-            var vm = new CreateKegViewModel(_beerOrchestrator.GetBeers());
+            var vm = new CreateKegViewModel(_beerOrchestrator.GetBeers().OrderBy(i => i.Name).ToList());
 
             return View(vm);
         }

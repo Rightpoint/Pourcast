@@ -72,6 +72,7 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
                 var km = kegModels.FirstOrDefault(k => k.Id == keg.Id);
                 if (null != km) km.BeerName = beer.Name;
             }
+            kegModels = kegModels.OrderBy(i => i.BeerName).ToList();
             var vm = new EditTapViewModel(kegModels, tap.KegId);
 
             return View(vm);

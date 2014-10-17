@@ -443,6 +443,8 @@
     <Content Include="Scripts\libs\toastr.min.js.map" />
     <Content Include="Views\RepourterTest\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\Number.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\Percentage.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
