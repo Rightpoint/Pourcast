@@ -44,6 +44,13 @@
                 self.percentRemaining((e.PercentRemaining * 100).toFixed(1));
             }
         });
+        events.on("KegRemainingChanged", function (e) {
+            console.log("KegRemainingChanged");
+
+            if (e.KegId === self.id()) {
+                self.percentRemaining((e.PercentRemaining * 100).toFixed(1));
+            }
+        });
     };
 
     return Keg;

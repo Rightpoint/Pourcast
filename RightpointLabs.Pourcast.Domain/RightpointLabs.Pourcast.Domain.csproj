@@ -48,6 +48,7 @@
     <Compile Include="Events\LogMessage.cs" />
     <Compile Include="Events\Heartbeat.cs" />
     <Compile Include="Events\Pouring.cs" />
+    <Compile Include="Events\KegRemainingChanged.cs" />
     <Compile Include="Events\PourStopped.cs" />
     <Compile Include="Events\PourStarted.cs" />
     <Compile Include="Events\BreweryCreated.cs" />

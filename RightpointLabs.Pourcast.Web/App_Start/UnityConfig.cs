@@ -88,12 +88,14 @@ namespace RightpointLabs.Pourcast.Web
             // event handlers (must be named!)
             container.RegisterType(typeof(IEventHandler<>), typeof(EventStoreHandler<>), "EventStore", new PerRequestLifetimeManager());
             container.RegisterType<IEventHandler<PourStopped>, KegNearingEmptyNotificationHandler>("KegNearingEmptyNotification", new PerRequestLifetimeManager());
+            container.RegisterType<IEventHandler<KegRemainingChanged>, KegNearingEmptyNotificationHandler>("KegNearingEmptyNotification", new PerRequestLifetimeManager());
             container.RegisterType<IEventHandler<KegEmptied>, KegEmptiedNotificationHandler>("KegEmptiedNotification", new PerRequestLifetimeManager());
 
             // signalr event handlers (must be named!)
             container.RegisterType<IEventHandler<PourStarted>, PourStartedClientHandler>("BeerPourStartedClientHandler", new PerRequestLifetimeManager());
             container.RegisterType<IEventHandler<Pouring>, PouringClientHandler>("BeerPouringClientHandler", new PerRequestLifetimeManager());
             container.RegisterType<IEventHandler<PourStopped>, PourStoppedClientHandler>("BeerPourStoppedClientHandler", new PerRequestLifetimeManager());
+            container.RegisterType<IEventHandler<KegRemainingChanged>, KegRemainingChangedClientHandler>("KegRemainingChangedClientHandler", new PerRequestLifetimeManager());
             container.RegisterType<IEventHandler<KegRemovedFromTap>, KegRemovedFromTapClientHandler>("KegRemovedFromTapClientHandler", new PerRequestLifetimeManager());
             container.RegisterType<IEventHandler<KegTapped>, KegTappedClientHandler>("KegTappedClientHandler", new PerRequestLifetimeManager());
             container.RegisterType<IEventHandler<Heartbeat>, HeartbeatClientHandler>("HeartbeatClientHandler", new PerRequestLifetimeManager());

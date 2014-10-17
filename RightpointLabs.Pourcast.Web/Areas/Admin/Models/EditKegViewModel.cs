@@ -11,8 +11,6 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Models
         public string Id { get; set; }
         [Display(Name = "Beer")]
         public string BeerName { get; set; }
-        [Display(Name = "Empty")]
-        public bool IsEmpty { get; set; }
         [Required(ErrorMessage = "Capacity is required")]
         public double Capacity { get; set; }
         [Required(ErrorMessage = "Amount of Beer Poured is required")]

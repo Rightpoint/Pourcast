@@ -5,16 +5,16 @@
     using RightpointLabs.Pourcast.Application.Transactions;
     using RightpointLabs.Pourcast.Domain.Events;
 
-    public class KegRemainingChangedClientHandler : IEventHandler<KegRemainingChanged>
+    public class PourStoppedClientHandler : IEventHandler<PourStopped>
     {
         private readonly IConnectionManager _connectionManager;
 
-        public KegRemainingChangedClientHandler(IConnectionManager connectionManager)
+        public PourStoppedClientHandler(IConnectionManager connectionManager)
         {
             _connectionManager = connectionManager;
         }
 
-        public void Handle(KegRemainingChanged domainEvent)
+        public void Handle(PourStopped domainEvent)
         {
             var context = _connectionManager.GetHubContext<EventsHub>();
 

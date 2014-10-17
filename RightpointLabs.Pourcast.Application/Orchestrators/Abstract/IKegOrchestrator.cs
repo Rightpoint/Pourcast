@@ -1,4 +1,6 @@
-﻿namespace RightpointLabs.Pourcast.Application.Orchestrators.Abstract
+﻿using RightpointLabs.Pourcast.Application.Transactions;
+
+namespace RightpointLabs.Pourcast.Application.Orchestrators.Abstract
 {
     using System.Collections.Generic;
 
@@ -17,5 +19,7 @@
         Keg GetKegOnTap(string tapId);
 
         string CreateKeg(string beerId, double capacity);
+        
+        void UpdateCapacityAndPoured(string kegId, double capacity, double amountOfBeerPoured);
     }
 }
