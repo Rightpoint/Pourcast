@@ -1,9 +1,9 @@
 #include <SoftwareSerial.h>
 #include <Streaming.h>
 #include <PString.h>
-#include <WiFlySerial.h>
 #include <Time.h>
 
+#include "WiFlySerial.h"
 #include "MemoryFree.h"
 #include "Tap.h"
 #include "MultiReporter.h"

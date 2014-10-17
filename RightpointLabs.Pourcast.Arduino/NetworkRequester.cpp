@@ -2,7 +2,7 @@
 #include "NetworkRequester.h"
 #include <Streaming.h>
 #include <PString.h>
-#include <WiFlySerial.h>
+#include "WiFlySerial.h"
 #include "MemoryFree.h"
 
 NetworkRequester::NetworkRequester(WiFlySerial* wiFly, const char* host, byte pin) { 
