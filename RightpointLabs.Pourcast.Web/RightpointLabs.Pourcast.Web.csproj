@@ -207,6 +207,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Components\hat\config.js" />
+    <Content Include="Components\keg\config.js" />
+    <Content Include="Components\keg\template.html" />
+    <Content Include="Components\keg\viewModel.js" />
+    <Content Include="Components\pourcast\config.js" />
+    <Content Include="Components\pourcast\template.html" />
+    <Content Include="Components\pourcast\viewModel.js" />
+    <Content Include="Components\tap\config.js" />
+    <Content Include="Components\tap\template.html" />
+    <Content Include="Components\tap\viewModel.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bubbles.css" />
@@ -295,10 +305,11 @@
     <Content Include="Scripts\app.js" />
     <Content Include="Scripts\app\bindings.js" />
     <Content Include="Scripts\app\bubbles.js" />
-    <Content Include="Scripts\app\dataservice.js" />
-    <Content Include="Extras\hat\template.html" />
-    <Content Include="Extras\hat\module.js" />
-    <Content Include="Extras\example.js" />
+    <Content Include="Scripts\app\componentResolver.js" />
+    <Content Include="Scripts\app\dataService.js" />
+    <Content Include="Components\hat\hat.html" />
+    <Content Include="Components\hat\hat.js" />
+    <Content Include="Components\example.js" />
     <Content Include="Scripts\app\model\beer.js" />
     <Content Include="Scripts\app\model\brewery.js" />
     <Content Include="Areas\Admin\Views\web.config" />
@@ -335,8 +346,8 @@
     <Content Include="Scripts\app\admin.js" />
     <Content Include="Scripts\app\model\style.js" />
     <Content Include="Scripts\app\model\tap.js" />
-    <Content Include="Scripts\app\pourcast.js" />
     <Content Include="Scripts\app\model\keg.js" />
+    <Content Include="Scripts\app\model\pourcast.js" />
     <Content Include="Scripts\app\viewmodel\TapViewModel.js" />
     <Content Include="Scripts\libs\bootstrap.js" />
     <Content Include="Scripts\libs\bootstrap.min.js" />
@@ -355,6 +366,8 @@
     <Content Include="Scripts\libs\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\libs\knockout-3.1.0.debug.js" />
     <Content Include="Scripts\libs\knockout-3.1.0.js" />
+    <Content Include="Scripts\libs\knockout-3.2.0.debug.js" />
+    <Content Include="Scripts\libs\knockout-3.2.0.js" />
     <Content Include="Scripts\libs\modernizr-2.7.2.js" />
     <Content Include="Scripts\libs\moment-with-langs.js" />
     <Content Include="Scripts\libs\moment-with-langs.min.js" />
@@ -364,7 +377,6 @@
     <Content Include="Scripts\libs\toastr.min.js" />
     <Content Include="Scripts\libs\r.js" />
     <Content Include="Scripts\libs\require.js" />
-    <Content Include="Views\Shared\Tap.cshtml" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -446,11 +458,6 @@
     <Content Include="Scripts\libs\toastr.min.js.map" />
     <Content Include="Views\RepourterTest\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\BeerInfo.cshtml" />
-    <Content Include="Views\Shared\KegBody.cshtml" />
-    <Content Include="Views\Shared\Accessories.cshtml" />
-    <Content Include="Views\Shared\Background.cshtml" />
-    <Content Include="Views\Shared\Bits.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

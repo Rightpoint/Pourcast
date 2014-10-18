@@ -1,4 +1,4 @@
-﻿define(['jquery', 'ko'], function ($, ko) {
+﻿define(['ko', 'app/componentResolver', 'app/events', 'app/dataservice'], function (ko, ComponentResolver, events, dataService) {
     
     function Tap(tapJSON) {
         var self = this;
@@ -7,17 +7,24 @@
         self.name = ko.observable(tapJSON.Name);
         self.hasKeg = ko.observable(tapJSON.HasKeg);
         self.keg = ko.observable();
+
+        self.resolver = new ComponentResolver(this);
+        self.resolver.register('tap', 'tap');
+
+        events.on("KegRemovedFromTap", self.removeKeg);
+        events.on("kegTapped", self.removeKeg);
     };
 
-    Tap.prototype.removeKeg = function (tapId) {
-        this.loadKeg(tapId, null);
-    };
+    Tap.prototype = {
+        removeKeg: function(e) {
+            self.keg(null);
+        },
+        tapKeg: function (e) {
+            var self = this;
 
-    Tap.prototype.loadKeg = function(tapId, keg) {
-        var self = this;
-
-        if (tapId === this.id()) {
-            self.keg(keg);
+            dataService.getKegFromTapId(e.TapId).done(function(keg) {
+                self.keg(keg);
+            });
         }
     };
 
