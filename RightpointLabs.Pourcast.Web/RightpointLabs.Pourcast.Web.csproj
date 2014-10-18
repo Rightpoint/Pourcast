@@ -335,6 +335,8 @@
     <Content Include="Scripts\app\pourcast.js" />
     <Content Include="Scripts\app\model\keg.js" />
     <Content Include="Scripts\app\viewmodel\TapViewModel.js" />
+    <Content Include="Scripts\libs\knockout-3.2.0.debug.js" />
+    <Content Include="Scripts\libs\knockout-3.2.0.js" />
     <Content Include="Scripts\libs\bootstrap.js" />
     <Content Include="Scripts\libs\bootstrap.min.js" />
     <None Include="Scripts\libs\jquery-2.1.0.intellisense.js" />
@@ -350,8 +352,6 @@
     <Content Include="Scripts\libs\jquery.validate.min.js" />
     <Content Include="Scripts\libs\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\libs\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\libs\knockout-3.1.0.debug.js" />
-    <Content Include="Scripts\libs\knockout-3.1.0.js" />
     <Content Include="Scripts\libs\modernizr-2.7.2.js" />
     <Content Include="Scripts\libs\moment-with-langs.js" />
     <Content Include="Scripts\libs\moment-with-langs.min.js" />

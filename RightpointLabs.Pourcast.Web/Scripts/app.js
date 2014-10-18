@@ -4,7 +4,7 @@
         app: '../app',
         jquery: 'jquery-2.1.0',
         TapViewModel: '../app/viewmodel/TapViewModel',
-        ko: 'knockout-3.1.0',
+        ko: 'knockout-3.2.0',
         signalr: 'jquery.signalR-2.0.3',
         'signalr.hubs' : '/signalr/hubs?'
     },
