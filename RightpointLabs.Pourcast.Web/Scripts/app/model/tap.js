@@ -7,6 +7,7 @@
         self.name = ko.observable(tapJSON.Name);
         self.hasKeg = ko.observable(tapJSON.HasKeg);
         self.keg = ko.observable();
+        self.rendererManager = ko.observable();
     };
 
     Tap.prototype.removeKeg = function (tapId) {

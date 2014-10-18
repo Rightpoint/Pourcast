@@ -1,4 +1,4 @@
-﻿define(['jquery', 'app/model/tap', 'app/model/keg', 'app/model/beer', 'app/model/brewery', 'app/model/style'], function ($, Tap, Keg, Beer, Brewery, Style) {
+﻿define(['jquery', 'app/model/tap', 'app/model/keg', 'app/model/beer', 'app/model/brewery', 'app/model/style', 'app/model/rendererManager'], function ($, Tap, Keg, Beer, Brewery, Style, RendererManager) {
     var dataService = {};
 
     dataService.getCurrentTaps = function () {
@@ -10,7 +10,8 @@
                     var taps = [];
                     beerOnTapJson.forEach(function(data) {
                         var tap = new Tap(data.Tap),
-                            brewery, style,  beer, keg;
+                            brewery, style, beer, keg;
+                        tap.rendererManager(new RendererManager(tap, null)); // TODO: get renderer configuration info from the server too
                         if (data.Keg != null) {
                             brewery = new Brewery(data.Brewery);
                             style = new Style(data.Style);

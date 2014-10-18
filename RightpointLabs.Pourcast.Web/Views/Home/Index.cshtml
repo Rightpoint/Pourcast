@@ -6,12 +6,6 @@
 
 <div class="taps" data-bind="with: tapViewModel">
     <!-- ko foreach: taps -->
-        <div class="tap" data-bind="visible: hasKeg">
-            <!-- ko if: keg -->
-            <!-- ko with: keg  -->
-            @Html.Partial("Keg")
-            <!-- /ko -->
-            <!-- /ko -->
-        </div>
+    <div data-bind="component: rendererManager().getComponent('tap')"></div>
     <!-- /ko -->
 </div>

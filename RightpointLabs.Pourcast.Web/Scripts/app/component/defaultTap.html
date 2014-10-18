@@ -1,0 +1,54 @@
+﻿<div data-bind="with: model">
+    <div class="tap" data-bind="visible: hasKeg">
+        <!-- ko if: keg -->
+        <!-- ko with: keg  -->
+        <div class="keg-info side" style="display: none" data-bind="bubbles: {}, visible: true">
+            <div class="background" data-bind="style: { background: beer().style().color }">
+                <div class="shade"></div>
+                <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; overflow: hidden;"
+                     data-bind="bubbles: { minBubbleCount: 20, maxBubbleCount: 50, minBubbleSize: 6, maxBubbleSize: 12, maxWaitTime: 1, minRiseTime: 1.5, maxRiseTime: 4}, visible: isPouring">
+                </div>
+            </div>
+
+            <div class="status">
+                <div class="bits">
+                    <div class="remaining bit" data-bind="css: percentRemainingClass">
+                        <div class="inner-contents">
+                            <span class="percent" data-bind="html: percentRemainingHtml"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="profile">
+                    <div class="beer-level" data-bind="style: { height: percentRemainingStyle, background: beer().style().color }"></div>
+                    <div class="keg">
+                        <img class="body" src="/Content/themes/base/images/keg.png" />
+
+                        <!-- ko ifnot: isLow -->
+                        <img class="face" src="/Content/themes/base/images/face-happy.png" data-bind="ifnot: isLow" />
+                        <!-- /ko -->
+                        <!-- ko if: isLow -->
+                        <img class="face" src="/Content/themes/base/images/face-sad.png" data-bind="if: isLow" />
+                        <!-- /ko -->
+                    </div>
+                    <img class="ring" src="/Content/themes/base/images/ring.png">
+                </div>
+            </div>
+
+
+
+
+            <div class="beer" data-bind="with: beer">
+                <h1 class="name" data-bind="text: name"></h1>
+
+                <h1 class="brewery" data-bind="with: brewery">
+                    <span data-bind="text: name"></span>  •  <span class="location" data-bind="text: location">Location</span>
+                </h1>
+
+                <div class="style"><span data-bind="text: style().name"></span></div>
+            </div>
+        </div>
+        <!-- /ko -->
+        <!-- /ko -->
+    </div>
+</div>

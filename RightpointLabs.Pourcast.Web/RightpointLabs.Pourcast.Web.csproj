@@ -295,6 +295,9 @@
     <Content Include="Scripts\app.js" />
     <Content Include="Scripts\app\bindings.js" />
     <Content Include="Scripts\app\bubbles.js" />
+    <Content Include="Scripts\app\component\missing.html" />
+    <Content Include="Scripts\app\component\missing.js" />
+    <Content Include="Scripts\app\component\defaultTap.html" />
     <Content Include="Scripts\app\dataservice.js" />
     <Content Include="Scripts\app\model\beer.js" />
     <Content Include="Scripts\app\model\brewery.js" />
@@ -331,9 +334,12 @@
     <None Include="Scripts\libs\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\app\admin.js" />
     <Content Include="Scripts\app\model\style.js" />
+    <Content Include="Scripts\app\model\rendererManager.js" />
     <Content Include="Scripts\app\model\tap.js" />
     <Content Include="Scripts\app\pourcast.js" />
     <Content Include="Scripts\app\model\keg.js" />
+    <Content Include="Scripts\app\component\defaultTap.js" />
+    <Content Include="Scripts\app\renderer\defaultTap.js" />
     <Content Include="Scripts\app\viewmodel\TapViewModel.js" />
     <Content Include="Scripts\libs\knockout-3.2.0.debug.js" />
     <Content Include="Scripts\libs\knockout-3.2.0.js" />
@@ -361,6 +367,7 @@
     <Content Include="Scripts\libs\toastr.min.js" />
     <Content Include="Scripts\libs\r.js" />
     <Content Include="Scripts\libs\require.js" />
+    <Content Include="Scripts\libs\text.js" />
     <Content Include="Views\Shared\Keg.cshtml" />
     <Content Include="Web.config" />
   </ItemGroup>
