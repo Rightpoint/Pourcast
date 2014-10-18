@@ -11,7 +11,7 @@
                     beerOnTapJson.forEach(function(data) {
                         var tap = new Tap(data.Tap),
                             brewery, style, beer, keg;
-                        tap.rendererManager(new RendererManager(tap, null)); // TODO: get renderer configuration info from the server too
+                        tap.rendererManager(new RendererManager(null)); // TODO: get renderer configuration info from the server too
                         if (data.Keg != null) {
                             brewery = new Brewery(data.Brewery);
                             style = new Style(data.Style);

@@ -6,6 +6,6 @@
 
 <div class="taps" data-bind="with: tapViewModel">
     <!-- ko foreach: taps -->
-    <div data-bind="component: rendererManager().getComponent('tap')"></div>
+    <div data-bind="component: rendererManager().getComponent('tap', $data, { model: $data })"></div>
     <!-- /ko -->
 </div>
