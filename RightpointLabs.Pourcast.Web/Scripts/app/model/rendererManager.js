@@ -8,7 +8,8 @@
     function RendererManager(configJSON) {
         // we're all fake for now - we'll fix that later :)
         configJSON = {
-            'tap': ['app/renderer/defaultTap']
+            'tap': ['app/renderer/defaultTap'],
+            'keg': ['app/renderer/defaultKeg']
         };
         var self = this;
 
