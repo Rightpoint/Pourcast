@@ -24,7 +24,7 @@
         });
         events.on("Reconnected", function (e) {
             self.taps().forEach(function (tap) {
-                reloadKeg(tap.id);
+                reloadKeg(tap.id());
             });
         });
 
