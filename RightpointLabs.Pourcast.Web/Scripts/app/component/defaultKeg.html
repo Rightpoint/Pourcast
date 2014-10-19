@@ -6,13 +6,8 @@
     <!-- /ko -->
 
     <div class="status">
-        <div class="bits">
-            <div class="remaining bit" data-bind="css: percentRemainingClass">
-                <div class="inner-contents">
-                    <span class="percent" data-bind="html: percentRemainingHtml"></span>
-                </div>
-            </div>
-        </div>
+        <!-- ko component: $parent.statusMarkerComponent -->
+        <!-- /ko -->
 
         <div class="profile">
             <div class="beer-level" data-bind="style: { height: percentRemainingStyle, background: beer().style().color }"></div>

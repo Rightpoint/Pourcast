@@ -9,6 +9,7 @@
         self.beerComponents = params.rendererManager.getComponents('beer', beer, { model: beer });
 
         self.backgroundComponents = params.rendererManager.getComponents('background', self.model, { model: self.model });
+        self.statusMarkerComponent = params.rendererManager.getComponent('statusMarker', self.model, { model: self.model });
     };
 
     return Keg;

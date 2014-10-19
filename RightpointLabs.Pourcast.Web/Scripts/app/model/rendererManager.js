@@ -8,6 +8,7 @@
     function RendererManager(configJSON) {
         // we're all fake for now - we'll fix that later :)
         configJSON = {
+            'statusMarker': ['app/renderer/defaultStatusMarker'],
             'background': ['app/renderer/backgroundColor', 'app/renderer/backgroundBubbles', 'app/renderer/backgroundBubblesActive'],
             'beer': ['app/renderer/defaultBeer'],
             'tap': ['app/renderer/defaultTap'],

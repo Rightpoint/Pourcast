@@ -299,10 +299,12 @@
     <Content Include="Scripts\app\component\backgroundBubbles.js" />
     <Content Include="Scripts\app\component\backgroundBubblesActive.html" />
     <Content Include="Scripts\app\component\backgroundBubblesActive.js" />
+    <Content Include="Scripts\app\component\defaultStatusMarker.js" />
     <Content Include="Scripts\app\component\backgroundColor.html" />
     <Content Include="Scripts\app\component\backgroundColor.js" />
     <Content Include="Scripts\app\component\defaultBeer.html" />
     <Content Include="Scripts\app\component\defaultBeer.js" />
+    <Content Include="Scripts\app\component\defaultStatusMarker.html" />
     <Content Include="Scripts\app\component\defaultKeg.html" />
     <Content Include="Scripts\app\component\defaultKeg.js" />
     <Content Include="Scripts\app\component\missing.html" />
@@ -353,6 +355,7 @@
     <Content Include="Scripts\app\renderer\backgroundBubbles.js" />
     <Content Include="Scripts\app\renderer\backgroundBubblesActive.js" />
     <Content Include="Scripts\app\renderer\backgroundColor.js" />
+    <Content Include="Scripts\app\renderer\defaultStatusMarker.js" />
     <Content Include="Scripts\app\renderer\defaultBeer.js" />
     <Content Include="Scripts\app\renderer\defaultKeg.js" />
     <Content Include="Scripts\app\renderer\defaultTap.js" />
