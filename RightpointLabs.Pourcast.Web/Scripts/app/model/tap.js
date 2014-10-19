@@ -1,6 +1,6 @@
 ﻿define(['jquery', 'ko'], function ($, ko) {
     
-    function Tap(tapJSON) {
+    function Tap(tapJSON, rendererManager) {
         var self = this;
 
         self.id = ko.observable(tapJSON.Id);
@@ -8,6 +8,8 @@
         self.hasKeg = ko.observable(tapJSON.HasKeg);
         self.keg = ko.observable();
         self.rendererManager = ko.observable();
+
+        self.tapComponent = rendererManager.getComponent('tap', self, { model: self });
     };
 
     Tap.prototype.removeKeg = function (tapId) {

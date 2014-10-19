@@ -1,9 +1,9 @@
 ﻿define(['jquery', 'ko'], function ($, ko) {
 
     function Keg(params) {
+        console.log("Creating keg component");
         var self = this;
-        self.rendererManager = ko.utils.unwrapObservable(params.rendererManager);
-        self.model = ko.observable(ko.utils.unwrapObservable(params.model));
+        self.model = params.model;
     };
 
     return Keg;

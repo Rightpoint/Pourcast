@@ -7,16 +7,23 @@
 
     // this constructor will be called by the rendererManager and provided the arguments provided as the second argument to the rendererManager.getComponents call
     function Tap(tapModel) {
+        console.log("Creating tap renderer");
+
         var self = this;
 
         // required parts of the renderer API - these can be simple values or observables (use simple values if they won't change to avoid unnecessary subscriptions)
         self.isActive = ko.observable(true);
         self.component = "defaultTap";
         // optional part of the renderer API - simple values or observables are fine here too
-        self.importance = 0;
+        self.importance = ko.observable(0);
 
         // do whatever you want here - your component will get a reference to the constructed object, so it can access this stuff
         self.model = ko.observable(tapModel);
+
+        setInterval(function () {
+            console.log("setting importance");
+            self.importance(Math.random() * 100);
+        }, 1000);
     };
 
     return Tap;

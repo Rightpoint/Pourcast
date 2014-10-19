@@ -1,7 +1,7 @@
 ﻿<div data-bind="with: model">
     <div class="tap" data-bind="visible: hasKeg">
         <!-- ko if: keg -->
-        <!-- ko component: $parent.rendererManager.getComponent('keg', keg, { model: keg }) -->
+        <!-- ko component: $parent.kegComponent -->
         <!-- /ko -->
         <!-- /ko -->
     </div>

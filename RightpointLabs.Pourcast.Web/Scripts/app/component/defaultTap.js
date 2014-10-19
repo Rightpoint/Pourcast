@@ -3,12 +3,14 @@
     function Tap(params) {
         var self = this;
 
-        // guaranteed objects on params include rendererManager (in case you want to have renderer children), and renderer (the one that chose this component, though that's transient at the moment, so you probably don't want to keep a reference to it...)
-        self.rendererManager = ko.utils.unwrapObservable(params.rendererManager);
+        // guaranteed objects on params include rendererManager (in case you want to have renderer children), and renderer (the one that chose this component)
+        //  if you're going to have children, call getComponent/getComponents here.  They return observables which you can wire right to component/foreach bindings
+        var keg = ko.computed(function() { return ko.utils.unwrapObservable(params.model).keg; });
+        self.kegComponent = params.rendererManager.getComponent('keg', keg, { model: keg });
 
         // additionally, the object passed as the third argument to rendererManager.getComponents is merged into params as well, 
         //   so if the contract for this kind of renderer gives you anything, you can use it.  (the 'model' property is commonly here)
-        self.model = ko.observable(ko.utils.unwrapObservable(params.model));
+        self.model = params.model;
     };
 
     return Tap;

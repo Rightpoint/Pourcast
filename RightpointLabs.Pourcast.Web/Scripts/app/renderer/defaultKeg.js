@@ -6,6 +6,7 @@
     });
 
     function Keg(kegModel) {
+        console.log("Creating keg renderer");
         var self = this;
 
         self.isActive = ko.observable(true);

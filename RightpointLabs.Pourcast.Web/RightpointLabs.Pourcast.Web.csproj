@@ -295,6 +295,8 @@
     <Content Include="Scripts\app.js" />
     <Content Include="Scripts\app\bindings.js" />
     <Content Include="Scripts\app\bubbles.js" />
+    <Content Include="Scripts\app\component\defaultKeg.html" />
+    <Content Include="Scripts\app\component\defaultKeg.js" />
     <Content Include="Scripts\app\component\missing.html" />
     <Content Include="Scripts\app\component\missing.js" />
     <Content Include="Scripts\app\component\defaultTap.html" />
@@ -339,6 +341,7 @@
     <Content Include="Scripts\app\pourcast.js" />
     <Content Include="Scripts\app\model\keg.js" />
     <Content Include="Scripts\app\component\defaultTap.js" />
+    <Content Include="Scripts\app\renderer\defaultKeg.js" />
     <Content Include="Scripts\app\renderer\defaultTap.js" />
     <Content Include="Scripts\app\viewmodel\TapViewModel.js" />
     <Content Include="Scripts\libs\knockout-3.2.0.debug.js" />

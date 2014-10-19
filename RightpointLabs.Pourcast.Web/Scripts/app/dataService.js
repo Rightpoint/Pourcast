@@ -9,9 +9,9 @@
                 function(beerOnTapJson) {
                     var taps = [];
                     beerOnTapJson.forEach(function(data) {
-                        var tap = new Tap(data.Tap),
+                        var rendererManager = new RendererManager(null).createChild(); // TODO: get renderer configuration info from the server too
+                        var tap = new Tap(data.Tap, rendererManager),
                             brewery, style, beer, keg;
-                        tap.rendererManager(new RendererManager(null)); // TODO: get renderer configuration info from the server too
                         if (data.Keg != null) {
                             brewery = new Brewery(data.Brewery);
                             style = new Style(data.Style);

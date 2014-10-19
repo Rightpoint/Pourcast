@@ -35,59 +35,88 @@
             self.renderers(renderers);
         });
     };
+    
+    RendererManager.prototype.createChild = function() {
+        return new ChildRendererManager(this);
+    }
 
-    RendererManager.prototype.getComponents = function (rendererKey, rendererCtorArgs, componentParams) {
+    function ChildRendererManager(root) {
         var self = this;
-        return ko.pureComputed(function () {
-            // grab the constructors we require-ed earlier
-            var renderers = self.renderers()[rendererKey] || [];
 
-            // grab the current value of rendererCtorArgs and make sure it's an array (in case we just got a single value or something)
-            var ctorArgs = ko.utils.unwrapObservable(rendererCtorArgs);
-            if (null == ctorArgs) {
-                ctorArgs = [];
-            } else if (!$.isArray(ctorArgs)) {
-                ctorArgs = [ctorArgs];
-            }
+        self.root = root;
+    }
 
-            // now build the actual renderer objects
-            renderers = $.map(renderers, function(constructor) {
-                // http://stackoverflow.com/a/14378462/12502
-                var args = [null].concat(ctorArgs);
-                var factoryFunction = constructor.bind.apply(constructor, args);
-                return new factoryFunction();
-            });
+    ChildRendererManager.prototype.getComponents = function (rendererKey, rendererCtorArg, componentParams) {
+        var self = this;
 
-            // filter out the inactive ones
-            renderers = $.grep(renderers, function(e) {
-                return ko.utils.unwrapObservable(e.isActive);
-            });
+        function createRenderers() {
+            // grab the constructors we require-ed earlier - the subscription will result in us getting called
+            var renderers = self.root.renderers.peek()[rendererKey] || [];
 
-            // now sort them
-            renderers.sort(function(a, b) {
-                a = ko.utils.unwrapObservable(a.importance || 0);
-                b = ko.utils.unwrapObservable(b.importance || 0);
-                return a > b ? -1 : a < b ? 1 : 0;
-            });
-
-            // and finally, build the object to be passed to the ko component binding
-            renderers = $.map(renderers, function (e) {
+            // now build the actual renderer objects and the component reference for them
+            renderers = $.map(renderers, function (constructor) {
+                var renderer = new constructor(rendererCtorArg);
                 return {
-                    name: ko.utils.unwrapObservable(e.component),
-                    params: $.extend({
-                        rendererManager: self,
-                        renderer: e
-                    }, ko.utils.unwrapObservable(componentParams) || {})
-                };
+                    renderer: renderer,
+                    componentReference: {
+                        name: renderer.component,
+                        params: ko.observable({
+                            rendererManager: new ChildRendererManager(self.root),
+                            renderer: renderer
+                        })
+                    }
+                }
             });
 
             return renderers;
+        }
+        var rendererObjects = ko.observable(null);
+        self.root.renderers.subscribe(function () {
+            rendererObjects(null);
         });
+
+        return ko.computed(function () {
+            var renderers = rendererObjects();
+            if (null == renderers) {
+                renderers = createRenderers();
+                rendererObjects(renderers);
+            }
+
+            // filter out the inactive ones
+            renderers = $.grep(renderers, function (e) {
+                return ko.utils.unwrapObservable(e.renderer.isActive);
+            });
+
+            // now sort them
+            renderers.sort(function (a, b) {
+                a = ko.utils.unwrapObservable(a.renderer.importance || 0);
+                b = ko.utils.unwrapObservable(b.renderer.importance || 0);
+                return a > b ? -1 : a < b ? 1 : 0;
+            });
+
+            // and finally, get and update the object to be passed to the ko component binding
+            var cParams = ko.utils.unwrapObservable(componentParams)|| {};
+            var components = $.map(renderers, function (e) {
+                var params = e.componentReference.params.peek();
+                var doUpdate = false;
+                for (var k in cParams) {
+                    if (cParams[k] !== params[k]) {
+                        doUpdate = true;
+                    }
+                }
+                if (doUpdate) {
+                    e.componentReference.params($.extend({}, params, cParams));
+                }
+                return e.componentReference;
+            });
+
+            return components;
+        }, null, { deferEvaluation: true });
     };
 
-    RendererManager.prototype.getComponent = function (rendererKey, rendererCtorArgs, componentParams) {
+    ChildRendererManager.prototype.getComponent = function (rendererKey, rendererCtorArgs, componentParams) {
         var self = this;
-        var all = this.getComponents(rendererKey, rendererCtorArgs, componentParams);
+        var all = self.getComponents(rendererKey, rendererCtorArgs, componentParams);
         return ko.pureComputed(function () {
             var r = all();
             return r.length ? r[0] : { name: 'missingRenderer', params: { rendererManager: self, key: rendererKey } };
