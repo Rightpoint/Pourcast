@@ -1,9 +1,9 @@
-﻿define(['jquery', 'ko', 'TapViewModel'], function($, ko, TapViewModel) {
+﻿define(['jquery', 'ko', 'BarViewModel'], function ($, ko, BarViewModel) {
     var pub = { };
 
     pub.init = function () {
-        pub.tapViewModel = new TapViewModel();
-        pub.tapViewModel.init().done(ko.applyBindings(pub));
+        pub.barViewModel = new BarViewModel();
+        pub.barViewModel.init().done(ko.applyBindings(pub));
     };
 
     return pub;

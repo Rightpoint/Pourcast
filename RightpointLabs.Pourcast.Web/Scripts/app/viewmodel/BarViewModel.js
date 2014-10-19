@@ -1,5 +1,5 @@
-﻿define('TapViewModel', ['jquery', 'ko', 'app/events', 'app/dataservice'], function ($, ko, events, dataService) {
-    var TapViewModel = function() {
+﻿define('BarViewModel', ['jquery', 'ko', 'app/events', 'app/dataservice'], function ($, ko, events, dataService) {
+    var BarViewModel = function() {
         var self = this;
         self.taps = ko.observableArray();
         self.dataService = dataService;
@@ -58,5 +58,5 @@
         return result;
     }
 
-    return TapViewModel;
+    return BarViewModel;
 });

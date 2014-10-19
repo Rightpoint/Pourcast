@@ -3,7 +3,7 @@
     paths: {
         app: '../app',
         jquery: 'jquery-2.1.0',
-        TapViewModel: '../app/viewmodel/TapViewModel',
+        BarViewModel: '../app/viewmodel/BarViewModel',
         ko: 'knockout-3.2.0.debug',
         signalr: 'jquery.signalR-2.0.3',
         'signalr.hubs' : '/signalr/hubs?'
