@@ -8,6 +8,7 @@
     function RendererManager(configJSON) {
         // we're all fake for now - we'll fix that later :)
         configJSON = {
+            'beer': ['app/renderer/defaultBeer'],
             'tap': ['app/renderer/defaultTap'],
             'keg': ['app/renderer/defaultKeg']
         };

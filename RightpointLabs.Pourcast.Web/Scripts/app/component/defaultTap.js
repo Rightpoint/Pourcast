@@ -5,7 +5,8 @@
 
         // guaranteed objects on params include rendererManager (in case you want to have renderer children), and renderer (the one that chose this component)
         //  if you're going to have children, call getComponent/getComponents here.  They return observables which you can wire right to component/foreach bindings
-        var keg = ko.computed(function() { return ko.utils.unwrapObservable(params.model).keg; });
+        //  note: yes, you probably want two unwraps here - one to get the value of the model, then again to get the value of the keg.  The computed will take a dependency on both and it'll work.
+        var keg = ko.computed(function() { return ko.utils.unwrapObservable(ko.utils.unwrapObservable(params.model).keg); });
         self.kegComponent = params.rendererManager.getComponent('keg', keg, { model: keg });
 
         // additionally, the object passed as the third argument to rendererManager.getComponents is merged into params as well, 
