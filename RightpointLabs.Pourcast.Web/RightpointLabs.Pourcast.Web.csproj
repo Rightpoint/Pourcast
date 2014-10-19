@@ -299,6 +299,8 @@
     <Content Include="Scripts\app\component\backgroundBubbles.js" />
     <Content Include="Scripts\app\component\backgroundBubblesActive.html" />
     <Content Include="Scripts\app\component\backgroundBubblesActive.js" />
+    <Content Include="Scripts\app\component\dynamicStatusMarker.js" />
+    <Content Include="Scripts\app\component\dynamicStatusMarker.html" />
     <Content Include="Scripts\app\component\defaultStatusMarker.js" />
     <Content Include="Scripts\app\component\backgroundColor.html" />
     <Content Include="Scripts\app\component\backgroundColor.js" />
@@ -354,6 +356,7 @@
     <Content Include="Scripts\app\component\defaultTap.js" />
     <Content Include="Scripts\app\renderer\backgroundBubbles.js" />
     <Content Include="Scripts\app\renderer\backgroundBubblesActive.js" />
+    <Content Include="Scripts\app\renderer\dynamicStatusMarker.js" />
     <Content Include="Scripts\app\renderer\backgroundColor.js" />
     <Content Include="Scripts\app\renderer\defaultStatusMarker.js" />
     <Content Include="Scripts\app\renderer\defaultBeer.js" />
