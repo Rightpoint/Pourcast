@@ -6,14 +6,15 @@
 
         var reloadKeg = function (tapId) {
             self.dataService.getKegFromTapId(tapId).done(function (keg) {
-                for (var i = 0; i < self.taps.length; i++) {
+                console.log(tapId, keg);
+                for (var i = 0; i < self.taps().length; i++) {
                     self.taps()[i].loadKeg(tapId, keg);
                 }
             });
         }
 
         events.on("KegRemovedFromTap", function (e) {
-            for (var i = 0; i < self.taps.length; i++) {
+            for (var i = 0; i < self.taps().length; i++) {
                 self.taps()[i].removeKeg(e.TapId);
             }
         });

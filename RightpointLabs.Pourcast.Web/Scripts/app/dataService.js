@@ -32,9 +32,9 @@
         var df = $.Deferred();
 
         $.get('/api/beerOnTap/' + tapId).done(function(data) {
-            var brewery, style, beer, keg;
+            var brewery, style, beer, keg = null;
 
-            if (data.keg != null) {
+            if (data.Keg != null) {
                 brewery = new Brewery(data.Brewery);
                 style = new Style(data.Style);
                 beer = new Beer(data.Beer, brewery, style);

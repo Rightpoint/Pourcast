@@ -89,5 +89,24 @@
                 DomainEvents.Raise(new KegEmptied(Id));
             }
         }
+
+        public void UpdateCapacityAndPoured(double capacity, double amountOfBeerPoured)
+        {
+            Capacity = capacity;
+            AmountOfBeerPoured = AmountOfBeerRemaining;
+
+            if (IsEmpty && AmountOfBeerRemaining > 0)
+            {
+                IsEmpty = false;
+            }
+
+            DomainEvents.Raise(new KegRemainingChanged(Id, PercentRemaining));
+
+            if (AmountOfBeerRemaining <= 0 && !IsEmpty)
+            {
+                IsEmpty = true;
+                DomainEvents.Raise(new KegEmptied(Id));
+            }
+        }
     }
 }
