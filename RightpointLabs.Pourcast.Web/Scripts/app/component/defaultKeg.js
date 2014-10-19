@@ -5,8 +5,10 @@
         var self = this;
         self.model = params.model;
 
-        var beer = ko.computed(function () { return ko.utils.unwrapObservable(ko.utils.unwrapObservable(params.model).beer); });
+        var beer = ko.computed(function () { return ko.utils.unwrapObservable(ko.utils.unwrapObservable(self.model).beer); });
         self.beerComponents = params.rendererManager.getComponents('beer', beer, { model: beer });
+
+        self.backgroundComponents = params.rendererManager.getComponents('background', self.model, { model: self.model });
     };
 
     return Keg;
