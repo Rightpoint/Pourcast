@@ -5,7 +5,6 @@
 </div>
 
 <div class="taps" data-bind="foreach: taps">
-    asdf
-    <!-- ko component: { name: resolver.resolve('tap'), params: $data } -->
+    <!-- ko component: { name: 'one-component', params: { location: 'tap', resolver: $parent.resolver } } -->
     <!-- /ko -->
 </div>

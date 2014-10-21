@@ -1,22 +1,17 @@
-﻿define(['jquery', 'app/model/tap', 'app/model/keg', 'app/model/beer', 'app/model/brewery', 'app/model/style'], function ($, Tap, Keg, Beer, Brewery, Style) {
+﻿define(['jquery'], function ($) {
     var dataService = {
-        getCurrentTaps: function () {
+        getTaps: function () {
             return $.get("/api/beerOnTap")
                 .then(function (beerOnTapJson) {
                     var taps = [];
                     beerOnTapJson.forEach(function (data) {
-                        var tap = new Tap(data.Tap);
+                        var tap = data.Tap;
 
                         if (data.Keg != null) {
-                            var brewery = new Brewery(data.Brewery);
-                            var style = new Style(data.Style);
-                            var beer = new Beer(data.Beer, brewery, style);
-                            var keg = new Keg(data.Keg, beer);
-
-                            tap.keg(keg);
-                            keg.beer(beer);
-                            beer.style(style);
-                            beer.brewery(brewery);
+                            tap.keg = data.Keg;
+                            tap.keg.beer = data.Beer;
+                            tap.keg.beer.style = data.Style;
+                            tap.keg.beer.brewery = data.Brewery;
                         }
                         taps.push(tap);
                     });
@@ -31,15 +26,10 @@
                     var keg;
 
                     if (data.keg != null) {
-                        var brewery = new Brewery(data.Brewery);
-                        var style = new Style(data.Style);
-                        var beer = new Beer(data.Beer, brewery, style);
-                        keg = new Keg(data.Keg, beer);
-
-                        tap.keg(keg);
-                        keg.beer(beer);
-                        beer.style(style);
-                        beer.brewery(brewery);
+                        keg = data.Keg;
+                        keg.beer = data.Beer;
+                        keg.beer.style = data.Style;
+                        keg.beer.brewery = data.Brewery;
                     }
 
                     return keg;

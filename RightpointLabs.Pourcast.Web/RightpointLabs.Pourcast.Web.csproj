@@ -207,16 +207,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Components\hat\config.js" />
-    <Content Include="Components\keg\config.js" />
-    <Content Include="Components\keg\template.html" />
-    <Content Include="Components\keg\viewModel.js" />
-    <Content Include="Components\pourcast\config.js" />
-    <Content Include="Components\pourcast\template.html" />
-    <Content Include="Components\pourcast\viewModel.js" />
-    <Content Include="Components\tap\config.js" />
-    <Content Include="Components\tap\template.html" />
-    <Content Include="Components\tap\viewModel.js" />
+    <Content Include="Scripts\app\components\hat\config.js" />
+    <Content Include="Scripts\app\components\keg\config.js" />
+    <Content Include="Scripts\app\components\keg\template.html" />
+    <Content Include="Scripts\app\components\keg\viewModel.js" />
+    <Content Include="Scripts\app\components\missing\template.html" />
+    <Content Include="Scripts\app\components\missing\viewModel.js" />
+    <Content Include="Scripts\app\components\pourcast\config.js" />
+    <Content Include="Scripts\app\components\one-component\template.html" />
+    <Content Include="Scripts\app\components\one-component\viewModel.js" />
+    <Content Include="Scripts\app\components\pourcast\template.html" />
+    <Content Include="Scripts\app\components\pourcast\viewModel.js" />
+    <Content Include="Scripts\app\components\tap\config.js" />
+    <Content Include="Scripts\app\components\tap\template.html" />
+    <Content Include="Scripts\app\components\tap\viewModel.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bubbles.css" />
@@ -307,9 +311,9 @@
     <Content Include="Scripts\app\bubbles.js" />
     <Content Include="Scripts\app\componentResolver.js" />
     <Content Include="Scripts\app\dataService.js" />
-    <Content Include="Components\hat\hat.html" />
-    <Content Include="Components\hat\hat.js" />
-    <Content Include="Components\example.js" />
+    <Content Include="Scripts\app\components\hat\hat.html" />
+    <Content Include="Scripts\app\components\hat\hat.js" />
+    <Content Include="Scripts\app\components\example.js" />
     <Content Include="Scripts\app\model\beer.js" />
     <Content Include="Scripts\app\model\brewery.js" />
     <Content Include="Areas\Admin\Views\web.config" />

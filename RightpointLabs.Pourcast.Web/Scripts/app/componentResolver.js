@@ -1,28 +1,24 @@
 ﻿define(['ko'], function (ko) {
 
-    function ComponentResolver(param) {
-        this.param = param;
-        this.components = ko.observable({});
+    function ComponentResolver() {
+        this.components = ko.observableArray();
     };
+
+    ko.components.register('missing', { require: 'app/components/missing/viewModel' });
+
+    ko.components.register('one-component', { require: 'app/components/one-component/viewModel' });
 
     ComponentResolver.prototype = {
         register: function (name, location) {
             var self = this;
 
-            if (!(location in self.components())) {
-                self.components()[location] = ko.observableArray();
-            }
+            require(['app/components/' + name + '/config'], function(Config) {
+                ko.components.register(name, { require: 'app/components/' + name + '/viewModel' });
 
-            require(['/components/' + name + '/config.js'], function (Config) {
-                var config = new Config(self.param);
-
-                if (!ko.components.isRegistered(name)) {
-                    ko.components.register(name, { require: '/components/' + name + '/viewModel.js' });
-                }
-
-                self.components()[location].push({
+                self.components.push({
+                    location: location,
                     name: name,
-                    config: config
+                    Config: Config
                 });
             });
         },
@@ -30,35 +26,9 @@
         resolve: function (location) {
             var self = this;
 
-            return ko.computed(function () {
-                var components = self.components()[location]();
-
-                if (components.length === 0) {
-                    return '';
-                }
-
-                if (components.length === 1) {
-                    return components[0].name;
-                }
-
-                return components.reduce(function (best, item) {
-                    if (best.config.isActive() && item.config.rank() > best.config.rank()) {
-                        return item;
-                    } else {
-                        return best;
-                    }
-                }).name;
-            });
-        },
-
-        resolveMany: function (location) {
-            var self = this;
-
-            return ko.computed(function () {
-                var components = self.components()[location]();
-
-                return components.map(function (item) {
-                    return item.name;
+            return ko.computed(function() {
+                return self.components().filter(function(component) {
+                    return component.location === location;
                 });
             });
         },
