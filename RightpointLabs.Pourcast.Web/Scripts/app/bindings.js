@@ -11,27 +11,15 @@
 
 
 
-        var getOrAddConfig = function (component, model, bindingContext) {
-            if (!bindingContext.configs) {
-                bindingContext.configs = [];
+        var ensureConfig = function (component, model, bindingContext) {
+            bindingContext.configs = bindingContext.configs || {};
+
+            var name = component.name;
+            if (!bindingContext.configs[name]) {
+                bindingContext.configs[name] = new component.Config(model);
             }
 
-            var matchingConfigs = bindingContext.configs.filter(function (config) {
-                return config.name === component.name;
-            });
-
-            if (matchingConfigs.length > 0) {
-                return matchingConfigs[0].config;
-
-            } else {
-                var config = new component.Config(model);
-                bindingContext.configs.push({
-                    name: component.name,
-                    config: config
-                });
-
-                return config;
-            }
+            return bindingContext.configs[name];
         };
 
         var getClosestResolver = function (bindingContext) {
@@ -75,7 +63,7 @@
                 var components = resolver.resolve(location);
 
                 components().forEach(function (component) {
-                    getOrAddConfig(component, model, bindingContext);
+                    ensureConfig(component, model, bindingContext);
                 });
             },
             update: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
@@ -99,9 +87,10 @@
                 var components = resolver.resolve(location);
 
                 var bestComponent = components().reduce(function (best, component) {
-                    var config = getOrAddConfig(component, model, bindingContext);
+                    var config = ensureConfig(component, model, bindingContext);
 
-                    if (best == null || config.isActive() && config.rank() > best.config.rank()) {
+                    // what if best is null and config is not active???
+                    if (best == null || (config.isActive() && (config.rank() > best.config.rank()))) {
                         return {
                             name: component.name,
                             config: config
@@ -148,7 +137,7 @@
                 var components = resolver.resolve(location);
 
                 components().forEach(function (component) {
-                    getOrAddConfig(component, model, bindingContext);
+                    ensureConfig(component, model, bindingContext);
                 });
             },
             update: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
@@ -176,7 +165,7 @@
                 var elements = [];
 
                 components().forEach(function (component) {
-                    var config = getOrAddConfig(component, model, bindingContext);
+                    var config = ensureConfig(component, model, bindingContext);
 
                     if (config.isActive()) {
 

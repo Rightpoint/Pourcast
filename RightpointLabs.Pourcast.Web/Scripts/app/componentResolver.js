@@ -6,8 +6,6 @@
 
     ko.components.register('missing', { require: 'app/components/missing/viewModel' });
 
-    ko.components.register('one-component', { require: 'app/components/one-component/viewModel' });
-
     ComponentResolver.prototype = {
         register: function (name, location) {
             var self = this;

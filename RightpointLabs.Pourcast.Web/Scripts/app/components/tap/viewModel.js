@@ -2,8 +2,6 @@
     
     function Tap(model) {
         var self = this;
-
-        self.resolver = model.resolver;
     };
 
     return {

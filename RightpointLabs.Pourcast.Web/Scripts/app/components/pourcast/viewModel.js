@@ -4,7 +4,6 @@
         var self = this;
 
         self.taps = ko.observableArray(model.taps);
-        self.resolver = model.resolver;
     };
 
     return {
