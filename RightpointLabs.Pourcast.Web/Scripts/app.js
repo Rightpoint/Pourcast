@@ -21,6 +21,7 @@ requirejs(['ko', 'app/bindings', 'app/componentResolver', 'app/dataService'], fu
     var resolver = new componentResolver();
     resolver.register('pourcast', 'pourcast');
     resolver.register('tap', 'tap');
+    resolver.register('hat', 'tap');
 
     dataService.getTaps().done(function (taps) {
         var viewModel = {

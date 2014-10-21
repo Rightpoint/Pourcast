@@ -214,8 +214,6 @@
     <Content Include="Scripts\app\components\missing\template.html" />
     <Content Include="Scripts\app\components\missing\viewModel.js" />
     <Content Include="Scripts\app\components\pourcast\config.js" />
-    <Content Include="Scripts\app\components\one-component\template.html" />
-    <Content Include="Scripts\app\components\one-component\viewModel.js" />
     <Content Include="Scripts\app\components\pourcast\template.html" />
     <Content Include="Scripts\app\components\pourcast\viewModel.js" />
     <Content Include="Scripts\app\components\tap\config.js" />
@@ -311,8 +309,8 @@
     <Content Include="Scripts\app\bubbles.js" />
     <Content Include="Scripts\app\componentResolver.js" />
     <Content Include="Scripts\app\dataService.js" />
-    <Content Include="Scripts\app\components\hat\hat.html" />
-    <Content Include="Scripts\app\components\hat\hat.js" />
+    <Content Include="Scripts\app\components\hat\template.html" />
+    <Content Include="Scripts\app\components\hat\viewModel.js" />
     <Content Include="Scripts\app\components\example.js" />
     <Content Include="Scripts\app\model\beer.js" />
     <Content Include="Scripts\app\model\brewery.js" />

@@ -1,17 +1,14 @@
 ﻿define(['ko'], function (ko) {
 
-    function Config(pourcast) {
+    function Config(tap) {
         var self = this;
 
-        self.pourcast = ko.observable(pourcast);
+        self.isActive = ko.observable(true);
+        self.rank = ko.observable(2);
 
-        self.isActive = ko.computed(function() {
-            return true;
-        });
-
-        rank: ko.computed(function() {
-            return 0;
-        });
+        setInterval(function () {
+            self.isActive(!self.isActive());
+        }, 2000);
     };
 
     return Config;

@@ -5,6 +5,12 @@
 </div>
 
 <div class="taps" data-bind="foreach: taps">
-    <!-- ko component: { name: 'one-component', params: { location: 'tap', resolver: $parent.resolver } } -->
+    <!-- ko oneComponent: 'tap' -->
+    <!-- /ko -->
+</div>
+
+
+<div class="taps" data-bind="foreach: taps">
+    <!-- ko manyComponents: 'tap' -->
     <!-- /ko -->
 </div>
