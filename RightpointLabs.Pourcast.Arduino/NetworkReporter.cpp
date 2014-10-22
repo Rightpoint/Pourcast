@@ -1,5 +1,6 @@
 #include "NetworkReporter.h"
 #include <PString.h>
+#include <Streaming.h>
 
 const double PULSES_PER_OZ = 5600.0 / 33.814;
 

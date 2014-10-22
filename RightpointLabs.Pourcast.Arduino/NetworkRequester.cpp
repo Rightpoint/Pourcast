@@ -1,12 +1,15 @@
+#include <Dhcp.h>
+#include <Dns.h>
+#include <Ethernet.h>
+#include <EthernetClient.h>
+
 #include "Arduino.h"
 #include "NetworkRequester.h"
 #include <Streaming.h>
 #include <PString.h>
-#include "WiFlySerial.h"
 #include "MemoryFree.h"
 
-NetworkRequester::NetworkRequester(WiFlySerial* wiFly, const char* host, byte pin) { 
-  _wiFly = wiFly;
+NetworkRequester::NetworkRequester(const char* host, byte pin) { 
   _host = host;
   _pin = pin;
   pinMode(_pin, OUTPUT);
@@ -28,22 +31,19 @@ void NetworkRequester::MakeRequest(const char* url){
      << "\n\n";
   //Serial << strRequest << endl;
   //Serial << F("Free: ") << freeMemory() << endl;
-
-  if (_wiFly->openConnection(_host)) {
+  
+  EthernetClient client;
+  if (client.connect(_host, 80)) {
     Serial << F("Connected") << endl;
-    *_wiFly << (const char*) strRequest << endl; 
+    client << (const char*) strRequest << endl; 
     Serial << F("Request sent") << endl;
-    while (_wiFly->isConnectionOpen())
-      _wiFly->drain();
-    Serial << F("response drained") << endl;
-    /*
-    while (  _wiFly->isConnectionOpen() ) {
-      if (  _wiFly->available() > 0 ) {
-        Serial << (char) _wiFly->read();
-      }
-    }
-    */
-    _wiFly->closeConnection();
+    while (client.connected())
+      while(client.available())
+        client.read();
+//        Serial.write((byte) client.read());
+    Serial << endl << F("response drained") << endl;
+    client.stop();
+    
     Serial << F("connection closed") << endl;
   } else {
     Serial.println(F("Connection failed"));

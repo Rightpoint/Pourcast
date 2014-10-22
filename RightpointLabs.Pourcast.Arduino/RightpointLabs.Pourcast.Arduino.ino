@@ -1,9 +1,19 @@
+#include <SPI.h>
+#include <Dhcp.h>
+#include <Dns.h>
+#include <Ethernet.h>
+#include <EthernetClient.h>
+#include <EthernetServer.h>
+#include <EthernetUdp.h>
+#include <util.h>
+
 #include <SoftwareSerial.h>
 #include <Streaming.h>
 #include <PString.h>
 #include <Time.h>
 
-#include "WiFlySerial.h"
+
+
 #include "MemoryFree.h"
 #include "Tap.h"
 #include "MultiReporter.h"
@@ -11,21 +21,13 @@
 #include "SerialReporter.h"
 #include "NetworkReporter.h"
 
-WiFlySerial wifi(4,5);
 Tap* tap1;
 Tap* tap2;
 NetworkRequester* http;
 
-time_t GetSyncTime() {
-  time_t tCurrent = (time_t) wifi.getTime();
-  wifi.exitCommandMode();
-  return tCurrent;
-}
-
-void setNoCommRemote() {
-  char bufRequest[60];
-  wifi.SendCommand("set comm remote 0", ">",bufRequest, 60);
-}
+// Enter a MAC address for your controller below.
+// Newer Ethernet shields have a MAC address printed on a sticker on the shield
+byte mac[] = { 0x90, 0xA2, 0xDA, 0x0F, 0x84, 0xC2 };
 
 // prep - initialize serial (TX on pin 1) and wire up the interrupts for pulses from the taps (pins 2 and 3)
 void setup() {
@@ -38,68 +40,16 @@ void setup() {
   char buf[32];
   PString pBuf(buf, 32);
   
-  #include "Credentials.h"
-
-  //wifi.setDebugChannel(&Serial);
   Serial.println(F("Starting"));
-  wifi.begin();
-  pBuf.begin();
-  pBuf << wifiPassword;
-  wifi.setPassphrase(pBuf);    
+  Ethernet.begin(mac);
   
-  wifi.getDeviceStatus();
-  while (! wifi.isifUp() ) {
-    Serial.println(F("Joining"));
-    pBuf.begin();
-    pBuf << wifiSSID;
-    if (!wifi.join((char*)(const char*)pBuf)) {
-      Serial.println(F("Failed to connect"));
-    } else{
-      Serial.println(F("Connected"));
-      break;
-    }
-    
-    // TODO: use an actual connection to confirm we got a good connection - maybe push this logic down to the network layer?
-    
-    wifi.getDeviceStatus();
-  }
-    
-  Serial << F("Free: ") << freeMemory() << endl;
-  setNoCommRemote();
-  Serial << F("Free: ") << freeMemory() << endl;
-
-  Serial << F("Enabling NTP") << endl;
-  Serial << F("Free: ") << freeMemory() << endl;
-  pBuf.begin();
-  pBuf << F("nist1-la.ustiming.org");
-  wifi.setNTP(pBuf); 
-  pBuf.begin();
-  pBuf << F(" 15");
-  wifi.setNTP_Update_Frequency(pBuf);
-  Serial << F("Getting status") << endl;
-  Serial << F("Free: ") << freeMemory() << endl;
-  wifi.getDeviceStatus();
-  Serial << F("Configuring time") << endl;
-  Serial << F("Free: ") << freeMemory() << endl;
-  setTime( wifi.getTime() );
-  delay(1000);
-  setSyncProvider( GetSyncTime );
-  
-  
-  // Set timezone adjustment: CDT is -5h.  Adjust to your local timezone.
-  adjustTime( (long) (-5 * 60 * 60) );
-  
-  //WiFly.configure(WIFLY_BAUD, 38400);
-
-//  Serial.println(WiFly.ip());
-
   Serial << F("Starting network stuff") << endl;
   Serial << F("Free: ") << freeMemory() << endl;
-  http = new NetworkRequester(&wifi, "pourcast.labs.rightpoint.com", 9);
+  http = new NetworkRequester("pourcast.labs.rightpoint.com", 9);
   http->LogMessage(F("Initializing"));
-  tap1 = new Tap(new MultiReporter(new LEDReporter(6), new LEDReporter(10), new NetworkReporter(http, "535c61a951aa0405287989ec")));
+  tap1 = new Tap(new MultiReporter(new LEDReporter(6), new LEDReporter(8), new NetworkReporter(http, "535c61a951aa0405287989ec")));
   attachInterrupt(0, tap1Pulse, RISING);
-  tap2 = new Tap(new MultiReporter(new LEDReporter(7), new LEDReporter(11), new NetworkReporter(http, "537d28db51aa04289027cde5")));
+  tap2 = new Tap(new MultiReporter(new LEDReporter(5), new LEDReporter(7), new NetworkReporter(http, "537d28db51aa04289027cde5")));
   attachInterrupt(1, tap2Pulse, RISING);
   http->LogMessage(F("Done Initializing"));
   Serial << F("Setup complete") << endl;
