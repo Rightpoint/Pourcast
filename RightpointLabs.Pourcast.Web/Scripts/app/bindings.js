@@ -9,183 +9,144 @@
             update: function (element, valueAccessor, allBindings, viewModel, bindingContext) { }
         };
 
+        (function() {
+            var init = function(element, valueAccessor, allBindings, viewModel, bindingContext) {
+                var model = bindingContext.$data;
+                var components = getComponents(valueAccessor, bindingContext);
 
-
-        var ensureConfig = function (component, model, bindingContext) {
-            bindingContext.configs = bindingContext.configs || {};
-
-            var name = component.name;
-            if (!bindingContext.configs[name]) {
-                bindingContext.configs[name] = new component.Config(model);
+                components().forEach(function(component) {
+                    ensureConfig(component, model, bindingContext);
+                });
             }
 
-            return bindingContext.configs[name];
-        };
+            var ensureConfig = function(component, model, bindingContext) {
+                bindingContext.configs = bindingContext.configs || {};
 
-        var getClosestResolver = function (bindingContext) {
-            if (bindingContext.$data.resolver) {
-                return bindingContext.$data.resolver;
-            }
+                var name = component.name;
+                if (!bindingContext.configs[name]) {
+                    bindingContext.configs[name] = new component.Config(model);
+                }
 
-            var i = 0;
-            var resolver;
-            while (!resolver) {
-                var $parent = bindingContext.$parents[i];
-                if ($parent.resolver) {
-                    resolver = $parent.resolver;
-                } else {
+                return bindingContext.configs[name];
+            };
+
+            var getClosestResolver = function(bindingContext) {
+                if (bindingContext.$data.resolver) {
+                    return bindingContext.$data.resolver;
+                }
+
+                var i = 0;
+                var resolver = null;
+                while (!resolver) {
+                    var $parent = bindingContext.$parents[i];
+                    if ($parent.resolver) {
+                        resolver = $parent.resolver;
+                    }
+
                     i++;
                 }
+
+                return resolver;
+            };
+
+            var getComponents = function(valueAccessor, bindingContext) {
+                var params = valueAccessor();
+                var resolver;
+                var location;
+
+                if (typeof params === 'string') {
+                    resolver = getClosestResolver(bindingContext);
+                    location = params;
+                } else {
+                    if (!params.resolver) {
+                        resolver = params.resolver;
+                    } else {
+                        resolver = getClosestResolver(bindingContext);
+                    }
+                    location = params.location;
+                }
+
+                return resolver.resolve(location);
             }
 
-            return resolver;
-        };
+            ko.bindingHandlers.oneComponent = {
+                init: init,
+                update: function(element, valueAccessor, allBindings, viewModel, bindingContext) {
+                    var model = bindingContext.$data;
+                    var components = getComponents(valueAccessor, bindingContext);
 
-        ko.bindingHandlers.oneComponent = {
-            init: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
-                var params = valueAccessor();
-                var model = bindingContext.$data;
-                var resolver;
-                var location;
+                    var bestComponent = components().reduce(function(best, component) {
+                        var config = ensureConfig(component, model, bindingContext);
 
-                if (typeof params === 'string') {
-                    resolver = getClosestResolver(bindingContext);
-                    location = params;
-                } else {
-                    if (!params.resolver) {
-                        resolver = params.resolver;
-                    } else {
-                        resolver = getClosestResolver(bindingContext);
-                    }
-                    location = params.location;
-                }
+                        if (best == null) {
+                            if (config.isActive()) {
+                                return {
+                                    name: component.name,
+                                    config: config
+                                };
+                            } else {
+                                return null;
+                            }
+                        } else {
+                            if (config.isActive() && config.rank() > best.config.rank()) {
+                                return {
+                                    name: component.name,
+                                    config: config
+                                };
+                            } else {
+                                return best;
+                            }
+                        }
+                    }, null);
 
-                var components = resolver.resolve(location);
+                    ko.virtualElements.emptyNode(element);
 
-                components().forEach(function (component) {
-                    ensureConfig(component, model, bindingContext);
-                });
-            },
-            update: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
-                var params = valueAccessor();
-                var model = bindingContext.$data;
-                var resolver;
-                var location;
-
-                if (typeof params === 'string') {
-                    resolver = getClosestResolver(bindingContext);
-                    location = params;
-                } else {
-                    if (!params.resolver) {
-                        resolver = params.resolver;
-                    } else {
-                        resolver = getClosestResolver(bindingContext);
-                    }
-                    location = params.location;
-                }
-
-                var components = resolver.resolve(location);
-
-                var bestComponent = components().reduce(function (best, component) {
-                    var config = ensureConfig(component, model, bindingContext);
-
-                    // what if best is null and config is not active???
-                    if (best == null || (config.isActive() && (config.rank() > best.config.rank()))) {
+                    var componentValueAccessor = function() {
                         return {
-                            name: component.name,
-                            config: config
+                            name: bestComponent.name,
+                            params: model,
                         };
-                    } else {
-                        return best;
-                    }
-                }, null);
-
-                ko.virtualElements.emptyNode(element);
-
-                var componentValueAccessor = function () {
-                    return {
-                        name: bestComponent.name,
-                        params: model,
                     };
-                };
 
-                ko.bindingHandlers.component.init(element, componentValueAccessor, allBindings, viewModel, bindingContext);
-            }
-        };
-        ko.virtualElements.allowedBindings.oneComponent = true;
-
-
-        ko.bindingHandlers.manyComponents = {
-            init: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
-                var params = valueAccessor();
-                var model = bindingContext.$data;
-                var resolver;
-                var location;
-
-                if (typeof params === 'string') {
-                    resolver = getClosestResolver(bindingContext);
-                    location = params;
-                } else {
-                    if (!params.resolver) {
-                        resolver = params.resolver;
-                    } else {
-                        resolver = getClosestResolver(bindingContext);
-                    }
-                    location = params.location;
+                    ko.bindingHandlers.component.init(element, componentValueAccessor, allBindings, viewModel, bindingContext);
                 }
+            };
 
-                var components = resolver.resolve(location);
+            ko.bindingHandlers.manyComponents = {
+                init: init,
+                update: function(element, valueAccessor, allBindings, viewModel, bindingContext) {
+                    var model = bindingContext.$data;
+                    var components = getComponents(valueAccessor, bindingContext);
 
-                components().forEach(function (component) {
-                    ensureConfig(component, model, bindingContext);
-                });
-            },
-            update: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
-                var params = valueAccessor();
-                var model = bindingContext.$data;
-                var resolver;
-                var location;
+                    ko.virtualElements.emptyNode(element);
 
-                if (typeof params === 'string') {
-                    resolver = getClosestResolver(bindingContext);
-                    location = params;
-                } else {
-                    if (!params.resolver) {
-                        resolver = params.resolver;
-                    } else {
-                        resolver = getClosestResolver(bindingContext);
-                    }
-                    location = params.location;
-                }
+                    var elements = [];
 
-                var components = resolver.resolve(location);
+                    components().forEach(function(component) {
+                        var config = ensureConfig(component, model, bindingContext);
 
-                ko.virtualElements.emptyNode(element);
+                        if (config.isActive()) {
 
-                var elements = [];
+                            var innerElement = document.createElement('div');
+                            elements.push(innerElement);
 
-                components().forEach(function (component) {
-                    var config = ensureConfig(component, model, bindingContext);
-
-                    if (config.isActive()) {
-
-                        var innerElement = document.createElement('div');
-                        elements.push(innerElement);
-
-                        var componentValueAccessor = function () {
-                            return {
-                                name: component.name,
-                                params: model,
+                            var componentValueAccessor = function() {
+                                return {
+                                    name: component.name,
+                                    params: model,
+                                };
                             };
-                        };
-                        ko.bindingHandlers.component.init(innerElement, componentValueAccessor, allBindings, viewModel, bindingContext);
-                    }
-                });
+                            ko.bindingHandlers.component.init(innerElement, componentValueAccessor, allBindings, viewModel, bindingContext);
+                        }
+                    });
 
-                ko.virtualElements.setDomNodeChildren(element, elements);
-            }
-        };
-        ko.virtualElements.allowedBindings.manyComponents = true;
+                    ko.virtualElements.setDomNodeChildren(element, elements);
+                }
+            };
+
+            ko.virtualElements.allowedBindings.oneComponent = true;
+            ko.virtualElements.allowedBindings.manyComponents = true;
+        }());
     };
 
     return bindings;
