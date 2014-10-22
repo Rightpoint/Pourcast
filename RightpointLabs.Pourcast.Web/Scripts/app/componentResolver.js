@@ -24,10 +24,8 @@
         resolve: function (location) {
             var self = this;
 
-            return ko.computed(function() {
-                return self.components().filter(function(component) {
-                    return component.location === location;
-                });
+            return self.components().filter(function (component) {
+                return component.location === location;
             });
         },
     };

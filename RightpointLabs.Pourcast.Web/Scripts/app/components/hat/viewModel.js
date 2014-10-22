@@ -1,4 +1,5 @@
 ﻿define(['ko', 'text!app/components/hat/template.html'], function (ko, htmlString) {
+
     function Hat(params) {
         var self = this;
 

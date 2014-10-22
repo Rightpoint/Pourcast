@@ -208,6 +208,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\app\components\hat\config.js" />
+    <Content Include="Scripts\app\components\beer\config.js" />
+    <Content Include="Scripts\app\components\beer\template.html" />
+    <Content Include="Scripts\app\components\beer\viewModel.js" />
     <Content Include="Scripts\app\components\keg\config.js" />
     <Content Include="Scripts\app\components\keg\template.html" />
     <Content Include="Scripts\app\components\keg\viewModel.js" />

@@ -1,4 +1,4 @@
-﻿define(['ko', 'app/componentResolver', 'app/events', 'app/dataservice'], function (ko, ComponentResolver, events, dataService) {
+﻿define(['ko', 'app/events', 'app/dataservice'], function (ko, events, dataService) {
     
     function Tap(tapJSON) {
         var self = this;
@@ -7,9 +7,6 @@
         self.name = ko.observable(tapJSON.Name);
         self.hasKeg = ko.observable(tapJSON.HasKeg);
         self.keg = ko.observable();
-
-        self.resolver = new ComponentResolver(this);
-        self.resolver.register('tap', 'tap');
 
         events.on("KegRemovedFromTap", self.removeKeg);
         events.on("kegTapped", self.removeKeg);

@@ -1,6 +1,6 @@
 ﻿define(['ko'], function (ko) {
 
-    function Config(tap) {
+    function Config(model) {
         var self = this;
 
         self.isActive = ko.observable(true);

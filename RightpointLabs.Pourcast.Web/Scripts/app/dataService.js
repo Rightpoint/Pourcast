@@ -1,5 +1,6 @@
 ﻿define(['jquery'], function ($) {
     var dataService = {
+
         getTaps: function () {
             return $.get("/api/beerOnTap")
                 .then(function (beerOnTapJson) {
@@ -8,10 +9,10 @@
                         var tap = data.Tap;
 
                         if (data.Keg != null) {
-                            tap.keg = data.Keg;
-                            tap.keg.beer = data.Beer;
-                            tap.keg.beer.style = data.Style;
-                            tap.keg.beer.brewery = data.Brewery;
+                            tap.Keg = data.Keg;
+                            tap.Keg.Beer = data.Beer;
+                            tap.Keg.Beer.Style = data.Style;
+                            tap.Keg.Beer.Brewery = data.Brewery;
                         }
                         taps.push(tap);
                     });
@@ -27,9 +28,9 @@
 
                     if (data.keg != null) {
                         keg = data.Keg;
-                        keg.beer = data.Beer;
-                        keg.beer.style = data.Style;
-                        keg.beer.brewery = data.Brewery;
+                        keg.Beer = data.Beer;
+                        keg.Beer.Style = data.Style;
+                        keg.Beer.Brewery = data.Brewery;
                     }
 
                     return keg;

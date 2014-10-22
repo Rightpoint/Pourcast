@@ -14,7 +14,7 @@
                 var model = bindingContext.$data;
                 var components = getComponents(valueAccessor, bindingContext);
 
-                components().forEach(function(component) {
+                components.forEach(function(component) {
                     ensureConfig(component, model, bindingContext);
                 });
             }
@@ -75,7 +75,7 @@
                     var model = bindingContext.$data;
                     var components = getComponents(valueAccessor, bindingContext);
 
-                    var bestComponent = components().reduce(function(best, component) {
+                    var bestComponent = components.reduce(function(best, component) {
                         var config = ensureConfig(component, model, bindingContext);
 
                         if (best == null) {
@@ -122,7 +122,7 @@
 
                     var elements = [];
 
-                    components().forEach(function(component) {
+                    components.forEach(function(component) {
                         var config = ensureConfig(component, model, bindingContext);
 
                         if (config.isActive()) {

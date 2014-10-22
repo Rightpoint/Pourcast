@@ -1,32 +1,70 @@
-﻿define(['ko', 'componentResolver', 'app/events', 'app/dataservice', 'text!/components/tap/tap.html'], function (ko, ComponentResolver, events, dataService, htmlString) {
+﻿define(['ko', 'app/events', 'app/dataservice', 'text!app/components/keg/template.html'], function (ko, events, dataService, htmlString) {
     
-    function Tap(tapJson) {
+    function Keg(model) {
         var self = this;
 
-        self.id = ko.observable(tapJson.Id);
-        self.name = ko.observable(tapJson.Name);
-        self.hasKeg = ko.observable(tapJson.HasKeg);
-        self.keg = ko.observable();
-        self.resolver = new ComponentResolver();
+        self.id = ko.observable(model.Id);
+        self.percentRemaining = ko.observable(decimalToPercent(model.PercentRemaining));
+        self.isEmpty = ko.observable(model.IsEmpty);
+        self.isPouring = ko.observable(model.IsPouring);
+        self.capacity = ko.observable(model.Capacity);
+        self.beer = ko.observable(model.Beer);
 
-        self.resolver.register('keg');
+        self.isLow = ko.computed(function () {
+            return self.percentRemaining() < 25;
+        });
+
+        self.percentRemainingStyle = ko.computed(function () {
+            return Math.floor(self.percentRemaining()) + '%';
+        });
+        self.percentRemainingHtml = ko.computed(function () {
+            return parseFloat(self.percentRemaining()).toFixed(1) + '<span class="symbol">%</span>';
+        });
+        self.percentRemainingClass = ko.computed(function () {
+            return self.isLow() ? "low" : "high";
+        });
+
+        events.on("PourStarted", self.pourStarted);
+        events.on("Pouring", self.pouring);
+        events.on("PourStopped", self.pourStopped);
     };
 
-    Tap.prototype = {
-        removeKeg: function(tapId) {
-            this.loadKeg(tapId, null);
-        },
-        loadKeg: function(tapId, keg) {
+    Keg.prototype = {
+        pourStarted: function (e) {
+            console.log("PourStarted");
             var self = this;
 
-            if (tapId === this.id()) {
-                self.keg(keg);
+            if (e.KegId === self.id()) {
+                self.isPouring(true);
             }
         },
-    };
+
+        pouring: function (e) {
+            console.log("Pouring");
+            var self = this;
+
+            if (e.KegId === self.id()) {
+                self.percentRemaining(decimalToPercent(e.PercentRemaining));
+            }
+        },
+
+        pourStopped: function (e) {
+            console.log("PourStopped");
+            var self = this;
+
+            if (e.KegId === self.id()) {
+                self.isPouring(false);
+                self.percentRemaining(decimalToPercent(e.PercentRemaining));
+            }
+        }
+    }
+
+    function decimalToPercent(decimal) {
+        return (decimal * 100).toFixed(1);
+    }
 
     return {
-        viewModel: Tap,
+        viewModel: Keg,
         template: htmlString
     };
 });
