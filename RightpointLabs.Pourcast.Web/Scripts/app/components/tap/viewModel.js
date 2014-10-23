@@ -1,4 +1,4 @@
-﻿define(['ko', 'app/events', 'app/dataService', 'text!app/components/tap/template.html'], function (ko, events, dataService, htmlString) {
+﻿define(['ko', 'app/events', 'app/componentResolver', 'app/dataService', 'text!app/components/tap/template.html'], function (ko, events, ComponentResolver, dataService, htmlString) {
     
     function Tap(model) {
         var self = this;
@@ -9,7 +9,14 @@
         self.keg = ko.observable(model.keg);
 
         events.on("KegRemovedFromTap", self.removeKeg);
-        events.on("kegTapped", self.removeKeg);
+        events.on("KegTapped", self.tapKeg);
+
+        self.resolver = new ComponentResolver();
+        self.resolver.register('keg', 'keg');
+        self.resolver.register('keg-body', 'kegBody');
+        self.resolver.register('face', 'face');
+        self.resolver.register('beer', 'beer');
+        self.resolver.register('hat', 'outsideRing');
     };
 
     Tap.prototype = {

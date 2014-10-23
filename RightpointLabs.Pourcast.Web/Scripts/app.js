@@ -15,15 +15,12 @@
     }
 });
 
-requirejs(['ko', 'app/bindings', 'app/componentResolver', 'app/dataService'], function (ko, bindings, componentResolver, dataService) {
+requirejs(['ko', 'app/bindings', 'app/componentResolver', 'app/dataService'], function (ko, bindings, ComponentResolver, dataService) {
     bindings.init();
 
-    var resolver = new componentResolver();
+    var resolver = new ComponentResolver();
     resolver.register('pourcast', 'pourcast');
     resolver.register('tap', 'tap');
-    resolver.register('keg', 'keg');
-    resolver.register('beer', 'beer');
-    resolver.register('hat', 'outsideRing');
 
     dataService.getTaps().done(function (taps) {
         var viewModel = {

@@ -101,11 +101,18 @@
 
                     ko.virtualElements.emptyNode(element);
 
-                    var componentValueAccessor = function() {
-                        return {
-                            name: bestComponent.name,
-                            params: model,
-                        };
+                    var componentValueAccessor = function () {
+                        if (bestComponent) {
+                            return {
+                                name: bestComponent.name,
+                                params: model,
+                            };
+                        } else {
+                            return {
+                                name: 'missing',
+                                params: model,
+                            };
+                        }
                     };
 
                     ko.bindingHandlers.component.init(element, componentValueAccessor, allBindings, viewModel, bindingContext);

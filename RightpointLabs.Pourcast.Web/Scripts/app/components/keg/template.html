@@ -23,19 +23,11 @@
                 <!-- /ko -->
 
                 <div class="keg">
-                    <img class="body" src="/Content/themes/base/images/keg.png" />
+                    <!-- ko oneComponent: 'kegBody' -->
+                    <!-- /ko -->
 
-                    <div class="face">
-                        <!-- ko ifnot: isLow -->
-                        <img src="/Content/themes/base/images/face-happy.png" data-bind="ifnot: isLow" />
-                        <!-- /ko -->
-                        <!-- ko if: isLow -->
-                        <img src="/Content/themes/base/images/face-sad.png" data-bind="if: isLow" />
-                        <!-- /ko -->
-                        
-                        <!-- ko manyComponents: 'onFace' -->
-                        <!-- /ko -->
-                    </div>
+                    <!-- ko oneComponent: 'face' -->
+                    <!-- /ko -->
                 </div>
                 
                 <!-- ko manyComponents: 'inFrontOfKeg' -->

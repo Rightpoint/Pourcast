@@ -10,8 +10,10 @@
         register: function (name, location) {
             var self = this;
 
-            require(['app/components/' + name + '/config'], function(Config) {
-                ko.components.register(name, { require: 'app/components/' + name + '/viewModel' });
+            require(['app/components/' + name + '/config'], function (Config) {
+                if (!ko.components.isRegistered(name)) {
+                    ko.components.register(name, { require: 'app/components/' + name + '/viewModel' });
+                }
 
                 self.components.push({
                     location: location,
