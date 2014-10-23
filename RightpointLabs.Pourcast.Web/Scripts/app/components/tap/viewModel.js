@@ -1,12 +1,12 @@
-﻿define(['ko', 'app/events', 'app/dataservice', 'text!app/components/tap/template.html'], function (ko, events, dataService, htmlString) {
+﻿define(['ko', 'app/events', 'app/dataService', 'text!app/components/tap/template.html'], function (ko, events, dataService, htmlString) {
     
     function Tap(model) {
         var self = this;
 
-        self.id = ko.observable(model.Id);
-        self.name = ko.observable(model.Name);
-        self.hasKeg = ko.observable(model.HasKeg);
-        self.keg = ko.observable(model.Keg);
+        self.id = ko.observable(model.id);
+        self.name = ko.observable(model.name);
+        self.hasKeg = ko.observable(model.hasKeg);
+        self.keg = ko.observable(model.keg);
 
         events.on("KegRemovedFromTap", self.removeKeg);
         events.on("kegTapped", self.removeKeg);

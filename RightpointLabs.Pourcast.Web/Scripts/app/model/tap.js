@@ -1,4 +1,4 @@
-﻿define(['ko', 'app/events', 'app/dataservice'], function (ko, events, dataService) {
+﻿define(['ko', 'app/events', 'app/dataService'], function (ko, events, dataService) {
     
     function Tap(tapJSON) {
         var self = this;

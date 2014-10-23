@@ -1,4 +1,4 @@
-﻿define('TapViewModel', ['jquery', 'ko', 'app/events', 'app/dataservice'], function ($, ko, events, dataService) {
+﻿define('TapViewModel', ['jquery', 'ko', 'app/events', 'app/dataService'], function ($, ko, events, dataService) {
     var TapViewModel = function() {
         var self = this;
         self.taps = ko.observableArray();

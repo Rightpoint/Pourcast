@@ -1,14 +1,14 @@
-﻿define(['ko', 'app/events', 'app/dataservice', 'text!app/components/keg/template.html'], function (ko, events, dataService, htmlString) {
+﻿define(['ko', 'app/events', 'app/dataService', 'text!app/components/keg/template.html'], function (ko, events, dataService, htmlString) {
     
     function Keg(model) {
         var self = this;
 
-        self.id = ko.observable(model.Id);
-        self.percentRemaining = ko.observable(decimalToPercent(model.PercentRemaining));
-        self.isEmpty = ko.observable(model.IsEmpty);
-        self.isPouring = ko.observable(model.IsPouring);
-        self.capacity = ko.observable(model.Capacity);
-        self.beer = ko.observable(model.Beer);
+        self.id = ko.observable(model.id);
+        self.percentRemaining = ko.observable(decimalToPercent(model.percentRemaining));
+        self.isEmpty = ko.observable(model.isEmpty);
+        self.isPouring = ko.observable(model.isPouring);
+        self.capacity = ko.observable(model.capacity);
+        self.beer = ko.observable(model.beer);
 
         self.isLow = ko.computed(function () {
             return self.percentRemaining() < 25;

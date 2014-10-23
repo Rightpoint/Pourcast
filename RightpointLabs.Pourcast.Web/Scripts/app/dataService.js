@@ -6,13 +6,13 @@
                 .then(function (beerOnTapJson) {
                     var taps = [];
                     beerOnTapJson.forEach(function (data) {
-                        var tap = data.Tap;
+                        var tap = data.tap;
 
-                        if (data.Keg != null) {
-                            tap.Keg = data.Keg;
-                            tap.Keg.Beer = data.Beer;
-                            tap.Keg.Beer.Style = data.Style;
-                            tap.Keg.Beer.Brewery = data.Brewery;
+                        if (data.keg != null) {
+                            tap.keg = data.keg;
+                            tap.keg.beer = data.beer;
+                            tap.keg.beer.style = data.style;
+                            tap.keg.beer.brewery = data.brewery;
                         }
                         taps.push(tap);
                     });
@@ -27,10 +27,10 @@
                     var keg;
 
                     if (data.keg != null) {
-                        keg = data.Keg;
-                        keg.Beer = data.Beer;
-                        keg.Beer.Style = data.Style;
-                        keg.Beer.Brewery = data.Brewery;
+                        keg = data.keg;
+                        keg.beer = data.beer;
+                        keg.beer.style = data.style;
+                        keg.beer.brewery = data.brewery;
                     }
 
                     return keg;

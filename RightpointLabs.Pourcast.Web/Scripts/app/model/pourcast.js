@@ -1,4 +1,4 @@
-﻿define(['ko', 'jquery', 'app/componentResolver', 'app/events', 'app/dataservice'], function (ko, $, ComponentResolver, events, dataService) {
+﻿define(['ko', 'jquery', 'app/componentResolver', 'app/events', 'app/dataService'], function (ko, $, ComponentResolver, events, dataService) {
 
     function Pourcast() {
         var self = this;
