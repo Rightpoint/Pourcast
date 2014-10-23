@@ -9,16 +9,17 @@
 #include <PString.h>
 #include "MemoryFree.h"
 
-NetworkRequester::NetworkRequester(const char* host, byte pin) { 
+NetworkRequester::NetworkRequester(const char* host, byte pin, Print* debug) { 
   _host = host;
   _pin = pin;
+  _debug = debug;
   pinMode(_pin, OUTPUT);
   digitalWrite(_pin, HIGH);
 }
 
 void NetworkRequester::MakeRequest(const char* url){
   digitalWrite(_pin, LOW);
-  Serial.println(url);
+  *_debug << url << endl;
   
   // Build GET expression
   
@@ -29,28 +30,27 @@ void NetworkRequester::MakeRequest(const char* url){
      << F(" HTTP/1.0") << "\n"
      << F("Host: ") << _host << "\n"
      << "\n\n";
-  //Serial << strRequest << endl;
-  //Serial << F("Free: ") << freeMemory() << endl;
+  //*_debug << strRequest << endl;
+  //*_debug << F("Free: ") << freeMemory() << endl;
   
   EthernetClient client;
   if (client.connect(_host, 80)) {
-    Serial << F("Connected") << endl;
+    *_debug << F("Connected") << endl;
     client << (const char*) strRequest << endl; 
-    Serial << F("Request sent") << endl;
+    *_debug << F("Request sent") << endl;
     while (client.connected())
       while(client.available())
         client.read();
-//        Serial.write((byte) client.read());
-    Serial << endl << F("response drained") << endl;
+//        _debug->write((byte) client.read());
+    *_debug << endl << F("response drained") << endl;
     client.stop();
     
-    Serial << F("connection closed") << endl;
+    *_debug << F("connection closed") << endl;
   } else {
-    Serial.println(F("Connection failed"));
+    _debug->println(F("Connection failed"));
   }
 
-  Serial.print(url);
-  Serial.println(F(" COMPLETE"));
+  *_debug << url << F(" COMPLETE") << endl;
   digitalWrite(_pin, HIGH);
 }
 
@@ -65,7 +65,7 @@ void Dec2Hex(PString* output, char ch, int len) {
   PString pBuf(buf, 4, F("%2x"));
   char outBuf[6];
   snprintf(outBuf, 6, buf, ch);
-  //Serial << F("Dec2Hex ") << buf << F(" + ") << ch << F(" -> ") << outBuf << endl;
+  //*_debug << F("Dec2Hex ") << buf << F(" + ") << ch << F(" -> ") << outBuf << endl;
   *output << outBuf;
 }
 void EscapeMessage(PString* output, const char* message) {
@@ -102,7 +102,7 @@ void NetworkRequester::LogMessage(const __FlashStringHelper* message){
   EscapeMessage(&pBuf, messageBuf);
   delete messageBuf;
   
-  Serial << F("Free: ") << freeMemory() << endl;
+  *_debug << F("Free: ") << freeMemory() << endl;
   MakeRequest(buf);
 }
 void NetworkRequester::LogMessage(const char* message){
@@ -111,6 +111,6 @@ void NetworkRequester::LogMessage(const char* message){
   pBuf << F("/api/Status/logMessage?message=");
   EscapeMessage(&pBuf, message);
   
-  Serial << F("Free: ") << freeMemory() << endl;
+  *_debug << F("Free: ") << freeMemory() << endl;
   MakeRequest(buf);
 }

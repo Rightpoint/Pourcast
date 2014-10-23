@@ -21,6 +21,12 @@
 #include "SerialReporter.h"
 #include "NetworkReporter.h"
 
+class NullPrint : public Print {
+  public:
+    virtual size_t write(uint8_t);
+};
+size_t NullPrint::write(uint8_t ch){}
+
 Tap* tap1;
 Tap* tap2;
 NetworkRequester* http;
@@ -45,7 +51,7 @@ void setup() {
   
   Serial << F("Starting network stuff") << endl;
   Serial << F("Free: ") << freeMemory() << endl;
-  http = new NetworkRequester("pourcast.labs.rightpoint.com", 9);
+  http = new NetworkRequester("pourcast.labs.rightpoint.com", 9, new NullPrint());
   http->LogMessage(F("Initializing"));
   
   NetworkReporter* tap1Reporter = new NetworkReporter(http, "535c61a951aa0405287989ec"); 
