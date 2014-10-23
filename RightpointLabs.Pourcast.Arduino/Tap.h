@@ -5,6 +5,7 @@ class Tap {
 public: 
   Tap(Reporter* reporter);
   inline void HandlePulse();
+  long Clear();
   void Loop(int cycleNumber);
 private:
   Reporter* _reporter;
