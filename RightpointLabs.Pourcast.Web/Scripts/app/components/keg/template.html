@@ -18,19 +18,35 @@
         <div class="profile">
             <div class="ring">
                 <div class="beer-level" data-bind="style: { height: percentRemainingStyle, background: beer().style.color }"></div>
+
+                <!-- ko manyComponents: 'behindKeg' -->
+                <!-- /ko -->
+
                 <div class="keg">
                     <img class="body" src="/Content/themes/base/images/keg.png" />
 
-                    <!-- ko ifnot: isLow -->
-                    <img class="face" src="/Content/themes/base/images/face-happy.png" data-bind="ifnot: isLow" />
-                    <!-- /ko -->
-                    <!-- ko if: isLow -->
-                    <img class="face" src="/Content/themes/base/images/face-sad.png" data-bind="if: isLow" />
-                    <!-- /ko -->
+                    <div class="face">
+                        <!-- ko ifnot: isLow -->
+                        <img src="/Content/themes/base/images/face-happy.png" data-bind="ifnot: isLow" />
+                        <!-- /ko -->
+                        <!-- ko if: isLow -->
+                        <img src="/Content/themes/base/images/face-sad.png" data-bind="if: isLow" />
+                        <!-- /ko -->
+                        
+                        <!-- ko manyComponents: 'onFace' -->
+                        <!-- /ko -->
+                    </div>
                 </div>
+                
+                <!-- ko manyComponents: 'inFrontOfKeg' -->
+                <!-- /ko -->
+
             </div>
 
             <img class="border" src="/Content/themes/base/images/ring.png">
+            
+            <!-- ko manyComponents: 'outsideRing' -->
+            <!-- /ko -->
         </div>
     </div>
 

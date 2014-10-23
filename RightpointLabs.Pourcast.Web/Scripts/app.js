@@ -23,6 +23,7 @@ requirejs(['ko', 'app/bindings', 'app/componentResolver', 'app/dataService'], fu
     resolver.register('tap', 'tap');
     resolver.register('keg', 'keg');
     resolver.register('beer', 'beer');
+    resolver.register('hat', 'outsideRing');
 
     dataService.getTaps().done(function (taps) {
         var viewModel = {

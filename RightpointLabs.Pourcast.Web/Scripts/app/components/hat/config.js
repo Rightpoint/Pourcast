@@ -6,9 +6,9 @@
         self.isActive = ko.observable(true);
         self.rank = ko.observable(2);
 
-        setInterval(function () {
-            self.isActive(!self.isActive());
-        }, 2000);
+        //setInterval(function () {
+        //    self.isActive(!self.isActive());
+        //}, 2000);
     };
 
     return Config;
