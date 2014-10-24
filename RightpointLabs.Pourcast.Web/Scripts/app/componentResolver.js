@@ -2,9 +2,21 @@
 
     function ComponentResolver() {
         this.components = ko.observableArray();
+        this.configs = {};
     };
 
     ko.components.register('missing', { require: 'app/components/missing/viewModel' });
+
+    var ensureConfig = function (component, model) {
+        var self = this;
+        var name = component.name;
+
+        if (!self.configs[name]) {
+            self.configs[name] = new component.Config(model);
+        }
+
+        return self.configs[name];
+    };
 
     ComponentResolver.prototype = {
         register: function (name, location) {
@@ -23,12 +35,21 @@
             });
         },
 
-        resolve: function (location) {
+        resolve: function (location, model) {
             var self = this;
 
-            return self.components().filter(function (component) {
+            var matchingComponents = self.components().filter(function (component) {
                 return component.location === location;
             });
+
+            var configs = matchingComponents.map(function(component) {
+                return {
+                    name: component.name,
+                    config: ensureConfig.call(self, component, model)
+                };
+            });
+
+            return configs;
         },
     };
 
