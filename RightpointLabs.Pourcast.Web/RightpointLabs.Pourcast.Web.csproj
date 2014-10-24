@@ -222,6 +222,9 @@
     <Content Include="Scripts\app\components\keg\viewModel.js" />
     <Content Include="Scripts\app\components\missing\template.html" />
     <Content Include="Scripts\app\components\missing\viewModel.js" />
+    <Content Include="Scripts\app\components\percent\config.js" />
+    <Content Include="Scripts\app\components\percent\template.html" />
+    <Content Include="Scripts\app\components\percent\viewModel.js" />
     <Content Include="Scripts\app\components\pourcast\config.js" />
     <Content Include="Scripts\app\components\pourcast\template.html" />
     <Content Include="Scripts\app\components\pourcast\viewModel.js" />
