@@ -13,7 +13,7 @@
 #include <Time.h>
 
 
-
+#include "ApplicationMonitor.h"
 #include "MemoryFree.h"
 #include "Tap.h"
 #include "MultiReporter.h"
@@ -27,6 +27,28 @@ class NullPrint : public Print {
 };
 size_t NullPrint::write(uint8_t ch){}
 
+class NetworkPrint : public Print {
+  public:
+    NetworkPrint (NetworkRequester* http);
+    virtual size_t write(uint8_t);
+  private:
+    NetworkRequester* _http;
+    char _buf[128];
+    PString _pBuf;
+};
+NetworkPrint::NetworkPrint(NetworkRequester* http): _pBuf(_buf, 128) {
+  _http = http;
+}
+
+size_t NetworkPrint::write(uint8_t ch){
+  _pBuf << (char)ch;
+  if(ch == '\n'){
+    _http->LogMessage(_buf);
+  }
+  _pBuf.begin();
+}
+
+Watchdog::CApplicationMonitor ApplicationMonitor;
 Tap* tap1;
 Tap* tap2;
 NetworkRequester* http;
@@ -37,6 +59,7 @@ byte mac[] = { 0x90, 0xA2, 0xDA, 0x0F, 0x84, 0xC2 };
 
 // prep - initialize serial (TX on pin 1) and wire up the interrupts for pulses from the taps (pins 2 and 3)
 void setup() {
+  ApplicationMonitor.DisableWatchdog();
   Serial.begin(9600);
   while(!Serial);
   Serial.println("setup");
@@ -54,6 +77,10 @@ void setup() {
   http = new NetworkRequester("pourcast.labs.rightpoint.com", 9, new NullPrint());
   http->LogMessage(F("Initializing"));
   
+  NetworkPrint* np = new NetworkPrint(http);
+  ApplicationMonitor.Dump(*np);
+  delete np;
+  
   NetworkReporter* tap1Reporter = new NetworkReporter(http, "535c61a951aa0405287989ec"); 
   NetworkReporter* tap2Reporter = new NetworkReporter(http, "537d28db51aa04289027cde5"); 
   
@@ -69,6 +96,8 @@ void setup() {
   Serial << F("Setup complete") << endl;
   http->LogMessage(F("Done Initializing"));
   Serial << F("Free: ") << freeMemory() << endl;
+  
+  ApplicationMonitor.EnableWatchdog(Watchdog::CApplicationMonitor::Timeout_8s);
 }
 
 // handle interrupt pulses from the taps
@@ -117,6 +146,7 @@ void loop() {
       Serial.println("ALIVE");
     }
     cycle = (cycle + 1) % 6000;
+    ApplicationMonitor.IAmAlive();
     delay(100);
   }
 }
