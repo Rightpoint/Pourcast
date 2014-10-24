@@ -57,6 +57,12 @@ NetworkRequester* http;
 // Newer Ethernet shields have a MAC address printed on a sticker on the shield
 byte mac[] = { 0x90, 0xA2, 0xDA, 0x0F, 0x84, 0xC2 };
 
+void dumpWatchdogHistory() {
+  NetworkPrint np(http);
+  ApplicationMonitor.Dump(np);
+  ApplicationMonitor.Dump(Serial);
+}
+
 // prep - initialize serial (TX on pin 1) and wire up the interrupts for pulses from the taps (pins 2 and 3)
 void setup() {
   ApplicationMonitor.DisableWatchdog();
@@ -77,9 +83,7 @@ void setup() {
   http = new NetworkRequester("pourcast.labs.rightpoint.com", 9, new NullPrint());
   http->LogMessage(F("Initializing"));
   
-  NetworkPrint* np = new NetworkPrint(http);
-  ApplicationMonitor.Dump(*np);
-  delete np;
+  dumpWatchdogHistory();
   
   NetworkReporter* tap1Reporter = new NetworkReporter(http, "535c61a951aa0405287989ec"); 
   NetworkReporter* tap2Reporter = new NetworkReporter(http, "537d28db51aa04289027cde5"); 
