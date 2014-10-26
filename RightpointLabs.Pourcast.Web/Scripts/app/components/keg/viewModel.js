@@ -6,11 +6,11 @@
         self.isPouring = ko.computed(function() {
             return model.isPouring();
         });
-        self.beer = ko.computed(function() {
-            return model.beer();
-        });
         self.beerHeight = ko.computed(function() {
             return decimalToPercent(model.percentRemaining()) + '%';
+        });
+        self.beer = ko.computed(function () {
+            return model.beer();
         });
         self.keg = ko.computed(function() {
             return model;

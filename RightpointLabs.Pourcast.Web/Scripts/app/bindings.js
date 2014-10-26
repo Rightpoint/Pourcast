@@ -9,26 +9,30 @@
             update: function (element, valueAccessor, allBindings, viewModel, bindingContext) { }
         };
 
-        (function() {
-            var getComponents = function (valueAccessor, bindingContext) {
-                var params = valueAccessor();
-                var model = bindingContext.$data;
-                var resolver;
-                var location;
-
-                if (typeof params === 'string') {
-                    resolver = getClosestResolver(bindingContext);
-                    location = params;
+        (function () {
+            var getModel = function (params, bindingContext) {
+                if (typeof params === 'string' || !params.model) {
+                    return bindingContext.$data;
                 } else {
-                    if (!params.resolver) {
-                        resolver = params.resolver;
-                    } else {
-                        resolver = getClosestResolver(bindingContext);
-                    }
-                    location = params.location;
+                    // is this unwrapping bad?
+                    return ko.unwrap(params.model);
                 }
+            };
 
-                return resolver.resolve(location, model);
+            var getResolver = function(params, bindingContext) {
+                if (typeof params === 'string' || !params.resolver) {
+                    return getClosestResolver(bindingContext);
+                } else {
+                    return params.resolver;
+                }
+            };
+
+            var getKey = function(params) {
+                if (typeof params === 'string' || !params.key) {
+                    return params;
+                } else {
+                    return params.key;
+                }
             };
 
             var getClosestResolver = function(bindingContext) {
@@ -53,8 +57,11 @@
             ko.bindingHandlers.oneComponent = {
                 init: function(element, valueAccessor, allBindings, viewModel, bindingContext) { },
                 update: function(element, valueAccessor, allBindings, viewModel, bindingContext) {
-                    var model = bindingContext.$data;
-                    var components = getComponents(valueAccessor, bindingContext);
+                    var params = valueAccessor();
+                    var key = getKey(params);
+                    var resolver = getResolver(params, bindingContext);
+                    var model = getModel(params, bindingContext);
+                    var components = resolver.resolve(key, model);
 
                     var bestComponent = components.reduce(function(best, component) {
                         var config = component.config;
@@ -103,8 +110,11 @@
             ko.bindingHandlers.manyComponents = {
                 init: function(element, valueAccessor, allBindings, viewModel, bindingContext) { },
                 update: function(element, valueAccessor, allBindings, viewModel, bindingContext) {
-                    var model = bindingContext.$data;
-                    var components = getComponents(valueAccessor, bindingContext);
+                    var params = valueAccessor();
+                    var key = getKey(params);
+                    var resolver = getResolver(params, bindingContext);
+                    var model = getModel(params, bindingContext);
+                    var components = resolver.resolve(key, model);
 
                     ko.virtualElements.emptyNode(element);
 

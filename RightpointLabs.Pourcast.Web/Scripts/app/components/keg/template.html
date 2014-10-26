@@ -8,9 +8,7 @@
 
     <div class="status">
         <div class="bits">
-            <!-- ko with: keg -->
-            <!-- ko manyComponents: 'bits' -->
-            <!-- /ko -->
+            <!-- ko manyComponents: { key: 'bits', model: keg } -->
             <!-- /ko -->
         </div>
 
@@ -18,42 +16,28 @@
             <div class="ring">
                 <div class="beer-level" data-bind="style: { height: beerHeight, background: beer().style().color }"></div>
 
-                <!-- ko with: keg -->
-                <!-- ko manyComponents: 'behindKeg' -->
-                <!-- /ko -->
+                <!-- ko manyComponents: { key: 'behindKeg', model: keg } -->
                 <!-- /ko -->
 
                 <div class="keg">
-                    <!-- ko with: keg -->
-                    <!-- ko oneComponent: 'kegBody' -->
-                    <!-- /ko -->
+                    <!-- ko oneComponent: { key: 'kegBody', model: keg } -->
                     <!-- /ko -->
 
-                    <!-- ko with: keg -->
-                    <!-- ko oneComponent: 'face' -->
-                    <!-- /ko -->
+                    <!-- ko oneComponent: { key: 'face', model: keg } -->
                     <!-- /ko -->
                 </div>
                 
-                <!-- ko with: keg -->
-                <!-- ko manyComponents: 'inFrontOfKeg' -->
+                <!-- ko manyComponents: { key: 'inFrontOfKeg', model: keg } -->
                 <!-- /ko -->
-                <!-- /ko -->
-
             </div>
 
             <img class="border" src="/Content/themes/base/images/ring.png">
             
-            <!-- ko with: keg -->
-            <!-- ko manyComponents: 'outsideRing' -->
+            <!-- ko manyComponents: { key: 'outsideRing', model: keg } -->
             <!-- /ko -->
-            <!-- /ko -->
-
         </div>
     </div>
 
-    <!-- ko with: beer -->
-    <!-- ko oneComponent: 'beer' -->
-    <!-- /ko -->
+    <!-- ko oneComponent: { key: 'beer', model: beer } -->
     <!-- /ko -->
 </div>

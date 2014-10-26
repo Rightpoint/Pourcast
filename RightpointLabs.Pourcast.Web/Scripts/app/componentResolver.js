@@ -19,7 +19,7 @@
     };
 
     ComponentResolver.prototype = {
-        register: function (name, location) {
+        register: function (name, key) {
             var self = this;
 
             require(['app/components/' + name + '/config'], function (Config) {
@@ -28,18 +28,18 @@
                 }
 
                 self.components.push({
-                    location: location,
+                    key: key,
                     name: name,
                     Config: Config
                 });
             });
         },
 
-        resolve: function (location, model) {
+        resolve: function (key, model) {
             var self = this;
 
             var matchingComponents = self.components().filter(function (component) {
-                return component.location === location;
+                return component.key === key;
             });
 
             var configs = matchingComponents.map(function(component) {
