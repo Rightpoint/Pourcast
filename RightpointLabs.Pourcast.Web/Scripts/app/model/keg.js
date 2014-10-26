@@ -9,7 +9,7 @@
         self.capacity = ko.observable(kegJSON.capacity);
         self.beer = ko.observable(beer);
         self.isLow = ko.computed(function () {
-            return self.percentRemaining() < .25;
+            return ko.unwrap(self.percentRemaining) < .25;
         });
 
         events.on("PourStarted", function(e) {
