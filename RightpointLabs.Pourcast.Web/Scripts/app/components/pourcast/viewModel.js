@@ -4,7 +4,7 @@
         var self = this;
 
         self.taps = ko.computed(function() {
-            return model.taps();
+            return ko.unwrap(model.taps);
         });
     };
 

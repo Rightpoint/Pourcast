@@ -4,13 +4,13 @@
         var self = this;
 
         self.name = ko.computed(function () {
-            return model.name();
+            return ko.unwrap(model.name);
         });
         self.brewery = ko.computed(function() {
-            return model.brewery();
+            return ko.unwrap(model.brewery);
         });
         self.style = ko.computed(function () {
-            return model.style();
+            return ko.unwrap(model.style);
         });
     };
 

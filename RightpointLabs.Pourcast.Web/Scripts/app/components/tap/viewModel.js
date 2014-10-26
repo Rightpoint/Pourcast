@@ -4,10 +4,10 @@
         var self = this;
 
         self.hasKeg = ko.computed(function() {
-            return model.hasKeg();
+            return ko.unwrap(model.hasKeg);
         });
         self.keg = ko.computed(function() {
-            return model.keg();
+            return ko.unwrap(model.keg);
         });
 
         self.resolver = new ComponentResolver();

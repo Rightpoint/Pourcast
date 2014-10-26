@@ -4,7 +4,7 @@
         var self = this;
 
         self.isLow = ko.computed(function () {
-            return model.isLow();
+            return ko.unwrap(model.isLow);
         });
     };
 

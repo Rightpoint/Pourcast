@@ -4,13 +4,13 @@
         var self = this;
 
         self.isPouring = ko.computed(function() {
-            return model.isPouring();
+            return ko.unwrap(model.isPouring);
         });
         self.beerHeight = ko.computed(function() {
-            return decimalToPercent(model.percentRemaining()) + '%';
+            return decimalToPercent(ko.unwrap(model.percentRemaining)) + '%';
         });
         self.beer = ko.computed(function () {
-            return model.beer();
+            return ko.unwrap(model.beer);
         });
         self.keg = ko.computed(function() {
             return model;
