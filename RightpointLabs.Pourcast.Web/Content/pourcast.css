@@ -241,6 +241,10 @@ body,
 }
 .tap .keg-info .status .profile .ring .keg .face img {
   width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  position: absolute;
 }
 .tap .keg-info .status .profile .ring .beer-level {
   width: 100%;

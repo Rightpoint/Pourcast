@@ -1,42 +1,39 @@
-﻿define(['jquery'], function ($) {
-    var dataService = {
+﻿define(['jquery', 'app/model/tap', 'app/model/keg', 'app/model/beer', 'app/model/brewery', 'app/model/style', 'exports'], function($, Tap, Keg, Beer, Brewery, Style, exports) {
 
-        getTaps: function () {
-            return $.get("/api/beerOnTap")
-                .then(function (beerOnTapJson) {
-                    var taps = [];
-                    beerOnTapJson.forEach(function (data) {
-                        var tap = data.tap;
+    exports.getTaps = function() {
+        return $.get("/api/beerOnTap").then(function(beerOnTapJson) {
+            var taps = [];
 
-                        if (data.keg != null) {
-                            tap.keg = data.keg;
-                            tap.keg.beer = data.beer;
-                            tap.keg.beer.style = data.style;
-                            tap.keg.beer.brewery = data.brewery;
-                        }
-                        taps.push(tap);
-                    });
+            beerOnTapJson.forEach(function(data) {
+                var tap, brewery, style, beer, keg;
 
-                    return taps;
-                });
-        },
+                if (data.keg != null) {
+                    brewery = new Brewery(data.brewery);
+                    style = new Style(data.style);
+                    beer = new Beer(data.beer, brewery, style);
+                    keg = new Keg(data.keg, beer);
+                }
 
-        getKegFromTapId: function(tapId) {
-            return $.get('/api/beerOnTap/' + tapId)
-                .then(function(data) {
-                    var keg;
+                tap = new Tap(data.tap, keg);
+                taps.push(tap);
+            });
 
-                    if (data.keg != null) {
-                        keg = data.keg;
-                        keg.beer = data.beer;
-                        keg.beer.style = data.style;
-                        keg.beer.brewery = data.brewery;
-                    }
-
-                    return keg;
-                });
-        }
+            return taps;
+        });
     };
 
-    return dataService;
+    exports.getKegFromTapId = function(tapId) {
+        return $.get('/api/beerOnTap/' + tapId).then(function(data) {
+            var brewery, style, beer, keg;
+
+            if (data.keg != null) {
+                brewery = new Brewery(data.brewery);
+                style = new Style(data.style);
+                beer = new Beer(data.beer, brewery, style);
+                keg = new Keg(data.keg, beer);
+            }
+
+            return keg;
+        });
+    };
 });

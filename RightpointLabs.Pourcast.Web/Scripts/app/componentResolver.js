@@ -1,7 +1,7 @@
 ﻿define(['ko'], function (ko) {
 
     function ComponentResolver() {
-        this.components = ko.observableArray();
+        this.components = ko.observableArray([]);
         this.configs = {};
     };
 

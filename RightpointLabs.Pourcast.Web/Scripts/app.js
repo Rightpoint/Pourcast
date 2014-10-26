@@ -24,7 +24,7 @@ requirejs(['ko', 'app/bindings', 'app/componentResolver', 'app/dataService'], fu
 
     dataService.getTaps().done(function (taps) {
         var viewModel = {
-            taps: taps,
+            taps: ko.observableArray(taps),
             resolver: resolver
         };
 

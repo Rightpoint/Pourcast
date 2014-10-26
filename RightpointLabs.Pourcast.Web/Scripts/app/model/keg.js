@@ -1,31 +1,26 @@
-﻿define(['jquery', 'ko', 'app/events'], function ($, ko, events) {
+﻿define(['ko', 'app/events'], function (ko, events) {
     function Keg(kegJSON, beer) {
         var self = this;
 
-        self.id = ko.observable(kegJSON.Id);
-        self.percentRemaining = ko.observable(decimalToPercent(kegJSON.PercentRemaining));
-        self.isEmpty = ko.observable(kegJSON.IsEmpty);
-        self.isPouring = ko.observable(kegJSON.IsPouring);
-        self.capacity = ko.observable(kegJSON.Capacity);
+        self.id = ko.observable(kegJSON.id);
+        self.percentRemaining = ko.observable(kegJSON.percentRemaining);
+        self.isEmpty = ko.observable(kegJSON.isEmpty);
+        self.isPouring = ko.observable(kegJSON.isPouring);
+        self.capacity = ko.observable(kegJSON.capacity);
         self.beer = ko.observable(beer);
-        
         self.isLow = ko.computed(function () {
-            return self.percentRemaining() < 25;
+            return self.percentRemaining() < .25;
         });
 
-        self.percentRemainingStyle = ko.computed(function () {
-            return Math.floor(self.percentRemaining()) + '%';
+        events.on("PourStarted", function(e) {
+            self.pourStarted(e);
         });
-        self.percentRemainingHtml = ko.computed(function () {
-            return parseFloat(self.percentRemaining()).toFixed(1) + '<span class="symbol">%</span>';
+        events.on("Pouring", function(e) {
+            self.pouring(e);
         });
-        self.percentRemainingClass = ko.computed(function () {
-            return self.isLow() ? "low" : "high";
+        events.on("PourStopped", function(e) {
+            self.pourStopped(e);
         });
-
-        events.on("PourStarted", self.pourStarted);
-        events.on("Pouring", self.pouring);
-        events.on("PourStopped", self.pourStopped);
     };
 
     Keg.prototype = {
@@ -43,7 +38,7 @@
             var self = this;
 
             if (e.KegId === self.id()) {
-                self.percentRemaining(decimalToPercent(e.PercentRemaining));
+                self.percentRemaining(e.PercentRemaining);
             }
         },
 
@@ -53,13 +48,9 @@
 
             if (e.KegId === self.id()) {
                 self.isPouring(false);
-                self.percentRemaining(decimalToPercent(e.PercentRemaining));
+                self.percentRemaining(e.PercentRemaining);
             }
         }
-    }
-
-    function decimalToPercent(decimal) {
-        return (decimal * 100).toFixed(1);
     }
 
     return Keg;

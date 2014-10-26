@@ -3,16 +3,13 @@
     function Percent(model) {
         var self = this;
 
-        self.percentRemaining = model.percentRemaining;
-
+        self.percentRemaining = ko.computed(function() {
+            return (model.percentRemaining() * 100).toFixed(1);
+        });
         self.isLow = ko.computed(function () {
-            return self.percentRemaining() < 25;
+            return model.isLow();
         });
-
-        self.percentRemainingHtml = ko.computed(function () {
-            return parseFloat(self.percentRemaining()).toFixed(1) + '<span class="symbol">%</span>';
-        });
-        self.percentRemainingClass = ko.computed(function () {
+        self.levelCssClass = ko.computed(function () {
             return self.isLow() ? "low" : "high";
         });
     };

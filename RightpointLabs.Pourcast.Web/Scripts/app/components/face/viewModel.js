@@ -3,7 +3,9 @@
     function Face(model) {
         var self = this;
 
-        self.isLow = model.isLow;
+        self.isLow = ko.computed(function () {
+            return model.isLow();
+        });
     };
 
     return {

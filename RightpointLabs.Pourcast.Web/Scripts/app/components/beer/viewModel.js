@@ -3,11 +3,15 @@
     function Beer(model) {
         var self = this;
 
-        self.id = ko.observable(model.id);
-        self.name = ko.observable(model.name);
-        self.abv = ko.observable(model.abv);
-        self.style = ko.observable(model.style);
-        self.brewery = ko.observable(model.brewery);
+        self.name = ko.computed(function () {
+            return model.name();
+        });
+        self.brewery = ko.computed(function() {
+            return model.brewery();
+        });
+        self.style = ko.computed(function () {
+            return model.style();
+        });
     };
 
     return {

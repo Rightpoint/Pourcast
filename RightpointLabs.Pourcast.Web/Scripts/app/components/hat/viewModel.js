@@ -1,9 +1,7 @@
 ﻿define(['ko', 'text!app/components/hat/template.html'], function (ko, htmlString) {
 
-    function Hat(params) {
+    function Hat(model) {
         var self = this;
-
-        self.params = params;
     };
 
     return {

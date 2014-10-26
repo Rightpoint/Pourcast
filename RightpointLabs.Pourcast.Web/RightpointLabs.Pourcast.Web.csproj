@@ -323,7 +323,6 @@
     <Content Include="Scripts\app\dataService.js" />
     <Content Include="Scripts\app\components\hat\template.html" />
     <Content Include="Scripts\app\components\hat\viewModel.js" />
-    <Content Include="Scripts\app\components\example.js" />
     <Content Include="Scripts\app\model\beer.js" />
     <Content Include="Scripts\app\model\brewery.js" />
     <Content Include="Areas\Admin\Views\web.config" />
@@ -361,8 +360,6 @@
     <Content Include="Scripts\app\model\style.js" />
     <Content Include="Scripts\app\model\tap.js" />
     <Content Include="Scripts\app\model\keg.js" />
-    <Content Include="Scripts\app\model\pourcast.js" />
-    <Content Include="Scripts\app\viewmodel\TapViewModel.js" />
     <Content Include="Scripts\libs\bootstrap.js" />
     <Content Include="Scripts\libs\bootstrap.min.js" />
     <None Include="Scripts\libs\jquery-2.1.0.intellisense.js" />

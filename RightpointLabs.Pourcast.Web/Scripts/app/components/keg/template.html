@@ -1,5 +1,5 @@
 ﻿<div class="keg-info side" style="display: none" data-bind="bubbles: {}, visible: true">
-    <div class="background" data-bind="style: { background: beer().style.color }">
+    <div class="background" data-bind="style: { background: beer().style().color }">
         <div class="shade"></div>
         <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; overflow: hidden;"
              data-bind="bubbles: { minBubbleCount: 20, maxBubbleCount: 50, minBubbleSize: 6, maxBubbleSize: 12, maxWaitTime: 1, minRiseTime: 1.5, maxRiseTime: 4}, visible: isPouring">
@@ -8,34 +8,47 @@
 
     <div class="status">
         <div class="bits">
+            <!-- ko with: keg -->
             <!-- ko manyComponents: 'bits' -->
+            <!-- /ko -->
             <!-- /ko -->
         </div>
 
         <div class="profile">
             <div class="ring">
-                <div class="beer-level" data-bind="style: { height: percentRemainingStyle, background: beer().style.color }"></div>
+                <div class="beer-level" data-bind="style: { height: beerHeight, background: beer().style().color }"></div>
 
+                <!-- ko with: keg -->
                 <!-- ko manyComponents: 'behindKeg' -->
+                <!-- /ko -->
                 <!-- /ko -->
 
                 <div class="keg">
+                    <!-- ko with: keg -->
                     <!-- ko oneComponent: 'kegBody' -->
                     <!-- /ko -->
+                    <!-- /ko -->
 
+                    <!-- ko with: keg -->
                     <!-- ko oneComponent: 'face' -->
+                    <!-- /ko -->
                     <!-- /ko -->
                 </div>
                 
+                <!-- ko with: keg -->
                 <!-- ko manyComponents: 'inFrontOfKeg' -->
+                <!-- /ko -->
                 <!-- /ko -->
 
             </div>
 
             <img class="border" src="/Content/themes/base/images/ring.png">
             
+            <!-- ko with: keg -->
             <!-- ko manyComponents: 'outsideRing' -->
             <!-- /ko -->
+            <!-- /ko -->
+
         </div>
     </div>
 

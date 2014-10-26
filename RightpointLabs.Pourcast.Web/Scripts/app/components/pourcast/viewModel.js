@@ -3,7 +3,9 @@
     function Pourcast(model) {
         var self = this;
 
-        self.taps = ko.observableArray(model.taps);
+        self.taps = ko.computed(function() {
+            return model.taps();
+        });
     };
 
     return {
