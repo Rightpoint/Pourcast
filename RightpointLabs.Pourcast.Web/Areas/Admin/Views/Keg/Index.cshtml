@@ -16,15 +16,16 @@
         <th>Percent</th>
         <th>Empty</th>
         <th>On Tap</th>
+        <th></th>
     </tr>
 
 @foreach (var keg in Model.Kegs) {
     <tr>
         <td>@keg.BeerName</td>
-        <td>@keg.AmountOfBeerRemaining</td>
-        <td>@keg.PercentRemaining</td>
-        <td>@keg.IsEmpty</td>
-        <td>@keg.IsOnTap</td>
+        <td align="right">@keg.AmountOfBeerRemaining.ToString("N0")</td>
+        <td align="right">@keg.PercentRemaining.ToString("P1")</td>
+        <td>@(keg.IsEmpty ? "Yes" : "No")</td>
+        <td>@(keg.IsOnTap ? "Yes" : "No")</td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id = keg.Id }) |
             @Html.ActionLink("Details", "Details", new { id = keg.Id }) |

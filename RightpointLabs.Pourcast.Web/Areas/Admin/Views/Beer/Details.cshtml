@@ -6,7 +6,7 @@
 
 <h2>Details</h2>
 
-<div style="display: block">
+<div class="clearfix">
     <h4>@Model.Name</h4>
     <hr />
     <dl class="dl-horizontal">
@@ -60,10 +60,11 @@
 
     </dl>
 
-
-    <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-        @Html.ActionLink("Back to List", "Details", "Brewery", new RouteValueDictionary() { { "id", Model.BreweryId } }, null)
-    </p>
 </div>
 
+<br/>
+
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to Brewery", "Details", "Brewery", new RouteValueDictionary() { { "id", Model.BreweryId } }, null)
+</p>

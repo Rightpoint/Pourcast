@@ -17,10 +17,18 @@
         @Html.HiddenFor(model => model.Id)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.IsEmpty, new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Capacity, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.CheckBoxFor(model => model.IsEmpty)
-                @Html.ValidationMessageFor(model => model.IsEmpty)
+                @Html.EditorFor(model => model.Capacity)
+                @Html.ValidationMessageFor(model => model.Capacity)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.AmountOfBeerPoured, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.AmountOfBeerPoured)
+                @Html.ValidationMessageFor(model => model.AmountOfBeerPoured)
             </div>
         </div>
 

@@ -47,10 +47,12 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
                 Beers =
                     _beerOrchestrator.GetBeers()
                         .Select(b => new SelectListItem() {Text = b.Name, Value = b.Id})
+                        .OrderBy(i => i.Text)
                         .ToList(),
                 Breweries =
                     _breweryOrchestrator.GetBreweries()
                         .Select(b => new SelectListItem() {Text = b.Name, Value = b.Id})
+                        .OrderBy(i => i.Text)
                         .ToList()
             };
             return View(vm);
@@ -115,7 +117,7 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
             var brewery = _breweryOrchestrator.GetById(beer.BreweryId);
             var model = AutoMapper.Mapper.Map<Beer, EditBeerViewModel>(beer);
             model.Styles =
-                styles.Select(s => new SelectListItem() {Text = s.Name, Value = s.Id, Selected = (s.Id == beer.StyleId)});
+                styles.Select(s => new SelectListItem() {Text = s.Name, Value = s.Id, Selected = (s.Id == beer.StyleId)}).OrderBy(i => i.Text).ToList();
 
             model.BreweryName = brewery.Name;
             return View(model);
