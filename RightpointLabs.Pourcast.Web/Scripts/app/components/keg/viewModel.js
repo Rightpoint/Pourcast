@@ -7,8 +7,11 @@
             return ko.unwrap(model.isPouring);
         });
         self.beerHeight = ko.computed(function() {
-            return decimalToPercent(ko.unwrap(model.percentRemaining)) + '%';
+            return (ko.unwrap(model.percentRemaining) * 100) + '%';
         });
+        self.beerColor = ko.computed(function() {
+            return ko.unwrap(ko.unwrap(ko.unwrap(model.beer).style).color);
+        })
         self.beer = ko.computed(function () {
             return ko.unwrap(model.beer);
         });
@@ -16,10 +19,6 @@
             return model;
         });
     };
-
-    function decimalToPercent(decimal) {
-        return (decimal * 100).toFixed(1);
-    }
 
     return {
         viewModel: Keg,

@@ -15,7 +15,7 @@
         self.resolver.register('keg-body', 'kegBody');
         self.resolver.register('face', 'face');
         self.resolver.register('beer', 'beer');
-        self.resolver.register('hat', 'outsideRing');
+        self.resolver.register('hat', 'onKegBody');
         self.resolver.register('percent', 'bits');
     };
 

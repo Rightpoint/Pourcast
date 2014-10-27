@@ -1,5 +1,5 @@
 ﻿<div class="keg-info side" style="display: none" data-bind="bubbles: {}, visible: true">
-    <div class="background" data-bind="style: { background: beer().style().color }">
+    <div class="background" data-bind="style: { background: beerColor }">
         <div class="shade"></div>
         <div style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; overflow: hidden;"
              data-bind="bubbles: { minBubbleCount: 20, maxBubbleCount: 50, minBubbleSize: 6, maxBubbleSize: 12, maxWaitTime: 1, minRiseTime: 1.5, maxRiseTime: 4}, visible: isPouring">
@@ -14,7 +14,7 @@
 
         <div class="profile">
             <div class="ring">
-                <div class="beer-level" data-bind="style: { height: beerHeight, background: beer().style().color }"></div>
+                <div class="beer-level" data-bind="style: { height: beerHeight, background: beerColor }"></div>
 
                 <!-- ko manyComponents: { key: 'behindKeg', model: keg } -->
                 <!-- /ko -->
@@ -22,9 +22,20 @@
                 <div class="keg">
                     <!-- ko oneComponent: { key: 'kegBody', model: keg } -->
                     <!-- /ko -->
-
-                    <!-- ko oneComponent: { key: 'face', model: keg } -->
+                    
+                    <!-- ko manyComponents: { key: 'onKegBody', model: keg } -->
                     <!-- /ko -->
+                    
+                    <div class="face">
+                        <!-- ko manyComponents: 'behindFace' -->
+                        <!-- /ko -->
+
+                        <!-- ko oneComponent: { key: 'face', model: keg } -->
+                        <!-- /ko -->
+
+                        <!-- ko manyComponents: 'onFace' -->
+                        <!-- /ko -->
+                    </div>
                 </div>
                 
                 <!-- ko manyComponents: { key: 'inFrontOfKeg', model: keg } -->

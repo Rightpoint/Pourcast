@@ -1,11 +1,7 @@
-﻿<div class="face">
-    <!-- ko ifnot: isLow -->
-    <img src="/Content/themes/base/images/face-happy.png" data-bind="ifnot: isLow" />
-    <!-- /ko -->
-    <!-- ko if: isLow -->
-    <img src="/Content/themes/base/images/face-sad.png" data-bind="if: isLow" />
-    <!-- /ko -->
+﻿<!-- ko ifnot: isLow -->
+<img src="/Content/themes/base/images/face-happy.png" data-bind="ifnot: isLow" />
+<!-- /ko -->
 
-    <!-- ko manyComponents: 'onFace' -->
-    <!-- /ko -->
-</div>
+<!-- ko if: isLow -->
+<img src="/Content/themes/base/images/face-sad.png" data-bind="if: isLow" />
+<!-- /ko -->
