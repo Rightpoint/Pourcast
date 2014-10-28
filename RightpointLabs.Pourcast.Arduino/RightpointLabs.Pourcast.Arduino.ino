@@ -129,10 +129,14 @@ void startupDelay() {
   http->LogMessage(buf);
 
   // and now we blink a few times to confirm we're starting up
-  for(int i=0; i<32; i++) {
-    digitalWrite(9, i % 2 < 1 ? HIGH : LOW);
-    digitalWrite(8, i % 4 < 2 ? HIGH : LOW);
-    digitalWrite(7, i % 8 < 4 ? HIGH : LOW);
+  for(int i=0; i<10; i++) {
+    digitalWrite(9, LOW);
+    digitalWrite(8, LOW);
+    digitalWrite(7, LOW);
+    delay(250);
+    digitalWrite(9, HIGH);
+    digitalWrite(8, HIGH);
+    digitalWrite(7, HIGH);
     delay(250);
   }
 
