@@ -114,12 +114,35 @@ void tap2Pulse() {
 
 void startupDelay() {
   http->LogMessage("Begining startup delay");
+
+  // turn on the pour lights for a few seconds while we clear things out
+  digitalWrite(8, HIGH);
+  digitalWrite(7, HIGH);
+
   delay(2000);
+
   long tap1Pulses = tap1->Clear();
   long tap2Pulses = tap2->Clear();
   char buf[128];
   PString pBuf(buf, 128);
   pBuf << "Startup delay complete (ignored " << tap1Pulses << " and " << tap2Pulses << ")";
+  http->LogMessage(buf);
+
+  // and now we blink a few times to confirm we're starting up
+  for(int i=0; i<32; i++) {
+    digitalWrite(9, i % 2 < 1 ? HIGH : LOW);
+    digitalWrite(8, i % 4 < 2 ? HIGH : LOW);
+    digitalWrite(7, i % 8 < 4 ? HIGH : LOW);
+    delay(250);
+  }
+
+  // and now go back to normal states
+  digitalWrite(9, HIGH);
+  digitalWrite(8, LOW);
+  digitalWrite(7, LOW);
+
+  pBuf.begin();
+  pBuf << F("Light show complete, really starting");
   http->LogMessage(buf);
 }
 
