@@ -100,8 +100,6 @@ void setup() {
   Serial << F("Setup complete") << endl;
   http->LogMessage(F("Done Initializing"));
   Serial << F("Free: ") << freeMemory() << endl;
-  
-  ApplicationMonitor.EnableWatchdog(Watchdog::CApplicationMonitor::Timeout_8s);
 }
 
 // handle interrupt pulses from the taps
@@ -120,7 +118,7 @@ void startupDelay() {
   digitalWrite(7, HIGH);
 
   delay(2000);
-
+   
   long tap1Pulses = tap1->Clear();
   long tap2Pulses = tap2->Clear();
   char buf[128];
@@ -161,6 +159,8 @@ void writeStatus() {
 // send an ALIVE message every loop to assist debugging
 void loop() {
   startupDelay();
+  
+  ApplicationMonitor.EnableWatchdog(Watchdog::CApplicationMonitor::Timeout_8s);
     
   int cycle = 0;  
   http->LogMessage("Primary loop initialized");
