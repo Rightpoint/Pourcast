@@ -50,4 +50,25 @@ void MultiReporter::ReportIgnore(long pulses){
     _reporter3->ReportIgnore(pulses);
   }
 }
-
+void MultiReporter::LogMessage(const __FlashStringHelper* message){
+  if(_reporter1 != NULL) {
+    _reporter1->LogMessage(message);
+  }
+  if(_reporter2 != NULL) {
+    _reporter2->LogMessage(message);
+  }
+  if(_reporter3 != NULL) {
+    _reporter3->LogMessage(message);
+  }
+}
+void MultiReporter::LogMessage(const char* message){
+  if(_reporter1 != NULL) {
+    _reporter1->LogMessage(message);
+  }
+  if(_reporter2 != NULL) {
+    _reporter2->LogMessage(message);
+  }
+  if(_reporter3 != NULL) {
+    _reporter3->LogMessage(message);
+  }
+}

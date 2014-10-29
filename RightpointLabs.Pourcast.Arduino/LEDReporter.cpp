@@ -15,4 +15,8 @@ void LEDReporter::ReportStart(long pulses){
 }
 void LEDReporter::ReportIgnore(long pulses){
 }
+void LEDReporter::LogMessage(const __FlashStringHelper* message){
+}
+void LEDReporter::LogMessage(const char* message){
+}
 

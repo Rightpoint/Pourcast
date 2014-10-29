@@ -19,12 +19,6 @@ void NetworkReporter::ReportStop(long pulses){
   double oz = pulses / PULSES_PER_OZ;
   char buf[128];
   PString pBuf(buf, 128);
-  if(oz > 64) {
-    pBuf << F("Got pour of ") << oz << F(" oz - treating as 0.01oz");
-    _requester->LogMessage(pBuf);
-    pBuf.begin();
-    oz = 0.01;
-  }
   pBuf << F("/api/Tap/") << _tapId << F("/StopPour?volume=") << oz;
   _requester->MakeRequest(pBuf);
 }
@@ -42,4 +36,10 @@ void NetworkReporter::ReportStart(long pulses){
   _requester->MakeRequest(pBuf);
 }
 void NetworkReporter::ReportIgnore(long pulses){
+}
+void NetworkReporter::LogMessage(const __FlashStringHelper* message){
+  _requester->LogMessage(message);
+}
+void NetworkReporter::LogMessage(const char* message){
+  _requester->LogMessage(message);
 }

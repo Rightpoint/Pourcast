@@ -11,6 +11,7 @@ private:
   Reporter* _reporter;
   volatile long _pulses;
   long _lastPulses;
+  unsigned long _pulsesStart;
 };
 // declared here because we want it to be eligible to be inlined
 void Tap::HandlePulse() {

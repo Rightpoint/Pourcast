@@ -1,4 +1,5 @@
 #include "SerialReporter.h"
+#include <Streaming.h>
 
 SerialReporter::SerialReporter(byte number) { 
   _number = number;
@@ -28,5 +29,9 @@ void SerialReporter::ReportIgnore(long pulses){
   Serial.print(F(" "));
   Serial.println(pulses, DEC);
 }
-
-
+void SerialReporter::LogMessage(const __FlashStringHelper* message){
+  Serial << message << endl;
+}
+void SerialReporter::LogMessage(const char* message){
+  Serial << message << endl;
+}
