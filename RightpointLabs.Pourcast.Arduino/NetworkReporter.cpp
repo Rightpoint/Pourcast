@@ -21,7 +21,7 @@ void NetworkReporter::ReportStop(long pulses){
   PString pBuf(buf, 128);
   if(oz > 64) {
     pBuf << F("Got pour of ") << oz << F(" oz - treating as 0.01oz");
-    _requester->MakeRequest(pBuf);
+    _requester->LogMessage(pBuf);
     pBuf.begin();
     oz = 0.01;
   }
