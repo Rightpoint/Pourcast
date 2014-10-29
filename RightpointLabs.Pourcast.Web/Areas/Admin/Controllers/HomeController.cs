@@ -58,6 +58,11 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
                 {
                     var keg = _kegOrchestrator.GetKeg(t.KegId);
                     tap.Keg = AutoMapper.Mapper.Map<Keg, KegModel>(keg);
+                    if (null != keg)
+                    {
+                        var beer = _beerOrchestrator.GetById(keg.BeerId);
+                        tap.Keg.BeerName = beer.Name;
+                    }
                 }
                 vm.Add(tap);
             });
