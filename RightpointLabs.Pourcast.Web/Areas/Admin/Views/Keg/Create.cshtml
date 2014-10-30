@@ -12,14 +12,14 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>CreateKegViewModel</h4>
+        <h4>New Keg</h4>
         <hr />
         @Html.ValidationSummary(true)
 
         <div class="form-group">
             @Html.LabelFor(model => model.BeerId, new {@class = "control-label col-md-2"})
             <div class="col-md-10">
-                @Html.DropDownListFor(m => m.BeerId, Model.Beers)
+                @Html.DropDownListFor(m => m.BeerId, Model.Beers, new{ @class="pcSelect2", id = "ddlBeers"})
                 @Html.ValidationMessageFor(model => model.BeerId)
             </div>
         </div>
@@ -43,3 +43,13 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(function() {
+            $('#ddlBeers').select2({ width: "resolve" });
+        })
+    </script>
+}

@@ -41,12 +41,14 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
         public ActionResult Index()
         {
             var kegs = _kegOrchestrator.GetKegs();
+            var kegsOnTap = _kegOrchestrator.GetKegsOnTap();
             var model = new KegViewModel(){Kegs = new List<KegModel>()};
             kegs.ForEach((k) =>
             {
                 var keg = AutoMapper.Mapper.Map<Keg, KegModel>(k);
                 keg.BeerName = _beerOrchestrator.GetById(k.BeerId).Name;
                 model.Kegs.Add(keg);
+                keg.IsOnTap = kegsOnTap.Select(t => t.Id).Contains(keg.Id);
             });
 
             return View(model);
