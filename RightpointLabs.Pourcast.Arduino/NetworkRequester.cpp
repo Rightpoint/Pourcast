@@ -13,6 +13,7 @@ NetworkRequester::NetworkRequester(const char* host, byte pin, Print* debug) {
   _host = host;
   _pin = pin;
   _debug = debug;
+  _minFreeMeory = 50000;
   pinMode(_pin, OUTPUT);
   digitalWrite(_pin, HIGH);
 }
@@ -25,6 +26,11 @@ void NetworkRequester::MakeRequest(const char* url){
   
   char bufRequest[192];
   PString strRequest(bufRequest, 192);
+
+  int newFree = freeMemory();
+  if(newFree < _minFreeMemory) {
+    _minFreeMemory = newFree;
+  }  
 
   strRequest << F("GET ") << url 
      << F(" HTTP/1.0") << "\n"

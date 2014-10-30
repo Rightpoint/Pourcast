@@ -6,6 +6,7 @@ class NetworkRequester  {
     void LogMessage(const char* message);
     void LogMessage(const __FlashStringHelper* message);
     void Heartbeat();
+    int _minFreeMemory;
   private:
     const char* _host;
     byte _pin;
