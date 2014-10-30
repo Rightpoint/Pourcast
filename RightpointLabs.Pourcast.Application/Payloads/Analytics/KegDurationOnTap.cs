@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Resources;
 
 namespace RightpointLabs.Pourcast.Application.Payloads.Analytics
 {
     public class KegDurationOnTap
     {
-        public KegDurationOnTap(string kegId, string beerId, string beerName, DateTime dateTapped, DateTime dateRemoved)
+        public KegDurationOnTap(string kegId, string beerId, string beerName, IEnumerable<Burndown> burndowns, int interval)
         {
             if(string.IsNullOrEmpty(kegId)) throw new ArgumentNullException("kegId");
             if(string.IsNullOrEmpty(beerId)) throw new ArgumentNullException("beerId");
@@ -12,20 +15,15 @@ namespace RightpointLabs.Pourcast.Application.Payloads.Analytics
             KegId = kegId;
             BeerId = beerId;
             BeerName = beerName;
-            Tapped = dateTapped;
-            RemovedFromTap = dateRemoved;
+            Burndowns = burndowns;
+            BurndownIntervalMintues = interval;
         }
 
         public string KegId { get; private set; }
         public string BeerName { get; private set; }
         public string BeerId { get; private set; }
-        public DateTime Tapped { get; private set; }
-        public DateTime RemovedFromTap { get; private set; }
-        public TimeSpan DurationOnTap
-        {
-            get { return RemovedFromTap - Tapped; }
-        }
+        public int BurndownIntervalMintues { get; private set; }
+        public IEnumerable<Burndown> Burndowns { get; private set; }
 
-        public int DaysOnTap { get { return DurationOnTap.Days; } }
     }
 }

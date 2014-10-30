@@ -1,3 +1,7 @@
+using System.Diagnostics;
+using MongoDB.Bson;
+using MongoDB.Driver.Builders;
+
 namespace RightpointLabs.Pourcast.Infrastructure.Persistence.Repositories
 {
     using System;
@@ -17,6 +21,10 @@ namespace RightpointLabs.Pourcast.Infrastructure.Persistence.Repositories
 
         public IEnumerable<StoredEvent> GetAll<T>() where T : class, IDomainEvent
         {
+            var q = Query<StoredEvent>.Where(e => e.DomainEvent.GetType() == typeof(T));
+            Debug.WriteLine(q.ToJson());
+            var exp = Collection.FindAs<StoredEvent>(q).Explain();
+            Debug.WriteLine(exp.ToJson());
             return Queryable.Where(e => e.DomainEvent.GetType() == typeof(T)).AsEnumerable();
         }
 

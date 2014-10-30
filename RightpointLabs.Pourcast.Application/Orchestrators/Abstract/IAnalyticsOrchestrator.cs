@@ -7,6 +7,7 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Abstract
 {
     public interface IAnalyticsOrchestrator
     {
+        KegDurationOnTap GetKegsDurationOnTap(string kegId, int minuteInterval);
         IEnumerable<KegDurationOnTap> GetKegDurationsOnTap();
         IEnumerable<BeerBeenOnTap> GetBeersThatHaveBeenOnTap();
         IEnumerable<BeerBeenOnTap> GetBeersThatHaveBeenOnTap(DateTime beginDate, DateTime endDate);

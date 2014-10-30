@@ -11,43 +11,77 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
 {
     public class AnalyticsOrchestrator : IAnalyticsOrchestrator
     {
-        private readonly IKegOrchestrator _kegOrchestrator;
-        private readonly ITapOrchestrator _tapOrchestrator;
-        private readonly IBeerOrchestrator _beerOrchestrator;
+        private readonly IKegRepository _kegRepository;
+        private readonly IBeerRepository _beerRepository;
         private readonly IStoredEventRepository _storedEventRepository; 
 
-        public AnalyticsOrchestrator(ITapOrchestrator tapOrchestrator, IKegOrchestrator kegOrchestrator, IBeerOrchestrator beerOrchestrator, IStoredEventRepository storedEventRepository)
+        public AnalyticsOrchestrator(IKegRepository kegRepository, IBeerRepository beerRepository, IStoredEventRepository storedEventRepository)
         {
-            if(null == tapOrchestrator) throw new ArgumentNullException("tapOrchestrator");
-            if(null == kegOrchestrator) throw new ArgumentNullException("kegOrchestrator");
-            if(null == beerOrchestrator) throw new ArgumentNullException("beerOrchestrator");
+            if(null == kegRepository) throw new ArgumentNullException("kegRepository");
+            if(null == beerRepository) throw new ArgumentNullException("beerRepository");
             if(null == storedEventRepository) throw new ArgumentNullException("storedEventRepository");
 
-            _tapOrchestrator = tapOrchestrator;
-            _kegOrchestrator = kegOrchestrator;
-            _beerOrchestrator = beerOrchestrator;
+            _kegRepository = kegRepository;
+            _beerRepository = beerRepository;
             _storedEventRepository = storedEventRepository;
         }
 
 
+        public KegDurationOnTap GetKegsDurationOnTap(string kegId, int minuteInterval)
+        {
+            var keg = _kegRepository.GetById(kegId);
+            if(null == keg) throw new Exception(string.Format("Keg with Id: {0} does not exit", kegId));
+            var beer = _beerRepository.GetById(keg.BeerId);
+            var pours =
+                _storedEventRepository.Find<PourStopped>(p => ((PourStopped) p.DomainEvent).KegId == kegId)
+                    .OrderBy(d => d.OccuredOn).ToList();
+
+            var burndowns = new List<Burndown>();
+            double totalPours = 0;
+
+            for (var i = 0; i < pours.Count(); i++)
+            {
+                var e = pours[i];
+                var pour = e.DomainEvent as PourStopped;
+                var totalVol = pour.Volume;
+                StoredEvent last = null;
+
+                for (var x = i + 1; x < pours.Count(); x++)
+                {
+                    var e2 = pours[x];
+                    var ts = e2.OccuredOn - e.OccuredOn;
+                    // See if we're over the interval given
+                    if (ts.TotalMinutes > minuteInterval)
+                    {
+                        i = x - 1;
+                        break;
+                    }
+                    last = e2;
+                    totalVol += ((PourStopped) e2.DomainEvent).Volume;
+                    i = x;
+                }
+                totalPours += totalVol;
+                burndowns.Add(new Burndown()
+                {
+                    PercentRemaining = ((keg.Capacity - totalPours) / keg.Capacity) * 100.0,
+                    StartOfBurndown = e.OccuredOn,
+                    EndOfBurndown = (null == last) ? e.OccuredOn : last.OccuredOn
+                });
+            }
+
+            return new KegDurationOnTap(keg.Id, keg.BeerId, beer.Name, burndowns, minuteInterval);
+        }
+
         public IEnumerable<KegDurationOnTap> GetKegDurationsOnTap()
         {
-            var kegs = _kegOrchestrator.GetKegs();
-            var beers = _beerOrchestrator.GetBeers();
-            var pourStartEvents = _storedEventRepository.GetAll<PourStarted>();
-            var pourStoppedEvents = _storedEventRepository.GetAll<PourStopped>();
-            return (from keg in kegs 
-                          let beerName = beers.FirstOrDefault(b => b.Id == keg.BeerId).Name 
-                          let start = pourStartEvents.Where(d => ((PourStarted) d.DomainEvent).KegId == keg.Id).Min(d => d.OccuredOn) 
-                          let stop = pourStoppedEvents.Where(d => ((PourStopped) d.DomainEvent).KegId == keg.Id).Max(d => d.OccuredOn) 
-                          select new KegDurationOnTap(keg.Id, keg.BeerId, beerName, start, stop)).ToList();
+            throw new NotImplementedException();
         }
 
 
         public IEnumerable<BeerBeenOnTap> GetBeersThatHaveBeenOnTap()
         {
-            var kegs = _kegOrchestrator.GetKegs().GroupBy(k => k.BeerId).ToList();
-            var beers = _beerOrchestrator.GetBeers().ToList();
+            var kegs = _kegRepository.GetAll().GroupBy(k => k.BeerId).ToList();
+            var beers = _beerRepository.GetAll().ToList();
             var pourStartEvents = _storedEventRepository.GetAll<PourStarted>().ToList();
             var pourStoppedEvents = _storedEventRepository.GetAll<PourStopped>().ToList();
 

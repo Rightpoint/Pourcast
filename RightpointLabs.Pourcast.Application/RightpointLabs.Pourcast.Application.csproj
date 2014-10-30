@@ -79,6 +79,7 @@
     <Compile Include="Orchestrators\Concrete\StyleOrchestrator.cs" />
     <Compile Include="Orchestrators\Concrete\TapOrchestrator.cs" />
     <Compile Include="Orchestrators\Concrete\IdentityOrchestrator.cs" />
+    <Compile Include="Payloads\Analytics\Burndown.cs" />
     <Compile Include="Payloads\Analytics\KegDurationOnTap.cs" />
     <Compile Include="Payloads\Analytics\BeerBeenOnTap.cs" />
     <Compile Include="Payloads\BeerOnTap.cs" />
