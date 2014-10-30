@@ -20,7 +20,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.KegId, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.KegId, Model.Kegs, new {@class = "ddlKeg"})
+                @Html.DropDownListFor(model => model.KegId, Model.Kegs, new {@class = "ddlKeg pcSelect2", id="keg"})
                 @Html.ValidationMessageFor(model => model.KegId)
                 <button id="removeKeg">Remove Keg</button>
             </div>
@@ -42,7 +42,8 @@
 @section scripts
 {
     <script type="text/javascript">
-        $(function() {
+        $(function () {
+            $('#keg').select2({ width: "resolve" });
             $('#removeKeg').on('click', function(e) {
                 $('.ddlKeg option:contains("@Resources.Admin_Tap_Edit_Dropdownlist")').attr('selected', true);
                 e.stopPropagation();
