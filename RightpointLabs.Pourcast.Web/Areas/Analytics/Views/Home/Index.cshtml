@@ -1,7 +1,49 @@
-﻿
+﻿@model RightpointLabs.Pourcast.Web.Areas.Analytics.Models.HomeIndexViewModel
+
 @{
     ViewBag.Title = "Index";
 }
 
 <h2>Analytics</h2>
 
+<div class="row">
+    <div class="col-lg-6">
+        <canvas id="beerChart" width="500" height="500"></canvas>
+    </div>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(function() {
+            var beers = @Html.Raw(Json.Encode(Model.BeersBeenOnTap)), 
+                getData = function() {
+                    var data = {
+                        labels: [],
+                        datasets: [
+                            {
+                                label: "Test",
+                                fillColor: "rgba(220,220,220,0.5)",
+                                strokeColor: "rgba(220,220,220,0.8)",
+                                highlightFill: "rgba(220,220,220,0.75)",
+                                highlightStroke: "rgba(220,220,220,1)",
+                                data: []
+                            }
+                        ]
+                    };
+                    
+                    $(beers).each(function() {
+                        data.labels.push(this.BeerName);
+                        data.datasets[0].data.push(this.KegsOfBeer);
+                    });
+
+                    return data;
+                };
+            
+            var ctx = document.getElementById("beerChart").getContext("2d");
+            var beerChartData = getData();
+            var scaleStep = Math.max.apply(Math, beerChartData.datasets[0].data) + 5;
+            var chart = new Chart(ctx).Bar(beerChartData, {scaleOverride: true, scaleStepWidth: 1, scaleSteps: scaleStep});
+        });
+    </script>
+}

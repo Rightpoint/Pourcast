@@ -345,6 +345,7 @@
     <Content Include="Scripts\app\pourcast.js" />
     <Content Include="Scripts\app\model\keg.js" />
     <Content Include="Scripts\app\viewmodel\TapViewModel.js" />
+    <Content Include="Scripts\libs\Chart.js" />
     <Content Include="Scripts\libs\bootstrap.js" />
     <Content Include="Scripts\libs\bootstrap.min.js" />
     <None Include="Scripts\libs\jquery-2.1.0.intellisense.js" />
@@ -460,6 +461,7 @@
     <Compile Include="Areas\Admin\Models\TapModel.cs" />
     <Compile Include="Areas\Analytics\AnalyticsAreaRegistration.cs" />
     <Compile Include="Areas\Analytics\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Analytics\Models\HomeIndexViewModel.cs" />
     <Compile Include="Controllers\Api\BeerOnTapController.cs" />
     <Compile Include="Controllers\Api\BreweryController.cs" />
     <Compile Include="Controllers\Api\StatusController.cs" />
@@ -516,7 +518,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Scripts\" />
-    <Folder Include="Areas\Analytics\Models\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

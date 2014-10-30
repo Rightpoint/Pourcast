@@ -18,7 +18,7 @@ namespace RightpointLabs.Pourcast.Web.Areas.Analytics
                 "Analytics_default",
                 "Analytics/{controller}/{action}/{id}",
                 new { controller = "Home", action = "Index", id = UrlParameter.Optional },
-                new string[] { "RightpointLabs.Pourcast.Web.Areas.Admin.Controllers" }
+                new string[] { "RightpointLabs.Pourcast.Web.Areas.Analytics.Controllers" }
             );
         }
     }

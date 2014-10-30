@@ -17,7 +17,7 @@ namespace RightpointLabs.Pourcast.Infrastructure.Persistence.Repositories
 
         public IEnumerable<StoredEvent> GetAll<T>() where T : class, IDomainEvent
         {
-            return Queryable.Where(e => e.DomainEvent is T).AsEnumerable();
+            return Queryable.Where(e => e.DomainEvent.GetType() == typeof(T)).AsEnumerable();
         }
 
         public IEnumerable<StoredEvent> Find(Func<StoredEvent, bool> predicate)
@@ -27,7 +27,7 @@ namespace RightpointLabs.Pourcast.Infrastructure.Persistence.Repositories
 
         public IEnumerable<StoredEvent> Find<T>(Func<StoredEvent, bool> predicate) where T : class, IDomainEvent
         {
-            return Queryable.Where(e => e.DomainEvent is T).Where(predicate).AsEnumerable();
+            return Queryable.Where(e => e.DomainEvent.GetType() == typeof(T)).Where(predicate).AsEnumerable();
         }
     }
 }

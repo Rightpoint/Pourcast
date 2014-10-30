@@ -22,6 +22,7 @@ namespace RightpointLabs.Pourcast.Web.App_Start
             bundles.Add(new ScriptBundle("~/bundles/moment").Include("~/Scripts/libs/moment.js"));
             bundles.Add(new ScriptBundle("~/bundles/signalr").Include("~/Scripts/libs/jquery.signalR-{version}.js"));
             bundles.Add(new ScriptBundle("~/bundles/select2").Include("~/Scripts/libs/select2.js"));
+            bundles.Add(new ScriptBundle("~/bundles/charts").Include("~/Scripts/libs/Chart.js"));
             bundles.Add(new ScriptBundle("~/bundles/app")
                 .Include("~/Scripts/app/model/brewery.js",
                 "~/Scripts/app/model/beer.js",
