@@ -333,6 +333,10 @@
     <Content Include="Areas\Admin\Views\Style\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Status\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Keg\Edit.cshtml" />
+    <Content Include="Areas\Analytics\Views\web.config" />
+    <Content Include="Areas\Analytics\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Analytics\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Analytics\Views\Home\Index.cshtml" />
     <None Include="Properties\PublishProfiles\Production.pubxml" />
     <None Include="Scripts\libs\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\app\admin.js" />
@@ -454,6 +458,8 @@
     <Compile Include="Areas\Admin\Models\KegViewModel.cs" />
     <Compile Include="Areas\Admin\Models\OnTapKeg.cs" />
     <Compile Include="Areas\Admin\Models\TapModel.cs" />
+    <Compile Include="Areas\Analytics\AnalyticsAreaRegistration.cs" />
+    <Compile Include="Areas\Analytics\Controllers\HomeController.cs" />
     <Compile Include="Controllers\Api\BeerOnTapController.cs" />
     <Compile Include="Controllers\Api\BreweryController.cs" />
     <Compile Include="Controllers\Api\StatusController.cs" />
@@ -510,6 +516,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Scripts\" />
+    <Folder Include="Areas\Analytics\Models\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
