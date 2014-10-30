@@ -19,7 +19,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Capacity, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Capacity)
+                @Html.TextBoxFor(model => model.Capacity, new{ id = "kegCapacity"})
                 @Html.ValidationMessageFor(model => model.Capacity)
             </div>
         </div>
@@ -27,11 +27,14 @@
         <div class="form-group">
             @Html.LabelFor(model => model.AmountOfBeerPoured, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.AmountOfBeerPoured)
+                @Html.TextBoxFor(model => model.AmountOfBeerPoured, new {id = "amtPoured"})
                 @Html.ValidationMessageFor(model => model.AmountOfBeerPoured)
             </div>
         </div>
-
+        <div class="form-group">
+            @Html.LabelFor(m => m.PercentOfBeerRemaining, new {@class = "control-label col-md-2"})
+            @Html.TextBoxFor(m => m.PercentOfBeerRemaining, new {id = "pctRemain"})
+        </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Save" class="btn btn-default" />
@@ -43,3 +46,37 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(function() {
+            var amtPoured = $('#amtPoured'),
+                pctRemain = $('#pctRemain'),
+                fullKeg = $('#kegCapacity');
+
+            var amountPouredToPercent = function (poured, capacity) {
+                var amtRemaining = capacity - poured;
+                return (amtRemaining / capacity) * 100.0;
+            }
+
+            var percentRemainingToAmountPoured = function(percent, capacity) {
+                var pctDecimal = percent / 100.00;
+                return capacity - (pctDecimal * capacity);
+            }
+
+            amtPoured.on('change', function() {
+                var pct = amountPouredToPercent(amtPoured.val(), fullKeg.val());
+                pctRemain.val(pct);
+            });
+
+            pctRemain.on('change', function() {
+                var pour = percentRemainingToAmountPoured(pctRemain.val(), fullKeg.val());
+                amtPoured.val(pour);
+            });
+
+            pctRemain.val(amountPouredToPercent(amtPoured.val(), fullKeg.val()));
+
+        });
+    </script>
+}
