@@ -71,6 +71,9 @@ void setup() {
   Serial.println("setup");
   
   // let's light up briefly
+  pinMode(9, OUTPUT);
+  pinMode(8, OUTPUT);
+  pinMode(7, OUTPUT);
   digitalWrite(9, HIGH);
   digitalWrite(8, HIGH);
   digitalWrite(7, HIGH);

@@ -13,7 +13,7 @@ NetworkRequester::NetworkRequester(const char* host, byte pin, Print* debug) {
   _host = host;
   _pin = pin;
   _debug = debug;
-  _minFreeMeory = 50000;
+  _minFreeMemory = 5000;
   pinMode(_pin, OUTPUT);
   digitalWrite(_pin, HIGH);
 }
