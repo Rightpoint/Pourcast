@@ -70,6 +70,16 @@ void setup() {
   while(!Serial);
   Serial.println("setup");
   
+  // let's light up briefly
+  digitalWrite(9, HIGH);
+  digitalWrite(8, HIGH);
+  digitalWrite(7, HIGH);
+  delay(500);
+  digitalWrite(9, HIGH);
+  digitalWrite(8, LOW);
+  digitalWrite(7, LOW);
+
+  
   Serial << F("Free: ") << freeMemory() << endl;
 
   char buf[32];
@@ -113,20 +123,7 @@ void tap2Pulse() {
 void startupDelay() {
   http->LogMessage("Begining startup delay");
 
-  // turn on the pour lights for a few seconds while we clear things out
-  digitalWrite(8, HIGH);
-  digitalWrite(7, HIGH);
-
-  delay(2000);
-   
-  long tap1Pulses = tap1->Clear();
-  long tap2Pulses = tap2->Clear();
-  char buf[128];
-  PString pBuf(buf, 128);
-  pBuf << "Startup delay complete (ignored " << tap1Pulses << " and " << tap2Pulses << ")";
-  http->LogMessage(buf);
-
-  // and now we blink a few times to confirm we're starting up
+  // and now we blink a few times to confirm we're starting up, and to wait for any phantom pours to clear
   for(int i=0; i<10; i++) {
     digitalWrite(9, LOW);
     digitalWrite(8, LOW);
@@ -142,6 +139,14 @@ void startupDelay() {
   digitalWrite(9, HIGH);
   digitalWrite(8, LOW);
   digitalWrite(7, LOW);
+   
+  long tap1Pulses = tap1->Clear();
+  long tap2Pulses = tap2->Clear();
+  char buf[128];
+  PString pBuf(buf, 128);
+  pBuf << "Startup delay complete (ignored " << tap1Pulses << " and " << tap2Pulses << ")";
+  http->LogMessage(buf);
+
 
   pBuf.begin();
   pBuf << F("Light show complete, really starting");
@@ -151,7 +156,7 @@ void startupDelay() {
 void writeStatus() {
   char buf[128];
   PString pBuf(buf, 128);
-  pBuf << "Status: free memory: " << freeMemory();
+  pBuf << "Status: free memory: " << freeMemory() << ", Lowest: " << http->_minFreeMemory;
   http->LogMessage(buf);
 }
 
