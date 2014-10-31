@@ -5,20 +5,16 @@
 
     using RightpointLabs.Pourcast.Domain.Events;
 
-    public interface IStoredEventRepository
+    public interface IStoredEventRepository<T> where T : IDomainEvent
     {
-        void Add(StoredEvent domainEvent);
-        
-        IEnumerable<StoredEvent> GetAll();
+        void Add(StoredEvent<IDomainEvent> storedEvent);
 
-        StoredEvent GetById(string id);
+        StoredEvent<T> GetById(string id);
 
         string NextIdentity();
 
-        IEnumerable<StoredEvent> GetAll<T>() where T : class, IDomainEvent;
+        IEnumerable<StoredEvent<T>> GetAll();
 
-        IEnumerable<StoredEvent> Find(Func<StoredEvent, bool> predicate);
-
-        IEnumerable<StoredEvent> Find<T>(Func<StoredEvent, bool> predicate) where T : class, IDomainEvent;
+        IEnumerable<StoredEvent<T>> Find(Func<StoredEvent<T>, bool> predicate);
     }
 }

@@ -5,7 +5,9 @@
     using System.Linq;
 
     using RightpointLabs.Pourcast.Application.Orchestrators.Abstract;
+    using RightpointLabs.Pourcast.Application.Payloads;
     using RightpointLabs.Pourcast.Application.Transactions;
+    using RightpointLabs.Pourcast.Domain.Events;
     using RightpointLabs.Pourcast.Domain.Models;
     using RightpointLabs.Pourcast.Domain.Repositories;
 
@@ -17,15 +19,23 @@
 
         private readonly IBeerRepository _beerRepository;
 
-        public KegOrchestrator(IKegRepository kegRepository, ITapRepository tapRepository, IBeerRepository beerRepository)
+        private readonly IStoredEventRepository<PourStarted> _pourStartedRepository;
+
+        private readonly IStoredEventRepository<PourStopped> _pourStoppedRepository;
+
+        public KegOrchestrator(IKegRepository kegRepository, ITapRepository tapRepository, IBeerRepository beerRepository, IStoredEventRepository<PourStarted> pourStartedRepository, IStoredEventRepository<PourStopped> pourStoppedRepository)
         {
             if (kegRepository == null) throw new ArgumentNullException("kegRepository");
             if (tapRepository == null) throw new ArgumentNullException("tapRepository");
             if (beerRepository == null) throw new ArgumentNullException("beerRepository");
+            if (pourStartedRepository == null) throw new ArgumentNullException("pourStartedRepository");
+            if (pourStoppedRepository == null) throw new ArgumentNullException("pourStoppedRepository");
 
             _kegRepository = kegRepository;
             _tapRepository = tapRepository;
             _beerRepository = beerRepository;
+            this._pourStartedRepository = pourStartedRepository;
+            this._pourStoppedRepository = pourStoppedRepository;
         }
 
         public IEnumerable<Keg> GetKegs()
@@ -77,6 +87,15 @@
             var keg = _kegRepository.GetById(kegId);
             keg.UpdateCapacityAndPoured(capacity, amountOfBeerPoured);
             _kegRepository.Update(keg);
+        }
+
+        public IEnumerable<KegBurndownPoint> GetKegBurndown(string id)
+        {
+            var poursStopped = _pourStoppedRepository
+                .Find(x => x.Event.KegId == id)
+                .Select(x => new KegBurndownPoint(x.Event.PercentRemaining, x.OccuredOn));
+
+            return poursStopped.OrderBy(x => x.OccurredOn);
         }
     }
 }

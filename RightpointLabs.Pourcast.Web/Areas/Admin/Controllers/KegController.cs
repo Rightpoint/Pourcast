@@ -105,5 +105,12 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
             _kegOrchestrator.UpdateCapacityAndPoured(model.Id, model.Capacity, model.AmountOfBeerPoured);
             return RedirectToAction("Details", new { id = model.Id });
         }
+
+        public ActionResult KegBurndown(string id)
+        {
+            var burndown = _kegOrchestrator.GetKegBurndown(id);
+
+            return Json(burndown, JsonRequestBehavior.AllowGet);
+        }
 	}
 }

@@ -22,14 +22,14 @@
             {
                 var fixture = new Fixture();
                 var mockEvent = fixture.Create<PourStopped>();
-                var mockRepo = new Mock<IStoredEventRepository>();
+                var mockRepo = new Mock<IStoredEventRepository<PourStopped>>();
                 var mockDateTimeProvider = new Mock<IDateTimeProvider>();
 
                 var sut = new EventStoreHandler<PourStopped>(mockRepo.Object, mockDateTimeProvider.Object);
 
                 sut.Handle(mockEvent);
 
-                mockRepo.Verify(r => r.Add(It.IsAny<StoredEvent>()));
+                mockRepo.Verify(r => r.Add(It.IsAny<StoredEvent<IDomainEvent>>()));
             }
         }
     }

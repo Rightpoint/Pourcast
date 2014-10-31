@@ -16,7 +16,7 @@
     {
         protected readonly MongoCollection<T> Collection;
 
-        protected IQueryable<T> Queryable
+        protected virtual IQueryable<T> Queryable
         {
             get
             {

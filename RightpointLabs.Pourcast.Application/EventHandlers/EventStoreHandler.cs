@@ -8,11 +8,11 @@
 
     public class EventStoreHandler<T> : IEventHandler<T> where T : IDomainEvent
     {
-        private readonly IStoredEventRepository _storedEventRepository;
+        private readonly IStoredEventRepository<T> _storedEventRepository;
 
         private readonly IDateTimeProvider _dateTimeProvider;
 
-        public EventStoreHandler(IStoredEventRepository storedEventRepository, IDateTimeProvider dateTimeProvider)
+        public EventStoreHandler(IStoredEventRepository<T> storedEventRepository, IDateTimeProvider dateTimeProvider)
         {
             if (storedEventRepository == null) throw new ArgumentNullException("storedEventRepository");
             if (dateTimeProvider == null) throw new ArgumentNullException("dateTimeProvider");
@@ -26,7 +26,7 @@
             var id = _storedEventRepository.NextIdentity();
             var occuredOn = _dateTimeProvider.GetCurrentDateTime();
 
-            var storedEvent = new StoredEvent(id, occuredOn, domainEvent);
+            var storedEvent = new StoredEvent<IDomainEvent>(id, occuredOn, domainEvent);
 
             _storedEventRepository.Add(storedEvent);
         }

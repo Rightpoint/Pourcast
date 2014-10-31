@@ -4,30 +4,44 @@ namespace RightpointLabs.Pourcast.Infrastructure.Persistence.Repositories
     using System.Collections.Generic;
     using System.Linq;
 
+    using MongoDB.Driver;
+    using MongoDB.Driver.Linq;
+
     using RightpointLabs.Pourcast.Domain.Events;
     using RightpointLabs.Pourcast.Domain.Repositories;
     using RightpointLabs.Pourcast.Infrastructure.Persistence.Collections;
 
-    public class StoredEventRepository : EntityRepository<StoredEvent>, IStoredEventRepository
+    public class StoredEventRepository<T> : EntityRepository<StoredEvent<IDomainEvent>>, IStoredEventRepository<T> where T : IDomainEvent
     {
+        private MongoCollection<StoredEvent<IDomainEvent>> _collection;
+
+        private new IQueryable<StoredEvent<T>> Queryable
+        {
+            get
+            {
+                return _collection.AsQueryable<StoredEvent<T>>().Where(x => x.DomainEvent.GetType() == typeof(T));
+            }
+        }
+
         public StoredEventRepository(StoredEventCollectionDefinition storedEventCollectionDefinition)
             : base(storedEventCollectionDefinition)
         {
+            _collection = storedEventCollectionDefinition.Collection;
         }
 
-        public IEnumerable<StoredEvent> GetAll<T>() where T : class, IDomainEvent
+        public new StoredEvent<T> GetById(string id)
         {
-            return Queryable.Where(e => e.DomainEvent is T).AsEnumerable();
+            return Queryable.Single(x => x.Id == id);
         }
 
-        public IEnumerable<StoredEvent> Find(Func<StoredEvent, bool> predicate)
+        public new IEnumerable<StoredEvent<T>> GetAll()
+        {
+            return Queryable;
+        }
+
+        public IEnumerable<StoredEvent<T>> Find(Func<StoredEvent<T>, bool> predicate)
         {
             return Queryable.Where(predicate);
-        }
-
-        public IEnumerable<StoredEvent> Find<T>(Func<StoredEvent, bool> predicate) where T : class, IDomainEvent
-        {
-            return Queryable.Where(e => e.DomainEvent is T).Where(predicate).AsEnumerable();
         }
     }
 }
