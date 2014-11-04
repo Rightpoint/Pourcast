@@ -19,12 +19,13 @@ namespace RightpointLabs.Pourcast.Web.Areas.Analytics.Controllers
         }
 
         // GET: Analytics/Home
-        public ActionResult Index()
+        public ActionResult Index(string id)
         {
             var vm = new HomeIndexViewModel();
             vm.BeersBeenOnTap = _analytics.GetBeersThatHaveBeenOnTap();
-            // Latest coors light keg
-            vm.KegBurndown = _analytics.GetKegsDurationOnTap("543844c67263df17a8e801ff", 60);
+
+            vm.KegBurndown = _analytics.GetKegsDurationOnTap(id ?? "5453af647263df11c8794fd1", 60);
+
             return View(vm);
         }
     }

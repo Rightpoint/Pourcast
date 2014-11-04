@@ -11,6 +11,7 @@
         <canvas id="beerChart" width="500" height="500"></canvas>
     </div>
     <div class="col-lg-6">
+        <h3 id="burndownBeer"></h3>
         <canvas id="burndownChart" width="700" height="500"></canvas>
     </div>
 </div>
@@ -62,7 +63,7 @@
                         data.labels.push(moment(this.EndOfBurndown).format("MMM DD YYYY hh:mm A"));
                         data.datasets[0].data.push(this.PercentRemaining);
                     });
-
+                    $('#burndownBeer').text(burndown.BeerName + " Burndown");
                     return data;
                 };
 
