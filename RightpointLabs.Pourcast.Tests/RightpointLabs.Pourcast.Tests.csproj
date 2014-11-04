@@ -37,6 +37,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="MongoDB.Bson">
       <HintPath>..\packages\mongocsharpdriver.1.8.3\lib\net35\MongoDB.Bson.dll</HintPath>
     </Reference>
@@ -48,6 +49,12 @@
     </Reference>
     <Reference Include="Ploeh.AutoFixture">
       <HintPath>..\packages\AutoFixture.3.18.1\lib\net40\Ploeh.AutoFixture.dll</HintPath>
+    </Reference>
+    <Reference Include="RightpointLabs.Pourcast.Domain.Fakes">
+      <HintPath>FakesAssemblies\RightpointLabs.Pourcast.Domain.Fakes.dll</HintPath>
+    </Reference>
+    <Reference Include="RightpointLabs.Pourcast.Infrastructure.Fakes">
+      <HintPath>FakesAssemblies\RightpointLabs.Pourcast.Infrastructure.Fakes.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Transactions" />
@@ -66,6 +73,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Application\EventHandlers\EventStoreHandlerTests.cs" />
+    <Compile Include="Application\Orchestrators\AnalyticsOrchestratorTests.cs" />
     <Compile Include="Application\Orchestrators\KegOrchestratorTests.cs" />
     <Compile Include="Domain\Events\DomainEventPublisherTests.cs" />
     <Compile Include="Domain\Models\KegTests.cs" />
@@ -76,6 +84,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <Fakes Include="Fakes\RightpointLabs.Pourcast.Infrastructure.fakes" />
+    <Fakes Include="Fakes\RightpointLabs.Pourcast.Domain.fakes" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
