@@ -27,6 +27,7 @@
         <td>@(keg.IsEmpty ? "Yes" : "No")</td>
         <td>@(keg.IsOnTap ? "Yes" : "No")</td>
         <td>
+            @Html.ActionLink("Analytics", "Index", new {area = "Analytics", controller = "Home", id = keg.Id}) |
             @Html.ActionLink("Edit", "Edit", new { id = keg.Id }) |
             @Html.ActionLink("Details", "Details", new { id = keg.Id }) |
             @Html.ActionLink("Delete", "Delete", new { id = keg.Id })

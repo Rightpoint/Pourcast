@@ -4,7 +4,7 @@
 
     using RightpointLabs.Pourcast.Domain.Models;
 
-    public class StoredEvent : Entity 
+    public class StoredEvent : Entity
     {
         public DateTime OccuredOn { get; private set; }
 
