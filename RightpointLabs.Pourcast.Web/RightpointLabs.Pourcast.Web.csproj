@@ -411,6 +411,7 @@
     <Content Include="Scripts\libs\moment-with-langs.min.js" />
     <Content Include="Scripts\libs\moment.js" />
     <Content Include="Scripts\libs\moment.min.js" />
+    <Content Include="Scripts\libs\text.js" />
     <Content Include="Scripts\libs\toastr.js" />
     <Content Include="Scripts\libs\toastr.min.js" />
     <Content Include="Scripts\libs\r.js" />
