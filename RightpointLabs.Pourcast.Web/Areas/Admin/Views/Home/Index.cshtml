@@ -11,30 +11,37 @@
     @foreach (var tap in Model)
     {
         <div class="col-sm-6">
-            <h3>@tap.Name</h3>
-            @if (null == tap.Keg)
-            {
-                <h4>No Keg On Tap</h4>
-                <hr />
-            }
-            else
-            {
-                <h4>@tap.Keg.BeerName</h4>
-                <p>
-                    Amount of Beer Remaining: @tap.Keg.AmountOfBeerRemaining.ToString("N0") <br />
-                    Percent Left: @tap.Keg.PercentRemaining.ToString("P1") <br />
-                </p>
-            }
-            <p>
-                @Html.ActionLink("Edit", "Edit", "Tap", new { id = tap.Id }, null)
-            </p>
+            <div class="panel panel-default">
+                <div class="panel-heading">@tap.Name</div>
+                <div class="panel-body">
+                    @if (null == tap.Keg)
+                    {
+                        <h4>No Keg On Tap</h4>
+                    }
+                    else
+                    {
+                        <h4>@tap.Keg.BeerName</h4>
+                        <p>
+                            Amount of Beer Remaining: @tap.Keg.AmountOfBeerRemaining.ToString("N0") <br />
+                            Percent Left: @tap.Keg.PercentRemaining.ToString("P1") <br />
+                        </p>
+                    }
+                    <div class="btn-group">
+                        @Html.ActionLink("Edit Tap", "Edit", "Tap", new { id = tap.Id }, new { @class = "btn btn-default" })
+                        @if (tap.Keg != null)
+                        {
+                            @Html.ActionLink("Edit Keg", "Edit", "Keg", new { id = tap.Keg.Id }, new { @class = "btn btn-default" })
+                        }
+                    </div>
+                </div>
+            </div>
         </div>
     }
 </div>
     
 <div class="row">
     <div class="col-lg-12">
-        <button class="btn" id="btnClientRefresh">Refresh all connected clients</button>
+        <button class="btn btn-lg btn-primary" id="btnClientRefresh">Refresh all connected clients</button>
     </div>
 </div>
 @section scripts {

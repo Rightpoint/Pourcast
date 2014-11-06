@@ -9,14 +9,14 @@
     <div class="form-group">
         <label class="control-label col-md-2">Select a Beer</label>
         <div class="col-md-10">
-            @Html.DropDownListFor(a => a.BeerId, Model.Beers, new { @class = "dropdown", id = "beerList" })
+            @Html.DropDownListFor(a => a.BeerId, Model.Beers, new { @class = "dropdown pcSelect2", id = "beerList" })
             <button id="btnBeer" class="btn">View Beer</button>
         </div>
     </div>
     <div class="form-group">
         <label class="control-label col-md-2">Select a Brewery</label>
         <div class="col-md-10"> 
-            @Html.DropDownListFor(a => a.BreweryId, Model.Breweries, new{@class= "dropdown", id = "breweryList"})
+            @Html.DropDownListFor(a => a.BreweryId, Model.Breweries, new { @class = "dropdown pcSelect2", id = "breweryList" })
             <button id="btnBrewery" class="btn">View Beers</button>
         </div>
     </div>
@@ -25,7 +25,11 @@
 @section scripts
 {
     <script type="text/javascript">
-        $(function() {
+        $(function () {
+
+            $('#beerList').select2({ width: "resolve" });
+            $('#breweryList').select2({ width: "resolve" });
+
             $('#btnBeer').on('click', function() {
                 window.location = '@Url.Action("Details", "Beer")/' + $('#beerList :selected').val();
             });

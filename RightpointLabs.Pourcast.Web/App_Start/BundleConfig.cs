@@ -21,6 +21,8 @@ namespace RightpointLabs.Pourcast.Web.App_Start
             bundles.Add(new ScriptBundle("~/bundles/toastr").Include("~/Scripts/libs/toastr.js"));
             bundles.Add(new ScriptBundle("~/bundles/moment").Include("~/Scripts/libs/moment.js"));
             bundles.Add(new ScriptBundle("~/bundles/signalr").Include("~/Scripts/libs/jquery.signalR-{version}.js"));
+            bundles.Add(new ScriptBundle("~/bundles/select2").Include("~/Scripts/libs/select2.js"));
+            bundles.Add(new ScriptBundle("~/bundles/charts").Include("~/Scripts/libs/Chart.js"));
             bundles.Add(new ScriptBundle("~/bundles/app")
                 .Include("~/Scripts/app/model/brewery.js",
                 "~/Scripts/app/model/beer.js",
@@ -38,6 +40,10 @@ namespace RightpointLabs.Pourcast.Web.App_Start
 
             bundles.Add(new StyleBundle("~/Content/css/bootstrap-theme", "//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css")
                 .Include("~/Content/bootstrap-theme.css"));
+
+            bundles.Add(new StyleBundle("~/Content/css/select2").Include("~/Content/select2/select2.css"));
+
+            bundles.Add(new StyleBundle("~/Content/css/admin").Include("~/Content/pourcast.admin.css"));
 
             bundles.Add(new StyleBundle("~/Content/css")
                 .Include("~/Content/toastr.css",

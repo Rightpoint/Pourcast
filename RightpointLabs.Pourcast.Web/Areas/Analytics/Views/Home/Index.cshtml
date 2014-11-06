@@ -1,0 +1,81 @@
+﻿@model RightpointLabs.Pourcast.Web.Areas.Analytics.Models.HomeIndexViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Analytics</h2>
+
+<div class="row">
+    <div class="col-lg-6">
+        <canvas id="beerChart" width="500" height="500"></canvas>
+    </div>
+    <div class="col-lg-6">
+        <h3 id="burndownBeer"></h3>
+        <canvas id="burndownChart" width="700" height="500"></canvas>
+    </div>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(function() {
+            var beers = @Html.Raw(Json.Encode(Model.BeersBeenOnTap)),
+                burndown = @Html.Raw(Json.Encode(Model.KegBurndown)),
+                getData = function() {
+                    var data = {
+                        labels: [],
+                        datasets: [
+                            {
+                                label: "Test",
+                                fillColor: "rgba(220,220,220,0.5)",
+                                strokeColor: "rgba(220,220,220,0.8)",
+                                highlightFill: "rgba(220,220,220,0.75)",
+                                highlightStroke: "rgba(220,220,220,1)",
+                                data: []
+                            }
+                        ]
+                    };
+
+                    $(beers).each(function() {
+                        data.labels.push(this.BeerName);
+                        data.datasets[0].data.push(this.KegsOfBeer);
+                    });
+
+                    return data;
+                },
+                getBurndown = function() {
+                    var data = {
+                        labels: [],
+                        datasets: [
+                            {
+                                label: "Test",
+                                fillColor: "rgba(220,220,220,0.5)",
+                                strokeColor: "rgba(220,220,220,0.8)",
+                                highlightFill: "rgba(220,220,220,0.75)",
+                                highlightStroke: "rgba(220,220,220,1)",
+                                data: []
+                            }
+                        ]
+                    };
+
+                    $(burndown.Burndowns).each(function() {
+                        data.labels.push(moment(this.EndOfBurndown).format("MMM DD YYYY hh:mm A"));
+                        data.datasets[0].data.push(this.PercentRemaining);
+                    });
+                    $('#burndownBeer').text(burndown.BeerName + " Burndown");
+                    return data;
+                };
+
+            var beerChartCtx = document.getElementById("beerChart").getContext("2d");
+            var beerChartData = getData();
+            var scaleStep = Math.max.apply(Math, beerChartData.datasets[0].data) + 5;
+            var beerChart = new Chart(beerChartCtx).Bar(beerChartData, { scaleOverride: true, scaleStepWidth: 1, scaleSteps: scaleStep });
+
+            var burndownChartCtx = document.getElementById("burndownChart").getContext("2d");
+            var burndownData = getBurndown();
+            var burndownChart = new Chart(burndownChartCtx).Line(burndownData);
+
+        });
+    </script>
+}

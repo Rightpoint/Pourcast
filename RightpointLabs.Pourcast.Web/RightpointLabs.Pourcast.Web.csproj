@@ -234,6 +234,11 @@
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bubbles.css" />
+    <Content Include="Content\pourcast.admin.css" />
+    <Content Include="Content\select2\select2-spinner.gif" />
+    <Content Include="Content\select2\select2.css" />
+    <Content Include="Content\select2\select2.png" />
+    <Content Include="Content\select2\select2x2.png" />
     <Content Include="Content\pourcast.css">
       <DependentUpon>pourcast.less</DependentUpon>
     </Content>
@@ -355,12 +360,18 @@
     <Content Include="Areas\Admin\Views\Style\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Status\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Keg\Edit.cshtml" />
+    <Content Include="Areas\Analytics\Views\web.config" />
+    <Content Include="Areas\Analytics\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Analytics\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Analytics\Views\Home\Index.cshtml" />
     <None Include="Properties\PublishProfiles\Production.pubxml" />
     <None Include="Scripts\libs\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\app\admin.js" />
     <Content Include="Scripts\app\model\style.js" />
     <Content Include="Scripts\app\model\tap.js" />
     <Content Include="Scripts\app\model\keg.js" />
+    
+    <Content Include="Scripts\libs\Chart.js" />
     <Content Include="Scripts\libs\bootstrap.js" />
     <Content Include="Scripts\libs\bootstrap.min.js" />
     <None Include="Scripts\libs\jquery-2.1.0.intellisense.js" />
@@ -389,6 +400,53 @@
     <Content Include="Scripts\libs\toastr.min.js" />
     <Content Include="Scripts\libs\r.js" />
     <Content Include="Scripts\libs\require.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_ar.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_az.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_bg.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_ca.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_cs.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_da.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_de.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_el.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_es.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_et.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_eu.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_fa.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_fi.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_fr.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_gl.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_he.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_hr.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_hu.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_id.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_is.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_it.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_ja.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_ka.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_ko.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_lt.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_lv.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_mk.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_ms.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_nl.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_no.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_pl.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_pt-BR.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_pt-PT.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_ro.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_rs.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_ru.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_sk.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_sv.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_th.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_tr.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_ua.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_ug-CN.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_uk.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_vi.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_zh-CN.js" />
+    <Content Include="Scripts\Select2-locales\select2_locale_zh-TW.js" />
+    <Content Include="Scripts\libs\select2.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -428,6 +486,9 @@
     <Compile Include="Areas\Admin\Models\KegViewModel.cs" />
     <Compile Include="Areas\Admin\Models\OnTapKeg.cs" />
     <Compile Include="Areas\Admin\Models\TapModel.cs" />
+    <Compile Include="Areas\Analytics\AnalyticsAreaRegistration.cs" />
+    <Compile Include="Areas\Analytics\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Analytics\Models\HomeIndexViewModel.cs" />
     <Compile Include="Controllers\Api\BeerOnTapController.cs" />
     <Compile Include="Controllers\Api\BreweryController.cs" />
     <Compile Include="Controllers\Api\StatusController.cs" />

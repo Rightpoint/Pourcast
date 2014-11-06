@@ -93,7 +93,7 @@
         public void UpdateCapacityAndPoured(double capacity, double amountOfBeerPoured)
         {
             Capacity = capacity;
-            AmountOfBeerPoured = AmountOfBeerRemaining;
+            AmountOfBeerPoured = amountOfBeerPoured;
 
             if (IsEmpty && AmountOfBeerRemaining > 0)
             {

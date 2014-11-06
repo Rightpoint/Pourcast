@@ -11,6 +11,8 @@
     <title>@ViewBag.Title - @Resources.Application</title>
     @Styles.Render("~/Content/css/bootstrap")
     @Styles.Render("~/Content/css/bootstrap-theme")
+    @Styles.Render("~/Content/css/select2")
+    @Styles.Render("~/Content/css/admin")
     @Scripts.Render("~/bundles/modernizer")
 </head>
 <body>
@@ -47,6 +49,7 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryUI")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/select2")
     @RenderSection("scripts", required: false)
 </body>
 </html>

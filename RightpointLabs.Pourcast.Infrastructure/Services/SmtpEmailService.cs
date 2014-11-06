@@ -23,7 +23,7 @@ namespace RightpointLabs.Pourcast.Infrastructure.Services
         {
             if (email == null) return;
 
-            TransactionExtensions.WaitForTransactionCompleted(() => _client.SendMailAsync(email));
+            TransactionExtensions.WaitForTransactionCompleted(() => _client.Send(email));
         }
     }
 }
