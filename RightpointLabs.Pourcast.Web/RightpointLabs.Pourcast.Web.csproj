@@ -207,6 +207,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Scripts\app\components\borat-flag\borat_flag.png" />
+    <Content Include="Scripts\app\components\borat-flag\config.js" />
+    <Content Include="Scripts\app\components\borat-flag\template.html" />
+    <Content Include="Scripts\app\components\borat-flag\viewModel.js" />
+    <Content Include="Scripts\app\components\borat-face\borat_face.png" />
     <Content Include="Scripts\app\components\face\config.js" />
     <Content Include="Scripts\app\components\face\template.html" />
     <Content Include="Scripts\app\components\face\viewModel.js" />
@@ -214,6 +219,17 @@
     <Content Include="Scripts\app\components\beer\config.js" />
     <Content Include="Scripts\app\components\beer\template.html" />
     <Content Include="Scripts\app\components\beer\viewModel.js" />
+    <Content Include="Scripts\app\components\borat-face\config.js" />
+    <Content Include="Scripts\app\components\borat-face\template.html" />
+    <Content Include="Scripts\app\components\borat-face\viewModel.js" />
+    <Content Include="Scripts\app\components\heisenberg-face\config.js" />
+    <Content Include="Scripts\app\components\heisenberg-face\heisenberg_face.png" />
+    <Content Include="Scripts\app\components\heisenberg-face\template.html" />
+    <Content Include="Scripts\app\components\heisenberg-face\viewModel.js" />
+    <Content Include="Scripts\app\components\heisenberg-hat\config.js" />
+    <Content Include="Scripts\app\components\heisenberg-hat\heisenberg_hat.png" />
+    <Content Include="Scripts\app\components\heisenberg-hat\template.html" />
+    <Content Include="Scripts\app\components\heisenberg-hat\viewModel.js" />
     <Content Include="Scripts\app\components\keg-body\config.js" />
     <Content Include="Scripts\app\components\keg-body\template.html" />
     <Content Include="Scripts\app\components\keg-body\viewModel.js" />
@@ -370,7 +386,6 @@
     <Content Include="Scripts\app\model\style.js" />
     <Content Include="Scripts\app\model\tap.js" />
     <Content Include="Scripts\app\model\keg.js" />
-    
     <Content Include="Scripts\libs\Chart.js" />
     <Content Include="Scripts\libs\bootstrap.js" />
     <Content Include="Scripts\libs\bootstrap.min.js" />
