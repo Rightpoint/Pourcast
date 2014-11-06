@@ -116,6 +116,7 @@ html, body,
     width: 50%;
     height: 100%;
     float: left;
+    overflow: hidden;
 
     .keg-info {
         width: 100%;
@@ -125,8 +126,8 @@ html, body,
 
         .background {
             height: 100%;
-            position: fixed;
-            width: 50%;
+            position: absolute;
+            width: 100%;
 
             .shade {
                 background: #fff;
@@ -224,58 +225,78 @@ html, body,
             .profile {
                 width: @profile-diameter;
                 height: @profile-diameter;
-                border-radius: 50%;
-                -webkit-mask-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC);
                 margin: 0 auto;
-                background: #fff;
                 //border: 4px solid #fff;
                 position: relative;
-                overflow: hidden;
                 clear: both;
 
                 .ring {
+                    background: #fff;
+                    border-radius: 50%;
+                    overflow: hidden;
+                    position: absolute;
+                    margin: auto;
+                    top: 2px;
+                    bottom: 2px;
+                    left: 2px;
+                    right: 2px;
+                    z-index: 0;
+
+                    & > div {
+                        position: absolute;
+                        width: 100%;
+                        height: 100%;
+                    }
+
+                    .keg {
+                        width: 64%;
+                        height: 79%;
+                        display: block;
+                        position: absolute;
+                        margin: auto;
+                        bottom: 0;
+                        left: 0;
+                        right: 0;
+
+                        .body {
+                            width: 100%;
+                            height: 100%;
+                            position: relative;
+                        }
+
+                        .face {
+                            height: 15%;
+                            width: 26%;
+                            position: absolute;
+                            margin: auto;
+                            top: 0;
+                            right: 0;
+                            bottom: 0;
+                            left: 0;
+
+                            img {
+                                width: 100%;
+                                height: 100%;
+                                top: 0;
+                                left: 0;
+                                position: absolute;
+                            }
+                        }
+                    }
+
+                    .beer-level {
+                        width: 100%;
+                        position: absolute;
+                        bottom: 0;
+                    }
+                }
+
+                .border {
                     height: 100%;
                     width: 100%;
                     position: absolute;
-                    margin: auto;
                     top: 0;
-                    right: 0;
-                    bottom: 0;
                     left: 0;
-                }
-
-                .keg {
-                    width: 64%;
-                    height: 79%;
-                    display: block;
-                    position: absolute;
-                    margin: auto;
-                    bottom: 0;
-                    left: 0;
-                    right: 0;
-
-                    .body {
-                        width: 100%;
-                        height: 100%;
-                        position: relative;
-                    }
-
-                    .face {
-                        height: 15%;
-                        width: 26%;
-                        position: absolute;
-                        margin: auto;
-                        top: 0;
-                        right: 0;
-                        bottom: 0;
-                        left: 0;
-                    }
-                }
-
-                .beer-level {
-                    width: 100%;
-                    position: absolute;
-                    bottom: 0;
                 }
             }
         }
@@ -297,6 +318,13 @@ html, body,
             }
         }
     }
+}
+
+.accessories {
+    z-index: 100;
+    position: absolute;
+    width: 100%;
+    height: 100%;
 }
 
 .taps .tap:nth-child(odd) .keg-info .status .bits .bit {

@@ -1,17 +1,2 @@
-﻿<div class="foam">
-    <img class="foam-bubbles left" src="/Content/themes/base/images/foam-bubbles-left.png" />
-    <img class="ribbon" src="/Content/themes/base/images/pourcast-ribbon.png" />
-    <img class="foam-bubbles right" src="/Content/themes/base/images/foam-bubbles-right.png" />
-</div>
-
-<div class="taps" data-bind="with: tapViewModel">
-    <!-- ko foreach: taps -->
-        <div class="tap" data-bind="visible: hasKeg">
-            <!-- ko if: keg -->
-            <!-- ko with: keg  -->
-            @Html.Partial("Keg")
-            <!-- /ko -->
-            <!-- /ko -->
-        </div>
-    <!-- /ko -->
-</div>
+﻿<!-- ko oneComponent: 'pourcast'-->
+<!-- /ko -->

@@ -207,6 +207,46 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Scripts\app\components\borat-flag\borat_flag.png" />
+    <Content Include="Scripts\app\components\borat-flag\config.js" />
+    <Content Include="Scripts\app\components\borat-flag\template.html" />
+    <Content Include="Scripts\app\components\borat-flag\viewModel.js" />
+    <Content Include="Scripts\app\components\borat-face\borat_face.png" />
+    <Content Include="Scripts\app\components\face\config.js" />
+    <Content Include="Scripts\app\components\face\template.html" />
+    <Content Include="Scripts\app\components\face\viewModel.js" />
+    <Content Include="Scripts\app\components\hat\config.js" />
+    <Content Include="Scripts\app\components\beer\config.js" />
+    <Content Include="Scripts\app\components\beer\template.html" />
+    <Content Include="Scripts\app\components\beer\viewModel.js" />
+    <Content Include="Scripts\app\components\borat-face\config.js" />
+    <Content Include="Scripts\app\components\borat-face\template.html" />
+    <Content Include="Scripts\app\components\borat-face\viewModel.js" />
+    <Content Include="Scripts\app\components\heisenberg-face\config.js" />
+    <Content Include="Scripts\app\components\heisenberg-face\heisenberg_face.png" />
+    <Content Include="Scripts\app\components\heisenberg-face\template.html" />
+    <Content Include="Scripts\app\components\heisenberg-face\viewModel.js" />
+    <Content Include="Scripts\app\components\heisenberg-hat\config.js" />
+    <Content Include="Scripts\app\components\heisenberg-hat\heisenberg_hat.png" />
+    <Content Include="Scripts\app\components\heisenberg-hat\template.html" />
+    <Content Include="Scripts\app\components\heisenberg-hat\viewModel.js" />
+    <Content Include="Scripts\app\components\keg-body\config.js" />
+    <Content Include="Scripts\app\components\keg-body\template.html" />
+    <Content Include="Scripts\app\components\keg-body\viewModel.js" />
+    <Content Include="Scripts\app\components\keg\config.js" />
+    <Content Include="Scripts\app\components\keg\template.html" />
+    <Content Include="Scripts\app\components\keg\viewModel.js" />
+    <Content Include="Scripts\app\components\missing\template.html" />
+    <Content Include="Scripts\app\components\missing\viewModel.js" />
+    <Content Include="Scripts\app\components\percent\config.js" />
+    <Content Include="Scripts\app\components\percent\template.html" />
+    <Content Include="Scripts\app\components\percent\viewModel.js" />
+    <Content Include="Scripts\app\components\pourcast\config.js" />
+    <Content Include="Scripts\app\components\pourcast\template.html" />
+    <Content Include="Scripts\app\components\pourcast\viewModel.js" />
+    <Content Include="Scripts\app\components\tap\config.js" />
+    <Content Include="Scripts\app\components\tap\template.html" />
+    <Content Include="Scripts\app\components\tap\viewModel.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bubbles.css" />
@@ -300,7 +340,10 @@
     <Content Include="Scripts\app.js" />
     <Content Include="Scripts\app\bindings.js" />
     <Content Include="Scripts\app\bubbles.js" />
-    <Content Include="Scripts\app\dataservice.js" />
+    <Content Include="Scripts\app\componentResolver.js" />
+    <Content Include="Scripts\app\dataService.js" />
+    <Content Include="Scripts\app\components\hat\template.html" />
+    <Content Include="Scripts\app\components\hat\viewModel.js" />
     <Content Include="Scripts\app\model\beer.js" />
     <Content Include="Scripts\app\model\brewery.js" />
     <Content Include="Areas\Admin\Views\web.config" />
@@ -342,9 +385,7 @@
     <Content Include="Scripts\app\admin.js" />
     <Content Include="Scripts\app\model\style.js" />
     <Content Include="Scripts\app\model\tap.js" />
-    <Content Include="Scripts\app\pourcast.js" />
     <Content Include="Scripts\app\model\keg.js" />
-    <Content Include="Scripts\app\viewmodel\TapViewModel.js" />
     <Content Include="Scripts\libs\Chart.js" />
     <Content Include="Scripts\libs\bootstrap.js" />
     <Content Include="Scripts\libs\bootstrap.min.js" />
@@ -363,6 +404,8 @@
     <Content Include="Scripts\libs\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\libs\knockout-3.1.0.debug.js" />
     <Content Include="Scripts\libs\knockout-3.1.0.js" />
+    <Content Include="Scripts\libs\knockout-3.2.0.debug.js" />
+    <Content Include="Scripts\libs\knockout-3.2.0.js" />
     <Content Include="Scripts\libs\modernizr-2.7.2.js" />
     <Content Include="Scripts\libs\moment-with-langs.js" />
     <Content Include="Scripts\libs\moment-with-langs.min.js" />
@@ -419,7 +462,6 @@
     <Content Include="Scripts\Select2-locales\select2_locale_zh-CN.js" />
     <Content Include="Scripts\Select2-locales\select2_locale_zh-TW.js" />
     <Content Include="Scripts\libs\select2.js" />
-    <Content Include="Views\Shared\Keg.cshtml" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

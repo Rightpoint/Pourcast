@@ -11,7 +11,7 @@ namespace RightpointLabs.Pourcast.Web.App_Start
             const string jqueryUI = "http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js";
             const string bootstrap = "//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js";
             const string modernizer = "http://ajax.aspnetcdn.com/ajax/modernizr/modernizr-2.7.2.js";
-            const string knockout = "/Scripts/libs/knockout-3.1.0.js";
+            const string knockout = "/Scripts/libs/knockout-3.2.0.js";
 
             bundles.Add(new ScriptBundle("~/bundles/jquery", jquery).Include("~/Scripts/libs/jquery-{version}.js"));
             bundles.Add(new ScriptBundle("~/bundles/jqueryUI", jqueryUI).Include("~/Scripts/libs/jquery-ui-{version}.js"));
@@ -28,10 +28,12 @@ namespace RightpointLabs.Pourcast.Web.App_Start
                 "~/Scripts/app/model/beer.js",
                 "~/Scripts/app/model/keg.js",
                 "~/Scripts/app/model/tap.js",
+                "~/Scripts/app/model/style.js",
                 "~/Scripts/app/events.js",
                 "~/Scripts/app/bindings.js", 
                 "~/Scripts/app/bubbles.js", 
-                "~/Scripts/app/pourcast.js"));
+                "~/Scripts/app/pourcast.js",
+                "~/Scripts/app.js"));
 
             bundles.Add(new StyleBundle("~/Content/css/bootstrap", "//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css")
                 .Include("~/Content/bootstrap.css"));
