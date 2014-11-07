@@ -212,6 +212,9 @@
     <Content Include="Scripts\app\components\borat-flag\template.html" />
     <Content Include="Scripts\app\components\borat-flag\viewModel.js" />
     <Content Include="Scripts\app\components\borat-face\borat_face.png" />
+    <Content Include="Scripts\app\components\waters-face\config.js" />
+    <Content Include="Scripts\app\components\waters-face\template.html" />
+    <Content Include="Scripts\app\components\waters-face\viewModel.js" />
     <Content Include="Scripts\app\components\face\config.js" />
     <Content Include="Scripts\app\components\face\template.html" />
     <Content Include="Scripts\app\components\face\viewModel.js" />
@@ -222,6 +225,10 @@
     <Content Include="Scripts\app\components\borat-face\config.js" />
     <Content Include="Scripts\app\components\borat-face\template.html" />
     <Content Include="Scripts\app\components\borat-face\viewModel.js" />
+    <Content Include="Scripts\app\components\waters-face\waters_face.png" />
+    <Content Include="Scripts\app\components\yosemite-face\config.js" />
+    <Content Include="Scripts\app\components\yosemite-face\template.html" />
+    <Content Include="Scripts\app\components\yosemite-face\viewModel.js" />
     <Content Include="Scripts\app\components\heisenberg-face\config.js" />
     <Content Include="Scripts\app\components\heisenberg-face\heisenberg_face.png" />
     <Content Include="Scripts\app\components\heisenberg-face\template.html" />
@@ -341,6 +348,7 @@
     <Content Include="Scripts\app\bindings.js" />
     <Content Include="Scripts\app\bubbles.js" />
     <Content Include="Scripts\app\componentResolver.js" />
+    <Content Include="Scripts\app\components\yosemite-face\yosemite_face.png" />
     <Content Include="Scripts\app\dataService.js" />
     <Content Include="Scripts\app\components\hat\template.html" />
     <Content Include="Scripts\app\components\hat\viewModel.js" />

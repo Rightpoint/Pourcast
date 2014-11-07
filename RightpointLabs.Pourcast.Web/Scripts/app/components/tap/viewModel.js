@@ -18,12 +18,18 @@
         self.resolver.register('percent', 'bits');
 
         // heisenberg
-        self.resolver.register('heisenberg-face', 'face');
-        self.resolver.register('heisenberg-hat', 'onKegBody');
+        //self.resolver.register('heisenberg-face', 'face');
+        //self.resolver.register('heisenberg-hat', 'onKegBody');
 
         // borat
-        self.resolver.register('borat-face', 'face');
-        self.resolver.register('borat-flag', 'outsideRing');
+        //self.resolver.register('borat-face', 'face');
+        //self.resolver.register('borat-flag', 'outsideRing');
+
+        // yosemite
+        self.resolver.register('yosemite-face', 'face');
+
+        // waters
+        self.resolver.register('waters-face', 'face');
     };
 
     return {
