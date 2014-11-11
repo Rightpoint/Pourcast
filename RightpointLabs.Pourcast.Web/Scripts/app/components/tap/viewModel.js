@@ -26,10 +26,16 @@
         //self.resolver.register('borat-flag', 'outsideRing');
 
         // yosemite
-        self.resolver.register('yosemite-face', 'face');
+        //self.resolver.register('yosemite-face', 'face');
 
         // waters
-        self.resolver.register('waters-face', 'face');
+        //self.resolver.register('waters-face', 'face');
+
+        // gable
+        self.resolver.register('gable-face', 'face');
+
+        // pringes
+        self.resolver.register('pringles-face', 'face');
     };
 
     return {

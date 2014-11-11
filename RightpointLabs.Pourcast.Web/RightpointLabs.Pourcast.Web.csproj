@@ -207,6 +207,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Scripts\app\components\gable-face\config.js" />
+    <Content Include="Scripts\app\components\gable-face\gable_face.png" />
+    <Content Include="Scripts\app\components\gable-face\template.html" />
+    <Content Include="Scripts\app\components\gable-face\viewModel.js" />
+    <Content Include="Scripts\app\components\pringles-face\config.js" />
+    <Content Include="Scripts\app\components\pringles-face\pringle_face.png" />
+    <Content Include="Scripts\app\components\pringles-face\template.html" />
+    <Content Include="Scripts\app\components\pringles-face\viewModel.js" />
     <Content Include="Scripts\app\components\borat-flag\borat_flag.png" />
     <Content Include="Scripts\app\components\borat-flag\config.js" />
     <Content Include="Scripts\app\components\borat-flag\template.html" />
