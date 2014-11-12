@@ -32,10 +32,16 @@
         //self.resolver.register('waters-face', 'face');
 
         // gable
-        self.resolver.register('gable-face', 'face');
+        //self.resolver.register('gable-face', 'face');
 
         // pringes
-        self.resolver.register('pringles-face', 'face');
+        //self.resolver.register('pringles-face', 'face');
+
+        // michael
+        self.resolver.register('michael-face', 'face');
+
+        // dali
+        self.resolver.register('dali-face', 'face');
     };
 
     return {

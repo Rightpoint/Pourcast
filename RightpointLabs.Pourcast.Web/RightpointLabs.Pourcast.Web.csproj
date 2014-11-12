@@ -207,10 +207,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Scripts\app\components\dali-face\dali_face.png" />
+    <Content Include="Scripts\app\components\michael-face\config.js" />
+    <Content Include="Scripts\app\components\michael-face\michael_face.png" />
+    <Content Include="Scripts\app\components\michael-face\template.html" />
+    <Content Include="Scripts\app\components\michael-face\viewModel.js" />
     <Content Include="Scripts\app\components\gable-face\config.js" />
     <Content Include="Scripts\app\components\gable-face\gable_face.png" />
     <Content Include="Scripts\app\components\gable-face\template.html" />
     <Content Include="Scripts\app\components\gable-face\viewModel.js" />
+    <Content Include="Scripts\app\components\dali-face\config.js" />
+    <Content Include="Scripts\app\components\dali-face\template.html" />
+    <Content Include="Scripts\app\components\dali-face\viewModel.js" />
     <Content Include="Scripts\app\components\pringles-face\config.js" />
     <Content Include="Scripts\app\components\pringles-face\pringle_face.png" />
     <Content Include="Scripts\app\components\pringles-face\template.html" />
