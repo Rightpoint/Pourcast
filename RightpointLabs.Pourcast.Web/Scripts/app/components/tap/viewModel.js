@@ -38,10 +38,16 @@
         //self.resolver.register('pringles-face', 'face');
 
         // michael
-        self.resolver.register('michael-face', 'face');
+        //self.resolver.register('michael-face', 'face');
 
         // dali
-        self.resolver.register('dali-face', 'face');
+        //self.resolver.register('dali-face', 'face');
+
+        // colin
+        self.resolver.register('colin-face', 'face');
+
+        // varnon
+        self.resolver.register('varnon-face', 'face');
     };
 
     return {

@@ -207,7 +207,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Scripts\app\components\colin-face\colin_face.png" />
+    <Content Include="Scripts\app\components\colin-face\config.js" />
+    <Content Include="Scripts\app\components\colin-face\template.html" />
+    <Content Include="Scripts\app\components\colin-face\viewModel.js" />
     <Content Include="Scripts\app\components\dali-face\dali_face.png" />
+    <Content Include="Scripts\app\components\varnon-face\config.js" />
+    <Content Include="Scripts\app\components\varnon-face\template.html" />
+    <Content Include="Scripts\app\components\varnon-face\varnon_face.png" />
+    <Content Include="Scripts\app\components\varnon-face\viewModel.js" />
     <Content Include="Scripts\app\components\michael-face\config.js" />
     <Content Include="Scripts\app\components\michael-face\michael_face.png" />
     <Content Include="Scripts\app\components\michael-face\template.html" />
