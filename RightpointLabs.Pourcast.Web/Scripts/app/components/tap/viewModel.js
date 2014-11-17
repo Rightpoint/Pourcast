@@ -44,10 +44,18 @@
         //self.resolver.register('dali-face', 'face');
 
         // colin
-        self.resolver.register('colin-face', 'face');
+        //self.resolver.register('colin-face', 'face');
 
         // varnon
-        self.resolver.register('varnon-face', 'face');
+        //self.resolver.register('varnon-face', 'face');
+
+        // colin
+        self.resolver.register('mario-face', 'face');
+        self.resolver.register('mario-hat', 'outsideRing');
+
+        // varnon
+        self.resolver.register('luigi-face', 'face');
+        self.resolver.register('luigi-hat', 'outsideRing');
     };
 
     return {
