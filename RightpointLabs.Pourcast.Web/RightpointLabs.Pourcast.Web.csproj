@@ -207,12 +207,32 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Scripts\app\components\chaplin-cane\chaplin_cane.png" />
+    <Content Include="Scripts\app\components\chaplin-cane\config.js" />
+    <Content Include="Scripts\app\components\chaplin-cane\template.html" />
+    <Content Include="Scripts\app\components\chaplin-cane\viewModel.js" />
+    <Content Include="Scripts\app\components\chaplin-face\chaplin_face.png" />
+    <Content Include="Scripts\app\components\chaplin-hat\chaplin_hat.png" />
+    <Content Include="Scripts\app\components\che-guevara-face\che_guevara_face.png" />
+    <Content Include="Scripts\app\components\che-guevara-face\config.js" />
+    <Content Include="Scripts\app\components\che-guevara-face\template.html" />
+    <Content Include="Scripts\app\components\che-guevara-face\viewModel.js" />
+    <Content Include="Scripts\app\components\che-guevara-hat\che_guevara_hat.png" />
     <Content Include="Scripts\app\components\luigi-face\luigi_face.png" />
+    <Content Include="Scripts\app\components\che-guevara-hat\config.js" />
+    <Content Include="Scripts\app\components\che-guevara-hat\template.html" />
+    <Content Include="Scripts\app\components\che-guevara-hat\viewModel.js" />
     <Content Include="Scripts\app\components\luigi-hat\config.js" />
     <Content Include="Scripts\app\components\luigi-hat\luigi_hat.png" />
     <Content Include="Scripts\app\components\luigi-hat\template.html" />
     <Content Include="Scripts\app\components\luigi-hat\viewModel.js" />
+    <Content Include="Scripts\app\components\chaplin-face\config.js" />
+    <Content Include="Scripts\app\components\chaplin-face\template.html" />
+    <Content Include="Scripts\app\components\chaplin-face\viewModel.js" />
     <Content Include="Scripts\app\components\mario-face\mario_face.png" />
+    <Content Include="Scripts\app\components\chaplin-hat\config.js" />
+    <Content Include="Scripts\app\components\chaplin-hat\template.html" />
+    <Content Include="Scripts\app\components\chaplin-hat\viewModel.js" />
     <Content Include="Scripts\app\components\mario-hat\config.js" />
     <Content Include="Scripts\app\components\mario-hat\mario_hat.png" />
     <Content Include="Scripts\app\components\mario-hat\template.html" />

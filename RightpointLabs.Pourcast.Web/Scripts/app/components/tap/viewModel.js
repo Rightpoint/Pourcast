@@ -49,13 +49,22 @@
         // varnon
         //self.resolver.register('varnon-face', 'face');
 
-        // colin
-        self.resolver.register('mario-face', 'face');
-        self.resolver.register('mario-hat', 'outsideRing');
+        // mario
+        //self.resolver.register('mario-face', 'face');
+        //self.resolver.register('mario-hat', 'outsideRing');
 
-        // varnon
-        self.resolver.register('luigi-face', 'face');
-        self.resolver.register('luigi-hat', 'outsideRing');
+        // luigi
+        //self.resolver.register('luigi-face', 'face');
+        //self.resolver.register('luigi-hat', 'outsideRing');
+
+        // chaplin
+        self.resolver.register('chaplin-face', 'face');
+        self.resolver.register('chaplin-hat', 'outsideRing');
+        self.resolver.register('chaplin-cane', 'outsideRing');
+
+        // che guevara
+        self.resolver.register('che-guevara-face', 'face');
+        self.resolver.register('che-guevara-hat', 'outsideRing');
     };
 
     return {
