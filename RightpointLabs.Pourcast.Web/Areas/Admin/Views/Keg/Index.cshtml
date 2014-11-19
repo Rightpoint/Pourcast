@@ -9,7 +9,7 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
+<table class="table table-bordered table-striped">
     <tr>
         <th>Beer</th>
         <th>Remaining</th>
@@ -19,14 +19,15 @@
         <th></th>
     </tr>
 
-@foreach (var keg in Model.Kegs) {
-    <tr>
+@foreach (var keg in Model.Kegs.OrderByDescending(k => k.IsOnTap).ThenBy(k => k.BeerName)) {
+    <tr class="@((keg.IsOnTap) ? "info" : "")">
         <td>@keg.BeerName</td>
         <td align="right">@keg.AmountOfBeerRemaining.ToString("N0")</td>
         <td align="right">@keg.PercentRemaining.ToString("P1")</td>
         <td>@(keg.IsEmpty ? "Yes" : "No")</td>
         <td>@(keg.IsOnTap ? "Yes" : "No")</td>
         <td>
+            @Html.ActionLink("Analytics", "Index", new {area = "Analytics", controller = "Home", id = keg.Id}) |
             @Html.ActionLink("Edit", "Edit", new { id = keg.Id }) |
             @Html.ActionLink("Details", "Details", new { id = keg.Id }) |
             @Html.ActionLink("Delete", "Delete", new { id = keg.Id })

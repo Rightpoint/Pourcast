@@ -1,21 +1,33 @@
 ﻿requirejs.config({
     baseUrl: 'Scripts/libs/',
+    //urlArgs: "bust=" + (new Date()).getTime(),
     paths: {
         app: '../app',
         jquery: 'jquery-2.1.0',
-        TapViewModel: '../app/viewmodel/TapViewModel',
-        ko: 'knockout-3.1.0',
+        ko: 'knockout-3.2.0',
         signalr: 'jquery.signalR-2.0.3',
-        'signalr.hubs' : '/signalr/hubs?'
+        'signalr.hubs': '/signalr/hubs?'
     },
     shim: {
-        jquery : { exports: '$' },
+        jquery: { exports: '$' },
         signalr: { deps: ['jquery'] },
         'signalr.hubs': { deps: ['signalr'] }
     }
 });
 
-requirejs(['app/bindings', 'app/pourcast'], function (bindings, pourcast) {
+requirejs(['ko', 'app/bindings', 'app/componentResolver', 'app/dataService'], function (ko, bindings, ComponentResolver, dataService) {
     bindings.init();
-    pourcast.init();
+
+    var resolver = new ComponentResolver();
+    resolver.register('pourcast', 'pourcast');
+    resolver.register('tap', 'tap');
+
+    dataService.getTaps().done(function (taps) {
+        var viewModel = {
+            taps: ko.observableArray(taps),
+            resolver: resolver
+        };
+
+        ko.applyBindings(viewModel);
+    });
 });

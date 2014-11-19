@@ -16,5 +16,8 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Models
         [Required(ErrorMessage = "Amount of Beer Poured is required")]
         [Display(Name = "Amount of Beer Poured")]
         public double AmountOfBeerPoured { get; set; }
+
+        [Display(Name = "Percent of Beer Remaining")]
+        public double PercentOfBeerRemaining { get; set; }
     }
 }
