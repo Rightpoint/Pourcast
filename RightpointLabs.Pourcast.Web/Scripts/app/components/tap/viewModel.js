@@ -58,13 +58,20 @@
         //self.resolver.register('luigi-hat', 'outsideRing');
 
         // chaplin
-        self.resolver.register('chaplin-face', 'face');
-        self.resolver.register('chaplin-hat', 'outsideRing');
-        self.resolver.register('chaplin-cane', 'outsideRing');
+        //self.resolver.register('chaplin-face', 'face');
+        //self.resolver.register('chaplin-hat', 'outsideRing');
+        //self.resolver.register('chaplin-cane', 'outsideRing');
 
         // che guevara
-        self.resolver.register('che-guevara-face', 'face');
-        self.resolver.register('che-guevara-hat', 'outsideRing');
+        //self.resolver.register('che-guevara-face', 'face');
+        //self.resolver.register('che-guevara-hat', 'outsideRing');
+
+        // zorro
+        self.resolver.register('zorro-face', 'face');
+        self.resolver.register('zorro-hat', 'outsideRing');
+
+        // richie
+        self.resolver.register('richie-face', 'face');
     };
 
     return {
