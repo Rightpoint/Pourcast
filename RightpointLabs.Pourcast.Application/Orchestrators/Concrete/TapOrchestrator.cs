@@ -117,5 +117,16 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
         {
             _tapRepository.Update(tap);
         }
+
+        [Transactional]
+        public void UpdateTemperature(string tapId, double temperatureF)
+        {
+            var tap = _tapRepository.GetById(tapId);
+            var keg = _kegRepository.GetById(tap.KegId);
+
+            keg.UpdateTemperature(tap.Id, temperatureF);
+
+            _kegRepository.Update(keg);
+        }
     }
 }

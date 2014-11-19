@@ -55,5 +55,11 @@ namespace RightpointLabs.Pourcast.Web.Controllers.Api
         {
             _tapOrchestrator.StopPourFromTap(id, volume);
         }
+
+        [HttpGet]
+        public void Temperature([FromUri]string id, [FromUri]double f)
+        {
+            _tapOrchestrator.UpdateTemperature(id, f);
+        }
     }
 }

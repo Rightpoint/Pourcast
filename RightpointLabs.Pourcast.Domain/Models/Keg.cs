@@ -108,5 +108,13 @@
                 DomainEvents.Raise(new KegEmptied(Id));
             }
         }
+
+        public double TemperatureF { get; private set; }
+
+        public void UpdateTemperature(string id, double temperatureF)
+        {
+            TemperatureF = temperatureF;
+            DomainEvents.Raise(new KegTemperatureChanged(Id, TemperatureF));
+        }
     }
 }

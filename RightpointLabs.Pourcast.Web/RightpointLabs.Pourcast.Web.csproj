@@ -422,6 +422,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="SignalR\HeartbeatClientHandler.cs" />
+    <Compile Include="SignalR\KegTemperatureChangedClientHandler.cs" />
     <Compile Include="SignalR\LogMessageClientHandler.cs" />
     <Compile Include="SignalR\PouringClientHandler.cs" />
     <Compile Include="SignalR\PourStartedClientHandler.cs" />

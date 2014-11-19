@@ -98,6 +98,7 @@ namespace RightpointLabs.Pourcast.Web
             container.RegisterType<IEventHandler<KegRemainingChanged>, KegRemainingChangedClientHandler>("KegRemainingChangedClientHandler", new PerRequestLifetimeManager());
             container.RegisterType<IEventHandler<KegRemovedFromTap>, KegRemovedFromTapClientHandler>("KegRemovedFromTapClientHandler", new PerRequestLifetimeManager());
             container.RegisterType<IEventHandler<KegTapped>, KegTappedClientHandler>("KegTappedClientHandler", new PerRequestLifetimeManager());
+            container.RegisterType<IEventHandler<KegTemperatureChanged>, KegTemperatureChangedClientHandler>("KegTemperatureChangedClientHandler", new PerRequestLifetimeManager());
             container.RegisterType<IEventHandler<Heartbeat>, HeartbeatClientHandler>("HeartbeatClientHandler", new PerRequestLifetimeManager());
             container.RegisterType<IEventHandler<LogMessage>, LogMessageClientHandler>("LogMessageClientHandler", new PerRequestLifetimeManager());
 
