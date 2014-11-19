@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Events\BeerCreated.cs" />
+    <Compile Include="Events\KegTemperatureChanged.cs" />
     <Compile Include="Events\DomainEvent.cs" />
     <Compile Include="Events\LogMessage.cs" />
     <Compile Include="Events\Heartbeat.cs" />

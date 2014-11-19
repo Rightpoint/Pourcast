@@ -27,5 +27,7 @@
         Tap GetByName(string name);
 
         void Save(Tap tap);
+
+        void UpdateTemperature(string id, double temperatureF);
     }
 }

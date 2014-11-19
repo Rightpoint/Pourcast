@@ -18,8 +18,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RightpointLabs.Pourcast.Dom
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RightpointLabs.Pourcast.Application", "RightpointLabs.Pourcast.Application\RightpointLabs.Pourcast.Application.csproj", "{15F3381D-CF8B-46E5-A323-6454A4E7D2C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RightpointLabs.Pourcast.Repourter", "RightpointLabs.Pourcast.Repourter\RightpointLabs.Pourcast.Repourter.csproj", "{5FEF6480-A462-4594-9A22-5FB9AFA3C331}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -79,21 +77,6 @@ Global
 		{15F3381D-CF8B-46E5-A323-6454A4E7D2C3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{15F3381D-CF8B-46E5-A323-6454A4E7D2C3}.Wifi|Any CPU.ActiveCfg = Release|Any CPU
 		{15F3381D-CF8B-46E5-A323-6454A4E7D2C3}.Wifi|Any CPU.Build.0 = Release|Any CPU
-		{5FEF6480-A462-4594-9A22-5FB9AFA3C331}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5FEF6480-A462-4594-9A22-5FB9AFA3C331}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5FEF6480-A462-4594-9A22-5FB9AFA3C331}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{5FEF6480-A462-4594-9A22-5FB9AFA3C331}.Ethernet|Any CPU.ActiveCfg = Ethernet|Any CPU
-		{5FEF6480-A462-4594-9A22-5FB9AFA3C331}.Ethernet|Any CPU.Build.0 = Ethernet|Any CPU
-		{5FEF6480-A462-4594-9A22-5FB9AFA3C331}.Ethernet|Any CPU.Deploy.0 = Ethernet|Any CPU
-		{5FEF6480-A462-4594-9A22-5FB9AFA3C331}.NoNetworking|Any CPU.ActiveCfg = NoNetworking|Any CPU
-		{5FEF6480-A462-4594-9A22-5FB9AFA3C331}.NoNetworking|Any CPU.Build.0 = NoNetworking|Any CPU
-		{5FEF6480-A462-4594-9A22-5FB9AFA3C331}.NoNetworking|Any CPU.Deploy.0 = NoNetworking|Any CPU
-		{5FEF6480-A462-4594-9A22-5FB9AFA3C331}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5FEF6480-A462-4594-9A22-5FB9AFA3C331}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5FEF6480-A462-4594-9A22-5FB9AFA3C331}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{5FEF6480-A462-4594-9A22-5FB9AFA3C331}.Wifi|Any CPU.ActiveCfg = Wifi|Any CPU
-		{5FEF6480-A462-4594-9A22-5FB9AFA3C331}.Wifi|Any CPU.Build.0 = Wifi|Any CPU
-		{5FEF6480-A462-4594-9A22-5FB9AFA3C331}.Wifi|Any CPU.Deploy.0 = Wifi|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

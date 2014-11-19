@@ -34,7 +34,7 @@
             var vm = {
                 statusMessages: ko.observableArray([])
             };
-            var eventNames = ["BeerCreated", "BreweryCreated", "Heartbeat", "KegCreated", "KegEmptied", "KegRemovedFromTap", "KegTapped", "LogMessage", "Pouring", "PourStarted", "PourStopped", "TapCreated"];
+            var eventNames = ["BeerCreated", "BreweryCreated", "Heartbeat", "KegCreated", "KegEmptied", "KegRemovedFromTap", "KegTapped", "LogMessage", "Pouring", "PourStarted", "PourStopped", "TapCreated", "KegTemperatureChanged"];
             for (var i in eventNames) {
                 (function() {
                     var eventName = eventNames[i];
