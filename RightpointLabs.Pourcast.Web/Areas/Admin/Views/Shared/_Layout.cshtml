@@ -1,4 +1,5 @@
-﻿@using RightpointLabs.Pourcast.Web.Properties
+﻿@using RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
+@using RightpointLabs.Pourcast.Web.Properties
 @using System.Web.Optimization
 
 
@@ -13,7 +14,7 @@
     @Scripts.Render("~/bundles/modernizer")
 </head>
 <body>
-    <div class="navbar">
+    <div class="navbar navbar-default">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -22,15 +23,14 @@
                     <span class="icon-bar"></span>
                 </button>
                 @Html.ActionLink(Resources.Application, "Index", "Home", null, new { @class = "navbar-brand" })
-                
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Manage Taps", "Index", "Tap", null, new { @class = "navbar-btn" })</li>
-                    <li>@Html.ActionLink("Manage Kegs", "Index", "Keg", null, new { @class = "navbar-btn" })</li>
-                    <li>@Html.ActionLink("Manage Breweries", "Index", "Brewery", null, new { @class = "navbar-btn" })</li>
-                    <li>@Html.ActionLink("Manage Beers", "Index", "Beer", null, new { @class = "navbar-btn" })</li>
-                    <li>@Html.ActionLink("Manage Styles", "Index", "Style", null, new { @class = "navbar-btn" })</li>
+                    <li @Html.Raw(this.ViewContext.Controller.GetType() == (typeof(TapController)) ? "class='active'" : "")>@Html.ActionLink("Manage Taps", "Index", "Tap")</li>
+                    <li @Html.Raw(this.ViewContext.Controller.GetType() == (typeof(KegController)) ? "class='active'" : "")>@Html.ActionLink("Manage Kegs", "Index", "Keg")</li>
+                    <li @Html.Raw(this.ViewContext.Controller.GetType() == (typeof(BeerController)) ? "class='active'" : "")>@Html.ActionLink("Manage Beers", "Index", "Beer")</li>
+                    <li @Html.Raw(this.ViewContext.Controller.GetType() == (typeof(StyleController)) ? "class='active'" : "")>@Html.ActionLink("Manage Styles", "Index", "Style")</li>
+                    <li @Html.Raw(this.ViewContext.Controller.GetType() == (typeof(BreweryController)) ? "class='active'" : "")>@Html.ActionLink("Manage Breweries", "Index", "Brewery")</li>
                 </ul>
             </div>
         </div>

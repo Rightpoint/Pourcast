@@ -327,6 +327,7 @@
     <Content Include="Areas\Admin\Views\Style\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Style\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Status\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Keg\Edit.cshtml" />
     <None Include="Properties\PublishProfiles\Production.pubxml" />
     <None Include="Scripts\libs\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\app\admin.js" />
@@ -391,6 +392,7 @@
     <Compile Include="Areas\Admin\Models\CreateTapViewModel.cs" />
     <Compile Include="Areas\Admin\Models\EditBeerViewModel.cs" />
     <Compile Include="Areas\Admin\Models\EditBreweryViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\EditKegViewModel.cs" />
     <Compile Include="Areas\Admin\Models\EditStyleViewModel.cs" />
     <Compile Include="Areas\Admin\Models\EditTapViewModel.cs" />
     <Compile Include="Areas\Admin\Models\ImportBeerModel.cs" />
@@ -423,6 +425,7 @@
     <Compile Include="SignalR\LogMessageClientHandler.cs" />
     <Compile Include="SignalR\PouringClientHandler.cs" />
     <Compile Include="SignalR\PourStartedClientHandler.cs" />
+    <Compile Include="SignalR\KegRemainingChangedClientHandler.cs" />
     <Compile Include="SignalR\PourStoppedClientHandler.cs" />
     <Compile Include="SignalR\EventsHub.cs" />
     <Compile Include="SignalR\KegRemovedFromTapClientHandler.cs" />
@@ -443,6 +446,8 @@
     <Content Include="Scripts\libs\toastr.min.js.map" />
     <Content Include="Views\RepourterTest\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\Number.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\Percentage.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

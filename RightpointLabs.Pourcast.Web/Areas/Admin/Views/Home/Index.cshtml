@@ -8,26 +8,44 @@
 <h2>@Resources.Admin_Home_Title</h2>
 
 <div class="row">
-@foreach (var tap in Model)
-{
-    <div class="col-lg-6">
-        <h3>@tap.Name</h3>
-        @if (null == tap.Keg)
-        {
-            <h4>No Keg On Tap</h4>
-            <hr />
-        }
-        else
-        {
-            <h4>@tap.Keg.BeerName</h4>
+    @foreach (var tap in Model)
+    {
+        <div class="col-sm-6">
+            <h3>@tap.Name</h3>
+            @if (null == tap.Keg)
+            {
+                <h4>No Keg On Tap</h4>
+                <hr />
+            }
+            else
+            {
+                <h4>@tap.Keg.BeerName</h4>
+                <p>
+                    Amount of Beer Remaining: @tap.Keg.AmountOfBeerRemaining.ToString("N0") <br />
+                    Percent Left: @tap.Keg.PercentRemaining.ToString("P1") <br />
+                </p>
+            }
             <p>
-                Amount of Beer Remaining: @tap.Keg.AmountOfBeerRemaining <br />
-                Percent Left: @tap.Keg.PercentRemaining <br />
+                @Html.ActionLink("Edit", "Edit", "Tap", new { id = tap.Id }, null)
             </p>
-        }
-        <p>
-            @Html.ActionLink("Edit", "Edit", "Tap", new { id = tap.Id }, null)
-        </p>
-    </div>
-}
+        </div>
+    }
 </div>
+    
+<div class="row">
+    <div class="col-lg-12">
+        <button class="btn" id="btnClientRefresh">Refresh all connected clients</button>
+    </div>
+</div>
+@section scripts {
+    <script type="text/javascript">
+        $(function () {
+            $("#btnClientRefresh").each(function () {
+                var $t = $(this);
+                $t.click(function () {
+                    $.getJSON("/Admin/Home/Refresh");
+                });
+            });
+        });
+    </script>
+}

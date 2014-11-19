@@ -1,7 +1,7 @@
 ﻿@using RightpointLabs.Pourcast.Web.Properties
 @model RightpointLabs.Pourcast.Web.Areas.Admin.Models.BreweryViewModel
 
-<div>
+<div class="clearfix">
     <h3>@Model.Brewery.Name</h3>
     <p>@Html.Raw(string.Format("{0}, {1} {2}", Model.Brewery.City, Model.Brewery.State, Model.Brewery.Country))</p>
     <h4>@Resources.Admin_BreweryDetails_Beers</h4>
@@ -66,7 +66,7 @@
 
     </dl>
 </div>
-
+<br/>
 <p>
     @Html.ActionLink(Resources.Admin_BreweryDetails_FullDetails, "Details", new { id = Model.Brewery.Id }) | 
     @Html.ActionLink(Resources.Admin_BreweryDetails_AddBeer, "Create", new { controller = "Beer", area = "Admin", breweryId = Model.Brewery.Id }) | 

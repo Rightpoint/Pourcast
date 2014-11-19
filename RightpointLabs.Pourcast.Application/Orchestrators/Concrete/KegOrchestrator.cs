@@ -70,5 +70,13 @@
 
             return id;
         }
+
+        [Transactional]
+        public void UpdateCapacityAndPoured(string kegId, double capacity, double amountOfBeerPoured)
+        {
+            var keg = _kegRepository.GetById(kegId);
+            keg.UpdateCapacityAndPoured(capacity, amountOfBeerPoured);
+            _kegRepository.Update(keg);
+        }
     }
 }
