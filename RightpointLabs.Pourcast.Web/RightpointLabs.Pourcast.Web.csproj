@@ -211,7 +211,18 @@
     <Content Include="Scripts\app\components\chaplin-cane\config.js" />
     <Content Include="Scripts\app\components\chaplin-cane\template.html" />
     <Content Include="Scripts\app\components\chaplin-cane\viewModel.js" />
+    <Content Include="Scripts\app\components\richie-face\config.js" />
+    <Content Include="Scripts\app\components\richie-face\richie_face.png" />
+    <Content Include="Scripts\app\components\richie-face\template.html" />
+    <Content Include="Scripts\app\components\richie-face\viewModel.js" />
+    <Content Include="Scripts\app\components\zorro-face\config.js" />
+    <Content Include="Scripts\app\components\zorro-face\template.html" />
+    <Content Include="Scripts\app\components\zorro-face\viewModel.js" />
     <Content Include="Scripts\app\components\chaplin-face\chaplin_face.png" />
+    <Content Include="Scripts\app\components\zorro-face\zorro_face.png" />
+    <Content Include="Scripts\app\components\zorro-hat\config.js" />
+    <Content Include="Scripts\app\components\zorro-hat\template.html" />
+    <Content Include="Scripts\app\components\zorro-hat\viewModel.js" />
     <Content Include="Scripts\app\components\chaplin-hat\chaplin_hat.png" />
     <Content Include="Scripts\app\components\che-guevara-face\che_guevara_face.png" />
     <Content Include="Scripts\app\components\che-guevara-face\config.js" />
@@ -409,6 +420,7 @@
     <Content Include="Scripts\app\bubbles.js" />
     <Content Include="Scripts\app\componentResolver.js" />
     <Content Include="Scripts\app\components\yosemite-face\yosemite_face.png" />
+    <Content Include="Scripts\app\components\zorro-hat\zorro_hat.png" />
     <Content Include="Scripts\app\dataService.js" />
     <Content Include="Scripts\app\components\hat\template.html" />
     <Content Include="Scripts\app\components\hat\viewModel.js" />
