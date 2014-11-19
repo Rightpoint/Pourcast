@@ -37,6 +37,13 @@ void NetworkReporter::ReportStart(long pulses){
 }
 void NetworkReporter::ReportIgnore(long pulses){
 }
+void NetworkReporter::ReportTemperature(float tempF) {
+  char buf[128];
+  PString pBuf(buf, 128);
+  pBuf << F("/api/Tap/") << _tapId << F("/Temperature?f=") << tempF;
+  _requester->MakeRequest(pBuf);
+}
+
 void NetworkReporter::LogMessage(const __FlashStringHelper* message){
   _requester->LogMessage(message);
 }

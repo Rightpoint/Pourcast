@@ -20,6 +20,7 @@
 #include "LEDReporter.h"
 #include "SerialReporter.h"
 #include "NetworkReporter.h"
+#include <OneWire.h>
 
 class NullPrint : public Print {
   public:
@@ -52,6 +53,10 @@ Watchdog::CApplicationMonitor ApplicationMonitor;
 Tap* tap1;
 Tap* tap2;
 NetworkRequester* http;
+OneWire oneWire(6);
+
+byte sensor1[] = { 0x28, 0x8A, 0x8E, 0x2A, 0x06, 0x00, 0x00, 0xE8 };
+byte sensor2[] = { 0x28, 0xA9, 0xD2, 0xFA, 0x05, 0x00, 0x00, 0x56 };
 
 // Enter a MAC address for your controller below.
 // Newer Ethernet shields have a MAC address printed on a sticker on the shield
@@ -70,18 +75,17 @@ void setup() {
   while(!Serial);
   Serial.println("setup");
   
-  // let's light up briefly
+  // let's light up briefly while waiting for the initial temp reading
   pinMode(9, OUTPUT);
   pinMode(8, OUTPUT);
   pinMode(7, OUTPUT);
   digitalWrite(9, HIGH);
   digitalWrite(8, HIGH);
   digitalWrite(7, HIGH);
-  delay(500);
+  delay(1000);
   digitalWrite(9, HIGH);
   digitalWrite(8, LOW);
   digitalWrite(7, LOW);
-
   
   Serial << F("Free: ") << freeMemory() << endl;
 
@@ -101,9 +105,9 @@ void setup() {
   NetworkReporter* tap1Reporter = new NetworkReporter(http, "535c61a951aa0405287989ec"); 
   NetworkReporter* tap2Reporter = new NetworkReporter(http, "537d28db51aa04289027cde5"); 
   
-  tap1 = new Tap(new MultiReporter(new SerialReporter(1), new LEDReporter(8), tap1Reporter));
+  tap1 = new Tap(new MultiReporter(new SerialReporter(1), new LEDReporter(8), tap1Reporter), &oneWire, sensor1);
   attachInterrupt(0, tap1Pulse, RISING);
-  tap2 = new Tap(new MultiReporter(new SerialReporter(2), new LEDReporter(7), tap2Reporter));
+  tap2 = new Tap(new MultiReporter(new SerialReporter(2), new LEDReporter(7), tap2Reporter), &oneWire, sensor2);
   attachInterrupt(1, tap2Pulse, RISING);
   http->LogMessage(F("Clearing any active pour"));
   

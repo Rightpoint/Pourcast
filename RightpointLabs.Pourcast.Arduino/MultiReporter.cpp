@@ -50,6 +50,17 @@ void MultiReporter::ReportIgnore(long pulses){
     _reporter3->ReportIgnore(pulses);
   }
 }
+void MultiReporter::ReportTemperature(float tempF){
+  if(_reporter1 != NULL) {
+    _reporter1->ReportTemperature(tempF);
+  }
+  if(_reporter2 != NULL) {
+    _reporter2->ReportTemperature(tempF);
+  }
+  if(_reporter3 != NULL) {
+    _reporter3->ReportTemperature(tempF);
+  }
+}
 void MultiReporter::LogMessage(const __FlashStringHelper* message){
   if(_reporter1 != NULL) {
     _reporter1->LogMessage(message);
