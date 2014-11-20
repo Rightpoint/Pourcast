@@ -113,8 +113,12 @@
 
         public void UpdateTemperature(string id, double temperatureF)
         {
-            TemperatureF = temperatureF;
-            DomainEvents.Raise(new KegTemperatureChanged(Id, TemperatureF));
+            // if we didn't actually change the value, don't bother telling anyone
+            if (Math.Abs(temperatureF - TemperatureF) > 0.0001)
+            {
+                TemperatureF = temperatureF;
+                DomainEvents.Raise(new KegTemperatureChanged(Id, TemperatureF));
+            }
         }
     }
 }
