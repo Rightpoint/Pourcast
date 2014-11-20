@@ -67,11 +67,19 @@
         //self.resolver.register('che-guevara-hat', 'outsideRing');
 
         // zorro
-        self.resolver.register('zorro-face', 'face');
-        self.resolver.register('zorro-hat', 'outsideRing');
+        //self.resolver.register('zorro-face', 'face');
+        //self.resolver.register('zorro-hat', 'outsideRing');
 
         // richie
-        self.resolver.register('richie-face', 'face');
+        //self.resolver.register('richie-face', 'face');
+
+        // monopoly
+        self.resolver.register('monopoly-face', 'face');
+        self.resolver.register('monopoly-hat', 'outsideRing');
+        self.resolver.register('monopoly-cane', 'outsideRing');
+
+        // zappa
+        self.resolver.register('zappa-face', 'face');
     };
 
     return {

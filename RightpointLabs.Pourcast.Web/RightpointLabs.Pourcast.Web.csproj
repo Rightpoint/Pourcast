@@ -207,14 +207,30 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Scripts\app\components\monopoly-cane\config.js" />
+    <Content Include="Scripts\app\components\monopoly-cane\monopoly_cane.png" />
+    <Content Include="Scripts\app\components\monopoly-cane\template.html" />
+    <Content Include="Scripts\app\components\monopoly-cane\viewModel.js" />
     <Content Include="Scripts\app\components\chaplin-cane\chaplin_cane.png" />
     <Content Include="Scripts\app\components\chaplin-cane\config.js" />
     <Content Include="Scripts\app\components\chaplin-cane\template.html" />
     <Content Include="Scripts\app\components\chaplin-cane\viewModel.js" />
+    <Content Include="Scripts\app\components\monopoly-face\config.js" />
+    <Content Include="Scripts\app\components\monopoly-face\monopoly_face.png" />
+    <Content Include="Scripts\app\components\monopoly-face\template.html" />
+    <Content Include="Scripts\app\components\monopoly-face\viewModel.js" />
+    <Content Include="Scripts\app\components\monopoly-hat\config.js" />
+    <Content Include="Scripts\app\components\monopoly-hat\monopoly_hat.png" />
+    <Content Include="Scripts\app\components\monopoly-hat\template.html" />
+    <Content Include="Scripts\app\components\monopoly-hat\viewModel.js" />
     <Content Include="Scripts\app\components\richie-face\config.js" />
     <Content Include="Scripts\app\components\richie-face\richie_face.png" />
     <Content Include="Scripts\app\components\richie-face\template.html" />
     <Content Include="Scripts\app\components\richie-face\viewModel.js" />
+    <Content Include="Scripts\app\components\zappa-face\config.js" />
+    <Content Include="Scripts\app\components\zappa-face\template.html" />
+    <Content Include="Scripts\app\components\zappa-face\viewModel.js" />
+    <Content Include="Scripts\app\components\zappa-face\zappa_face.png" />
     <Content Include="Scripts\app\components\zorro-face\config.js" />
     <Content Include="Scripts\app\components\zorro-face\template.html" />
     <Content Include="Scripts\app\components\zorro-face\viewModel.js" />
