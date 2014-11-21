@@ -207,6 +207,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Scripts\app\components\flanders-face\config.js" />
+    <Content Include="Scripts\app\components\flanders-face\flanders_face.png" />
+    <Content Include="Scripts\app\components\flanders-face\template.html" />
+    <Content Include="Scripts\app\components\flanders-face\viewModel.js" />
+    <Content Include="Scripts\app\components\flanders-keg-body\flanders_keg.png" />
+    <Content Include="Scripts\app\components\hogan-face\config.js" />
+    <Content Include="Scripts\app\components\hogan-face\hogan_face.png" />
+    <Content Include="Scripts\app\components\hogan-face\template.html" />
+    <Content Include="Scripts\app\components\hogan-face\viewModel.js" />
+    <Content Include="Scripts\app\components\hogan-keg-body\config.js" />
+    <Content Include="Scripts\app\components\hogan-keg-body\hogan_keg_body.png" />
+    <Content Include="Scripts\app\components\hogan-keg-body\template.html" />
+    <Content Include="Scripts\app\components\hogan-keg-body\viewModel.js" />
+    <Content Include="Scripts\app\components\flanders-keg-body\config.js" />
+    <Content Include="Scripts\app\components\flanders-keg-body\template.html" />
+    <Content Include="Scripts\app\components\flanders-keg-body\viewModel.js" />
     <Content Include="Scripts\app\components\monopoly-cane\config.js" />
     <Content Include="Scripts\app\components\monopoly-cane\monopoly_cane.png" />
     <Content Include="Scripts\app\components\monopoly-cane\template.html" />

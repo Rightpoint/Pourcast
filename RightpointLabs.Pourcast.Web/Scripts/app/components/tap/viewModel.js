@@ -74,12 +74,20 @@
         //self.resolver.register('richie-face', 'face');
 
         // monopoly
-        self.resolver.register('monopoly-face', 'face');
-        self.resolver.register('monopoly-hat', 'outsideRing');
-        self.resolver.register('monopoly-cane', 'outsideRing');
+        //self.resolver.register('monopoly-face', 'face');
+        //self.resolver.register('monopoly-hat', 'outsideRing');
+        //self.resolver.register('monopoly-cane', 'outsideRing');
 
         // zappa
-        self.resolver.register('zappa-face', 'face');
+        //self.resolver.register('zappa-face', 'face');
+
+        // flanders
+        self.resolver.register('flanders-keg-body', 'kegBody');
+        self.resolver.register('flanders-face', 'face');
+
+        // hogan
+        self.resolver.register('hogan-keg-body', 'kegBody');
+        self.resolver.register('hogan-face', 'face');
     };
 
     return {
