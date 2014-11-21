@@ -68,7 +68,7 @@ void ReportFake(Reporter* reporter, unsigned long duration, unsigned long pulses
 }
 void Tap::Loop(int cycle) {
   long pulses = _pulses;
-  if(cycle % 100 == 0) {
+  if(cycle % 600 == 0) {
     requestTempMeasurement(_oneWire, _tempSensorAddress);
   }
   if(_lastPulses != 0 && cycle % 10 == 0) {
@@ -108,7 +108,7 @@ void Tap::Loop(int cycle) {
       _reporter->ReportIgnore(pulses);
     }
   }
-  if(cycle % 100 == 9) {
+  if(cycle % 600 == 9) {
     float value = readTemp(_oneWire, _tempSensorAddress);
     if(value > -1000) {
       _reporter->ReportTemperature(value);
