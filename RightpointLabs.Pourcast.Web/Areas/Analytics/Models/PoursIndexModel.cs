@@ -8,5 +8,7 @@ namespace RightpointLabs.Pourcast.Web.Areas.Analytics.Models
         public List<PourAnalysis> ByTime { get; set; }
         public List<PourAnalysis> ByDayAndTime { get; set; }
         public List<PourAnalysis> ByDate { get; set; }
+        public List<BeerInfo> LastWeekBeers { get; set; }
+        public List<BeerPourAnalysis> ByDayAndTimeAndBeer { get; set; }
     }
 }

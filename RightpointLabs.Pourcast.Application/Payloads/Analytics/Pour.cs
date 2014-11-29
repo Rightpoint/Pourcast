@@ -9,6 +9,7 @@ namespace RightpointLabs.Pourcast.Application.Payloads.Analytics
         public Tap Tap { get; set; }
         public Keg Keg { get; set; }
         public Beer Beer { get; set; }
+        public Style BeerStyle { get; set; }
         public double PercentRemaining { get; set; }
         public double Volume { get; set; }
     }

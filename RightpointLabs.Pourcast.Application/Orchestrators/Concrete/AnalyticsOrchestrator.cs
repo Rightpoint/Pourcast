@@ -15,18 +15,21 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
         private readonly IBeerRepository _beerRepository;
         private readonly IStoredEventRepository _storedEventRepository;
         private readonly ITapRepository _tapRepository;
+        private readonly IStyleRepository _styleRepository;
 
-        public AnalyticsOrchestrator(IKegRepository kegRepository, IBeerRepository beerRepository, IStoredEventRepository storedEventRepository, ITapRepository tapRepository)
+        public AnalyticsOrchestrator(IKegRepository kegRepository, IBeerRepository beerRepository, IStoredEventRepository storedEventRepository, ITapRepository tapRepository, IStyleRepository styleRepository)
         {
             if (null == kegRepository) throw new ArgumentNullException("kegRepository");
             if (null == beerRepository) throw new ArgumentNullException("beerRepository");
             if (null == storedEventRepository) throw new ArgumentNullException("storedEventRepository");
             if (tapRepository == null) throw new ArgumentNullException("tapRepository");
+            if (styleRepository == null) throw new ArgumentNullException("styleRepository");
 
             _kegRepository = kegRepository;
             _beerRepository = beerRepository;
             _storedEventRepository = storedEventRepository;
             _tapRepository = tapRepository;
+            _styleRepository = styleRepository;
         }
 
 
@@ -125,18 +128,21 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
             var taps = _tapRepository.GetAll().ToDictionary(i => i.Id);
             var kegs = _kegRepository.GetAll().ToDictionary(i => i.Id);
             var beers = _beerRepository.GetAll().ToDictionary(i => i.Id);
+            var styles = _styleRepository.GetAll().ToDictionary(i => i.Id);
 
             return (from evt in events
                     let p = (PourStopped)evt.DomainEvent
                     let t = taps.TryGetValue(p.TapId)
                     let k = kegs.TryGetValue(p.KegId)
                     let b = k.ChainIfNotNull(i => beers.TryGetValue(i.BeerId))
+                    let s = b.ChainIfNotNull(i => styles.TryGetValue(i.StyleId))
                     select new Pour
                     {
                         OccuredOn = evt.OccuredOn,
                         Tap = t,
                         Keg = k,
                         Beer = b,
+                        BeerStyle = s,
                         PercentRemaining = p.PercentRemaining,
                         Volume = p.Volume
                     }).ToList();

@@ -22,60 +22,106 @@
         <h3>Last Week By Hour</h3>
         <canvas id="byDayAndTime" height="500"></canvas>
     </div>
+    <div class="col-lg-12">
+        <h3>Last Week By Hour By Beer</h3>
+        <canvas id="byDayAndTimeAndBeer" height="500"></canvas>
+    </div>
 </div>
 
 @section scripts
 {
     <script type="text/javascript">
-    $(function() {
-        var dataByDay = @Html.Raw(Json.Encode(Model.ByDay));
-        var dataByTime = @Html.Raw(Json.Encode(Model.ByTime));
-        var dataByDayAndTime = @Html.Raw(Json.Encode(Model.ByDayAndTime));
-        var dataByDate = @Html.Raw(Json.Encode(Model.ByDate));
+        $(function() {
+            var dataByDay = @Html.Raw(Json.Encode(Model.ByDay));
+            var dataByTime = @Html.Raw(Json.Encode(Model.ByTime));
+            var dataByDayAndTime = @Html.Raw(Json.Encode(Model.ByDayAndTime));
+            var dataByDate = @Html.Raw(Json.Encode(Model.ByDate));
+            var dataByDayAndTimeAndBeer = @Html.Raw(Json.Encode(Model.ByDayAndTimeAndBeer));
+            var dataLastWeekBeers = @Html.Raw(Json.Encode(Model.LastWeekBeers));
 
-        var buildChart = function(element, data, labelCallback) {
-            var configData = {
-                labels: [],
-                datasets: [
-                    {
-                        label: "Volume",
-                        fillColor: "rgba(228,80,45,0.5)",
-                        strokeColor: "rgba(228,80,45,0.8)",
-                        highlightFill: "rgba(228,80,45,0.75)",
-                        highlightStroke: "rgba(228,80,45,1)",
-                        data: []
-                    },
-                    {
-                        label: "Count",
-                        fillColor: "rgba(220,220,220,0.5)",
-                        strokeColor: "rgba(220,220,220,0.8)",
-                        highlightFill: "rgba(220,220,220,0.75)",
-                        highlightStroke: "rgba(220,220,220,1)",
-                        data: []
-                    }
-                ]
+            var buildChart = function(element, data, labelCallback) {
+                var configData = {
+                    labels: [],
+                    datasets: [
+                        {
+                            label: "Volume",
+                            fillColor: "rgba(228,80,45,0.5)",
+                            strokeColor: "rgba(228,80,45,0.8)",
+                            highlightFill: "rgba(228,80,45,0.75)",
+                            highlightStroke: "rgba(228,80,45,1)",
+                            data: []
+                        },
+                        {
+                            label: "Count",
+                            fillColor: "rgba(220,220,220,0.5)",
+                            strokeColor: "rgba(220,220,220,0.8)",
+                            highlightFill: "rgba(220,220,220,0.75)",
+                            highlightStroke: "rgba(220,220,220,1)",
+                            data: []
+                        }
+                    ]
+                };
+                $.each(data, function(ix, value) {
+                    configData.labels.push(labelCallback(value));
+                    configData.datasets[0].data.push(value.TotalVolume);
+                    configData.datasets[1].data.push(value.Count);
+                });
+                var config = {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    multiTooltipTemplate: "<%=datasetLabel%>: <%= Math.round(value*100)/100 %><%if (datasetLabel=='Volume'){%> oz<%}%>"
+                };
+
+                var ctx = document.getElementById(element).getContext("2d");
+                var chart = new Chart(ctx).Line(configData, config);
+                return chart;
             };
-            $.each(data, function(ix, value) {
-                configData.labels.push(labelCallback(value));
-                configData.datasets[0].data.push(value.TotalVolume);
-                configData.datasets[1].data.push(value.Count);
-            });
-            var config = {
-                responsive: true,
-                maintainAspectRatio: false,
-                multiTooltipTemplate: "<%=datasetLabel%>: <%= Math.round(value*100)/100 %><%if (datasetLabel=='Volume'){%>oz<%}%>"
-            };
 
-            var ctx = document.getElementById(element).getContext("2d");
-            var chart = new Chart(ctx).Line(configData, config);
-            return chart;
-        };
+            buildChart("byDay", dataByDay, function(val) { return moment(val.Date).format("ddd"); });
+            buildChart("byTime", dataByTime, function(val) { return moment(val.Date).format("h A"); });
+            buildChart("byDayAndTime", dataByDayAndTime, function(val) { return moment(val.Date).format("ddd h A"); });
+            buildChart("byDate", dataByDate, function(val) { return moment(val.Date).format("ddd M/D"); });
 
-        buildChart("byDay", dataByDay, function(val) { return moment(val.Date).format("ddd"); });
-        buildChart("byTime", dataByTime, function(val) { return moment(val.Date).format("h A"); });
-        buildChart("byDayAndTime", dataByDayAndTime, function(val) { return moment(val.Date).format("ddd h A"); });
-        buildChart("byDate", dataByDate, function(val) { return moment(val.Date).format("ddd M/D"); });
+            (function(element, data, labelCallback) {
+                var configData = {
+                    labels: [],
+                    datasets: []
+                };
+                var idToIx = {};
+                $.each(dataLastWeekBeers, function(ix, value) {
+                    idToIx[value.Beer.Id] = ix;
+                    configData.datasets.push({
+                        label: value.Beer.Name,
+                        fillColor: value.BeerStyle.Color,
+                        strokeColor: value.BeerStyle.Color,
+                        data: []
+                    });
+                });
 
-    });
-</script>
+                $.each(data, function(ix, value) {
+                    configData.labels.push(labelCallback(value));
+                    var pointValues = [];
+                    $.each(dataLastWeekBeers, function() {
+                        pointValues.push(0);
+                    });
+                    $.each(value.Beers, function(ix2, value2) {
+                        pointValues[idToIx[value2.BeerId]] += value2.Volume;
+                    });
+                    $.each(dataLastWeekBeers, function(ix2) {
+                        configData.datasets[ix2].data.push(pointValues[ix2]);
+                    });
+                });
+                var config = {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    multiTooltipTemplate: "<%=datasetLabel%>: <%= Math.round(value*100)/100 %> oz"
+                };
+
+                var ctx = document.getElementById(element).getContext("2d");
+                var chart = new Chart(ctx).Line(configData, config);
+                return chart;
+            })("byDayAndTimeAndBeer", dataByDayAndTimeAndBeer, function(val) { return moment(val.Date).format("ddd M/D"); });
+
+        });
+    </script>
 }

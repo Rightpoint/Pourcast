@@ -62,7 +62,7 @@ namespace RightpointLabs.Pourcast.Tests.Application.Orchestrators
         public void Test_GetKegsDurationOnTap_Method()
         {
             SetupRepos();
-            var orch = new AnalyticsOrchestrator(_kegRepository, _beerRepository, _storedEventRepository, null);
+            var orch = new AnalyticsOrchestrator(_kegRepository, _beerRepository, _storedEventRepository, null, null);
             var amtOf16OzPours = KegCapacity / 16;
             TimeSpan kegTimeSpan = startTime - startTime.AddMinutes(amtOf16OzPours);
 

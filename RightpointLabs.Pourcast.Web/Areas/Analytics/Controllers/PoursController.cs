@@ -41,10 +41,24 @@ namespace RightpointLabs.Pourcast.Web.Areas.Analytics.Controllers
                               TotalVolume = g.Sum(i => i.Volume),
                               Count = g.Count(),
                           }).ToList();
+            var byDate = (from p in pours
+                          let d = p.OccuredOn.ToLocalTime()
+                          group p by d.Date into g
+                          orderby g.Key
+                          select new PourAnalysis
+                          {
+                              Date = g.Key,
+                              TotalVolume = g.Sum(i => i.Volume),
+                              Count = g.Count()
+                          }).ToList();
+
             var lastWeekStart = DateTime.Today.AddDays(-7);
-            var byDayAndTime = (from p in pours
+            var lastWeekPours = (from p in pours
+                                 let d = p.OccuredOn.ToLocalTime()
+                                 where d >= lastWeekStart
+                                 select p).ToList();
+            var byDayAndTime = (from p in lastWeekPours
                                 let d = p.OccuredOn.ToLocalTime()
-                                where d >= lastWeekStart
                                 group p by new { d.DayOfWeek, d.Hour } into g
                                 orderby g.First().OccuredOn
                                 select new PourAnalysis
@@ -55,16 +69,19 @@ namespace RightpointLabs.Pourcast.Web.Areas.Analytics.Controllers
                                     TotalVolume = g.Sum(i => i.Volume),
                                     Count = g.Count()
                                 }).ToList();
-            var byDate = (from p in pours
-                                let d = p.OccuredOn.ToLocalTime()
-                                group p by d.Date into g
-                                orderby g.Key
-                                select new PourAnalysis
-                                {
-                                    Date = g.Key,
-                                    TotalVolume = g.Sum(i => i.Volume),
-                                    Count = g.Count()
-                                }).ToList();
+            var byDayAndTimeAndBeer = (from p in lastWeekPours
+                                       let d = p.OccuredOn.ToLocalTime()
+                                       group p by new { d.DayOfWeek, d.Hour, BeerId = p.Beer.Id } into g
+                                       group g by new { g.Key.DayOfWeek, g.Key.Hour } into g2
+                                       orderby g2.First().First().OccuredOn
+                                       select new BeerPourAnalysis
+                                       {
+                                           Date = g2.First().First().OccuredOn.ToLocalTime(),
+                                           Day = g2.Key.DayOfWeek,
+                                           Hour = g2.Key.Hour,
+                                           Beers = g2.Select(i => new BeerPourAnalysisItem { BeerId = i.Key.BeerId, Volume = i.Sum(ii => ii.Volume) })
+                                       }).ToList();
+            var lastWeekBeers = lastWeekPours.Select(i => new BeerInfo {Beer = i.Beer, BeerStyle = i.BeerStyle}).Distinct().OrderBy(i => i.Beer.Name).ToList();
 
             return View(new PoursIndexModel
             {
@@ -72,6 +89,8 @@ namespace RightpointLabs.Pourcast.Web.Areas.Analytics.Controllers
                 ByTime = byTime,
                 ByDayAndTime = byDayAndTime,
                 ByDate = byDate,
+                LastWeekBeers = lastWeekBeers,
+                ByDayAndTimeAndBeer = byDayAndTimeAndBeer,
             });
         }
     }
