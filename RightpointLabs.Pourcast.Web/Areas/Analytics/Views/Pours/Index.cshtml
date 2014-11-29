@@ -34,9 +34,7 @@
         var dataByDate = @Html.Raw(Json.Encode(Model.ByDate));
 
         var buildChart = function(element, data, labelCallback) {
-            var config = {
-                responsive: true,
-                maintainAspectRatio: false,
+            var configData = {
                 labels: [],
                 datasets: [
                     {
@@ -58,17 +56,18 @@
                 ]
             };
             $.each(data, function(ix, value) {
-                config.labels.push(labelCallback(value));
-                config.datasets[0].data.push(value.TotalVolume);
-                config.datasets[1].data.push(value.Count);
+                configData.labels.push(labelCallback(value));
+                configData.datasets[0].data.push(value.TotalVolume);
+                configData.datasets[1].data.push(value.Count);
             });
-
-            // quick hack to size the chart since width: 100% doesn't work...
-            var e = $("#" + element);
-            e.attr("width", e.parent().width());
+            var config = {
+                responsive: true,
+                maintainAspectRatio: false,
+                multiTooltipTemplate: "<%=datasetLabel%>: <%= Math.round(value*100)/100 %><%if (datasetLabel=='Volume'){%>oz<%}%>"
+            };
 
             var ctx = document.getElementById(element).getContext("2d");
-            var chart = new Chart(ctx).Line(config);
+            var chart = new Chart(ctx).Line(configData, config);
             return chart;
         };
 
