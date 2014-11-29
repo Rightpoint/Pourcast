@@ -63,6 +63,7 @@
     <Compile Include="Events\KegTapped.cs" />
     <Compile Include="Events\StoredEvent.cs" />
     <Compile Include="Events\TapCreated.cs" />
+    <Compile Include="Extensions.cs" />
     <Compile Include="Models\Entity.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Style.cs" />

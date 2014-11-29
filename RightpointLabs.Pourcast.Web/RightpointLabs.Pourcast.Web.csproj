@@ -492,6 +492,7 @@
     <Content Include="Areas\Analytics\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Analytics\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Analytics\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Analytics\Views\Pours\Index.cshtml" />
     <None Include="Properties\PublishProfiles\Production.pubxml" />
     <None Include="Scripts\libs\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\app\admin.js" />
@@ -616,7 +617,10 @@
     <Compile Include="Areas\Admin\Models\TapModel.cs" />
     <Compile Include="Areas\Analytics\AnalyticsAreaRegistration.cs" />
     <Compile Include="Areas\Analytics\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Analytics\Controllers\PoursController.cs" />
     <Compile Include="Areas\Analytics\Models\HomeIndexViewModel.cs" />
+    <Compile Include="Areas\Analytics\Models\PourAnalysis.cs" />
+    <Compile Include="Areas\Analytics\Models\PoursIndexModel.cs" />
     <Compile Include="Controllers\Api\BeerOnTapController.cs" />
     <Compile Include="Controllers\Api\BreweryController.cs" />
     <Compile Include="Controllers\Api\StatusController.cs" />

@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using RightpointLabs.Pourcast.Application.Orchestrators.Abstract;
 using RightpointLabs.Pourcast.Application.Payloads.Analytics;
+using RightpointLabs.Pourcast.Domain;
 using RightpointLabs.Pourcast.Domain.Events;
-using RightpointLabs.Pourcast.Domain.Models;
 using RightpointLabs.Pourcast.Domain.Repositories;
 
 namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
@@ -13,27 +13,30 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
     {
         private readonly IKegRepository _kegRepository;
         private readonly IBeerRepository _beerRepository;
-        private readonly IStoredEventRepository _storedEventRepository; 
+        private readonly IStoredEventRepository _storedEventRepository;
+        private readonly ITapRepository _tapRepository;
 
-        public AnalyticsOrchestrator(IKegRepository kegRepository, IBeerRepository beerRepository, IStoredEventRepository storedEventRepository)
+        public AnalyticsOrchestrator(IKegRepository kegRepository, IBeerRepository beerRepository, IStoredEventRepository storedEventRepository, ITapRepository tapRepository)
         {
-            if(null == kegRepository) throw new ArgumentNullException("kegRepository");
-            if(null == beerRepository) throw new ArgumentNullException("beerRepository");
-            if(null == storedEventRepository) throw new ArgumentNullException("storedEventRepository");
+            if (null == kegRepository) throw new ArgumentNullException("kegRepository");
+            if (null == beerRepository) throw new ArgumentNullException("beerRepository");
+            if (null == storedEventRepository) throw new ArgumentNullException("storedEventRepository");
+            if (tapRepository == null) throw new ArgumentNullException("tapRepository");
 
             _kegRepository = kegRepository;
             _beerRepository = beerRepository;
             _storedEventRepository = storedEventRepository;
+            _tapRepository = tapRepository;
         }
 
 
         public KegDurationOnTap GetKegsDurationOnTap(string kegId, int minuteInterval)
         {
             var keg = _kegRepository.GetById(kegId);
-            if(null == keg) throw new Exception(string.Format("Keg with Id: {0} does not exit", kegId));
+            if (null == keg) throw new Exception(string.Format("Keg with Id: {0} does not exit", kegId));
             var beer = _beerRepository.GetById(keg.BeerId);
             var pours =
-                _storedEventRepository.Find<PourStopped>(p => ((PourStopped) p.DomainEvent).KegId == kegId)
+                _storedEventRepository.Find<PourStopped>(p => ((PourStopped)p.DomainEvent).KegId == kegId)
                     .OrderBy(d => d.OccuredOn).ToList();
 
             var burndowns = new List<Burndown>();
@@ -57,7 +60,7 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
                         break;
                     }
                     last = e2;
-                    totalVol += ((PourStopped) e2.DomainEvent).Volume;
+                    totalVol += ((PourStopped)e2.DomainEvent).Volume;
                     i = x;
                 }
                 totalPours += totalVol;
@@ -92,11 +95,11 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
             //    let stop = pourStoppedEvents.Where(d => grp.Select(k => k.Id).Contains(((PourStarted)d.DomainEvent).KegId)).Max(d => d.OccuredOn)
             //    select new BeerBeenOnTap(grp.Key, beerName, kegIds, start, stop)).ToList();
 
-            return (from @group in kegs 
-                    let beerName = beers.FirstOrDefault(b => b.Id == @group.Key).Name 
-                    let kegIds = @group.Select(k => k.Id).ToArray() 
-                    let startEvents = pourStartEvents.Where(d => kegIds.Contains(((PourStarted) d.DomainEvent).KegId)).ToList() 
-                    let stopEvents = pourStoppedEvents.Where(d => kegIds.Contains(((PourStopped) d.DomainEvent).KegId)).ToList() 
+            return (from @group in kegs
+                    let beerName = beers.FirstOrDefault(b => b.Id == @group.Key).Name
+                    let kegIds = @group.Select(k => k.Id).ToArray()
+                    let startEvents = pourStartEvents.Where(d => kegIds.Contains(((PourStarted)d.DomainEvent).KegId)).ToList()
+                    let stopEvents = pourStoppedEvents.Where(d => kegIds.Contains(((PourStopped)d.DomainEvent).KegId)).ToList()
                     where startEvents.Any() && stopEvents.Any()
                     select new BeerBeenOnTap(@group.Key, beerName, kegIds, startEvents.Min(d => d.OccuredOn), stopEvents.Max(d => d.OccuredOn))
                     ).ToList();
@@ -105,6 +108,38 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
         public IEnumerable<BeerBeenOnTap> GetBeersThatHaveBeenOnTap(DateTime beginDate, DateTime endDate)
         {
             throw new NotImplementedException();
+        }
+
+        public IEnumerable<Pour> GetRealPoursSince(DateTime beginDate)
+        {
+            return GetPours(_storedEventRepository.Find<PourStopped>(i => i.OccuredOn >= beginDate && ((PourStopped)i.DomainEvent).Volume > 0.01 && ((PourStopped)i.DomainEvent).Volume < 100));
+        }
+
+        public IEnumerable<Pour> GetPhantomPoursSince(DateTime beginDate)
+        {
+            return GetPours(_storedEventRepository.Find<PourStopped>(i => i.OccuredOn >= beginDate && ((PourStopped)i.DomainEvent).Volume <= 0.01 && ((PourStopped)i.DomainEvent).Volume >= 100));
+        }
+
+        private IEnumerable<Pour> GetPours(IEnumerable<StoredEvent> events)
+        {
+            var taps = _tapRepository.GetAll().ToDictionary(i => i.Id);
+            var kegs = _kegRepository.GetAll().ToDictionary(i => i.Id);
+            var beers = _beerRepository.GetAll().ToDictionary(i => i.Id);
+
+            return (from evt in events
+                    let p = (PourStopped)evt.DomainEvent
+                    let t = taps.TryGetValue(p.TapId)
+                    let k = kegs.TryGetValue(p.KegId)
+                    let b = k.ChainIfNotNull(i => beers.TryGetValue(i.BeerId))
+                    select new Pour
+                    {
+                        OccuredOn = evt.OccuredOn,
+                        Tap = t,
+                        Keg = k,
+                        Beer = b,
+                        PercentRemaining = p.PercentRemaining,
+                        Volume = p.Volume
+                    }).ToList();
         }
     }
 }

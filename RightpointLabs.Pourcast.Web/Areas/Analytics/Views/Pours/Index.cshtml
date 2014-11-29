@@ -1,0 +1,82 @@
+﻿@model RightpointLabs.Pourcast.Web.Areas.Analytics.Models.PoursIndexModel
+
+@{
+    ViewBag.Title = "Pours Analytics";
+}
+<h2>Pour Analytics over the past 28 days</h2>
+
+<div class="row">
+    <div class="col-lg-6">
+        <h3>By Day of week</h3>
+        <canvas id="byDay" height="500"></canvas>
+    </div>
+    <div class="col-lg-6">
+        <h3>By Hour</h3>
+        <canvas id="byTime" height="500"></canvas>
+    </div>
+    <div class="col-lg-12">
+        <h3>By Day</h3>
+        <canvas id="byDate" height="500"></canvas>
+    </div>
+    <div class="col-lg-12">
+        <h3>Last Week By Hour</h3>
+        <canvas id="byDayAndTime" height="500"></canvas>
+    </div>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+    $(function() {
+        var dataByDay = @Html.Raw(Json.Encode(Model.ByDay));
+        var dataByTime = @Html.Raw(Json.Encode(Model.ByTime));
+        var dataByDayAndTime = @Html.Raw(Json.Encode(Model.ByDayAndTime));
+        var dataByDate = @Html.Raw(Json.Encode(Model.ByDate));
+
+        var buildChart = function(element, data, labelCallback) {
+            var config = {
+                responsive: true,
+                maintainAspectRatio: false,
+                labels: [],
+                datasets: [
+                    {
+                        label: "Volume",
+                        fillColor: "rgba(228,80,45,0.5)",
+                        strokeColor: "rgba(228,80,45,0.8)",
+                        highlightFill: "rgba(228,80,45,0.75)",
+                        highlightStroke: "rgba(228,80,45,1)",
+                        data: []
+                    },
+                    {
+                        label: "Count",
+                        fillColor: "rgba(220,220,220,0.5)",
+                        strokeColor: "rgba(220,220,220,0.8)",
+                        highlightFill: "rgba(220,220,220,0.75)",
+                        highlightStroke: "rgba(220,220,220,1)",
+                        data: []
+                    }
+                ]
+            };
+            $.each(data, function(ix, value) {
+                config.labels.push(labelCallback(value));
+                config.datasets[0].data.push(value.TotalVolume);
+                config.datasets[1].data.push(value.Count);
+            });
+
+            // quick hack to size the chart since width: 100% doesn't work...
+            var e = $("#" + element);
+            e.attr("width", e.parent().width());
+
+            var ctx = document.getElementById(element).getContext("2d");
+            var chart = new Chart(ctx).Line(config);
+            return chart;
+        };
+
+        buildChart("byDay", dataByDay, function(val) { return moment(val.Date).format("ddd"); });
+        buildChart("byTime", dataByTime, function(val) { return moment(val.Date).format("h A"); });
+        buildChart("byDayAndTime", dataByDayAndTime, function(val) { return moment(val.Date).format("ddd h A"); });
+        buildChart("byDate", dataByDate, function(val) { return moment(val.Date).format("ddd M/D"); });
+
+    });
+</script>
+}
