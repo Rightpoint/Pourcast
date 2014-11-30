@@ -620,7 +620,6 @@
     <Compile Include="Areas\Analytics\Controllers\PoursController.cs" />
     <Compile Include="Areas\Analytics\Models\BeerInfo.cs" />
     <Compile Include="Areas\Analytics\Models\BeerPourAnalysis.cs" />
-    <Compile Include="Areas\Analytics\Models\BeerPourAnalysisItem.cs" />
     <Compile Include="Areas\Analytics\Models\HomeIndexViewModel.cs" />
     <Compile Include="Areas\Analytics\Models\PourAnalysis.cs" />
     <Compile Include="Areas\Analytics\Models\PoursIndexModel.cs" />

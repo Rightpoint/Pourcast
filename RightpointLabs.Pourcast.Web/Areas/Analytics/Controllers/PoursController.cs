@@ -79,9 +79,9 @@ namespace RightpointLabs.Pourcast.Web.Areas.Analytics.Controllers
                                            Date = g2.First().First().OccuredOn.ToLocalTime(),
                                            Day = g2.Key.DayOfWeek,
                                            Hour = g2.Key.Hour,
-                                           Beers = g2.Select(i => new BeerPourAnalysisItem { BeerId = i.Key.BeerId, Volume = i.Sum(ii => ii.Volume) })
+                                           Beers = g2.ToDictionary(i => i.Key.BeerId, i => i.Sum(ii => ii.Volume)),
                                        }).ToList();
-            var lastWeekBeers = lastWeekPours.Select(i => new BeerInfo {Beer = i.Beer, BeerStyle = i.BeerStyle}).Distinct().OrderBy(i => i.Beer.Name).ToList();
+            var lastWeekBeers = lastWeekPours.GroupBy(i => i.Beer.Id).Distinct().Select(i => new BeerInfo {Beer = i.First().Beer, BeerStyle = i.First().BeerStyle}).OrderBy(i => i.Beer.Name).ToList();
 
             return View(new PoursIndexModel
             {

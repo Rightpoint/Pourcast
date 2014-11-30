@@ -8,6 +8,6 @@ namespace RightpointLabs.Pourcast.Web.Areas.Analytics.Models
         public DateTime Date { get; set; }
         public DayOfWeek Day { get; set; }
         public int Hour { get; set; }
-        public IEnumerable<BeerPourAnalysisItem> Beers { get; set; }
+        public Dictionary<string, double> Beers { get; set; }
     }
 }
