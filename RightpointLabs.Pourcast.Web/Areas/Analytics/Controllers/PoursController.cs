@@ -51,6 +51,16 @@ namespace RightpointLabs.Pourcast.Web.Areas.Analytics.Controllers
                               TotalVolume = g.Sum(i => i.Volume),
                               Count = g.Count()
                           }).ToList();
+            var byDateAndBeer = (from p in pours
+                                       let d = p.OccuredOn.ToLocalTime()
+                                       group p by new { d.Date, BeerId = p.Beer.Id } into g
+                                       group g by g.Key.Date into g2
+                                       orderby g2.First().First().OccuredOn
+                                       select new BeerPourAnalysis
+                                       {
+                                           Date = g2.Key,
+                                           Beers = g2.ToDictionary(i => i.Key.BeerId, i => i.Sum(ii => ii.Volume)),
+                                       }).ToList();
 
             var lastWeekStart = DateTime.Today.AddDays(-7);
             var lastWeekPours = (from p in pours
@@ -81,7 +91,8 @@ namespace RightpointLabs.Pourcast.Web.Areas.Analytics.Controllers
                                            Hour = g2.Key.Hour,
                                            Beers = g2.ToDictionary(i => i.Key.BeerId, i => i.Sum(ii => ii.Volume)),
                                        }).ToList();
-            var lastWeekBeers = lastWeekPours.GroupBy(i => i.Beer.Id).Distinct().Select(i => new BeerInfo {Beer = i.First().Beer, BeerStyle = i.First().BeerStyle}).OrderBy(i => i.Beer.Name).ToList();
+            var lastWeekBeers = lastWeekPours.GroupBy(i => i.Beer.Id).Distinct().Select(i => new BeerInfo { Beer = i.First().Beer, BeerStyle = i.First().BeerStyle }).OrderBy(i => i.Beer.Name).ToList();
+            var beers = pours.GroupBy(i => i.Beer.Id).Distinct().Select(i => new BeerInfo { Beer = i.First().Beer, BeerStyle = i.First().BeerStyle }).OrderBy(i => i.Beer.Name).ToList();
 
             return View(new PoursIndexModel
             {
@@ -91,6 +102,8 @@ namespace RightpointLabs.Pourcast.Web.Areas.Analytics.Controllers
                 ByDate = byDate,
                 LastWeekBeers = lastWeekBeers,
                 ByDayAndTimeAndBeer = byDayAndTimeAndBeer,
+                Beers = beers,
+                ByDateAndBeer = byDateAndBeer,
             });
         }
     }
