@@ -88,7 +88,7 @@ namespace RightpointLabs.Pourcast.Web
             container.RegisterType<IMessagePoster, YammerMessagePoster>(new ContainerControlledLifetimeManager(),
                 new InjectionConstructor(
                     ConfigurationManager.AppSettings["YammerApiCode"],
-                    int.Parse(ConfigurationManager.AppSettings["YammerGroupId"])));
+                    int.Parse(ConfigurationManager.AppSettings["YammerGroupId"] ?? "0")));
 
             // StateTracker
             container.RegisterType<StateTracker>(new ContainerControlledLifetimeManager());
