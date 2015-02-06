@@ -20,9 +20,16 @@ namespace RightpointLabs.Pourcast.Application.EventHandlers
     {
         private static log4net.ILog log = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
+        public StateTracker(IMessagePoster messagePoster)
+        {
+            _messagePoster = messagePoster;
+        }
+
+        private readonly IMessagePoster _messagePoster;
         private object _lockObject = new object();
         private DateTime? _lastPour = null;
         private double? _biggestPour = null;
+        private int? _todaysMessage = null;
         private DateTime? _lastPictureTakenTime = null;
         private PictureTaken _lastPictureTaken = null;
         private List<CancellationTokenSource> _stoppedWaitSources = new List<CancellationTokenSource>();
@@ -58,14 +65,29 @@ namespace RightpointLabs.Pourcast.Application.EventHandlers
                 {
                     log.DebugFormat("State: LP: {0}, BP: {1}, LPTT: {2}", _lastPour, _biggestPour, _lastPictureTakenTime);
 
-                    Func<PictureTaken, MailMessage> buildMessage = null;
+                    Action<PictureTaken> buildMessage = null;
 
-                    if (_lastPour.HasValue && _lastPour.Value.Date == now.Date)
+                    if (_lastPour.HasValue && _lastPour.Value.Date == now.Date && _todaysMessage.HasValue)
                     {
-                        if (!_biggestPour.HasValue || _biggestPour.Value < domainEvent.Volume)
+                        if (!_biggestPour.HasValue || _biggestPour.Value + 1 < domainEvent.Volume)
                         {
                             // biggest pour...
-                            log.InfoFormat("This is a bigger pour - we should say something about it or something");
+                            buildMessage = pt =>
+                            {
+                                var msg = string.Format("Biggest pour of the day!  A solid {0:0.0}oz!", domainEvent.Volume);
+                                string contentType = null;
+                                string filename = null;
+                                byte[] filedata = null;
+
+                                if (null != pt)
+                                {
+                                    filedata = GetDataFromUrl(pt.DataUrl, out contentType);
+                                    filename = "image.jpg";
+                                }
+
+                                _messagePoster.PostReply(_todaysMessage.Value, msg, filename, contentType, filedata);
+                            };
+                            _biggestPour = domainEvent.Volume;
                         }
                     }
                     else
@@ -73,24 +95,23 @@ namespace RightpointLabs.Pourcast.Application.EventHandlers
                         // first pour
                         buildMessage = pt =>
                         {
-                            var msg = new MailMessage();
-                            msg.Subject = "First pour of the day!";
-                            msg.Body = "Open season on the keg";
+                            var msg = string.Format("First pour of the day!  A solid {0:0.0}oz!", domainEvent.Volume);
+                            string contentType = null;
+                            string filename = null;
+                            byte[] filedata = null;
 
                             if (null != pt)
                             {
-                                string contentType;
-                                byte[] data = GetDataFromUrl(pt.DataUrl, out contentType);
-
-                                msg.Attachments.Add(new Attachment(new MemoryStream(data), new ContentType(contentType)));
+                                filedata = GetDataFromUrl(pt.DataUrl, out contentType);
+                                filename = "image.jpg";
                             }
 
-                            return msg;
+                            _todaysMessage = _messagePoster.PostNewMessage(msg, filename, contentType, filedata);
                         };
+                        _biggestPour = domainEvent.Volume;
                     }
 
                     _lastPour = now;
-                    _biggestPour = domainEvent.Volume;
 
                     log.DebugFormat("Has Message? {0}", buildMessage != null);
                     if (null == buildMessage)
@@ -103,10 +124,7 @@ namespace RightpointLabs.Pourcast.Application.EventHandlers
                         {
                             log.DebugFormat("Sending message sync");
                             // only use a current picture
-                            var msg = buildMessage(_lastPictureTaken);
-                            msg.To.Add("jrupp@rightpoint.com");
-                            msg.From = new MailAddress("pourcast@rightpoint.com");
-                            new SmtpClient().Send(msg);
+                            buildMessage(_lastPictureTaken);
                             return;
                         }
                     }
@@ -117,10 +135,7 @@ namespace RightpointLabs.Pourcast.Application.EventHandlers
                     toWaitFor = Task.Delay(TimeSpan.FromSeconds(10), cts.Token).ContinueWith(i =>
                     {
                         log.DebugFormat("Sending message async");
-                        var msg = buildMessage(_lastPictureTaken);
-                        msg.To.Add("jrupp@rightpoint.com");
-                        msg.From = new MailAddress("pourcast@rightpoint.com");
-                        new SmtpClient().Send(msg);
+                        buildMessage(_lastPictureTaken);
                     });
                 }
 

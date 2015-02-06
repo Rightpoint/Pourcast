@@ -1,3 +1,4 @@
+using System.Configuration;
 using Microsoft.Practices.Unity;
 
 namespace RightpointLabs.Pourcast.Web
@@ -84,6 +85,10 @@ namespace RightpointLabs.Pourcast.Web
             // domain services
             container.RegisterType<IEmailService, SmtpEmailService>(new PerRequestLifetimeManager());
             container.RegisterType<IDateTimeProvider, CurrentDateTimeProvider>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IMessagePoster, YammerMessagePoster>(new ContainerControlledLifetimeManager(),
+                new InjectionConstructor(
+                    ConfigurationManager.AppSettings["YammerApiCode"],
+                    int.Parse(ConfigurationManager.AppSettings["YammerGroupId"])));
 
             // StateTracker
             container.RegisterType<StateTracker>(new ContainerControlledLifetimeManager());

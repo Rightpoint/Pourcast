@@ -88,6 +88,7 @@
     <Compile Include="Repositories\IUserRepository.cs" />
     <Compile Include="Services\IDateTimeProvider.cs" />
     <Compile Include="Services\IEmailService.cs" />
+    <Compile Include="Services\IMessagePoster.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
