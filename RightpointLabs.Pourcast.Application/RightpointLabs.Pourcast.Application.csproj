@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net">
+      <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.Unity">
       <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.dll</HintPath>
     </Reference>
@@ -62,6 +65,7 @@
     <Compile Include="EventHandlers\EventStoreHandler.cs" />
     <Compile Include="EventHandlers\KegEmptiedNotificationHandler.cs" />
     <Compile Include="EventHandlers\KegNearingEmptyNotificationHandler.cs" />
+    <Compile Include="EventHandlers\StateTracker.cs" />
     <Compile Include="Orchestrators\Abstract\BaseOrchestrator.cs" />
     <Compile Include="Orchestrators\Abstract\IAnalyticsOrchestrator.cs" />
     <Compile Include="Orchestrators\Abstract\IBeerOrchestrator.cs" />

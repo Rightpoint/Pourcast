@@ -1,4 +1,5 @@
-﻿using System.Web.Http;
+﻿using System;
+using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Optimization;
@@ -13,6 +14,8 @@ namespace RightpointLabs.Pourcast.Web
     {
         protected void Application_Start()
         {
+            InitLogging();
+
             AreaRegistration.RegisterAllAreas();
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
@@ -23,6 +26,16 @@ namespace RightpointLabs.Pourcast.Web
             var settings = jsonFormatter.SerializerSettings;
             settings.Formatting = Formatting.Indented;
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+        }
+
+        private void InitLogging()
+        {
+            // initialize log4net
+            var file = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log4net.config");
+            if (System.IO.File.Exists(file))
+            {
+                log4net.Config.XmlConfigurator.ConfigureAndWatch(new System.IO.FileInfo(file));
+            }
         }
     }
 }

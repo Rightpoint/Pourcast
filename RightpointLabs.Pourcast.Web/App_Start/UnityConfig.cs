@@ -85,6 +85,11 @@ namespace RightpointLabs.Pourcast.Web
             container.RegisterType<IEmailService, SmtpEmailService>(new PerRequestLifetimeManager());
             container.RegisterType<IDateTimeProvider, CurrentDateTimeProvider>(new ContainerControlledLifetimeManager());
 
+            // StateTracker
+            container.RegisterType<StateTracker>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IEventHandler<PictureTaken>, StateTracker.StateTrackerEventHandler>("StateTrackerEventHandler_PictureTaken", new PerRequestLifetimeManager());
+            container.RegisterType<IEventHandler<PourStopped>, StateTracker.StateTrackerEventHandler>("StateTrackerEventHandler_PourStopped", new PerRequestLifetimeManager());
+
             // event handlers (must be named!)
             container.RegisterType(typeof(IEventHandler<>), typeof(EventStoreHandler<>), "EventStore", new PerRequestLifetimeManager());
             container.RegisterType<IEventHandler<PourStopped>, KegNearingEmptyNotificationHandler>("KegNearingEmptyNotification", new PerRequestLifetimeManager());
