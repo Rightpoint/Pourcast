@@ -453,6 +453,7 @@
     <Content Include="Scripts\app\componentResolver.js" />
     <Content Include="Scripts\app\components\yosemite-face\yosemite_face.png" />
     <Content Include="Scripts\app\components\zorro-hat\zorro_hat.png" />
+    <Content Include="Scripts\app\camera.js" />
     <Content Include="Scripts\app\dataService.js" />
     <Content Include="Scripts\app\components\hat\template.html" />
     <Content Include="Scripts\app\components\hat\viewModel.js" />

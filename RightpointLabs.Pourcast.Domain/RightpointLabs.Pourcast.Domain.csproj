@@ -49,6 +49,7 @@
     <Compile Include="Events\DomainEvent.cs" />
     <Compile Include="Events\LogMessage.cs" />
     <Compile Include="Events\Heartbeat.cs" />
+    <Compile Include="Events\PictureTaken.cs" />
     <Compile Include="Events\Pouring.cs" />
     <Compile Include="Events\KegRemainingChanged.cs" />
     <Compile Include="Events\PourStopped.cs" />

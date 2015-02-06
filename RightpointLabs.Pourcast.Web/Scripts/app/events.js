@@ -32,6 +32,9 @@
             subscribers[event].forEach(function(callback) {
                 callback(args);
             });
+        },
+        send: function (event, args) {
+            $.connection.eventsHub.server[event].apply($.connection.eventsHub.server, args);
         }
     };
 

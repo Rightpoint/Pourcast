@@ -15,7 +15,7 @@
     }
 });
 
-requirejs(['ko', 'app/bindings', 'app/componentResolver', 'app/dataService'], function (ko, bindings, ComponentResolver, dataService) {
+requirejs(['ko', 'app/bindings', 'app/componentResolver', 'app/dataService', 'app/camera'], function (ko, bindings, ComponentResolver, dataService) {
     bindings.init();
 
     var resolver = new ComponentResolver();
