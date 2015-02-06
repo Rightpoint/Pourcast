@@ -57,8 +57,9 @@ namespace RightpointLabs.Pourcast.Application.EventHandlers
                 if (domainEvent.Volume < 2)
                     return;
                 var now = DateTime.Now;
-                //if (now.TimeOfDay < TimeSpan.FromHours(14))
-                //    return;
+                // wait until 2PM :)
+                if (now.TimeOfDay < TimeSpan.FromHours(14))
+                    return;
 
                 Task toWaitFor;
                 lock (_lockObject)
