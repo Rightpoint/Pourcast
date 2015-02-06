@@ -82,12 +82,12 @@
         //self.resolver.register('zappa-face', 'face');
 
         // flanders
-        self.resolver.register('flanders-keg-body', 'kegBody');
-        self.resolver.register('flanders-face', 'face');
+        //self.resolver.register('flanders-keg-body', 'kegBody');
+        //self.resolver.register('flanders-face', 'face');
 
         // hogan
-        self.resolver.register('hogan-keg-body', 'kegBody');
-        self.resolver.register('hogan-face', 'face');
+        //self.resolver.register('hogan-keg-body', 'kegBody');
+        //self.resolver.register('hogan-face', 'face');
     };
 
     return {
