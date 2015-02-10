@@ -35,6 +35,9 @@ namespace RightpointLabs.Pourcast.Application.EventHandlers
 
         private void Handle(PictureTaken domainEvent)
         {
+            if (string.IsNullOrEmpty(domainEvent.TapId))
+                return;
+
             lock (_lockObject)
             {
                 var tpl = new Tuple<DateTime, PictureTaken>(DateTime.UtcNow, domainEvent);
