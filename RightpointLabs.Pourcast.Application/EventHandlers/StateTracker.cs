@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Mime;
 using System.Reflection;
+using System.Resources;
 using System.Text.RegularExpressions;
 using System.IO;
 using System.Linq;
@@ -12,6 +13,8 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using RightpointLabs.Pourcast.Domain.Events;
+using RightpointLabs.Pourcast.Domain.Models;
+using RightpointLabs.Pourcast.Domain.Repositories;
 using RightpointLabs.Pourcast.Domain.Services;
 
 namespace RightpointLabs.Pourcast.Application.EventHandlers
@@ -27,29 +30,25 @@ namespace RightpointLabs.Pourcast.Application.EventHandlers
 
         private readonly IMessagePoster _messagePoster;
         private object _lockObject = new object();
-        private DateTime? _lastPour = null;
-        private double? _biggestPour = null;
-        private int? _todaysMessage = null;
-        private DateTime? _lastPictureTakenTime = null;
-        private PictureTaken _lastPictureTaken = null;
+        private Dictionary<string, Tuple<DateTime, PictureTaken>> _lastPicturesTaken = new Dictionary<string, Tuple<DateTime, PictureTaken>>();
         private List<CancellationTokenSource> _stoppedWaitSources = new List<CancellationTokenSource>();
 
         private void Handle(PictureTaken domainEvent)
         {
             lock (_lockObject)
             {
-                _lastPictureTakenTime = DateTime.UtcNow;
-                _lastPictureTaken = domainEvent;
+                var tpl = new Tuple<DateTime, PictureTaken>(DateTime.UtcNow, domainEvent);
+                _lastPicturesTaken[domainEvent.TapId] = tpl;
                 _stoppedWaitSources.ForEach(i => i.Cancel());
 
-                log.DebugFormat("Handled PictureTaken @ {0} ({1} characters), cancelling {2} waits", _lastPictureTakenTime.Value.ToLocalTime(), domainEvent.DataUrl.Length, _stoppedWaitSources.Count);
+                log.DebugFormat("Handled PictureTaken @ {0} ({1} characters), cancelling {2} waits", tpl.Item1.ToLocalTime(), domainEvent.DataUrl.Length, _stoppedWaitSources.Count);
                 
                 _stoppedWaitSources = new List<CancellationTokenSource>();
             }
         }
 
 
-        private void Handle(PourStopped domainEvent)
+        private void Handle(PourStopped domainEvent, ITapNotificationStateRepository stateRepository, Keg keg, Beer beer)
         {
             try
             {
@@ -64,18 +63,30 @@ namespace RightpointLabs.Pourcast.Application.EventHandlers
                 Task toWaitFor;
                 lock (_lockObject)
                 {
-                    log.DebugFormat("State: LP: {0}, BP: {1}, LPTT: {2}", _lastPour, _biggestPour, _lastPictureTakenTime);
+                    var state = stateRepository.GetByTapId(domainEvent.TapId);
+                    if (null == state)
+                    {
+                        state = new TapNotificationState(string.Empty) { TapId = domainEvent.TapId, Today = DateTime.Today };
+                        stateRepository.Add(state);
+                    }
+
+                    Tuple<DateTime, PictureTaken> lpt = null;
+                    _lastPicturesTaken.TryGetValue(domainEvent.TapId, out lpt);
+
+                    log.DebugFormat("State: LP: {0}, BP: {1}, LPTT: {2}", state.Today, state.TodaysBiggestPour, lpt == null ? null : (DateTime?)lpt.Item1);
 
                     Action<PictureTaken> buildMessage = null;
 
-                    if (_lastPour.HasValue && _lastPour.Value.Date == now.Date && _todaysMessage.HasValue)
+                    var beerName = beer == null ? "an unknown beer" : beer.Name;
+
+                    if (state.Today.Date == now.Date && state.TodaysNotificationThreadId.HasValue && state.KegId == domainEvent.KegId)
                     {
-                        if (!_biggestPour.HasValue || _biggestPour.Value + 1 < domainEvent.Volume)
+                        if (!state.TodaysBiggestPour.HasValue || state.TodaysBiggestPour.Value + 1 < domainEvent.Volume)
                         {
                             // biggest pour...
                             buildMessage = pt =>
                             {
-                                var msg = string.Format("Biggest pour of the day!  A solid {0:0.0}oz!", domainEvent.Volume);
+                                var msg = string.Format("Biggest pour of {0} for the day!  A solid {1:0.0}oz!", beerName, domainEvent.Volume);
                                 string contentType = null;
                                 string filename = null;
                                 byte[] filedata = null;
@@ -86,17 +97,21 @@ namespace RightpointLabs.Pourcast.Application.EventHandlers
                                     filename = "image.jpg";
                                 }
 
-                                _messagePoster.PostReply(_todaysMessage.Value, msg, filename, contentType, filedata);
+                                _messagePoster.PostReply(state.TodaysNotificationThreadId.Value, msg, filename, contentType, filedata);
                             };
-                            _biggestPour = domainEvent.Volume;
+                            state.TodaysBiggestPour = domainEvent.Volume;
+                            stateRepository.Update(state);
                         }
                     }
                     else
                     {
+                        state.Today = now.Date;
+                        state.KegId = domainEvent.KegId;
+
                         // first pour
                         buildMessage = pt =>
                         {
-                            var msg = string.Format("First pour of the day!  A solid {0:0.0}oz!", domainEvent.Volume);
+                            var msg = string.Format("First pour of the day of {0}!  A solid {1:0.0}oz!", beerName, domainEvent.Volume);
                             string contentType = null;
                             string filename = null;
                             byte[] filedata = null;
@@ -107,25 +122,29 @@ namespace RightpointLabs.Pourcast.Application.EventHandlers
                                 filename = "image.jpg";
                             }
 
-                            _todaysMessage = _messagePoster.PostNewMessage(msg, filename, contentType, filedata);
+                            var newState = stateRepository.GetByTapId(domainEvent.TapId);
+                            if (null != newState)
+                            {
+                                newState.TodaysNotificationThreadId = _messagePoster.PostNewMessage(msg, filename, contentType, filedata);
+                                stateRepository.Update(newState);
+                            }
                         };
-                        _biggestPour = domainEvent.Volume;
+                        state.TodaysBiggestPour = domainEvent.Volume;
+                        stateRepository.Update(state);
                     }
-
-                    _lastPour = now;
 
                     log.DebugFormat("Has Message? {0}", buildMessage != null);
                     if (null == buildMessage)
                         return;
 
-                    if (_lastPictureTakenTime.HasValue && null != _lastPictureTaken)
+                    if (null != lpt)
                     {
-                        var age = DateTime.UtcNow.Subtract(_lastPictureTakenTime.Value);
+                        var age = DateTime.UtcNow.Subtract(lpt.Item1);
                         if (age < TimeSpan.FromSeconds(30))
                         {
                             log.DebugFormat("Sending message sync");
                             // only use a current picture
-                            buildMessage(_lastPictureTaken);
+                            buildMessage(lpt.Item2);
                             return;
                         }
                     }
@@ -136,7 +155,8 @@ namespace RightpointLabs.Pourcast.Application.EventHandlers
                     toWaitFor = Task.Delay(TimeSpan.FromSeconds(10), cts.Token).ContinueWith(i =>
                     {
                         log.DebugFormat("Sending message async");
-                        buildMessage(_lastPictureTaken);
+                        _lastPicturesTaken.TryGetValue(domainEvent.TapId, out lpt);
+                        buildMessage(null == lpt ? null : lpt.Item2);
                     });
                 }
 
@@ -164,10 +184,16 @@ namespace RightpointLabs.Pourcast.Application.EventHandlers
         public class StateTrackerEventHandler : IEventHandler<PictureTaken>, IEventHandler<PourStopped>
         {
             private readonly StateTracker _tracker;
+            private readonly ITapNotificationStateRepository _tapNotificationStateRepository;
+            private readonly IKegRepository _kegRepository;
+            private readonly IBeerRepository _beerRepository;
 
-            public StateTrackerEventHandler(StateTracker tracker)
+            public StateTrackerEventHandler(StateTracker tracker, ITapNotificationStateRepository tapNotificationStateRepository, IKegRepository kegRepository, IBeerRepository beerRepository)
             {
                 _tracker = tracker;
+                _tapNotificationStateRepository = tapNotificationStateRepository;
+                _kegRepository = kegRepository;
+                _beerRepository = beerRepository;
             }
 
             public void Handle(PictureTaken domainEvent)
@@ -177,7 +203,10 @@ namespace RightpointLabs.Pourcast.Application.EventHandlers
 
             public void Handle(PourStopped domainEvent)
             {
-                _tracker.Handle(domainEvent);
+                var keg = _kegRepository.GetById(domainEvent.KegId);
+                var beer = null == keg ? null : _beerRepository.GetById(keg.BeerId);
+
+                _tracker.Handle(domainEvent, _tapNotificationStateRepository, keg, beer);
             }
         }
     }

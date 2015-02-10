@@ -64,6 +64,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Persistence\Collections\TapNotificationStateDefinition.cs" />
     <Compile Include="Persistence\Collections\BeerCollectionDefinition.cs" />
     <Compile Include="Persistence\Collections\BreweryCollectionDefinition.cs" />
     <Compile Include="Persistence\Collections\EntityCollectionDefinition.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="Persistence\Collections\UserCollectionDefinition.cs" />
     <Compile Include="Persistence\IMongoConnectionHandler.cs" />
     <Compile Include="Persistence\MongoConnectionHandler.cs" />
+    <Compile Include="Persistence\Repositories\TapNotificationStateRepository.cs" />
     <Compile Include="Persistence\Repositories\BeerRepository.cs" />
     <Compile Include="Persistence\Repositories\BreweryRepository.cs" />
     <Compile Include="Persistence\Repositories\EntityRepository.cs" />

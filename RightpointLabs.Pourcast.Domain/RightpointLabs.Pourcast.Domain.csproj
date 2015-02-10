@@ -69,10 +69,12 @@
     <Compile Include="Events\TapCreated.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Models\Entity.cs" />
+    <Compile Include="Models\TapNotificationState.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Style.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\ValueObject.cs" />
+    <Compile Include="Repositories\ITapNotificationStateRepository.cs" />
     <Compile Include="Repositories\IBeerRepository.cs" />
     <Compile Include="Repositories\IBreweryRepository.cs" />
     <Compile Include="Repositories\IRoleRepository.cs" />
