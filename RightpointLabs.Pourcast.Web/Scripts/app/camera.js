@@ -103,7 +103,8 @@
         });
     };
 
-
+    // test out the camera when launching the app
+    takePicture(null);
     events.on("PourStarted", function (e) {
         takePicture(e.TapId);
     });
