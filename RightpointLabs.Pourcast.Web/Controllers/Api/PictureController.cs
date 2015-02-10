@@ -10,9 +10,9 @@ namespace RightpointLabs.Pourcast.Web.Controllers.Api
     [System.Web.Http.RoutePrefix("api/picture")]
     public class PictureController : ApiController
     {
-        public void Taken([FromBody] string dataUrl)
+        public void Taken(string tapId, [FromBody] string dataUrl)
         {
-            DomainEvents.Raise(new PictureTaken() { DataUrl = dataUrl });
+            DomainEvents.Raise(new PictureTaken() { TapId = tapId, DataUrl = dataUrl });
         }
     }
 }
