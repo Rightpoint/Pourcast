@@ -12,13 +12,6 @@
         });
         return d.promise();
     }
-    function delay(ms, value) {
-        var d = $.Deferred();
-        setTimeout(function() {
-            d.resolve(value);
-        }, ms);
-        return d.promise();
-    }
     function setupVideo(stream) {
         var v = document.createElement("video");
         $(v).css({ 'z-index': -9999, opacity: 0, position: 'absolute', top: '-9999px', left: '-9999px' });
@@ -26,6 +19,34 @@
         v.src = URL.createObjectURL(stream);
         v.play();
         return v;
+    }
+    function waitForVideoReady(v, retVal, ms, iter) {
+        if (!ms) ms = 100;
+        if (!iter) iter = 20;
+
+        var d = $.Deferred();
+
+        if (v.clientHeight > 150) {
+            d.resolve(retVal);
+        } else {
+            var interval = setInterval(function () {
+                if (v.clientHeight > 150) {
+                    console.log("Found with " + iter + " left");
+                    clearInterval(interval);
+                    setTimeout(function() {
+                        d.resolve(retVal);
+                    }, ms);
+                } else {
+                    iter--;
+                    if (iter <= 0) {
+                        clearInterval(interval);
+                        d.reject("failed to initialize camera");
+                    }
+                }
+            }, ms);
+        }
+
+        return d.promise();
     }
     function takeShot(v) {
         var c = document.createElement("canvas");
@@ -51,7 +72,7 @@
         return function () {
             return getVideoStream().then(function (s) {
                 var v = setupVideo(s);
-                return delay(1000, { v: v, s: s });
+                return waitForVideoReady(v, { v: v, s: s }, 100, 30);
             }).then(function (obj) {
                 var v = obj.v;
                 var s = obj.s;
@@ -72,7 +93,7 @@
         return function() {
             return stream.then(function (s) {
                 var v = setupVideo(s);
-                return delay(1000, v);
+                return waitForVideoReady(v, v, 100, 30);
             }).then(function (v) {
                 console.log(v);
                 var data = takeShot(v);
