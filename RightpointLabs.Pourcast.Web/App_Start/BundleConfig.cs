@@ -7,10 +7,10 @@ namespace RightpointLabs.Pourcast.Web.App_Start
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.UseCdn = true;
-            const string jquery = "http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js";
-            const string jqueryUI = "http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js";
+            const string jquery = "//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js";
+            const string jqueryUI = "//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js";
             const string bootstrap = "//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js";
-            const string modernizer = "http://ajax.aspnetcdn.com/ajax/modernizr/modernizr-2.7.2.js";
+            const string modernizer = "//ajax.aspnetcdn.com/ajax/modernizr/modernizr-2.7.2.js";
             const string knockout = "/Scripts/libs/knockout-3.2.0.js";
 
             bundles.Add(new ScriptBundle("~/bundles/jquery", jquery).Include("~/Scripts/libs/jquery-{version}.js"));
