@@ -51,7 +51,7 @@
         return function () {
             return getVideoStream().then(function (s) {
                 var v = setupVideo(s);
-                return delay(500, { v: v, s: s });
+                return delay(1000, { v: v, s: s });
             }).then(function (obj) {
                 var v = obj.v;
                 var s = obj.s;
@@ -72,7 +72,7 @@
         return function() {
             return stream.then(function (s) {
                 var v = setupVideo(s);
-                return delay(500, v);
+                return delay(1000, v);
             }).then(function (v) {
                 console.log(v);
                 var data = takeShot(v);
@@ -96,7 +96,9 @@
         acquirePicture().then(function(data) {
             for (var i in pendingPics) {
                 var tId = pendingPics[i];
-                $.post("/api/picture/Taken?tapId=" + tId, { '': data });
+                var url = "/api/picture/Taken?tapId=" + (tId || "");
+                console.log(url);
+                $.post(url, { '': data });
             }
         }).done(function () {
             pendingPics = null;
