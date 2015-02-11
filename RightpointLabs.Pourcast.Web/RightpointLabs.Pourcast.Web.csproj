@@ -15,7 +15,7 @@
     <AssemblyName>RightpointLabs.Pourcast.Web</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort />
+    <IISExpressSSLPort>44301</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
     <IISExpressWindowsAuthentication>enabled</IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
@@ -650,6 +650,7 @@
     </Compile>
     <Compile Include="SignalR\HeartbeatClientHandler.cs" />
     <Compile Include="SignalR\KegTemperatureChangedClientHandler.cs" />
+    <Compile Include="SignalR\PictureRequestedClientHandler.cs" />
     <Compile Include="SignalR\LogMessageClientHandler.cs" />
     <Compile Include="SignalR\PouringClientHandler.cs" />
     <Compile Include="SignalR\PourStartedClientHandler.cs" />

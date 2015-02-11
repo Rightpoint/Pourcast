@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using RightpointLabs.Pourcast.Application.Orchestrators.Abstract;
+using RightpointLabs.Pourcast.Domain.Events;
 using RightpointLabs.Pourcast.Domain.Models;
 using RightpointLabs.Pourcast.Web.Areas.Admin.Models;
 using WebGrease.Css.Extensions;
@@ -77,5 +78,12 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
 
             return null;
         }
-	}
+
+        public ActionResult RequestPicture()
+        {
+            DomainEvents.Raise(new PictureRequested());
+
+            return null;
+        }
+    }
 }

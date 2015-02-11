@@ -131,4 +131,7 @@
     events.on("PourStarted", function (e) {
         takePicture(e.TapId);
     });
+    events.on("PictureRequested", function (e) {
+        takePicture(null);
+    });
 });
