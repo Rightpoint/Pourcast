@@ -650,6 +650,7 @@
     </Compile>
     <Compile Include="SignalR\HeartbeatClientHandler.cs" />
     <Compile Include="SignalR\KegTemperatureChangedClientHandler.cs" />
+    <Compile Include="SignalR\PictureTakenClientHandler.cs" />
     <Compile Include="SignalR\PictureRequestedClientHandler.cs" />
     <Compile Include="SignalR\LogMessageClientHandler.cs" />
     <Compile Include="SignalR\PouringClientHandler.cs" />
