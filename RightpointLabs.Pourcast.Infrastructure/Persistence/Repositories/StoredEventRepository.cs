@@ -37,5 +37,10 @@ namespace RightpointLabs.Pourcast.Infrastructure.Persistence.Repositories
         {
             return Queryable.Where(e => e.DomainEvent.GetType() == typeof(T)).Where(predicate).AsEnumerable();
         }
+
+        public IEnumerable<StoredEvent> GetLatest(int limit)
+        {
+            return Queryable.OrderByDescending(e => e.OccuredOn).Take(limit).AsEnumerable();
+        }
     }
 }

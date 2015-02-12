@@ -1,4 +1,6 @@
-﻿namespace RightpointLabs.Pourcast.Infrastructure.Persistence.Collections
+﻿using System.Linq;
+
+namespace RightpointLabs.Pourcast.Infrastructure.Persistence.Collections
 {
     using MongoDB.Bson.Serialization;
 
@@ -17,6 +19,7 @@
                         cm.AutoMap();
                     });
             }
+            typeof (IDomainEvent).Assembly.GetTypes().Where(i => typeof (IDomainEvent).IsAssignableFrom(i)).ToList().ForEach(i => BsonClassMap.LookupClassMap(i));
         }
     }
 }

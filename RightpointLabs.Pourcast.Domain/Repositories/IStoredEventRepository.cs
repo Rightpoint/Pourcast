@@ -20,5 +20,7 @@
         IEnumerable<StoredEvent> Find(Func<StoredEvent, bool> predicate);
 
         IEnumerable<StoredEvent> Find<T>(Func<StoredEvent, bool> predicate) where T : class, IDomainEvent;
+
+        IEnumerable<StoredEvent> GetLatest(int limit);
     }
 }

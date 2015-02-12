@@ -1,4 +1,6 @@
-﻿@model dynamic
+﻿@using MongoDB.Bson
+@using Newtonsoft.Json
+@model IEnumerable<RightpointLabs.Pourcast.Domain.Events.StoredEvent>
 <style type="text/css">
     .statusMessages {
         overflow: scroll;
@@ -7,7 +9,8 @@
 </style>
 
 <pre class="statusMessages" data-bind="foreach: statusMessages">
-    <span><span data-bind="text: type"></span><span>: </span><span data-bind="text: json"></span></span>
+    <span><span data-bind="text: type"></span><span>: </span><span data-bind="text: json"></span></span><span data-bind="if: type == 'PictureTaken'">
+<img data-bind="attr: { src: data.DataUrl}"/></span>
 </pre>
 
 @section Scripts {
@@ -34,12 +37,27 @@
             var vm = {
                 statusMessages: ko.observableArray([])
             };
-            var eventNames = ["BeerCreated", "BreweryCreated", "Heartbeat", "KegCreated", "KegEmptied", "KegRemovedFromTap", "KegTapped", "LogMessage", "Pouring", "PourStarted", "PourStopped", "TapCreated", "KegTemperatureChanged"];
+
+            var initialEvents = @(Html.Raw(JsonConvert.SerializeObject(Model.ToArray())));
+            for (var i = 0; i < initialEvents.length; i++) {
+                var e = initialEvents[i];
+                var json = ko.toJSON(e.DomainEvent);
+                if (e.TypeName == "PictureTaken") {
+                    json = "....";
+                }
+                vm.statusMessages.push({ type: e.TypeName, json: json, data: e.DomainEvent });
+            }
+
+            var eventNames = ["BeerCreated", "BreweryCreated", "Heartbeat", "KegCreated", "KegEmptied", "KegRemovedFromTap", "KegTapped", "LogMessage", "Pouring", "PourStarted", "PourStopped", "TapCreated", "KegTemperatureChanged", "PictureTaken", "PictureRequested"];
             for (var i in eventNames) {
                 (function() {
                     var eventName = eventNames[i];
                     events.on(eventName, function (e) {
-                        vm.statusMessages.unshift({ type: eventName, json: ko.toJSON(e) });
+                        var json = ko.toJSON(e);
+                        if (eventName == "PictureTaken") {
+                            json = "....";
+                        }
+                        vm.statusMessages.unshift({ type: eventName, json: json, data: e });
                         while (vm.statusMessages().length > 100) {
                             vm.statusMessages.pop();
                         }
