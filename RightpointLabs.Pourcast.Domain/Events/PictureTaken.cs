@@ -9,6 +9,7 @@ namespace RightpointLabs.Pourcast.Domain.Events
     public class PictureTaken : IDomainEvent
     {
         public string DataUrl { get; set; }
+        public string OriginalDataUrl { get; set; }
         public string TapId { get; set;  }
     }
 }
