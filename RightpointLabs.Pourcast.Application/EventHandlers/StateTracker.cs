@@ -59,8 +59,8 @@ namespace RightpointLabs.Pourcast.Application.EventHandlers
                 if (domainEvent.Volume < 2)
                     return;
                 var now = DateTime.Now;
-                // wait until 2PM :)
-                if (now.TimeOfDay < TimeSpan.FromHours(14))
+                // wait until 2PM, and only do it on Fridays
+                if (now.TimeOfDay < TimeSpan.FromHours(14) && now.DayOfWeek == DayOfWeek.Friday)
                     return;
 
                 Task toWaitFor;
