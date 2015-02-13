@@ -27,7 +27,9 @@
         var d = $.Deferred();
 
         if (v.clientHeight > 150) {
-            d.resolve(retVal);
+            setTimeout(function () {
+                d.resolve(retVal);
+            }, 500);
         } else {
             var interval = setInterval(function () {
                 if (v.clientHeight > 150) {
@@ -35,7 +37,7 @@
                     clearInterval(interval);
                     setTimeout(function() {
                         d.resolve(retVal);
-                    }, ms);
+                    }, 500);
                 } else {
                     iter--;
                     if (iter <= 0) {
