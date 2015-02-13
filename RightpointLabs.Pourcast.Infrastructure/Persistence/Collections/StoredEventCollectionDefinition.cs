@@ -19,7 +19,7 @@ namespace RightpointLabs.Pourcast.Infrastructure.Persistence.Collections
                         cm.AutoMap();
                     });
             }
-            typeof (IDomainEvent).Assembly.GetTypes().Where(i => typeof (IDomainEvent).IsAssignableFrom(i)).ToList().ForEach(i => BsonClassMap.LookupClassMap(i));
+            typeof (IDomainEvent).Assembly.GetTypes().Where(i => typeof (IDomainEvent).IsAssignableFrom(i) && !i.IsAbstract).ToList().ForEach(i => BsonClassMap.LookupClassMap(i));
         }
     }
 }

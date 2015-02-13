@@ -57,7 +57,7 @@
         var ctx = c.getContext("2d");
         ctx.drawImage(v, 0, 0);
 
-        return c.toDataURL('image/jpeg');
+        return c.toDataURL('image/png');
     }
 
     var secure = window.location.protocol === "https:";

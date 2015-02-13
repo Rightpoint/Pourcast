@@ -89,6 +89,7 @@ namespace RightpointLabs.Pourcast.Web
                 new InjectionConstructor(
                     new InjectionParameter<string>(ConfigurationManager.AppSettings["YammerApiCode"]),
                     new InjectionParameter<int>(int.Parse(ConfigurationManager.AppSettings["YammerGroupId"] ?? "0"))));
+            container.RegisterType<IImageCleanupService, ImageCleanupService>(new PerRequestLifetimeManager());
 
             // StateTracker
             container.RegisterType<StateTracker>(new ContainerControlledLifetimeManager());
