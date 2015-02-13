@@ -20,7 +20,7 @@ namespace RightpointLabs.Pourcast.Infrastructure.Services
             using (var ms = new MemoryStream(data))
             {
                 var image = (Bitmap)Bitmap.FromStream(ms);
-                new HistogramEqualization().ApplyInPlace(image);
+                new ContrastStretch().ApplyInPlace(image);
                 using (var ms2 = new MemoryStream())
                 {
                     image.Save(ms2, ImageFormat.Jpeg);
