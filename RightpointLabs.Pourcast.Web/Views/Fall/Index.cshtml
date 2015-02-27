@@ -1,0 +1,144 @@
+﻿@using Newtonsoft.Json
+@model object
+           
+<style type="text/css">
+    .single-fall {
+        display: none;
+    }
+    .dual-fall .fall {
+        width: 50%;
+        float: left;
+    }
+     @@media (max-width: 800px) {
+        .dual-fall {
+            display: none;
+        }
+        .single-fall {
+            display: block;
+        }
+     }
+</style>
+           
+<div class="dual-fall" data-bind="foreach: tapFalls">
+    <div class="fall" data-bind="foreach: fall">
+        <div>Poured <span data-bind="text: poured"></span>oz of <span data-bind="text: beer"></span> - <span data-bind="text: percentRemaining"></span> left</div>
+        <div data-bind="if: picture"><img data-bind="attr: { src: picture}" /></div>
+    </div>
+</div>
+
+<div class="single-fall fall" data-bind="foreach: singleFall">
+    <div>Poured <span data-bind="text: poured"></span>oz of <span data-bind="text: beer"></span> - <span data-bind="text: percentRemaining"></span> left</div>
+    <div data-bind="if: picture"><img data-bind="attr: { src: picture}" /></div>
+</div>
+
+
+@section Scripts {
+    <script type="text/javascript">
+        requirejs.config({
+            baseUrl: '/Scripts/libs/',
+            paths: {
+                app: '../app',
+                jquery: 'jquery-2.1.0',
+                TapViewModel: '../app/viewmodel/TapViewModel',
+                ko: 'knockout-3.1.0',
+                signalr: 'jquery.signalR-2.0.3',
+                'signalr.hubs': '/signalr/hubs?'
+            },
+            shim: {
+                jquery: { exports: '$' },
+                signalr: { deps: ['jquery'] },
+                'signalr.hubs': { deps: ['signalr'] }
+            }
+        });
+
+        function getBeerNameForKeg(kegId, callback) {
+            $.get('@Url.Action("GetBeerNameForKeg")?kegId=' + kegId, function(data) {
+                callback(data);
+            });
+        }
+
+        requirejs(['ko', 'app/events', 'jquery'], function(ko, events, $) {
+            var vm = {
+                tapFalls: ko.observableArray([]),
+                singleFall: ko.observableArray([])
+            };
+            var initialData = @(Html.Raw(JsonConvert.SerializeObject(Model)));
+            for (var i = 0; i < initialData.length; i++) {
+                vm.tapFalls.push({ id: initialData[i].Id, fall: ko.observableArray([]), beer: ko.observable(initialData[i].BeerName) });
+            }
+
+            // load existing data
+
+
+            // watch for new data
+            var latestPictures = {};
+            var pictureClearers = {};
+            function handlePour(falls, e) {
+                var pic = latestPictures[e.TapId];
+                var obj = { tapId: e.TapId, poured: e.Volume, percentRemaining: e.PercentRemaining, picture: ko.observable(pic), beer: ko.observable(null) };
+                getBeerNameForKeg(e.KegId, function(name) {
+                    obj.beer(name);
+                    var tapFall = ko.utils.arrayFirst(vm.tapFalls(), function(item) {
+                        return e.TapId == item.id;
+                    });
+                    if (tapFall) {
+                        tapFall.beer(name);
+                    }
+                });
+                for (var i = 0; i < falls.length; i++) {
+                    if (falls[i]) {
+                        falls[i].unshift(obj);
+                    }
+                }
+            }
+
+            function handlePicture(falls, e) {
+                if (pictureClearers[e.TapId]) {
+                    clearTimeout(pictureClearers[e.TapId]);
+                }
+                latestPictures[e.TapId] = e.DataUrl;
+                pictureClearers[e.TapId] = setTimeout(function() {
+                    latestPictures[e.TapId] = null;
+                }, 30000);
+                for (var i = 0; i < falls.length; i++) {
+                    if (falls[i]) {
+                        var first = ko.utils.arrayFirst(falls[i](), function(item) {
+                            return e.TapId == item.tapId;
+                        });
+                        if (null != first && !first.picture()) {
+                            first.picture(e.DataUrl);
+                        }
+                    }
+                }
+            }
+
+            events.on("KegTapped", function(e) {}); // TODO: update beer name when new keg is tapped
+            events.on("PourStopped", function(e) {
+                var tapFall = ko.utils.arrayFirst(vm.tapFalls(), function(item) {
+                    return e.TapId == item.id;
+                });
+                handlePour([tapFall.fall, vm.singleFall], e);
+            });
+            events.on("PictureTaken", function(e) {
+                if (!e.TapId)
+                    return;
+                var tapFall = ko.utils.arrayFirst(vm.tapFalls(), function(item) {
+                    return e.TapId == item.id;
+                });
+                handlePicture([tapFall.fall, vm.singleFall], e);
+            });
+
+            ko.applyBindings(vm);
+            $(function() {
+                var container = $(".fall");
+
+                function updateHeight() {
+                    container.height($(window).height() - 200);
+                }
+
+                $(window).resize(updateHeight);
+                updateHeight();
+            });
+        });
+    </script>
+}

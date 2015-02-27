@@ -634,6 +634,7 @@
     <Compile Include="Controllers\Api\StatusController.cs" />
     <Compile Include="Controllers\Api\RepourterTestController.cs" />
     <Compile Include="Controllers\Api\TapController.cs" />
+    <Compile Include="Controllers\FallController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Api\KegController.cs" />
     <Compile Include="Controllers\RepourterTestController.cs" />
@@ -678,6 +679,7 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Number.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Percentage.cshtml" />
+    <Content Include="Views\Fall\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
