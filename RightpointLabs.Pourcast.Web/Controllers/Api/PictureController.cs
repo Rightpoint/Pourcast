@@ -23,8 +23,9 @@ namespace RightpointLabs.Pourcast.Web.Controllers.Api
 
         public void Taken(string tapId, [FromBody] string dataUrl)
         {
-            var newDataUrl = _imageCleanupService.CleanUpImage(dataUrl);
-            DomainEvents.Raise(new PictureTaken() { TapId = tapId, DataUrl = newDataUrl, OriginalDataUrl = dataUrl});
+            string intermediateUrl;
+            var newDataUrl = _imageCleanupService.CleanUpImage(dataUrl, out intermediateUrl);
+            DomainEvents.Raise(new PictureTaken() { TapId = tapId, DataUrl = newDataUrl, IntermediateDataUrl = intermediateUrl, OriginalDataUrl = dataUrl });
         }
 
     }

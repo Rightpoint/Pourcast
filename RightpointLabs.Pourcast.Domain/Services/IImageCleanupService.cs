@@ -8,6 +8,6 @@ namespace RightpointLabs.Pourcast.Domain.Services
 {
     public interface IImageCleanupService
     {
-        string CleanUpImage(string rawDataUrl);
+        string CleanUpImage(string rawDataUrl, out string intermediateUrl);
     }
 }

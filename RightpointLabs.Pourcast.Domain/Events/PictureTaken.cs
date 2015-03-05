@@ -10,6 +10,7 @@ namespace RightpointLabs.Pourcast.Domain.Events
     {
         public string DataUrl { get; set; }
         public string OriginalDataUrl { get; set; }
-        public string TapId { get; set;  }
+        public string IntermediateDataUrl { get; set; }
+        public string TapId { get; set; }
     }
 }

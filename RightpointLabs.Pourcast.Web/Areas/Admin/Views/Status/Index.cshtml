@@ -11,7 +11,8 @@
 <pre class="statusMessages" data-bind="foreach: statusMessages">
     <span><span data-bind="text: type"></span><span>: </span><span data-bind="text: json"></span></span><span data-bind="if: type == 'PictureTaken'">
 <img data-bind="attr: { src: data.DataUrl}"/></span><span data-bind="if: type == 'PictureTaken' && data.OriginalDataUrl">
-<img data-bind="attr: { src: data.OriginalDataUrl}" />
+<img data-bind="attr: { src: data.OriginalDataUrl}" /></span><span data-bind="if: type == 'PictureTaken' && data.IntermediateDataUrl">
+<img data-bind="attr: { src: data.IntermediateDataUrl}" />
 </span>
 </pre>
 
