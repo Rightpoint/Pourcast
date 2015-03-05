@@ -35,6 +35,7 @@ namespace RightpointLabs.Pourcast.Infrastructure.Services
             using (var ms = new MemoryStream(data))
             {
                 var image = (Bitmap)Bitmap.FromStream(ms);
+                new ContrastStretch().ApplyInPlace(image);
                 var faces = detector.ProcessFrame(image);
 
                 if (faces.Length > 0)
@@ -42,7 +43,7 @@ namespace RightpointLabs.Pourcast.Infrastructure.Services
                     var intermediateImage = new Bitmap(image);
                     new RectanglesMarker(faces, Color.Red).ApplyInPlace(intermediateImage);
 
-                    var boundary = 80;
+                    var boundary = Math.Max(40, faces.Max(i => Math.Max(i.Height, i.Width)) / 3);
                     var x1 = Math.Max(0, faces.Min(i => i.Left) - boundary);
                     var y1 = Math.Max(0, faces.Min(i => i.Top) - boundary);
                     var x2 = Math.Min(image.Width, faces.Max(i => i.Right) + boundary);
@@ -60,7 +61,6 @@ namespace RightpointLabs.Pourcast.Infrastructure.Services
                     image = new Crop(newBoundingBox).Apply(image);
                 }
 
-                new ContrastStretch().ApplyInPlace(image);
                 using (var ms2 = new MemoryStream())
                 {
                     image.Save(ms2, ImageFormat.Jpeg);
