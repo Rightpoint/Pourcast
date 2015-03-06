@@ -12,5 +12,6 @@ namespace RightpointLabs.Pourcast.Domain.Events
         public string OriginalDataUrl { get; set; }
         public string IntermediateDataUrl { get; set; }
         public string TapId { get; set; }
+        public string[] Faces { get; set; }
     }
 }

@@ -14,18 +14,18 @@ namespace RightpointLabs.Pourcast.Web.Controllers.Api
     [System.Web.Http.RoutePrefix("api/picture")]
     public class PictureController : ApiController
     {
-        private readonly IImageCleanupService _imageCleanupService;
+        private readonly IFaceRecognitionService _faceRecognitionService;
 
-        public PictureController(IImageCleanupService imageCleanupService)
+        public PictureController(IFaceRecognitionService faceRecognitionService)
         {
-            _imageCleanupService = imageCleanupService;
+            _faceRecognitionService = faceRecognitionService;
         }
 
         public void Taken(string tapId, [FromBody] string dataUrl)
         {
-            string intermediateUrl;
-            var newDataUrl = _imageCleanupService.CleanUpImage(dataUrl, out intermediateUrl);
-            DomainEvents.Raise(new PictureTaken() { TapId = tapId, DataUrl = newDataUrl, IntermediateDataUrl = intermediateUrl, OriginalDataUrl = dataUrl });
+            string intermediateUrl, newDataUrl;
+            var faces = _faceRecognitionService.ProcessImage(dataUrl, out intermediateUrl, out newDataUrl);
+            DomainEvents.Raise(new PictureTaken() { TapId = tapId, DataUrl = newDataUrl, IntermediateDataUrl = intermediateUrl, OriginalDataUrl = dataUrl, Faces = faces });
         }
 
     }

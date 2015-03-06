@@ -12,8 +12,7 @@
     <span><span data-bind="text: type"></span><span>: </span><span data-bind="text: json"></span></span><span data-bind="if: type == 'PictureTaken'">
 <img data-bind="attr: { src: data.DataUrl}"/></span><span data-bind="if: type == 'PictureTaken' && data.OriginalDataUrl">
 <img data-bind="attr: { src: data.OriginalDataUrl}" /></span><span data-bind="if: type == 'PictureTaken' && data.IntermediateDataUrl">
-<img data-bind="attr: { src: data.IntermediateDataUrl}" />
-</span>
+<img data-bind="attr: { src: data.IntermediateDataUrl}" /></span>
 </pre>
 
 @section Scripts {
@@ -46,7 +45,7 @@
                 var e = initialEvents[i];
                 var json = ko.toJSON(e.DomainEvent);
                 if (e.TypeName == "PictureTaken") {
-                    json = "....";
+                    json = ko.toJSON({ faces: e.DomainEvent.faces });
                 }
                 vm.statusMessages.push({ type: e.TypeName, json: json, data: e.DomainEvent });
             }

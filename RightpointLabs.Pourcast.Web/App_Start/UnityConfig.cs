@@ -89,6 +89,11 @@ namespace RightpointLabs.Pourcast.Web
                 new InjectionConstructor(
                     new InjectionParameter<string>(ConfigurationManager.AppSettings["YammerApiCode"]),
                     new InjectionParameter<int>(int.Parse(ConfigurationManager.AppSettings["YammerGroupId"] ?? "0"))));
+            container.RegisterType<IFaceRecognitionService, FaceRecognitionService>(new ContainerControlledLifetimeManager(),
+                new InjectionConstructor(
+                    new InjectionParameter<string>(ConfigurationManager.AppSettings["SkyBiometryApiKey"]),
+                    new InjectionParameter<string>(ConfigurationManager.AppSettings["SkyBiometryApiSecret"]),
+                    new InjectionParameter<string>(ConfigurationManager.AppSettings["SkyBiometryTagNamespace"])));
             container.RegisterType<IImageCleanupService, ImageCleanupService>(new PerRequestLifetimeManager());
 
             // StateTracker

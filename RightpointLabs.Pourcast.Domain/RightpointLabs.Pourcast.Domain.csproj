@@ -70,6 +70,7 @@
     <Compile Include="Events\TapCreated.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Models\Entity.cs" />
+    <Compile Include="Models\MessageUserInfo.cs" />
     <Compile Include="Models\TapNotificationState.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Style.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="Repositories\IUserRepository.cs" />
     <Compile Include="Services\IDateTimeProvider.cs" />
     <Compile Include="Services\IEmailService.cs" />
+    <Compile Include="Services\IFaceRecognitionService.cs" />
     <Compile Include="Services\IImageCleanupService.cs" />
     <Compile Include="Services\IMessagePoster.cs" />
   </ItemGroup>

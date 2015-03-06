@@ -2,10 +2,14 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
+using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using RightpointLabs.Pourcast.Domain.Models;
 using RightpointLabs.Pourcast.Domain.Services;
 
 namespace RightpointLabs.Pourcast.Infrastructure.Services
@@ -21,23 +25,52 @@ namespace RightpointLabs.Pourcast.Infrastructure.Services
             _groupId = groupId;
         }
 
-        public int PostNewMessage(string body, string filename = null, string fileContentType = null, byte[] filedata = null)
+        public int PostNewMessage(string body, int[] users = null, string filename = null, string fileContentType = null, byte[] filedata = null)
         {
             var form = new NameValueCollection();
             form["group_id"] = _groupId.ToString();
 
-            return DoPost(form, body, filename, fileContentType, filedata);
+            return DoPost(form, body, users, filename, fileContentType, filedata);
         }
 
-        public int PostReply(int repliedTo, string body, string filename = null, string fileContentType = null, byte[] filedata = null)
+        public int PostReply(int repliedTo, string body, int[] users = null, string filename = null, string fileContentType = null, byte[] filedata = null)
         {
             var form = new NameValueCollection();
             form["replied_to_id"] = repliedTo.ToString();
 
-            return DoPost(form, body, filename, fileContentType, filedata);
+            return DoPost(form, body, users, filename, fileContentType, filedata);
         }
 
-        private int DoPost(NameValueCollection form, string body, string filename = null, string fileContentType = null, byte[] filedata = null)
+        public async Task<Dictionary<string, MessageUserInfo>>  GetUsers()
+        {
+            var result = new Dictionary<string, MessageUserInfo>();
+
+            int page = 0;
+            while (true)
+            {
+                var users = await GetUserPage(page);
+                foreach (var user in users)
+                {
+                    result[user.email] = user;
+                }
+                if (users.Length < 50)
+                    break;
+                page++;
+            }
+
+            return result;
+        }
+
+        private async Task<MessageUserInfo[]> GetUserPage(int page)
+        {
+            var resp = await new HttpClient().GetAsync("https://www.yammer.com/api/v1/users.json?page=" + page);
+            var data = await resp.Content.ReadAsStringAsync();
+            var obj = JsonConvert.DeserializeObject<JArray>(data);
+
+            return obj.Select(i => new MessageUserInfo {email = (string) i["email"], id = (int) i["id"], name = (string) i["name"]}).ToArray();
+        }
+
+        private int DoPost(NameValueCollection form, string body, int[] users = null, string filename = null, string fileContentType = null, byte[] filedata = null)
         {
             var files = new UploadFile[0];
             if (!string.IsNullOrEmpty(filename) && null != filedata)
@@ -47,6 +80,10 @@ namespace RightpointLabs.Pourcast.Infrastructure.Services
             }
 
             form["body"] = body;
+            if (null != users)
+            {
+                form["cc"] = string.Join(",", users.Select(i => string.Format("[[user:{0}]]", i)));
+            }
 
             var req = (HttpWebRequest)WebRequest.Create("https://www.yammer.com/api/v1/messages.json");
             req.Headers.Add("Authorization", "Bearer " + _authCode);

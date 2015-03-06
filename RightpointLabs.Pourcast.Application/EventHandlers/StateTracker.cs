@@ -81,7 +81,7 @@ namespace RightpointLabs.Pourcast.Application.EventHandlers
 
                     log.DebugFormat("State: LP: {0}, BP: {1}, LPTT: {2}", state.Today, state.TodaysBiggestPour, lpt == null ? null : (DateTime?)lpt.Item1);
 
-                    Action<PictureTaken> buildMessage = null;
+                    Func<PictureTaken, Task> buildMessage = null;
 
                     var beerName = beer == null ? "an unknown beer" : beer.Name;
 
@@ -90,20 +90,28 @@ namespace RightpointLabs.Pourcast.Application.EventHandlers
                         if (!state.TodaysBiggestPour.HasValue || state.TodaysBiggestPour.Value + 1 < domainEvent.Volume)
                         {
                             // biggest pour...
-                            buildMessage = pt =>
+                            buildMessage = async pt =>
                             {
                                 var msg = string.Format("Biggest pour of {0} for the day!  A solid {1:0.0}oz!", beerName, domainEvent.Volume);
                                 string contentType = null;
                                 string filename = null;
                                 byte[] filedata = null;
 
+                                int[] users = new int[0];
                                 if (null != pt)
                                 {
                                     filedata = GetDataFromUrl(pt.DataUrl, out contentType);
                                     filename = "image.jpg";
+
+                                    if (pt.Faces != null && pt.Faces.Any())
+                                    {
+                                        var faces = new HashSet<string>(pt.Faces.Select(i => i.Split('@')[0].ToLowerInvariant()));
+                                        var allUsers = await _messagePoster.GetUsers();
+                                        users = AddUsers(ref msg, allUsers.Where(i => faces.Contains(i.Key.Split('@')[0])).Select(i => i.Value).ToArray());
+                                    }
                                 }
 
-                                _messagePoster.PostReply(state.TodaysNotificationThreadId.Value, msg, filename, contentType, filedata);
+                                _messagePoster.PostReply(state.TodaysNotificationThreadId.Value, msg, users, filename, contentType, filedata);
                             };
                             state.TodaysBiggestPour = domainEvent.Volume;
                             stateRepository.Update(state);
@@ -115,23 +123,31 @@ namespace RightpointLabs.Pourcast.Application.EventHandlers
                         state.KegId = domainEvent.KegId;
 
                         // first pour
-                        buildMessage = pt =>
+                        buildMessage = async (PictureTaken pt) =>
                         {
                             var msg = string.Format("First pour of the day of {0}!  A solid {1:0.0}oz!", beerName, domainEvent.Volume);
                             string contentType = null;
                             string filename = null;
                             byte[] filedata = null;
 
+                            int[] users = new int[0];
                             if (null != pt)
                             {
                                 filedata = GetDataFromUrl(pt.DataUrl, out contentType);
                                 filename = "image.jpg";
+
+                                if (pt.Faces != null && pt.Faces.Any())
+                                {
+                                    var faces = new HashSet<string>(pt.Faces.Select(i => i.Split('@')[0].ToLowerInvariant()));
+                                    var allUsers = await _messagePoster.GetUsers();
+                                    users = AddUsers(ref msg, allUsers.Where(i => faces.Contains(i.Key.Split('@')[0])).Select(i => i.Value).ToArray());
+                                }
                             }
 
                             var newState = stateRepository.GetByTapId(domainEvent.TapId);
                             if (null != newState)
                             {
-                                newState.TodaysNotificationThreadId = _messagePoster.PostNewMessage(msg, filename, contentType, filedata);
+                                newState.TodaysNotificationThreadId = _messagePoster.PostNewMessage(msg, users, filename, contentType, filedata);
                                 stateRepository.Update(newState);
                             }
                         };
@@ -150,7 +166,18 @@ namespace RightpointLabs.Pourcast.Application.EventHandlers
                         {
                             log.DebugFormat("Sending message sync");
                             // only use a current picture
-                            buildMessage(lpt.Item2);
+                            var pic = lpt.Item2;
+                            Task.Run(async () =>
+                            {
+                                try
+                                {
+                                    await buildMessage(pic);
+                                }
+                                catch (Exception ex)
+                                {
+                                    log.Error("Sending async", ex);
+                                }
+                            });
                             return;
                         }
                     }
@@ -158,11 +185,18 @@ namespace RightpointLabs.Pourcast.Application.EventHandlers
                     log.DebugFormat("Preparing to send message async");
                     var cts = new CancellationTokenSource();
                     _stoppedWaitSources.Add(cts);
-                    toWaitFor = Task.Delay(TimeSpan.FromSeconds(10), cts.Token).ContinueWith(i =>
+                    toWaitFor = Task.Delay(TimeSpan.FromSeconds(10), cts.Token).ContinueWith(async i =>
                     {
-                        log.DebugFormat("Sending message async");
-                        _lastPicturesTaken.TryGetValue(domainEvent.TapId, out lpt);
-                        buildMessage(null == lpt ? null : lpt.Item2);
+                        try
+                        {
+                            log.DebugFormat("Sending message async");
+                            _lastPicturesTaken.TryGetValue(domainEvent.TapId, out lpt);
+                            await buildMessage(null == lpt ? null : lpt.Item2);
+                        }
+                        catch (Exception ex)
+                        {
+                            log.Error("Sending async", ex);
+                        }
                     });
                 }
 
@@ -173,6 +207,27 @@ namespace RightpointLabs.Pourcast.Application.EventHandlers
             {
                 log.Error("Error processing PourStopped", ex);
             }
+        }
+
+        private int[] AddUsers(ref string msg, MessageUserInfo[] nearbyUsers)
+        {
+            int[] users = null;
+            if (null != nearbyUsers && nearbyUsers.Length > 0)
+            {
+                users = nearbyUsers.Select(i => i.id).ToArray();
+                var userNames = nearbyUsers.Select(i => i.name).ToArray();
+                if (userNames.Length == 2)
+                {
+                    userNames = new[] { userNames[0] + " and " + userNames[1] };
+                }
+                else if (userNames.Length > 2)
+                {
+                    userNames = userNames.Take(userNames.Length - 2).Concat(new[] { userNames[userNames.Length - 2] + ", and " + userNames[userNames.Length - 1] }).ToArray();
+                }
+
+                msg += " Do I see " + string.Join(", ", userNames) + "?";
+            }
+            return users;
         }
 
         private byte[] GetDataFromUrl(string dataUrl, out string contentType)
