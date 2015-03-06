@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RightpointLabs.Pourcast.Web", "RightpointLabs.Pourcast.Web\RightpointLabs.Pourcast.Web.csproj", "{F114F2A6-3380-41E8-B957-5FA4A5CC4762}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RightpointLabs.Pourcast.Tests", "RightpointLabs.Pourcast.Tests\RightpointLabs.Pourcast.Tests.csproj", "{85E756AA-2F6A-49D9-B024-C866020B4119}"
@@ -17,6 +19,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RightpointLabs.Pourcast.Domain", "RightpointLabs.Pourcast.Domain\RightpointLabs.Pourcast.Domain.csproj", "{86A90834-4FDA-40E7-810F-F1AB0ADE8FE0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RightpointLabs.Pourcast.Application", "RightpointLabs.Pourcast.Application\RightpointLabs.Pourcast.Application.csproj", "{15F3381D-CF8B-46E5-A323-6454A4E7D2C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RightpointLabs.Pourcast.PhotoLoader", "RightpointLabs.Pourcast.PhotoLoader\RightpointLabs.Pourcast.PhotoLoader.csproj", "{60356C5B-2217-4AD8-A5A1-103CC02C750E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -77,6 +81,16 @@ Global
 		{15F3381D-CF8B-46E5-A323-6454A4E7D2C3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{15F3381D-CF8B-46E5-A323-6454A4E7D2C3}.Wifi|Any CPU.ActiveCfg = Release|Any CPU
 		{15F3381D-CF8B-46E5-A323-6454A4E7D2C3}.Wifi|Any CPU.Build.0 = Release|Any CPU
+		{60356C5B-2217-4AD8-A5A1-103CC02C750E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60356C5B-2217-4AD8-A5A1-103CC02C750E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60356C5B-2217-4AD8-A5A1-103CC02C750E}.Ethernet|Any CPU.ActiveCfg = Release|Any CPU
+		{60356C5B-2217-4AD8-A5A1-103CC02C750E}.Ethernet|Any CPU.Build.0 = Release|Any CPU
+		{60356C5B-2217-4AD8-A5A1-103CC02C750E}.NoNetworking|Any CPU.ActiveCfg = Release|Any CPU
+		{60356C5B-2217-4AD8-A5A1-103CC02C750E}.NoNetworking|Any CPU.Build.0 = Release|Any CPU
+		{60356C5B-2217-4AD8-A5A1-103CC02C750E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60356C5B-2217-4AD8-A5A1-103CC02C750E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60356C5B-2217-4AD8-A5A1-103CC02C750E}.Wifi|Any CPU.ActiveCfg = Release|Any CPU
+		{60356C5B-2217-4AD8-A5A1-103CC02C750E}.Wifi|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
