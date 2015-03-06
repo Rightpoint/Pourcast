@@ -69,7 +69,7 @@ namespace RightpointLabs.Pourcast.Infrastructure.Services
             var data = await resp.Content.ReadAsStringAsync();
             var obj = JsonConvert.DeserializeObject<JArray>(data);
 
-            return obj.Select(i => new MessageUserInfo {email = (string) i["email"], id = (int) i["id"], name = (string) i["name"]}).ToArray();
+            return obj.Select(i => new MessageUserInfo {email = (string) i["email"], id = (int) i["id"], name = (string) i["name"], fullName = (string) i["full_name"]}).ToArray();
         }
 
         private int DoPost(NameValueCollection form, string body, int[] users = null, string filename = null, string fileContentType = null, byte[] filedata = null)
