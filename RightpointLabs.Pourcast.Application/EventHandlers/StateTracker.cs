@@ -60,12 +60,12 @@ namespace RightpointLabs.Pourcast.Application.EventHandlers
                 if (domainEvent.Volume < 2)
                     return;
                 var now = DateTime.Now;
-                //// wait until 2PM
-                //if (now.TimeOfDay < TimeSpan.FromHours(14))
-                //    return;
-                //// only post on Fridays
-                //if(now.DayOfWeek != DayOfWeek.Friday)
-                //    return;
+                // wait until 2PM
+                if (now.TimeOfDay < TimeSpan.FromHours(14))
+                    return;
+                // only post on Fridays
+                if (now.DayOfWeek != DayOfWeek.Friday)
+                    return;
 
                 Task toWaitFor;
                 lock (_lockObject)
