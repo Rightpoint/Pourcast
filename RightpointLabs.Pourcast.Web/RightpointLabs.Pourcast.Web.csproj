@@ -712,7 +712,7 @@
     <Content Include="Scripts\app\MainBundle.min.js.map">
       <DependentUpon>MainBundle.min.js</DependentUpon>
     </Content>
-    <None Include="Views\Components\Templates.cshtml" />
+    <Content Include="Views\Components\Templates.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
