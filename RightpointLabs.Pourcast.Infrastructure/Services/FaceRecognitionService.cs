@@ -70,7 +70,7 @@ namespace RightpointLabs.Pourcast.Infrastructure.Services
                 }
 
                 var intermediateImage = new Bitmap(image);
-                var faces = faceTags.Select(i => GetBox(i.Center, i.Width, i.Height, image)).ToList();
+                var faces = faceTags.Select(i => GetTagBoundingBox(i, image)).ToList();
                 new RectanglesMarker(faces, Color.Red).ApplyInPlace(intermediateImage);
 
                 var boundary = Math.Max(40, faces.Max(i => Math.Max(i.Height, i.Width)) / 3);
@@ -101,13 +101,17 @@ namespace RightpointLabs.Pourcast.Infrastructure.Services
             
         }
 
-        private Rectangle GetBox(Point center, float width, float height, Bitmap image)
+        /// <summary>
+        /// Get the bounding box of the face.
+        /// Center, width, and height are percent-of-image.  Convert them to absolute pixels (needed for our marker/crop algorithms)
+        /// </summary>
+        private Rectangle GetTagBoundingBox(Tag tag, Bitmap image)
         {
             return new Rectangle(
-                (int)((center.X - width / 2) * image.Width / 100),
-                (int)((center.Y - width / 2) * image.Height / 100),
-                (int)((center.X + height / 2) * image.Width / 100),
-                (int)((center.Y + height / 2) * image.Height / 100));
+                (int)((tag.Center.X - tag.Width / 2) * image.Width / 100),
+                (int)((tag.Center.Y - tag.Width / 2) * image.Height / 100),
+                (int)((tag.Center.X + tag.Height / 2) * image.Width / 100),
+                (int)((tag.Center.Y + tag.Height / 2) * image.Height / 100));
         }
 
         private byte[] GetDataFromUrl(string dataUrl, out string contentType)

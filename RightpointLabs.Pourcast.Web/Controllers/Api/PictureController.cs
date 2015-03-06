@@ -23,7 +23,7 @@ namespace RightpointLabs.Pourcast.Web.Controllers.Api
 
         public void Taken(string tapId, [FromBody] string dataUrl)
         {
-            string intermediateUrl, newDataUrl;
+\            string intermediateUrl, newDataUrl;
             var faces = _faceRecognitionService.ProcessImage(dataUrl, out intermediateUrl, out newDataUrl);
             DomainEvents.Raise(new PictureTaken() { TapId = tapId, DataUrl = newDataUrl, IntermediateDataUrl = intermediateUrl, OriginalDataUrl = dataUrl, Faces = faces });
         }
