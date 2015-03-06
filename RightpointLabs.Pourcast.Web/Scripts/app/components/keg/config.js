@@ -1,4 +1,4 @@
-﻿define(['ko'], function (ko) {
+﻿define('app/components/keg/config', ['ko'], function (ko) {
 
     function Config(model) {
         var self = this;

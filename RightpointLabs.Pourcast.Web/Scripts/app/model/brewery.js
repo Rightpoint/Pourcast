@@ -1,4 +1,4 @@
-﻿define(['ko'], function(ko) {
+﻿define('app/model/brewery', ['ko'], function(ko) {
     function Brewery(breweryJSON) {
         var self = this;
 

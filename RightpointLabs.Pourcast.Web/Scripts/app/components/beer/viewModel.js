@@ -1,4 +1,4 @@
-﻿define(['ko', 'app/events', 'app/dataService', 'text!app/components/beer/template.html'], function (ko, events, dataService, htmlString) {
+﻿define('app/components/beer/viewModel', ['ko', 'app/events', 'app/dataService'], function (ko, events, dataService) {
     
     function Beer(model) {
         var self = this;
@@ -16,6 +16,6 @@
 
     return {
         viewModel: Beer,
-        template: htmlString
+        template: { element: 'beer-template' }
     };
 });

@@ -1,4 +1,4 @@
-﻿define(['ko', 'app/events', 'app/dataService', 'text!app/components/keg/template.html'], function (ko, events, dataService, htmlString) {
+﻿define('app/components/keg/viewModel', ['ko', 'app/events', 'app/dataService'], function (ko, events, dataService) {
     
     function Keg(model) {
         var self = this;
@@ -22,6 +22,6 @@
 
     return {
         viewModel: Keg,
-        template: htmlString
+        template: { element: 'keg-template' }
     };
 });

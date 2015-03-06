@@ -1,4 +1,4 @@
-﻿define(['jquery', 'app/model/tap', 'app/model/keg', 'app/model/beer', 'app/model/brewery', 'app/model/style', 'exports'], function($, Tap, Keg, Beer, Brewery, Style, exports) {
+﻿define('app/dataService', ['jquery', 'app/model/tap', 'app/model/keg', 'app/model/beer', 'app/model/brewery', 'app/model/style', 'exports'], function($, Tap, Keg, Beer, Brewery, Style, exports) {
 
     exports.getTaps = function() {
         return $.get("/api/beerOnTap").then(function(beerOnTapJson) {

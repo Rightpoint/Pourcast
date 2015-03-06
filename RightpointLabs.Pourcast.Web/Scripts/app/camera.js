@@ -1,4 +1,4 @@
-﻿define(['app/events', 'jquery'], function (events, $) {
+﻿define('app/camera', ['app/events', 'jquery'], function (events, $) {
 
     if (window.location.href.indexOf("camera=true") < 0)
         return;

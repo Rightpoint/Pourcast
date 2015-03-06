@@ -1,4 +1,4 @@
-﻿define(['ko'], function (ko) {
+﻿define('app/components/beer/config', ['ko'], function (ko) {
 
     function Config(model) {
         var self = this;

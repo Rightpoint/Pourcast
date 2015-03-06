@@ -46,6 +46,5 @@ namespace RightpointLabs.Pourcast.Web.Controllers
 
             return View();
         }
-
     }
 }

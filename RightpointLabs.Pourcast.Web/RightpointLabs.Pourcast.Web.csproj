@@ -210,117 +210,117 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Scripts\app\components\flanders-face\config.js" />
-    <Content Include="Scripts\app\components\flanders-face\flanders_face.png" />
-    <Content Include="Scripts\app\components\flanders-face\template.html" />
-    <Content Include="Scripts\app\components\flanders-face\viewModel.js" />
-    <Content Include="Scripts\app\components\flanders-keg-body\flanders_keg.png" />
-    <Content Include="Scripts\app\components\hogan-face\config.js" />
-    <Content Include="Scripts\app\components\hogan-face\hogan_face.png" />
-    <Content Include="Scripts\app\components\hogan-face\template.html" />
-    <Content Include="Scripts\app\components\hogan-face\viewModel.js" />
-    <Content Include="Scripts\app\components\hogan-keg-body\config.js" />
-    <Content Include="Scripts\app\components\hogan-keg-body\hogan_keg_body.png" />
-    <Content Include="Scripts\app\components\hogan-keg-body\template.html" />
-    <Content Include="Scripts\app\components\hogan-keg-body\viewModel.js" />
-    <Content Include="Scripts\app\components\flanders-keg-body\config.js" />
-    <Content Include="Scripts\app\components\flanders-keg-body\template.html" />
-    <Content Include="Scripts\app\components\flanders-keg-body\viewModel.js" />
-    <Content Include="Scripts\app\components\monopoly-cane\config.js" />
-    <Content Include="Scripts\app\components\monopoly-cane\monopoly_cane.png" />
-    <Content Include="Scripts\app\components\monopoly-cane\template.html" />
-    <Content Include="Scripts\app\components\monopoly-cane\viewModel.js" />
-    <Content Include="Scripts\app\components\chaplin-cane\chaplin_cane.png" />
-    <Content Include="Scripts\app\components\chaplin-cane\config.js" />
-    <Content Include="Scripts\app\components\chaplin-cane\template.html" />
-    <Content Include="Scripts\app\components\chaplin-cane\viewModel.js" />
-    <Content Include="Scripts\app\components\monopoly-face\config.js" />
-    <Content Include="Scripts\app\components\monopoly-face\monopoly_face.png" />
-    <Content Include="Scripts\app\components\monopoly-face\template.html" />
-    <Content Include="Scripts\app\components\monopoly-face\viewModel.js" />
-    <Content Include="Scripts\app\components\monopoly-hat\config.js" />
-    <Content Include="Scripts\app\components\monopoly-hat\monopoly_hat.png" />
-    <Content Include="Scripts\app\components\monopoly-hat\template.html" />
-    <Content Include="Scripts\app\components\monopoly-hat\viewModel.js" />
-    <Content Include="Scripts\app\components\richie-face\config.js" />
-    <Content Include="Scripts\app\components\richie-face\richie_face.png" />
-    <Content Include="Scripts\app\components\richie-face\template.html" />
-    <Content Include="Scripts\app\components\richie-face\viewModel.js" />
-    <Content Include="Scripts\app\components\zappa-face\config.js" />
-    <Content Include="Scripts\app\components\zappa-face\template.html" />
-    <Content Include="Scripts\app\components\zappa-face\viewModel.js" />
-    <Content Include="Scripts\app\components\zappa-face\zappa_face.png" />
-    <Content Include="Scripts\app\components\zorro-face\config.js" />
-    <Content Include="Scripts\app\components\zorro-face\template.html" />
-    <Content Include="Scripts\app\components\zorro-face\viewModel.js" />
-    <Content Include="Scripts\app\components\chaplin-face\chaplin_face.png" />
-    <Content Include="Scripts\app\components\zorro-face\zorro_face.png" />
-    <Content Include="Scripts\app\components\zorro-hat\config.js" />
-    <Content Include="Scripts\app\components\zorro-hat\template.html" />
-    <Content Include="Scripts\app\components\zorro-hat\viewModel.js" />
-    <Content Include="Scripts\app\components\chaplin-hat\chaplin_hat.png" />
-    <Content Include="Scripts\app\components\che-guevara-face\che_guevara_face.png" />
-    <Content Include="Scripts\app\components\che-guevara-face\config.js" />
-    <Content Include="Scripts\app\components\che-guevara-face\template.html" />
-    <Content Include="Scripts\app\components\che-guevara-face\viewModel.js" />
-    <Content Include="Scripts\app\components\che-guevara-hat\che_guevara_hat.png" />
-    <Content Include="Scripts\app\components\luigi-face\luigi_face.png" />
-    <Content Include="Scripts\app\components\che-guevara-hat\config.js" />
-    <Content Include="Scripts\app\components\che-guevara-hat\template.html" />
-    <Content Include="Scripts\app\components\che-guevara-hat\viewModel.js" />
-    <Content Include="Scripts\app\components\luigi-hat\config.js" />
-    <Content Include="Scripts\app\components\luigi-hat\luigi_hat.png" />
-    <Content Include="Scripts\app\components\luigi-hat\template.html" />
-    <Content Include="Scripts\app\components\luigi-hat\viewModel.js" />
-    <Content Include="Scripts\app\components\chaplin-face\config.js" />
-    <Content Include="Scripts\app\components\chaplin-face\template.html" />
-    <Content Include="Scripts\app\components\chaplin-face\viewModel.js" />
-    <Content Include="Scripts\app\components\mario-face\mario_face.png" />
-    <Content Include="Scripts\app\components\chaplin-hat\config.js" />
-    <Content Include="Scripts\app\components\chaplin-hat\template.html" />
-    <Content Include="Scripts\app\components\chaplin-hat\viewModel.js" />
-    <Content Include="Scripts\app\components\mario-hat\config.js" />
-    <Content Include="Scripts\app\components\mario-hat\mario_hat.png" />
-    <Content Include="Scripts\app\components\mario-hat\template.html" />
-    <Content Include="Scripts\app\components\mario-hat\viewModel.js" />
-    <Content Include="Scripts\app\components\luigi-face\config.js" />
-    <Content Include="Scripts\app\components\luigi-face\template.html" />
-    <Content Include="Scripts\app\components\luigi-face\viewModel.js" />
-    <Content Include="Scripts\app\components\mario-face\config.js" />
-    <Content Include="Scripts\app\components\mario-face\template.html" />
-    <Content Include="Scripts\app\components\mario-face\viewModel.js" />
-    <Content Include="Scripts\app\components\colin-face\colin_face.png" />
-    <Content Include="Scripts\app\components\colin-face\config.js" />
-    <Content Include="Scripts\app\components\colin-face\template.html" />
-    <Content Include="Scripts\app\components\colin-face\viewModel.js" />
-    <Content Include="Scripts\app\components\dali-face\dali_face.png" />
-    <Content Include="Scripts\app\components\varnon-face\config.js" />
-    <Content Include="Scripts\app\components\varnon-face\template.html" />
-    <Content Include="Scripts\app\components\varnon-face\varnon_face.png" />
-    <Content Include="Scripts\app\components\varnon-face\viewModel.js" />
-    <Content Include="Scripts\app\components\michael-face\config.js" />
-    <Content Include="Scripts\app\components\michael-face\michael_face.png" />
-    <Content Include="Scripts\app\components\michael-face\template.html" />
-    <Content Include="Scripts\app\components\michael-face\viewModel.js" />
-    <Content Include="Scripts\app\components\gable-face\config.js" />
-    <Content Include="Scripts\app\components\gable-face\gable_face.png" />
-    <Content Include="Scripts\app\components\gable-face\template.html" />
-    <Content Include="Scripts\app\components\gable-face\viewModel.js" />
-    <Content Include="Scripts\app\components\dali-face\config.js" />
-    <Content Include="Scripts\app\components\dali-face\template.html" />
-    <Content Include="Scripts\app\components\dali-face\viewModel.js" />
-    <Content Include="Scripts\app\components\pringles-face\config.js" />
-    <Content Include="Scripts\app\components\pringles-face\pringle_face.png" />
-    <Content Include="Scripts\app\components\pringles-face\template.html" />
-    <Content Include="Scripts\app\components\pringles-face\viewModel.js" />
-    <Content Include="Scripts\app\components\borat-flag\borat_flag.png" />
-    <Content Include="Scripts\app\components\borat-flag\config.js" />
-    <Content Include="Scripts\app\components\borat-flag\template.html" />
-    <Content Include="Scripts\app\components\borat-flag\viewModel.js" />
-    <Content Include="Scripts\app\components\borat-face\borat_face.png" />
-    <Content Include="Scripts\app\components\waters-face\config.js" />
-    <Content Include="Scripts\app\components\waters-face\template.html" />
-    <Content Include="Scripts\app\components\waters-face\viewModel.js" />
+    <Content Include="Scripts\app\components\movember\flanders-face\config.js" />
+    <Content Include="Scripts\app\components\movember\flanders-face\flanders_face.png" />
+    <Content Include="Scripts\app\components\movember\flanders-face\template.html" />
+    <Content Include="Scripts\app\components\movember\flanders-face\viewModel.js" />
+    <Content Include="Scripts\app\components\movember\flanders-keg-body\flanders_keg.png" />
+    <Content Include="Scripts\app\components\movember\hogan-face\config.js" />
+    <Content Include="Scripts\app\components\movember\hogan-face\hogan_face.png" />
+    <Content Include="Scripts\app\components\movember\hogan-face\template.html" />
+    <Content Include="Scripts\app\components\movember\hogan-face\viewModel.js" />
+    <Content Include="Scripts\app\components\movember\hogan-keg-body\config.js" />
+    <Content Include="Scripts\app\components\movember\hogan-keg-body\hogan_keg_body.png" />
+    <Content Include="Scripts\app\components\movember\hogan-keg-body\template.html" />
+    <Content Include="Scripts\app\components\movember\hogan-keg-body\viewModel.js" />
+    <Content Include="Scripts\app\components\movember\flanders-keg-body\config.js" />
+    <Content Include="Scripts\app\components\movember\flanders-keg-body\template.html" />
+    <Content Include="Scripts\app\components\movember\flanders-keg-body\viewModel.js" />
+    <Content Include="Scripts\app\components\movember\monopoly-cane\config.js" />
+    <Content Include="Scripts\app\components\movember\monopoly-cane\monopoly_cane.png" />
+    <Content Include="Scripts\app\components\movember\monopoly-cane\template.html" />
+    <Content Include="Scripts\app\components\movember\monopoly-cane\viewModel.js" />
+    <Content Include="Scripts\app\components\movember\chaplin-cane\chaplin_cane.png" />
+    <Content Include="Scripts\app\components\movember\chaplin-cane\config.js" />
+    <Content Include="Scripts\app\components\movember\chaplin-cane\template.html" />
+    <Content Include="Scripts\app\components\movember\chaplin-cane\viewModel.js" />
+    <Content Include="Scripts\app\components\movember\monopoly-face\config.js" />
+    <Content Include="Scripts\app\components\movember\monopoly-face\monopoly_face.png" />
+    <Content Include="Scripts\app\components\movember\monopoly-face\template.html" />
+    <Content Include="Scripts\app\components\movember\monopoly-face\viewModel.js" />
+    <Content Include="Scripts\app\components\movember\monopoly-hat\config.js" />
+    <Content Include="Scripts\app\components\movember\monopoly-hat\monopoly_hat.png" />
+    <Content Include="Scripts\app\components\movember\monopoly-hat\template.html" />
+    <Content Include="Scripts\app\components\movember\monopoly-hat\viewModel.js" />
+    <Content Include="Scripts\app\components\movember\richie-face\config.js" />
+    <Content Include="Scripts\app\components\movember\richie-face\richie_face.png" />
+    <Content Include="Scripts\app\components\movember\richie-face\template.html" />
+    <Content Include="Scripts\app\components\movember\richie-face\viewModel.js" />
+    <Content Include="Scripts\app\components\movember\zappa-face\config.js" />
+    <Content Include="Scripts\app\components\movember\zappa-face\template.html" />
+    <Content Include="Scripts\app\components\movember\zappa-face\viewModel.js" />
+    <Content Include="Scripts\app\components\movember\zappa-face\zappa_face.png" />
+    <Content Include="Scripts\app\components\movember\zorro-face\config.js" />
+    <Content Include="Scripts\app\components\movember\zorro-face\template.html" />
+    <Content Include="Scripts\app\components\movember\zorro-face\viewModel.js" />
+    <Content Include="Scripts\app\components\movember\chaplin-face\chaplin_face.png" />
+    <Content Include="Scripts\app\components\movember\zorro-face\zorro_face.png" />
+    <Content Include="Scripts\app\components\movember\zorro-hat\config.js" />
+    <Content Include="Scripts\app\components\movember\zorro-hat\template.html" />
+    <Content Include="Scripts\app\components\movember\zorro-hat\viewModel.js" />
+    <Content Include="Scripts\app\components\movember\chaplin-hat\chaplin_hat.png" />
+    <Content Include="Scripts\app\components\movember\che-guevara-face\che_guevara_face.png" />
+    <Content Include="Scripts\app\components\movember\che-guevara-face\config.js" />
+    <Content Include="Scripts\app\components\movember\che-guevara-face\template.html" />
+    <Content Include="Scripts\app\components\movember\che-guevara-face\viewModel.js" />
+    <Content Include="Scripts\app\components\movember\che-guevara-hat\che_guevara_hat.png" />
+    <Content Include="Scripts\app\components\movember\luigi-face\luigi_face.png" />
+    <Content Include="Scripts\app\components\movember\che-guevara-hat\config.js" />
+    <Content Include="Scripts\app\components\movember\che-guevara-hat\template.html" />
+    <Content Include="Scripts\app\components\movember\che-guevara-hat\viewModel.js" />
+    <Content Include="Scripts\app\components\movember\luigi-hat\config.js" />
+    <Content Include="Scripts\app\components\movember\luigi-hat\luigi_hat.png" />
+    <Content Include="Scripts\app\components\movember\luigi-hat\template.html" />
+    <Content Include="Scripts\app\components\movember\luigi-hat\viewModel.js" />
+    <Content Include="Scripts\app\components\movember\chaplin-face\config.js" />
+    <Content Include="Scripts\app\components\movember\chaplin-face\template.html" />
+    <Content Include="Scripts\app\components\movember\chaplin-face\viewModel.js" />
+    <Content Include="Scripts\app\components\movember\mario-face\mario_face.png" />
+    <Content Include="Scripts\app\components\movember\chaplin-hat\config.js" />
+    <Content Include="Scripts\app\components\movember\chaplin-hat\template.html" />
+    <Content Include="Scripts\app\components\movember\chaplin-hat\viewModel.js" />
+    <Content Include="Scripts\app\components\movember\mario-hat\config.js" />
+    <Content Include="Scripts\app\components\movember\mario-hat\mario_hat.png" />
+    <Content Include="Scripts\app\components\movember\mario-hat\template.html" />
+    <Content Include="Scripts\app\components\movember\mario-hat\viewModel.js" />
+    <Content Include="Scripts\app\components\movember\luigi-face\config.js" />
+    <Content Include="Scripts\app\components\movember\luigi-face\template.html" />
+    <Content Include="Scripts\app\components\movember\luigi-face\viewModel.js" />
+    <Content Include="Scripts\app\components\movember\mario-face\config.js" />
+    <Content Include="Scripts\app\components\movember\mario-face\template.html" />
+    <Content Include="Scripts\app\components\movember\mario-face\viewModel.js" />
+    <Content Include="Scripts\app\components\movember\colin-face\colin_face.png" />
+    <Content Include="Scripts\app\components\movember\colin-face\config.js" />
+    <Content Include="Scripts\app\components\movember\colin-face\template.html" />
+    <Content Include="Scripts\app\components\movember\colin-face\viewModel.js" />
+    <Content Include="Scripts\app\components\movember\dali-face\dali_face.png" />
+    <Content Include="Scripts\app\components\movember\varnon-face\config.js" />
+    <Content Include="Scripts\app\components\movember\varnon-face\template.html" />
+    <Content Include="Scripts\app\components\movember\varnon-face\varnon_face.png" />
+    <Content Include="Scripts\app\components\movember\varnon-face\viewModel.js" />
+    <Content Include="Scripts\app\components\movember\michael-face\config.js" />
+    <Content Include="Scripts\app\components\movember\michael-face\michael_face.png" />
+    <Content Include="Scripts\app\components\movember\michael-face\template.html" />
+    <Content Include="Scripts\app\components\movember\michael-face\viewModel.js" />
+    <Content Include="Scripts\app\components\movember\gable-face\config.js" />
+    <Content Include="Scripts\app\components\movember\gable-face\gable_face.png" />
+    <Content Include="Scripts\app\components\movember\gable-face\template.html" />
+    <Content Include="Scripts\app\components\movember\gable-face\viewModel.js" />
+    <Content Include="Scripts\app\components\movember\dali-face\config.js" />
+    <Content Include="Scripts\app\components\movember\dali-face\template.html" />
+    <Content Include="Scripts\app\components\movember\dali-face\viewModel.js" />
+    <Content Include="Scripts\app\components\movember\pringles-face\config.js" />
+    <Content Include="Scripts\app\components\movember\pringles-face\pringle_face.png" />
+    <Content Include="Scripts\app\components\movember\pringles-face\template.html" />
+    <Content Include="Scripts\app\components\movember\pringles-face\viewModel.js" />
+    <Content Include="Scripts\app\components\movember\borat-flag\borat_flag.png" />
+    <Content Include="Scripts\app\components\movember\borat-flag\config.js" />
+    <Content Include="Scripts\app\components\movember\borat-flag\template.html" />
+    <Content Include="Scripts\app\components\movember\borat-flag\viewModel.js" />
+    <Content Include="Scripts\app\components\movember\borat-face\borat_face.png" />
+    <Content Include="Scripts\app\components\movember\waters-face\config.js" />
+    <Content Include="Scripts\app\components\movember\waters-face\template.html" />
+    <Content Include="Scripts\app\components\movember\waters-face\viewModel.js" />
     <Content Include="Scripts\app\components\face\config.js" />
     <Content Include="Scripts\app\components\face\template.html" />
     <Content Include="Scripts\app\components\face\viewModel.js" />
@@ -328,21 +328,21 @@
     <Content Include="Scripts\app\components\beer\config.js" />
     <Content Include="Scripts\app\components\beer\template.html" />
     <Content Include="Scripts\app\components\beer\viewModel.js" />
-    <Content Include="Scripts\app\components\borat-face\config.js" />
-    <Content Include="Scripts\app\components\borat-face\template.html" />
-    <Content Include="Scripts\app\components\borat-face\viewModel.js" />
-    <Content Include="Scripts\app\components\waters-face\waters_face.png" />
-    <Content Include="Scripts\app\components\yosemite-face\config.js" />
-    <Content Include="Scripts\app\components\yosemite-face\template.html" />
-    <Content Include="Scripts\app\components\yosemite-face\viewModel.js" />
-    <Content Include="Scripts\app\components\heisenberg-face\config.js" />
-    <Content Include="Scripts\app\components\heisenberg-face\heisenberg_face.png" />
-    <Content Include="Scripts\app\components\heisenberg-face\template.html" />
-    <Content Include="Scripts\app\components\heisenberg-face\viewModel.js" />
-    <Content Include="Scripts\app\components\heisenberg-hat\config.js" />
-    <Content Include="Scripts\app\components\heisenberg-hat\heisenberg_hat.png" />
-    <Content Include="Scripts\app\components\heisenberg-hat\template.html" />
-    <Content Include="Scripts\app\components\heisenberg-hat\viewModel.js" />
+    <Content Include="Scripts\app\components\movember\borat-face\config.js" />
+    <Content Include="Scripts\app\components\movember\borat-face\template.html" />
+    <Content Include="Scripts\app\components\movember\borat-face\viewModel.js" />
+    <Content Include="Scripts\app\components\movember\waters-face\waters_face.png" />
+    <Content Include="Scripts\app\components\movember\yosemite-face\config.js" />
+    <Content Include="Scripts\app\components\movember\yosemite-face\template.html" />
+    <Content Include="Scripts\app\components\movember\yosemite-face\viewModel.js" />
+    <Content Include="Scripts\app\components\movember\heisenberg-face\config.js" />
+    <Content Include="Scripts\app\components\movember\heisenberg-face\heisenberg_face.png" />
+    <Content Include="Scripts\app\components\movember\heisenberg-face\template.html" />
+    <Content Include="Scripts\app\components\movember\heisenberg-face\viewModel.js" />
+    <Content Include="Scripts\app\components\movember\heisenberg-hat\config.js" />
+    <Content Include="Scripts\app\components\movember\heisenberg-hat\heisenberg_hat.png" />
+    <Content Include="Scripts\app\components\movember\heisenberg-hat\template.html" />
+    <Content Include="Scripts\app\components\movember\heisenberg-hat\viewModel.js" />
     <Content Include="Scripts\app\components\keg-body\config.js" />
     <Content Include="Scripts\app\components\keg-body\template.html" />
     <Content Include="Scripts\app\components\keg-body\viewModel.js" />
@@ -454,8 +454,8 @@
     <Content Include="Scripts\app\bindings.js" />
     <Content Include="Scripts\app\bubbles.js" />
     <Content Include="Scripts\app\componentResolver.js" />
-    <Content Include="Scripts\app\components\yosemite-face\yosemite_face.png" />
-    <Content Include="Scripts\app\components\zorro-hat\zorro_hat.png" />
+    <Content Include="Scripts\app\components\movember\yosemite-face\yosemite_face.png" />
+    <Content Include="Scripts\app\components\movember\zorro-hat\zorro_hat.png" />
     <Content Include="Scripts\app\camera.js" />
     <Content Include="Scripts\app\dataService.js" />
     <Content Include="Scripts\app\components\hat\template.html" />
@@ -499,11 +499,21 @@
     <Content Include="Areas\Analytics\Views\Pours\Index.cshtml" />
     <Content Include="log4net.config" />
     <None Include="Properties\PublishProfiles\Production.pubxml" />
+    <Content Include="Scripts\app\ComponentsBundle.js">
+      <DependentUpon>ComponentsBundle.js.bundle</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\ComponentsBundle.js.bundle" />
+    <Content Include="Scripts\app\ComponentsBundle.min.js.map">
+      <DependentUpon>ComponentsBundle.min.js</DependentUpon>
+    </Content>
     <None Include="Scripts\libs\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\app\admin.js" />
     <Content Include="Scripts\app\model\style.js" />
     <Content Include="Scripts\app\model\tap.js" />
     <Content Include="Scripts\app\model\keg.js" />
+    <Content Include="Scripts\app\ComponentsBundle.min.js">
+      <DependentUpon>ComponentsBundle.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\libs\Chart.js" />
     <Content Include="Scripts\libs\bootstrap.js" />
     <Content Include="Scripts\libs\bootstrap.min.js" />
@@ -534,6 +544,18 @@
     <Content Include="Scripts\libs\toastr.min.js" />
     <Content Include="Scripts\libs\r.js" />
     <Content Include="Scripts\libs\require.js" />
+    <Content Include="Scripts\app\MainBundle.js">
+      <DependentUpon>MainBundle.js.bundle</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\MainBundle.min.js">
+      <DependentUpon>MainBundle.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\ModelBundle.js">
+      <DependentUpon>ModelBundle.js.bundle</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\ModelBundle.min.js">
+      <DependentUpon>ModelBundle.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\Select2-locales\select2_locale_ar.js" />
     <Content Include="Scripts\Select2-locales\select2_locale_az.js" />
     <Content Include="Scripts\Select2-locales\select2_locale_bg.js" />
@@ -634,6 +656,7 @@
     <Compile Include="Controllers\Api\StatusController.cs" />
     <Compile Include="Controllers\Api\RepourterTestController.cs" />
     <Compile Include="Controllers\Api\TapController.cs" />
+    <Compile Include="Controllers\ComponentsController.cs" />
     <Compile Include="Controllers\FallController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Api\KegController.cs" />
@@ -642,6 +665,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ComponentTemplateViewModel.cs" />
     <Compile Include="PourcastRoleProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -680,6 +704,15 @@
     <Content Include="Views\Shared\DisplayTemplates\Number.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Percentage.cshtml" />
     <Content Include="Views\Fall\Index.cshtml" />
+    <Content Include="Scripts\app\ModelBundle.js.bundle" />
+    <Content Include="Scripts\app\ModelBundle.min.js.map">
+      <DependentUpon>ModelBundle.min.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\app\MainBundle.js.bundle" />
+    <Content Include="Scripts\app\MainBundle.min.js.map">
+      <DependentUpon>MainBundle.min.js</DependentUpon>
+    </Content>
+    <None Include="Views\Components\Templates.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -690,7 +723,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Scripts\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\RightpointLabs.Pourcast.Application\RightpointLabs.Pourcast.Application.csproj">

@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<bundle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://vswebessentials.com/schemas/v1/bundle.xsd">
+  <settings>
+    <!--Determines if the bundle file should be automatically optimized after creation/update.-->
+    <minify>true</minify>
+    <!--Determine whether to generate/re-generate this bundle on building the solution.-->
+    <runOnBuild>false</runOnBuild>
+    <!--Specifies a custom subfolder to save files to. By default, compiled output will be placed in the same folder and nested under the original file.-->
+    <outputDirectory />
+  </settings>
+  <!--The order of the <file> elements determines the order of the files in the bundle.-->
+  <files>
+    <file>/Scripts/app/components/beer/config.js</file>
+    <file>/Scripts/app/components/beer/viewModel.js</file>
+    <file>/Scripts/app/components/face/config.js</file>
+    <file>/Scripts/app/components/face/viewModel.js</file>
+    <file>/Scripts/app/components/hat/config.js</file>
+    <file>/Scripts/app/components/hat/viewModel.js</file>
+    <file>/Scripts/app/components/keg/config.js</file>
+    <file>/Scripts/app/components/keg/viewModel.js</file>
+    <file>/Scripts/app/components/keg-body/config.js</file>
+    <file>/Scripts/app/components/keg-body/viewModel.js</file>
+    <file>/Scripts/app/components/missing/viewModel.js</file>
+    <file>/Scripts/app/components/percent/config.js</file>
+    <file>/Scripts/app/components/percent/viewModel.js</file>
+    <file>/Scripts/app/components/pourcast/config.js</file>
+    <file>/Scripts/app/components/pourcast/viewModel.js</file>
+    <file>/Scripts/app/components/tap/config.js</file>
+    <file>/Scripts/app/components/tap/viewModel.js</file>
+  </files>
+</bundle>

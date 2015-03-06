@@ -1,4 +1,4 @@
-﻿define(['jquery'], function () {
+﻿define('app/bubbles', ['jquery'], function () {
     var bubbles = function($container, p) {
         p = $.extend({
             minBubbleCount: 5, // Minimum number of bubbles
@@ -60,8 +60,3 @@
     };
     return bubbles;
 });
-
-function bubbles($container, params) {
-
-    
-}

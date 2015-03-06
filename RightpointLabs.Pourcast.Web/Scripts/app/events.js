@@ -1,4 +1,4 @@
-﻿define(['jquery', 'toastr', 'signalr.hubs'], function ($, toastr) {
+﻿define('app/events', ['jquery', 'toastr', 'signalr.hubs'], function ($, toastr) {
 
     var subscribers = {};
 

@@ -1,9 +1,9 @@
-﻿define(['ko', 'jquery', 'text!app/components/missing/template.html'], function (ko, $, htmlString) {
+﻿define('app/components/missing/viewModel', ['ko', 'jquery'], function (ko, $) {
 
     function Missing() { };
 
     return {
         viewModel: Missing,
-        template: htmlString
+        template: { element: 'missing-template' }
     };
 });

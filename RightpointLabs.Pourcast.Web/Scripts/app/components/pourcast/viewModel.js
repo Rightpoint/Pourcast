@@ -1,4 +1,4 @@
-﻿define(['ko', 'text!app/components/pourcast/template.html'], function (ko, htmlString) {
+﻿define('app/components/pourcast/viewModel', ['ko'], function (ko) {
 
     function Pourcast(model) {
         var self = this;
@@ -10,6 +10,6 @@
 
     return {
         viewModel: Pourcast,
-        template: htmlString
+        template: { element: 'pourcast-template' }
     };
 });

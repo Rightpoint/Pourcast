@@ -1,4 +1,4 @@
-﻿define(['ko', 'jquery', 'app/bubbles'], function (ko, $, bubbles) {
+﻿define('app/bindings', ['ko', 'jquery', 'app/bubbles'], function (ko, $, bubbles) {
     var bindings = {};
 
     bindings.init = function () {

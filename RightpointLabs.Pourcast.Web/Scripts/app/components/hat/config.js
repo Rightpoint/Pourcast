@@ -1,4 +1,4 @@
-﻿define(['ko'], function (ko) {
+﻿define('app/components/hat/config', ['ko'], function (ko) {
 
     var count = 0;
 

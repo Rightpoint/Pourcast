@@ -1,4 +1,4 @@
-﻿define(['ko'], function (ko) {
+﻿define('app/model/style', ['ko'], function (ko) {
     function Style(styleJSON) {
         var self = this;
 

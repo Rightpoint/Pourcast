@@ -1,4 +1,4 @@
-﻿define(['ko'], function (ko) {
+﻿define('app/componentResolver', ['ko'], function (ko) {
 
     function ComponentResolver() {
         this.components = ko.observableArray([]);

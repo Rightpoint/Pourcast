@@ -1,0 +1,8 @@
+﻿@model IEnumerable<RightpointLabs.Pourcast.Web.Models.ComponentTemplateViewModel>
+
+@foreach (var template in Model)
+{
+    <script type="text/html" id="@(template.Name)-template">
+        @Html.Raw(template.Template)
+    </script>
+}

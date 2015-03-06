@@ -1,4 +1,4 @@
-﻿define(['ko'], function (ko) {
+﻿define('app/components/tap/config', ['ko'], function (ko) {
 
     function Config(model) {
         var self = this;

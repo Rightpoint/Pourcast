@@ -1,4 +1,4 @@
-﻿define(['ko', 'app/events', 'app/dataService', 'text!app/components/percent/template.html'], function (ko, events, dataService, htmlString) {
+﻿define('app/components/percent/viewModel', ['ko', 'app/events', 'app/dataService'], function (ko, events, dataService) {
     
     function Percent(model) {
         var self = this;
@@ -13,6 +13,6 @@
 
     return {
         viewModel: Percent,
-        template: htmlString
+        template: { element: 'percent-template' }
     };
 });

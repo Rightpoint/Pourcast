@@ -1,4 +1,4 @@
-﻿define(['ko', 'app/events', 'app/dataService', 'text!app/components/face/template.html'], function (ko, events, dataService, htmlString) {
+﻿define('app/components/face/viewModel', ['ko', 'app/events', 'app/dataService'], function (ko, events, dataService) {
     
     function Face(model) {
         var self = this;
@@ -10,6 +10,6 @@
 
     return {
         viewModel: Face,
-        template: htmlString
+        template: { element: 'face-template' }
     };
 });
