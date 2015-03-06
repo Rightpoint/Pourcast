@@ -63,7 +63,9 @@ namespace RightpointLabs.Pourcast.Infrastructure.Services
 
         private async Task<MessageUserInfo[]> GetUserPage(int page)
         {
-            var resp = await new HttpClient().GetAsync("https://www.yammer.com/api/v1/users.json?page=" + page);
+            var client = new HttpClient();
+            client.DefaultRequestHeaders.Add("Authorization", "Bearer " + _authCode);
+            var resp = await client.GetAsync("https://www.yammer.com/api/v1/users.json?page=" + page);
             var data = await resp.Content.ReadAsStringAsync();
             var obj = JsonConvert.DeserializeObject<JArray>(data);
 

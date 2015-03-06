@@ -4,13 +4,16 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Accord.Imaging.Filters;
+using Accord.Statistics.Kernels;
 using Accord.Vision.Detection;
 using Accord.Vision.Detection.Cascades;
 using AForge.Imaging.Filters;
+using log4net;
 using RightpointLabs.Pourcast.Domain.Services;
 using SkyBiometry.Client.FC;
 using Point = SkyBiometry.Client.FC.Point;
@@ -19,15 +22,19 @@ namespace RightpointLabs.Pourcast.Infrastructure.Services
 {
     public class FaceRecognitionService : IFaceRecognitionService
     {
+        private static ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
         private readonly string _apiKey;
         private readonly string _apiSecret;
         private readonly string _tagNamespace;
+        private readonly IImageCleanupService _imageCleanupService;
 
-        public FaceRecognitionService(string apiKey, string apiSecret, string tagNamespace)
+        public FaceRecognitionService(string apiKey, string apiSecret, string tagNamespace, IImageCleanupService imageCleanupService)
         {
             _apiKey = apiKey;
             _apiSecret = apiSecret;
             _tagNamespace = tagNamespace;
+            _imageCleanupService = imageCleanupService;
         }
 
         public string[] ProcessImage(string rawDataUrl, out string intermediateUrl, out string finalUrl)
@@ -45,30 +52,43 @@ namespace RightpointLabs.Pourcast.Infrastructure.Services
                 var image = (Bitmap)Bitmap.FromStream(ms);
                 new ContrastStretch().ApplyInPlace(image);
 
-                var faceTags = detectResult.Photos.SelectMany(i => i.Tags).ToList();
-                if (faceTags.Count > 0)
+                List<Tag> faceTags = null;
+                try
                 {
-                    var intermediateImage = new Bitmap(image);
-                    var faces = faceTags.Select(i => GetBox(i.Center, i.Width, i.Height, image)).ToList();
-                    new RectanglesMarker(faces, Color.Red).ApplyInPlace(intermediateImage);
-
-                    var boundary = Math.Max(40, faces.Max(i => Math.Max(i.Height, i.Width)) / 3);
-                    var x1 = Math.Max(0, faces.Min(i => i.Left) - boundary);
-                    var y1 = Math.Max(0, faces.Min(i => i.Top) - boundary);
-                    var x2 = Math.Min(image.Width, faces.Max(i => i.Right) + boundary);
-                    var y2 = Math.Min(image.Height, faces.Max(i => i.Bottom) + boundary);
-
-                    var newBoundingBox = new Rectangle(x1, y1, x2 - x1, y2 - y1);
-                    new RectanglesMarker(new[] { newBoundingBox }, Color.Blue).ApplyInPlace(intermediateImage);
-
-                    using (var ms2 = new MemoryStream())
-                    {
-                        intermediateImage.Save(ms2, ImageFormat.Jpeg);
-                        intermediateUrl = string.Concat("data:image/jpeg;base64,", Convert.ToBase64String(ms2.ToArray()));
-                    }
-
-                    image = new Crop(newBoundingBox).Apply(image);
+                    faceTags = detectResult.Photos.SelectMany(i => i.Tags).ToList();
                 }
+                catch (Exception ex)
+                {
+                    log.Error("Remote call", ex);
+                }
+
+                if (null == faceTags || faceTags.Count == 0)
+                {
+                    // our fancy web service can't figure out anything, use the local library :(
+                    finalUrl = _imageCleanupService.CleanUpImage(rawDataUrl, out intermediateUrl);
+                    return new string[0];
+                }
+
+                var intermediateImage = new Bitmap(image);
+                var faces = faceTags.Select(i => GetBox(i.Center, i.Width, i.Height, image)).ToList();
+                new RectanglesMarker(faces, Color.Red).ApplyInPlace(intermediateImage);
+
+                var boundary = Math.Max(40, faces.Max(i => Math.Max(i.Height, i.Width)) / 3);
+                var x1 = Math.Max(0, faces.Min(i => i.Left) - boundary);
+                var y1 = Math.Max(0, faces.Min(i => i.Top) - boundary);
+                var x2 = Math.Min(image.Width, faces.Max(i => i.Right) + boundary);
+                var y2 = Math.Min(image.Height, faces.Max(i => i.Bottom) + boundary);
+
+                var newBoundingBox = new Rectangle(x1, y1, x2 - x1, y2 - y1);
+                new RectanglesMarker(new[] { newBoundingBox }, Color.Blue).ApplyInPlace(intermediateImage);
+
+                using (var ms2 = new MemoryStream())
+                {
+                    intermediateImage.Save(ms2, ImageFormat.Jpeg);
+                    intermediateUrl = string.Concat("data:image/jpeg;base64,", Convert.ToBase64String(ms2.ToArray()));
+                }
+
+                image = new Crop(newBoundingBox).Apply(image);
 
                 using (var ms2 = new MemoryStream())
                 {
@@ -84,10 +104,10 @@ namespace RightpointLabs.Pourcast.Infrastructure.Services
         private Rectangle GetBox(Point center, float width, float height, Bitmap image)
         {
             return new Rectangle(
-                (int) (center.X - width/2) * image.Width,
-                (int)(center.Y - width / 2) * image.Height,
-                (int)(center.X + height / 2) * image.Width,
-                (int)(center.Y + height / 2) * image.Height);
+                (int)((center.X - width / 2) * image.Width / 100),
+                (int)((center.Y - width / 2) * image.Height / 100),
+                (int)((center.X + height / 2) * image.Width / 100),
+                (int)((center.Y + height / 2) * image.Height / 100));
         }
 
         private byte[] GetDataFromUrl(string dataUrl, out string contentType)

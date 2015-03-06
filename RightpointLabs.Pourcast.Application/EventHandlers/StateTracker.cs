@@ -23,9 +23,11 @@ namespace RightpointLabs.Pourcast.Application.EventHandlers
     {
         private static log4net.ILog log = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
+        private Lazy<Task<Dictionary<string, MessageUserInfo>>> _getUsers; 
         public StateTracker(IMessagePoster messagePoster)
         {
             _messagePoster = messagePoster;
+            _getUsers = new Lazy<Task<Dictionary<string, MessageUserInfo>>>(() => _messagePoster.GetUsers());
         }
 
         private readonly IMessagePoster _messagePoster;
@@ -50,7 +52,6 @@ namespace RightpointLabs.Pourcast.Application.EventHandlers
             }
         }
 
-
         private void Handle(PourStopped domainEvent, ITapNotificationStateRepository stateRepository, Keg keg, Beer beer)
         {
             try
@@ -59,12 +60,12 @@ namespace RightpointLabs.Pourcast.Application.EventHandlers
                 if (domainEvent.Volume < 2)
                     return;
                 var now = DateTime.Now;
-                // wait until 2PM
-                if (now.TimeOfDay < TimeSpan.FromHours(14))
-                    return;
-                // only post on Fridays
-                if(now.DayOfWeek != DayOfWeek.Friday)
-                    return;
+                //// wait until 2PM
+                //if (now.TimeOfDay < TimeSpan.FromHours(14))
+                //    return;
+                //// only post on Fridays
+                //if(now.DayOfWeek != DayOfWeek.Friday)
+                //    return;
 
                 Task toWaitFor;
                 lock (_lockObject)
@@ -106,7 +107,7 @@ namespace RightpointLabs.Pourcast.Application.EventHandlers
                                     if (pt.Faces != null && pt.Faces.Any())
                                     {
                                         var faces = new HashSet<string>(pt.Faces.Select(i => i.Split('@')[0].ToLowerInvariant()));
-                                        var allUsers = await _messagePoster.GetUsers();
+                                        var allUsers = await _getUsers.Value;
                                         users = AddUsers(ref msg, allUsers.Where(i => faces.Contains(i.Key.Split('@')[0])).Select(i => i.Value).ToArray());
                                     }
                                 }
@@ -139,7 +140,7 @@ namespace RightpointLabs.Pourcast.Application.EventHandlers
                                 if (pt.Faces != null && pt.Faces.Any())
                                 {
                                     var faces = new HashSet<string>(pt.Faces.Select(i => i.Split('@')[0].ToLowerInvariant()));
-                                    var allUsers = await _messagePoster.GetUsers();
+                                    var allUsers = await _getUsers.Value;
                                     users = AddUsers(ref msg, allUsers.Where(i => faces.Contains(i.Key.Split('@')[0])).Select(i => i.Value).ToArray());
                                 }
                             }
@@ -215,7 +216,7 @@ namespace RightpointLabs.Pourcast.Application.EventHandlers
             if (null != nearbyUsers && nearbyUsers.Length > 0)
             {
                 users = nearbyUsers.Select(i => i.id).ToArray();
-                var userNames = nearbyUsers.Select(i => i.name).ToArray();
+                var userNames = nearbyUsers.Select(i => "@" + i.name).ToArray();
                 if (userNames.Length == 2)
                 {
                     userNames = new[] { userNames[0] + " and " + userNames[1] };

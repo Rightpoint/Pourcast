@@ -17,6 +17,7 @@ namespace RightpointLabs.Pourcast.Infrastructure.Services
     public class ImageCleanupService : IImageCleanupService
     {
         private static ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
         public string CleanUpImage(string rawDataUrl, out string intermediateUrl)
         {
             intermediateUrl = null;
@@ -43,7 +44,7 @@ namespace RightpointLabs.Pourcast.Infrastructure.Services
                     var intermediateImage = new Bitmap(image);
                     new RectanglesMarker(faces, Color.Red).ApplyInPlace(intermediateImage);
 
-                    var boundary = Math.Max(40, faces.Max(i => Math.Max(i.Height, i.Width)) / 3);
+                    var boundary = Math.Max(40, faces.Max(i => Math.Max(i.Height, i.Width)));
                     var x1 = Math.Max(0, faces.Min(i => i.Left) - boundary);
                     var y1 = Math.Max(0, faces.Min(i => i.Top) - boundary);
                     var x2 = Math.Min(image.Width, faces.Max(i => i.Right) + boundary);
