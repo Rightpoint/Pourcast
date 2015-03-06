@@ -82,7 +82,7 @@
                 var data = takeShot(v);
 
                 v.pause();
-                v.src = null;
+                v.src = '';
                 $(v).remove();
                 s.stop();
                 return data;
