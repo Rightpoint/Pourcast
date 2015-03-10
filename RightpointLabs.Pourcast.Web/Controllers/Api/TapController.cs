@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Web.Http;
+using log4net;
 
 namespace RightpointLabs.Pourcast.Web.Controllers.Api
 {
@@ -9,6 +11,7 @@ namespace RightpointLabs.Pourcast.Web.Controllers.Api
 
     public class TapController : ApiController
     {
+        private static ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);  
         private readonly ITapOrchestrator _tapOrchestrator;
 
         public TapController(ITapOrchestrator tapOrchestrator)
@@ -41,25 +44,57 @@ namespace RightpointLabs.Pourcast.Web.Controllers.Api
         [HttpGet]
         public void StartPour(string id)
         {
-            _tapOrchestrator.StartPourFromTap(id);
+            try
+            {
+                _tapOrchestrator.StartPourFromTap(id);
+            }
+            catch (Exception ex)
+            {
+                log.Error("StartPour", ex);
+                throw;
+            }
         }
 
         [HttpGet]
         public void Pouring([FromUri]string id, [FromUri]double volume)
         {
-            _tapOrchestrator.PouringFromTap(id, volume);
+            try
+            {
+                _tapOrchestrator.PouringFromTap(id, volume);
+            }
+            catch (Exception ex)
+            {
+                log.Error("Pouring", ex);
+                throw;
+            }
         }
 
         [HttpGet]
         public void StopPour([FromUri]string id, [FromUri]double volume)
         {
-            _tapOrchestrator.StopPourFromTap(id, volume);
+            try
+            {
+                _tapOrchestrator.StopPourFromTap(id, volume);
+            }
+            catch (Exception ex)
+            {
+                log.Error("StopPour", ex);
+                throw;
+            }
         }
 
         [HttpGet]
         public void Temperature([FromUri]string id, [FromUri]double f)
         {
-            _tapOrchestrator.UpdateTemperature(id, f);
+            try
+            {
+                _tapOrchestrator.UpdateTemperature(id, f);
+            }
+            catch (Exception ex)
+            {
+                log.Error("Temperature", ex);
+                throw;
+            }
         }
     }
 }
