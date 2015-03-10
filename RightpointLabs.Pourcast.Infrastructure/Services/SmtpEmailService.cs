@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Reflection;
+using log4net;
 
 namespace RightpointLabs.Pourcast.Infrastructure.Services
 {
@@ -12,6 +14,8 @@ namespace RightpointLabs.Pourcast.Infrastructure.Services
     {
         private readonly SmtpClient _client;
 
+        private static ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
         public SmtpEmailService(SmtpClient client)
         {
             if (client == null) throw new ArgumentNullException("client");
@@ -23,7 +27,18 @@ namespace RightpointLabs.Pourcast.Infrastructure.Services
         {
             if (email == null) return;
 
-            TransactionExtensions.WaitForTransactionCompleted(() => _client.Send(email));
+            TransactionExtensions.WaitForTransactionCompleted(() =>
+            {
+                try
+                {
+                    _client.Send(email);
+                }
+                catch (Exception ex)
+                {
+                    // failure to send the email should not bring everything crashing down
+                    log.Warn("Unable to send email", ex);
+                }
+            });
         }
     }
 }
