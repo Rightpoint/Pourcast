@@ -73,7 +73,7 @@ namespace RightpointLabs.Pourcast.Infrastructure.Services
                 var faces = faceTags.Select(i => GetTagBoundingBox(i, image)).ToList();
                 new RectanglesMarker(faces, Color.Red).ApplyInPlace(intermediateImage);
 
-                var boundary = Math.Max(40, faces.Max(i => Math.Max(i.Height, i.Width)) / 3);
+                var boundary = Math.Max(40, faces.Max(i => Math.Max(i.Height, i.Width)));
                 var x1 = Math.Max(0, faces.Min(i => i.Left) - boundary);
                 var y1 = Math.Max(0, faces.Min(i => i.Top) - boundary);
                 var x2 = Math.Min(image.Width, faces.Max(i => i.Right) + boundary);
@@ -109,9 +109,9 @@ namespace RightpointLabs.Pourcast.Infrastructure.Services
         {
             return new Rectangle(
                 (int)((tag.Center.X - tag.Width / 2) * image.Width / 100),
-                (int)((tag.Center.Y - tag.Width / 2) * image.Height / 100),
-                (int)((tag.Center.X + tag.Height / 2) * image.Width / 100),
-                (int)((tag.Center.Y + tag.Height / 2) * image.Height / 100));
+                (int)((tag.Center.Y - tag.Height / 2) * image.Height / 100),
+                (int)(tag.Width * image.Width / 100),
+                (int)(tag.Height * image.Height / 100));
         }
 
         private byte[] GetDataFromUrl(string dataUrl, out string contentType)
