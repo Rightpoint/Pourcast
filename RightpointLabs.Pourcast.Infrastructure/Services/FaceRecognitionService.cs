@@ -27,13 +27,15 @@ namespace RightpointLabs.Pourcast.Infrastructure.Services
         private readonly string _apiKey;
         private readonly string _apiSecret;
         private readonly string _tagNamespace;
+        private readonly string[] _possibleUsers;
         private readonly IImageCleanupService _imageCleanupService;
 
-        public FaceRecognitionService(string apiKey, string apiSecret, string tagNamespace, IImageCleanupService imageCleanupService)
+        public FaceRecognitionService(string apiKey, string apiSecret, string tagNamespace, string[] possibleUsers, IImageCleanupService imageCleanupService)
         {
             _apiKey = apiKey;
             _apiSecret = apiSecret;
             _tagNamespace = tagNamespace;
+            _possibleUsers = possibleUsers;
             _imageCleanupService = imageCleanupService;
         }
 
@@ -46,7 +48,7 @@ namespace RightpointLabs.Pourcast.Infrastructure.Services
             var data = GetDataFromUrl(rawDataUrl, out contentType);
             using (var ms = new MemoryStream(data))
             {
-                var detectResult = Task.Run(async () => await ctx.Faces.DetectAsync(new string[0], new[] {ms})).Result;
+                var detectResult = Task.Run(async () => await ctx.Faces.RecognizeAsync(_possibleUsers, new string[0], new[] {ms}, _tagNamespace)).Result;
                 ms.Seek(0, SeekOrigin.Begin);
 
                 var image = (Bitmap)Bitmap.FromStream(ms);
