@@ -45,7 +45,7 @@
                 var e = initialEvents[i];
                 var json = ko.toJSON(e.DomainEvent);
                 if (e.TypeName == "PictureTaken") {
-                    json = ko.toJSON({ faces: e.DomainEvent.faces });
+                    json = ko.toJSON({ faces: e.DomainEvent.Faces });
                 }
                 vm.statusMessages.push({ type: e.TypeName, json: json, data: e.DomainEvent });
             }
@@ -57,7 +57,7 @@
                     events.on(eventName, function (e) {
                         var json = ko.toJSON(e);
                         if (eventName == "PictureTaken") {
-                            json = ko.toJSON({ faces: e.faces });
+                            json = ko.toJSON({ faces: e.Faces });
                         }
                         vm.statusMessages.unshift({ type: eventName, json: json, data: e });
                         while (vm.statusMessages().length > 100) {

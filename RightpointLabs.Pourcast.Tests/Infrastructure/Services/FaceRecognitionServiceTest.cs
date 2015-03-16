@@ -16,7 +16,7 @@ namespace RightpointLabs.Pourcast.Tests.Infrastructure.Services
         {
             var rawImage = @"";
             var people = "".Split(',');
-            var svc = new FaceRecognitionService("7c1d51ce2ff74be58ecc1668a32e6172", "63af4f447bec4d889a5a23d3a7928506", "rpphotos", people, new ImageCleanupService());
+            var svc = new FaceRecognitionService("", "", "", people, new ImageCleanupService());
             string intermediateUrl;
             string finalUrl;
             var users = svc.ProcessImage(rawImage, out intermediateUrl, out finalUrl);

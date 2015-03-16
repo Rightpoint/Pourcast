@@ -16,6 +16,7 @@ using AForge.Imaging.Filters;
 using log4net;
 using RightpointLabs.Pourcast.Domain.Services;
 using SkyBiometry.Client.FC;
+using Match = SkyBiometry.Client.FC.Match;
 using Point = SkyBiometry.Client.FC.Point;
 
 namespace RightpointLabs.Pourcast.Infrastructure.Services
@@ -98,10 +99,30 @@ namespace RightpointLabs.Pourcast.Infrastructure.Services
                     finalUrl = string.Concat("data:image/jpeg;base64,", Convert.ToBase64String(ms2.ToArray()));
                 }
 
-                return faceTags.Select(i => i.Matches.FirstOrDefault()).Where(i => i != null).Select(i => (i.UserId ?? "").Split('@')[0]).ToArray();
+                return faceTags.Select(GetMatch).Where(i => i != null).ToArray();
             }
-            
         }
+
+        private static string GetMatch(Tag tag)
+        {
+            var result = _GetMatch(tag);
+            log.DebugFormat("Got tag with ({0}), but returning {1}", string.Join(", ", tag.Matches.Select(i => string.Format("{0}: {1}", i.UserId.Split('@')[0], i.Confidence))), result);
+            return result;
+        }
+
+        private static string _GetMatch(Tag tag)
+        {
+            if (!tag.Matches.Any())
+                return null;
+
+            var best = tag.Matches.First();
+
+            if (best.Confidence < tag.Matches.Skip(1).Max(i => i.Confidence) + 10)
+                return null; // it basically has no idea
+
+            return best.UserId.Split('@')[0];
+        }
+
 
         /// <summary>
         /// Get the bounding box of the face.
