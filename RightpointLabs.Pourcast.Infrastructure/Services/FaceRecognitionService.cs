@@ -28,15 +28,14 @@ namespace RightpointLabs.Pourcast.Infrastructure.Services
         private readonly string _apiKey;
         private readonly string _apiSecret;
         private readonly string _tagNamespace;
-        private readonly string[] _possibleUsers;
+        private string[] _possibleUsers;
         private readonly IImageCleanupService _imageCleanupService;
 
-        public FaceRecognitionService(string apiKey, string apiSecret, string tagNamespace, string[] possibleUsers, IImageCleanupService imageCleanupService)
+        public FaceRecognitionService(string apiKey, string apiSecret, string tagNamespace, IImageCleanupService imageCleanupService)
         {
             _apiKey = apiKey;
             _apiSecret = apiSecret;
             _tagNamespace = tagNamespace;
-            _possibleUsers = possibleUsers;
             _imageCleanupService = imageCleanupService;
         }
 
@@ -44,6 +43,11 @@ namespace RightpointLabs.Pourcast.Infrastructure.Services
         {
             intermediateUrl = null;
             var ctx = new FCClient(_apiKey, _apiSecret);
+
+            if (null == _possibleUsers)
+            {
+                _possibleUsers = Task.Run(async () => await ctx.Account.UsersAsync(new [] { _tagNamespace })).Result.Users[_tagNamespace].Select(i => i.Split('@')[0]).ToArray();
+            }
 
             string contentType;
             var data = GetDataFromUrl(rawDataUrl, out contentType);

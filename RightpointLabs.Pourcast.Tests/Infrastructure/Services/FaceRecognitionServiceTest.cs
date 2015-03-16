@@ -15,8 +15,7 @@ namespace RightpointLabs.Pourcast.Tests.Infrastructure.Services
         public void TestFaces()
         {
             var rawImage = @"";
-            var people = "".Split(',');
-            var svc = new FaceRecognitionService("", "", "", people, new ImageCleanupService());
+            var svc = new FaceRecognitionService("", "", "", new ImageCleanupService());
             string intermediateUrl;
             string finalUrl;
             var users = svc.ProcessImage(rawImage, out intermediateUrl, out finalUrl);

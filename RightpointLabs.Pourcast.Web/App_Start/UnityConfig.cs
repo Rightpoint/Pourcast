@@ -94,7 +94,6 @@ namespace RightpointLabs.Pourcast.Web
                     new InjectionParameter<string>(ConfigurationManager.AppSettings["SkyBiometryApiKey"]),
                     new InjectionParameter<string>(ConfigurationManager.AppSettings["SkyBiometryApiSecret"]),
                     new InjectionParameter<string>(ConfigurationManager.AppSettings["SkyBiometryTagNamespace"]),
-                    new InjectionParameter<string[]>(ConfigurationManager.AppSettings["SkyBiometryDetectUsers"].Split(',')),
                     typeof(IImageCleanupService)));
             container.RegisterType<IImageCleanupService, ImageCleanupService>(new PerRequestLifetimeManager());
 
