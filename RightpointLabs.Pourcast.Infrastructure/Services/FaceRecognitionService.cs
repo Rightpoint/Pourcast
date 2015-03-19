@@ -5,19 +5,13 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Accord.Imaging.Filters;
-using Accord.Statistics.Kernels;
-using Accord.Vision.Detection;
-using Accord.Vision.Detection.Cascades;
 using AForge.Imaging.Filters;
 using log4net;
 using RightpointLabs.Pourcast.Domain.Services;
 using SkyBiometry.Client.FC;
-using Match = SkyBiometry.Client.FC.Match;
-using Point = SkyBiometry.Client.FC.Point;
 
 namespace RightpointLabs.Pourcast.Infrastructure.Services
 {
@@ -44,24 +38,31 @@ namespace RightpointLabs.Pourcast.Infrastructure.Services
             intermediateUrl = null;
             var ctx = new FCClient(_apiKey, _apiSecret);
 
+            string contentType;
+            var data = GetDataFromUrl(rawDataUrl, out contentType);
+
+            var dataToSend = ResizePictureForDetection(data);
+            
             if (null == _possibleUsers)
             {
                 _possibleUsers = Task.Run(async () => await ctx.Account.UsersAsync(new [] { _tagNamespace })).Result.Users[_tagNamespace].Select(i => i.Split('@')[0]).ToArray();
             }
 
-            string contentType;
-            var data = GetDataFromUrl(rawDataUrl, out contentType);
             using (var ms = new MemoryStream(data))
             {
-                var detectResult = Task.Run(async () => await ctx.Faces.RecognizeAsync(_possibleUsers, new string[0], new[] {ms}, _tagNamespace)).Result;
-                ms.Seek(0, SeekOrigin.Begin);
-
                 var image = (Bitmap)Bitmap.FromStream(ms);
                 new ContrastStretch().ApplyInPlace(image);
 
                 List<Tag> faceTags = null;
                 try
                 {
+                    var detectResult = Task.Run(async () =>
+                    {
+                        using (var msToSend = new MemoryStream(dataToSend))
+                        {
+                            return await ctx.Faces.RecognizeAsync(_possibleUsers, new string[0], new[] { msToSend }, _tagNamespace);
+                        }
+                    }).Result;
                     faceTags = detectResult.Photos.SelectMany(i => i.Tags).ToList();
                 }
                 catch (Exception ex)
@@ -106,6 +107,59 @@ namespace RightpointLabs.Pourcast.Infrastructure.Services
                 return faceTags.Select(GetMatch).Where(i => i != null).ToArray();
             }
         }
+
+        /// <summary>
+        /// Scales down the byte size of the image by reducing dimensions and/or introducing compression.  It aims to get it under 2MB so the web service won't reject it.
+        /// </summary>
+        private byte[] ResizePictureForDetection(byte[] data)
+        {
+            const int maxLength = 2*1000*1000; // be conservative
+            if (data == null || data.Length < maxLength)
+                return data;
+
+            using (var ms = new MemoryStream(data))
+            {
+                using (var rawImage = (Bitmap) Image.FromStream(ms))
+                {
+                    log.DebugFormat("Image is too big @ {0} bytes, {1}x{2}, shrinking", data.Length, rawImage.Width, rawImage.Height);
+
+                    // too big - try some measures to downsize things
+                    for (var cutSize = 1;; cutSize++)
+                    {
+                        // first, let's cut the image down
+                        using (var smallerImage = new ResizeBilinear(rawImage.Width/cutSize, rawImage.Height/cutSize).Apply(rawImage))
+                        {
+                            log.DebugFormat("Sized down to {0}x{1}", smallerImage.Width, smallerImage.Height);
+
+                            // now, see what a PNG would be...
+                            var png = GetBytes(s => smallerImage.Save(s, ImageFormat.Png));
+                            log.DebugFormat("PNG is {0} bytes", png.Length);
+                            if (png.Length < maxLength)
+                                return png;
+
+                            // too big, try JPEG
+                            var jpg = GetBytes(s => smallerImage.Save(s, ImageFormat.Jpeg));
+                            log.DebugFormat("JPG is {0} bytes", jpg.Length);
+                            if (jpg.Length < maxLength)
+                                return jpg;
+
+                            // still too big, guess we'll have to use a smaller image
+                        }
+                    }
+                }
+            }
+        }
+
+        private byte[] GetBytes(Action<Stream> callback)
+        {
+            using (var ms = new MemoryStream())
+            {
+                callback(ms);
+                return ms.ToArray();
+            }
+        }
+
+
 
         private static string GetMatch(Tag tag)
         {
