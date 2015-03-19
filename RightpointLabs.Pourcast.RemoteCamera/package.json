@@ -1,0 +1,21 @@
+{
+  "name": "pourcast-camera",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "dataurl": "^0.1.0",
+    "memory-stream": "0.0.3",
+    "pngjs": "^0.4.0",
+    "signalr-client": "0.0.12",
+    "v4l2camera": "^0.4.3"
+  },
+  "devDependencies": {
+    "express": "^4.12.3"
+  }
+}
