@@ -309,11 +309,33 @@ define('app/camera', ['app/events', 'jquery'], function (events, $) {
 
     function getVideoStream() {
         var d = $.Deferred();
-        navigator.webkitGetUserMedia({ video: true }, function (s) {
-            d.resolve(s);
-        }, function() {
-            d.reject("Failed to initialize camera");
-        });
+
+        // try a series of options to get us the best picture we can
+        var options = [
+            { video: { mandatory: { minWidth: 1920, minHeight: 1080 } } },
+            { video: { mandatory: { minWidth: 1280, minHeight: 720 } } },
+            { video: { mandatory: { minWidth: 1024, minHeight: 768 } } },
+            { video: { mandatory: { minWidth: 640, minHeight: 480 } } },
+            { video: true }
+        ];
+
+        function tryOne() {
+            var opt = options.shift();
+            if (opt) {
+                console.log(opt);
+                navigator.webkitGetUserMedia(opt, function (s) {
+                    console.log("Opened camera with args", opt);
+                    d.resolve(s);
+                }, function () {
+                    tryOne();
+                });
+            } else {
+                d.reject("Failed to initialize camera");
+            }
+        }
+
+        tryOne();
+
         return d.promise();
     }
     function setupVideo(stream) {
@@ -370,10 +392,10 @@ define('app/camera', ['app/events', 'jquery'], function (events, $) {
     var acquirePicture = (secure ? function () {
         // this is SSL, so the allow will be remembered, which means we can do cleanup after each shot
 
-        // get it once first so that it'll prompt the user right away if we don't have the rights yet
-        getVideoStream().then(function(s) {
-            s.stop();
-        });
+        // so long as we're taking a picture at startup, that will trigger the prompt
+        //getVideoStream().then(function(s) {
+        //    s.stop();
+        //});
 
         return function () {
             return getVideoStream().then(function (s) {
@@ -386,7 +408,7 @@ define('app/camera', ['app/events', 'jquery'], function (events, $) {
                 var data = takeShot(v);
 
                 v.pause();
-                v.src = null;
+                v.src = '';
                 $(v).remove();
                 s.stop();
                 return data;
