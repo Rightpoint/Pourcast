@@ -312,8 +312,11 @@ define('app/camera', ['app/events', 'jquery'], function (events, $) {
 
         // try a series of options to get us the best picture we can
         var options = [
+            { video: { mandatory: { minWidth: 2304, minHeight: 1296 } } },
+            { video: { mandatory: { minWidth: 2304, minHeight: 1536 } } },
             { video: { mandatory: { minWidth: 1920, minHeight: 1080 } } },
             { video: { mandatory: { minWidth: 1280, minHeight: 720 } } },
+            { video: { mandatory: { minWidth: 2048, minHeight: 1536 } } },
             { video: { mandatory: { minWidth: 1024, minHeight: 768 } } },
             { video: { mandatory: { minWidth: 640, minHeight: 480 } } },
             { video: true }
