@@ -148,6 +148,9 @@ html, body,
                 width: 100%;
 
                 .bit {
+                    @diameter: 11vmin;
+                    height: @diameter;
+                    width: @diameter;
                     position: absolute;
                     display: block;
                     left: 0;
@@ -184,9 +187,6 @@ html, body,
                 }
 
                 .remaining {
-                    @diameter: 11vmin;
-                    height: @diameter;
-                    width: @diameter;
                     -moz-background-size: contain;
                     -webkit-background-size: contain;
                     background-size: contain;

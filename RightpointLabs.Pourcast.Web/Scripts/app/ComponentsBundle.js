@@ -256,6 +256,7 @@ define('app/components/tap/viewModel', ['ko', 'app/componentResolver'], function
         self.resolver.register('face', 'face');
         self.resolver.register('beer', 'beer');
         self.resolver.register('percent', 'bits');
+        self.resolver.register('the-dream', 'onKegBody');
     };
 
     return {

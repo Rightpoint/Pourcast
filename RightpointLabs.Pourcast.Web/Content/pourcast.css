@@ -123,6 +123,8 @@ body,
   width: 100%;
 }
 .tap .keg-info .status .bits .bit {
+  height: 11vmin;
+  width: 11vmin;
   position: absolute;
   display: block;
   left: 0;
@@ -159,8 +161,6 @@ body,
   }
 }
 .tap .keg-info .status .bits .remaining {
-  height: 11vmin;
-  width: 11vmin;
   -moz-background-size: contain;
   -webkit-background-size: contain;
   background-size: contain;

@@ -457,6 +457,10 @@
     <Content Include="Scripts\app\components\movember\yosemite-face\yosemite_face.png" />
     <Content Include="Scripts\app\components\movember\zorro-hat\zorro_hat.png" />
     <Content Include="Scripts\app\camera.js" />
+    <Content Include="Scripts\app\components\the-dream\config.js" />
+    <Content Include="Scripts\app\components\the-dream\livelong.png" />
+    <Content Include="Scripts\app\components\the-dream\template.html" />
+    <Content Include="Scripts\app\components\the-dream\viewModel.js" />
     <Content Include="Scripts\app\dataService.js" />
     <Content Include="Scripts\app\components\hat\template.html" />
     <Content Include="Scripts\app\components\hat\viewModel.js" />
