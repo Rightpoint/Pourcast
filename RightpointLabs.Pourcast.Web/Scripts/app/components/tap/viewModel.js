@@ -16,7 +16,6 @@
         self.resolver.register('face', 'face');
         self.resolver.register('beer', 'beer');
         self.resolver.register('percent', 'bits');
-        self.resolver.register('the-dream', 'onKegBody');
     };
 
     return {
