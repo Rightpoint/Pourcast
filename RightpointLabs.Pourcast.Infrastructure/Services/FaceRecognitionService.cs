@@ -137,11 +137,23 @@ namespace RightpointLabs.Pourcast.Infrastructure.Services
                             if (png.Length < maxLength)
                                 return png;
 
-                            // too big, try JPEG
-                            var jpg = GetBytes(s => smallerImage.Save(s, ImageFormat.Jpeg));
-                            log.DebugFormat("JPG is {0} bytes", jpg.Length);
-                            if (jpg.Length < maxLength)
-                                return jpg;
+                            // too big, try JPEG @ Q100
+                            var jpgQ100 = GetBytes(s => smallerImage.Save(s, JPEGEncoder(), Quality(100)));
+                            log.DebugFormat("JPG@Q100 is {0} bytes", jpgQ100.Length);
+                            if (jpgQ100.Length < maxLength)
+                                return jpgQ100;
+
+                            // too big, try JPEG @ Q99
+                            var jpgQ99 = GetBytes(s => smallerImage.Save(s, JPEGEncoder(), Quality(99)));
+                            log.DebugFormat("JPG@Q99 is {0} bytes", jpgQ99.Length);
+                            if (jpgQ99.Length < maxLength)
+                                return jpgQ99;
+
+                            // too big, try JPEG @ Q95
+                            var jpgQ95 = GetBytes(s => smallerImage.Save(s, JPEGEncoder(), Quality(95)));
+                            log.DebugFormat("JPG@Q95 is {0} bytes", jpgQ95.Length);
+                            if (jpgQ95.Length < maxLength)
+                                return jpgQ95;
 
                             // still too big, guess we'll have to use a smaller image
                         }
@@ -150,6 +162,35 @@ namespace RightpointLabs.Pourcast.Infrastructure.Services
             }
         }
 
+        /// <summary>
+        /// Create an ImageCodecInfo for ImageFormat.Jpeg
+        /// </summary>
+        private ImageCodecInfo JPEGEncoder()
+        {
+            ImageCodecInfo[] codecs = ImageCodecInfo.GetImageDecoders();
+            foreach (ImageCodecInfo codec in codecs)
+            {
+                if (codec.FormatID == ImageFormat.Jpeg.Guid)
+                {
+                    return codec;
+                }
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Create an EncoderParameters with the given quality level
+        /// </summary>
+        private EncoderParameters Quality(long value)
+        {
+            var p = new EncoderParameters(1);
+            p.Param[0] = new EncoderParameter(Encoder.Quality, value);
+            return p;
+        } 
+
+        /// <summary>
+        /// Get the bytes written to the stream passed to the callback
+        /// </summary>
         private byte[] GetBytes(Action<Stream> callback)
         {
             using (var ms = new MemoryStream())
@@ -158,8 +199,6 @@ namespace RightpointLabs.Pourcast.Infrastructure.Services
                 return ms.ToArray();
             }
         }
-
-
 
         private static string GetMatch(Tag tag)
         {
