@@ -27,8 +27,8 @@ namespace RightpointLabs.Pourcast.PhotoLoader
                 var tagNamespace = ConfigurationManager.AppSettings["TagNamespace"];
                 foreach (var file in Directory.GetFiles(ConfigurationManager.AppSettings["SourceDirectory"]))
                 {
-                    var nameParts = Path.GetFileNameWithoutExtension(file).Split('_');
-                    var recognizeAs = nameParts.Reverse().Where(i => !i.ToLowerInvariant().Contains("thumb")).First();
+                    var nameParts = Path.GetFileNameWithoutExtension(file).Split('-');
+                    var recognizeAs = nameParts.First();
                     log.DebugFormat("Preparing to recognize {0} as {1}", file, recognizeAs);
 
                     using (var fs = new FileStream(file, FileMode.Open))
