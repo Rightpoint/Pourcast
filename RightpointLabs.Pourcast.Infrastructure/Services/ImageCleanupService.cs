@@ -58,8 +58,8 @@ namespace RightpointLabs.Pourcast.Infrastructure.Services
                         intermediateImage.Save(ms2, ImageFormat.Jpeg);
                         intermediateUrl = string.Concat("data:image/jpeg;base64,", Convert.ToBase64String(ms2.ToArray()));
                     }
-
-                    image = new Crop(newBoundingBox).Apply(image);
+                    
+                    // perform no cropping of the image - post the original
                 }
 
                 using (var ms2 = new MemoryStream())
