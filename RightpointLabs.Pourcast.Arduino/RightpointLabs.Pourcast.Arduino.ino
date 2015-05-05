@@ -197,19 +197,24 @@ void loop() {
   http->LogMessage("Primary loop initialized");
   while(true) {
     tap1->Loop(cycle);
+    resetWatchdog();
     tap2->Loop(cycle);
+    resetWatchdog();
 
     if(cycle % 600 == 0) {
       writeStatus();
+      resetWatchdog();
     }
     if(cycle % 600 == 0) {
       http->Heartbeat();
+      resetWatchdog();
     } else if(cycle % 100 == 0) {
       Serial.println("ALIVE");
+      resetWatchdog();
     }
     cycle = (cycle + 1) % 6000;
-    resetWatchdog();
     delay(100);
+    resetWatchdog();
   }
 }
 
