@@ -62,14 +62,10 @@ namespace RightpointLabs.Pourcast.Infrastructure.Services
                     // perform no cropping of the image - post the original
                 }
 
-                using (var ms2 = new MemoryStream())
-                {
-                    image.Save(ms2, ImageFormat.Jpeg);
-                    var newDataUrl = string.Concat("data:image/jpeg;base64,", Convert.ToBase64String(ms2.ToArray()));
-
-
-                    return newDataUrl;
-                }
+                // save off at JPG/100
+                var finalImage = ImageHelper.GetBytes(s => image.Save(s, ImageHelper.JPEGEncoder(), ImageHelper.Quality(100)));
+                var newDataUrl = string.Concat("data:image/jpeg;base64,", Convert.ToBase64String(finalImage));
+                return newDataUrl;
             }
         }
 

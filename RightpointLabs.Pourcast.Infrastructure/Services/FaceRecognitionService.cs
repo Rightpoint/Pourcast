@@ -96,12 +96,9 @@ namespace RightpointLabs.Pourcast.Infrastructure.Services
                     intermediateUrl = string.Concat("data:image/jpeg;base64,", Convert.ToBase64String(ms2.ToArray()));
                 }
 
-                // save the original image without cropping
-                using (var ms2 = new MemoryStream())
-                {
-                    image.Save(ms2, ImageFormat.Jpeg);
-                    finalUrl = string.Concat("data:image/jpeg;base64,", Convert.ToBase64String(ms2.ToArray()));
-                }
+                // save the original image without cropping @ JPG/100
+                var finalImage = ImageHelper.GetBytes(s => image.Save(s, ImageHelper.JPEGEncoder(), ImageHelper.Quality(100)));
+                finalUrl = string.Concat("data:image/jpeg;base64,", Convert.ToBase64String(finalImage));
 
                 return faceTags.Select(GetMatch).Where(i => i != null).ToArray();
             }
@@ -131,25 +128,25 @@ namespace RightpointLabs.Pourcast.Infrastructure.Services
                             log.DebugFormat("Sized down to {0}x{1}", smallerImage.Width, smallerImage.Height);
 
                             // now, see what a PNG would be...
-                            var png = GetBytes(s => smallerImage.Save(s, ImageFormat.Png));
+                            var png = ImageHelper.GetBytes(s => smallerImage.Save(s, ImageFormat.Png));
                             log.DebugFormat("PNG is {0} bytes", png.Length);
                             if (png.Length < maxLength)
                                 return png;
 
                             // too big, try JPEG @ Q100
-                            var jpgQ100 = GetBytes(s => smallerImage.Save(s, JPEGEncoder(), Quality(100)));
+                            var jpgQ100 = ImageHelper.GetBytes(s => smallerImage.Save(s, ImageHelper.JPEGEncoder(), ImageHelper.Quality(100)));
                             log.DebugFormat("JPG@Q100 is {0} bytes", jpgQ100.Length);
                             if (jpgQ100.Length < maxLength)
                                 return jpgQ100;
 
                             // too big, try JPEG @ Q99
-                            var jpgQ99 = GetBytes(s => smallerImage.Save(s, JPEGEncoder(), Quality(99)));
+                            var jpgQ99 = ImageHelper.GetBytes(s => smallerImage.Save(s, ImageHelper.JPEGEncoder(), ImageHelper.Quality(99)));
                             log.DebugFormat("JPG@Q99 is {0} bytes", jpgQ99.Length);
                             if (jpgQ99.Length < maxLength)
                                 return jpgQ99;
 
                             // too big, try JPEG @ Q95
-                            var jpgQ95 = GetBytes(s => smallerImage.Save(s, JPEGEncoder(), Quality(95)));
+                            var jpgQ95 = ImageHelper.GetBytes(s => smallerImage.Save(s, ImageHelper.JPEGEncoder(), ImageHelper.Quality(95)));
                             log.DebugFormat("JPG@Q95 is {0} bytes", jpgQ95.Length);
                             if (jpgQ95.Length < maxLength)
                                 return jpgQ95;
@@ -158,44 +155,6 @@ namespace RightpointLabs.Pourcast.Infrastructure.Services
                         }
                     }
                 }
-            }
-        }
-
-        /// <summary>
-        /// Create an ImageCodecInfo for ImageFormat.Jpeg
-        /// </summary>
-        private ImageCodecInfo JPEGEncoder()
-        {
-            ImageCodecInfo[] codecs = ImageCodecInfo.GetImageDecoders();
-            foreach (ImageCodecInfo codec in codecs)
-            {
-                if (codec.FormatID == ImageFormat.Jpeg.Guid)
-                {
-                    return codec;
-                }
-            }
-            return null;
-        }
-
-        /// <summary>
-        /// Create an EncoderParameters with the given quality level
-        /// </summary>
-        private EncoderParameters Quality(long value)
-        {
-            var p = new EncoderParameters(1);
-            p.Param[0] = new EncoderParameter(Encoder.Quality, value);
-            return p;
-        } 
-
-        /// <summary>
-        /// Get the bytes written to the stream passed to the callback
-        /// </summary>
-        private byte[] GetBytes(Action<Stream> callback)
-        {
-            using (var ms = new MemoryStream())
-            {
-                callback(ms);
-                return ms.ToArray();
             }
         }
 

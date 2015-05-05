@@ -129,6 +129,7 @@
     <Compile Include="Services\CurrentDateTimeProvider.cs" />
     <Compile Include="Services\FaceRecognitionService.cs" />
     <Compile Include="Services\ImageCleanupService.cs" />
+    <Compile Include="Services\ImageHelper.cs" />
     <Compile Include="Services\SmtpEmailService.cs" />
     <Compile Include="Services\YammerMessagePoster.cs" />
   </ItemGroup>
