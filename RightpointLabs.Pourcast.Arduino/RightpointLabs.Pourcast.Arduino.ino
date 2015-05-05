@@ -160,11 +160,29 @@ void startupDelay() {
   http->LogMessage(buf);
 }
 
-void writeStatus(unsigned long lastWatch, unsigned long maxWatch) {
+unsigned long lastWatchTime = 0;
+unsigned long lastWatch = 0;
+unsigned long maxWatch = 0;
+    
+void writeStatus() {
   char buf[128];
   PString pBuf(buf, 128);
   pBuf << "Status: free memory: " << freeMemory() << ", Lowest: " << http->_minFreeMemory << ", lastWatch: " << lastWatch << ", maxWatch: " << maxWatch;
   http->LogMessage(buf);
+}
+
+void resetWatchdog() {
+  ApplicationMonitor.IAmAlive();
+  unsigned long thisWatchTime = micros();
+  if(thisWatchTime > lastWatchTime) {
+    lastWatch = thisWatchTime - lastWatchTime;
+  } else {
+    lastWatch = 4294967295 - lastWatchTime + thisWatchTime;
+  }
+  lastWatchTime = thisWatchTime;
+  if(lastWatch > maxWatch) {
+    maxWatch = lastWatch;
+  }
 }
 
 // main loop - once a second, check the accumulated pulse counts and send the START/STOP/CONTINUE/IGNORE message as necessary
@@ -173,10 +191,8 @@ void loop() {
   startupDelay();
   
   ApplicationMonitor.EnableWatchdog(Watchdog::CApplicationMonitor::Timeout_8s);
-  unsigned long lastWatchTime = micros();
-  unsigned long lastWatch = 0;
-  unsigned long maxWatch = 0;
-    
+  lastWatchTime = micros();
+  
   int cycle = 0;  
   http->LogMessage("Primary loop initialized");
   while(true) {
@@ -184,7 +200,7 @@ void loop() {
     tap2->Loop(cycle);
 
     if(cycle % 600 == 0) {
-      writeStatus(lastWatch, maxWatch);
+      writeStatus();
     }
     if(cycle % 600 == 0) {
       http->Heartbeat();
@@ -192,17 +208,7 @@ void loop() {
       Serial.println("ALIVE");
     }
     cycle = (cycle + 1) % 6000;
-    ApplicationMonitor.IAmAlive();
-    unsigned long thisWatchTime = micros();
-    if(thisWatchTime > lastWatchTime) {
-      lastWatch = thisWatchTime - lastWatchTime;
-    } else {
-      lastWatch = 4294967295 - lastWatchTime + thisWatchTime;
-    }
-    lastWatchTime = thisWatchTime;
-    if(lastWatch > maxWatch) {
-      maxWatch = lastWatch;
-    }
+    resetWatchdog();
     delay(100);
   }
 }
