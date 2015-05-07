@@ -167,7 +167,7 @@ unsigned long maxWatch = 0;
 void writeStatus() {
   char buf[128];
   PString pBuf(buf, 128);
-  pBuf << "Status: free memory: " << freeMemory() << ", Lowest: " << http->_minFreeMemory << ", lastWatch: " << lastWatch << ", maxWatch: " << maxWatch;
+  pBuf << "S:FM: " << freeMemory() << ",L: " << http->_minFreeMemory << ",LW: " << lastWatch << ",MW: " << maxWatch;
   http->LogMessage(buf);
 }
 
