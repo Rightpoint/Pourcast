@@ -15,15 +15,16 @@ namespace RightpointLabs.Pourcast.Tests.Infrastructure.Services
         public void TestFaces()
         {
             var rawImage = @"";
-            var svc = new FaceRecognitionService("", "", "", new ImageCleanupService());
+            var svc = new FaceRecognitionService("", "", "", new ImageCleanupService(), null);
             string intermediateUrl;
             string finalUrl;
-            var users = svc.ProcessImage(rawImage, out intermediateUrl, out finalUrl);
+            bool addedOverlay;
+            var users = svc.ProcessImage(rawImage, out intermediateUrl, out finalUrl, out addedOverlay);
             if(!string.IsNullOrEmpty(intermediateUrl))
                 Console.WriteLine(intermediateUrl);
             if (!string.IsNullOrEmpty(finalUrl))
                 Console.WriteLine(finalUrl);
-            Console.WriteLine("Users: " + string.Join(", ", users));
+            Console.WriteLine("Users: " + string.Join(", ", users) + ", added overlay: " + addedOverlay);
         }
     }
 }
