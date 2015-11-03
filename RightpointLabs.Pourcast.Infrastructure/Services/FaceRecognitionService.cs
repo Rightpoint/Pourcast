@@ -8,10 +8,12 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Accord.Imaging.Filters;
+using AForge;
 using AForge.Imaging.Filters;
 using log4net;
 using RightpointLabs.Pourcast.Domain.Services;
 using SkyBiometry.Client.FC;
+using Point = SkyBiometry.Client.FC.Point;
 
 namespace RightpointLabs.Pourcast.Infrastructure.Services
 {
@@ -79,7 +81,13 @@ namespace RightpointLabs.Pourcast.Infrastructure.Services
 
                 var intermediateImage = new Bitmap(image);
                 var faces = faceTags.Select(i => GetTagBoundingBox(i, image)).ToList();
+                var mouthCenters = faceTags.Select(i => ConvertPoint(i.MouthCenter, image)).ToList();
+                var mouthLeft = faceTags.Select(i => ConvertPoint(i.MouthLeft, image)).ToList();
+                var mouthRight = faceTags.Select(i => ConvertPoint(i.MouthRight, image)).ToList();
                 new RectanglesMarker(faces, Color.Red).ApplyInPlace(intermediateImage);
+                new PointsMarker(mouthCenters, Color.Blue).ApplyInPlace(intermediateImage);
+                new PointsMarker(mouthLeft, Color.Green).ApplyInPlace(intermediateImage);
+                new PointsMarker(mouthRight, Color.Purple).ApplyInPlace(intermediateImage);
 
                 var boundary = Math.Max(40, faces.Max(i => Math.Max(i.Height, i.Width)));
                 var x1 = Math.Max(0, faces.Min(i => i.Left) - boundary);
@@ -190,6 +198,13 @@ namespace RightpointLabs.Pourcast.Infrastructure.Services
                 (int)((tag.Center.Y - tag.Height / 2) * image.Height / 100),
                 (int)(tag.Width * image.Width / 100),
                 (int)(tag.Height * image.Height / 100));
+        }
+
+        private IntPoint ConvertPoint(Point point, Bitmap image)
+        {
+            return new IntPoint(
+                (int)(point.X * image.Width / 100),
+                (int)(point.Y * image.Height / 100));
         }
 
         private byte[] GetDataFromUrl(string dataUrl, out string contentType)
