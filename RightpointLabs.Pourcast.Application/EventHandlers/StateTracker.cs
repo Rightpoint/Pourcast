@@ -94,6 +94,10 @@ namespace RightpointLabs.Pourcast.Application.EventHandlers
                             buildMessage = async pt =>
                             {
                                 var msg = string.Format("Biggest pour of {0} for the day!  A solid {1:0.0}oz!", beerName, domainEvent.Volume);
+                                if (pt.AddedOverlay.GetValueOrDefault())
+                                {
+                                    msg += "  Looking spiffy.";
+                                }
                                 string contentType = null;
                                 string filename = null;
                                 byte[] filedata = null;
@@ -156,6 +160,10 @@ namespace RightpointLabs.Pourcast.Application.EventHandlers
                         buildMessage = async (PictureTaken pt) =>
                         {
                             var msg = string.Format("First pour of the day of {0}!  A solid {1:0.0}oz!", beerName, domainEvent.Volume);
+                            if (pt.AddedOverlay.GetValueOrDefault())
+                            {
+                                msg += "  Looking spiffy.";
+                            }
                             string contentType = null;
                             string filename = null;
                             byte[] filedata = null;
