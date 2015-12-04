@@ -50,7 +50,7 @@ namespace RightpointLabs.Pourcast.Web.Controllers.Api
             }
             catch (Exception ex)
             {
-                log.Error("StartPour", ex);
+                log.Error(string.Format("StartPour({0})", id), ex);
                 throw;
             }
         }
@@ -64,7 +64,7 @@ namespace RightpointLabs.Pourcast.Web.Controllers.Api
             }
             catch (Exception ex)
             {
-                log.Error("Pouring", ex);
+                log.Error(string.Format("Pouring({0}, {1})", id, volume), ex);
                 throw;
             }
         }
@@ -78,7 +78,7 @@ namespace RightpointLabs.Pourcast.Web.Controllers.Api
             }
             catch (Exception ex)
             {
-                log.Error("StopPour", ex);
+                log.Error(string.Format("StopPour({0}, {1})", id, volume), ex);
                 throw;
             }
         }
@@ -92,7 +92,7 @@ namespace RightpointLabs.Pourcast.Web.Controllers.Api
             }
             catch (Exception ex)
             {
-                log.Error("Temperature", ex);
+                log.Error(string.Format("Temperature({0}, {1})", id, f), ex);
                 throw;
             }
         }
