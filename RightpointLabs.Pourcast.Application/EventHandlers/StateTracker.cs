@@ -94,6 +94,10 @@ namespace RightpointLabs.Pourcast.Application.EventHandlers
                             buildMessage = async pt =>
                             {
                                 var msg = string.Format("Biggest pour of {0} for the day!  A solid {1:0.0}oz!", beerName, domainEvent.Volume);
+                                if (pt.AddedOverlay.GetValueOrDefault())
+                                {
+                                    msg += "  Looking spiffy.";
+                                }
                                 string contentType = null;
                                 string filename = null;
                                 byte[] filedata = null;
@@ -117,6 +121,35 @@ namespace RightpointLabs.Pourcast.Application.EventHandlers
                             state.TodaysBiggestPour = domainEvent.Volume;
                             stateRepository.Update(state);
                         }
+                        else
+                        {
+                            // added overlay
+                            buildMessage = async pt =>
+                            {
+                                if (null == pt || !pt.AddedOverlay.GetValueOrDefault())
+                                {
+                                    return;
+                                }
+
+                                var msg = string.Format("A solid pour of {1:0.0}oz of {0}!  Looking spiffy.", beerName, domainEvent.Volume);
+                                string contentType = null;
+                                string filename = null;
+                                byte[] filedata = null;
+
+                                int[] users = new int[0];
+                                filedata = GetDataFromUrl(pt.DataUrl, out contentType);
+                                filename = "image.jpg";
+
+                                if (pt.Faces != null && pt.Faces.Any())
+                                {
+                                    var faces = new HashSet<string>(pt.Faces.Select(i => i.Split('@')[0].ToLowerInvariant()));
+                                    var allUsers = await _getUsers.Value;
+                                    users = AddUsers(ref msg, allUsers.Where(i => faces.Contains(i.Key.Split('@')[0])).Select(i => i.Value).ToArray());
+                                }
+
+                                _messagePoster.PostReply(state.TodaysNotificationThreadId.Value, msg, users, filename, contentType, filedata);
+                            };
+                        }
                     }
                     else
                     {
@@ -127,6 +160,10 @@ namespace RightpointLabs.Pourcast.Application.EventHandlers
                         buildMessage = async (PictureTaken pt) =>
                         {
                             var msg = string.Format("First pour of the day of {0}!  A solid {1:0.0}oz!", beerName, domainEvent.Volume);
+                            if (pt.AddedOverlay.GetValueOrDefault())
+                            {
+                                msg += "  Looking spiffy.";
+                            }
                             string contentType = null;
                             string filename = null;
                             byte[] filedata = null;

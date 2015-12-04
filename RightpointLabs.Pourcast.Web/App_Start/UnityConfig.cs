@@ -1,4 +1,8 @@
 using System.Configuration;
+using System.Drawing;
+using System.IO;
+using System.Web;
+using Glimpse.AspNet.Tab;
 using Microsoft.Practices.Unity;
 
 namespace RightpointLabs.Pourcast.Web
@@ -94,7 +98,8 @@ namespace RightpointLabs.Pourcast.Web
                     new InjectionParameter<string>(ConfigurationManager.AppSettings["SkyBiometryApiKey"]),
                     new InjectionParameter<string>(ConfigurationManager.AppSettings["SkyBiometryApiSecret"]),
                     new InjectionParameter<string>(ConfigurationManager.AppSettings["SkyBiometryTagNamespace"]),
-                    typeof(IImageCleanupService)));
+                    typeof(IImageCleanupService),
+                    typeof(IOverlayImageProvider)));
             container.RegisterType<IImageCleanupService, ImageCleanupService>(new PerRequestLifetimeManager());
 
             // StateTracker
@@ -125,8 +130,21 @@ namespace RightpointLabs.Pourcast.Web
             container.RegisterType<SmtpClient>(new PerRequestLifetimeManager(), new InjectionConstructor());
             container.RegisterType<IConnectionManager>(new ContainerControlledLifetimeManager(), new InjectionFactory(c => GlobalHost.ConnectionManager));
 
+            container.RegisterType<IOverlayImageProvider, OverlayImageProvider>(new ContainerControlledLifetimeManager());
+
             var locator = new App_Start.UnityServiceLocator(container);
             ServiceLocator.SetLocatorProvider(() => locator);
+        }
+    }
+
+    public class OverlayImageProvider : IOverlayImageProvider
+    {
+        private Random _rnd = new Random();
+        public Image GetRandomOverlayImage()
+        {
+            var dir = HttpContext.Current.Server.MapPath("~/OverlayImages");
+            var files = Directory.GetFiles(dir, "*");
+            return Image.FromFile(files[_rnd.Next(files.Length)]);
         }
     }
 }

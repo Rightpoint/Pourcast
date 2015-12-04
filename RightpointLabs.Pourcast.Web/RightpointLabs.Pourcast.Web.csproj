@@ -210,6 +210,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="OverlayImages\mustache1.png" />
+    <Content Include="OverlayImages\mustache2.png" />
+    <Content Include="OverlayImages\mustache3.png" />
+    <Content Include="OverlayImages\mustache4.png" />
+    <Content Include="OverlayImages\mustache5.png" />
     <Content Include="Scripts\app\components\movember\flanders-face\config.js" />
     <Content Include="Scripts\app\components\movember\flanders-face\flanders_face.png" />
     <Content Include="Scripts\app\components\movember\flanders-face\template.html" />
@@ -763,7 +768,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>57168</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:57168/</IISUrl>
+          <IISUrl>https://localhost:44301/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

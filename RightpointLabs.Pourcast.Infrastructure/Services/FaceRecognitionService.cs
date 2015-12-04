@@ -8,10 +8,12 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Accord.Imaging.Filters;
+using AForge;
 using AForge.Imaging.Filters;
 using log4net;
 using RightpointLabs.Pourcast.Domain.Services;
 using SkyBiometry.Client.FC;
+using Point = SkyBiometry.Client.FC.Point;
 
 namespace RightpointLabs.Pourcast.Infrastructure.Services
 {
@@ -24,18 +26,21 @@ namespace RightpointLabs.Pourcast.Infrastructure.Services
         private readonly string _tagNamespace;
         private string[] _possibleUsers;
         private readonly IImageCleanupService _imageCleanupService;
+        private readonly IOverlayImageProvider _overlayImageProvider;
 
-        public FaceRecognitionService(string apiKey, string apiSecret, string tagNamespace, IImageCleanupService imageCleanupService)
+        public FaceRecognitionService(string apiKey, string apiSecret, string tagNamespace, IImageCleanupService imageCleanupService, IOverlayImageProvider overlayImageProvider)
         {
             _apiKey = apiKey;
             _apiSecret = apiSecret;
             _tagNamespace = tagNamespace;
             _imageCleanupService = imageCleanupService;
+            _overlayImageProvider = overlayImageProvider;
         }
 
-        public string[] ProcessImage(string rawDataUrl, out string intermediateUrl, out string finalUrl)
+        public string[] ProcessImage(string rawDataUrl, out string intermediateUrl, out string finalUrl, out bool addedOverlay)
         {
             intermediateUrl = null;
+            addedOverlay = false;
             var ctx = new FCClient(_apiKey, _apiSecret);
 
             string contentType;
@@ -79,7 +84,7 @@ namespace RightpointLabs.Pourcast.Infrastructure.Services
 
                 var intermediateImage = new Bitmap(image);
                 var faces = faceTags.Select(i => GetTagBoundingBox(i, image)).ToList();
-                new RectanglesMarker(faces, Color.Red).ApplyInPlace(intermediateImage);
+                addedOverlay = faceTags.Select(f => ProcessFace(f, intermediateImage, image)).ToList().Any();
 
                 var boundary = Math.Max(40, faces.Max(i => Math.Max(i.Height, i.Width)));
                 var x1 = Math.Max(0, faces.Min(i => i.Left) - boundary);
@@ -102,6 +107,60 @@ namespace RightpointLabs.Pourcast.Infrastructure.Services
 
                 return faceTags.Select(GetMatch).Where(i => i != null).ToArray();
             }
+        }
+
+        private bool ProcessFace(Tag face, Bitmap intermediateImage, Bitmap image)
+        {
+            if (face.MouthCenter == null)
+            {
+                return false;
+            }
+            var center = ConvertPoint(face.MouthCenter, image);
+            IntPoint left, right;
+            if (face.MouthLeft != null && face.MouthRight != null)
+            {
+                left = ConvertPoint(face.MouthLeft, image);
+                right = ConvertPoint(face.MouthRight, image);
+            }
+            else if (face.EyeLeft != null && face.EyeRight != null)
+            {
+                var eyeLeft = ConvertPoint(face.EyeLeft, image);
+                var eyeRight = ConvertPoint(face.EyeRight, image);
+                var midY = (eyeLeft.Y + eyeRight.Y)/2;
+                var midX = (eyeLeft.X + eyeRight.X)/2;
+                left = new IntPoint(eyeLeft.X - midX + center.X, eyeLeft.Y - midY + center.Y);
+                right = new IntPoint(eyeRight.X - midX + center.X, eyeRight.Y - midY + center.Y);
+            }
+            else
+            {
+                return false;
+            }
+
+            if (null != _overlayImageProvider)
+            {
+                using (var overlay = _overlayImageProvider.GetRandomOverlayImage())
+                {
+                    var targetWidth = (left.DistanceTo(center) + right.DistanceTo(center)) / 2 * 4;
+                    var bmOverlay = new Bitmap(overlay);
+                    using (bmOverlay)
+                    {
+                        var resizedOverlay = new ResizeBilinear((int)targetWidth, (int)(overlay.Height * targetWidth / overlay.Width)).Apply(bmOverlay);
+                        using (resizedOverlay)
+                        {
+                            using (var g = Graphics.FromImage(image))
+                            {
+                                g.DrawImage(resizedOverlay, new System.Drawing.Point(center.X - resizedOverlay.Width / 2, center.Y - resizedOverlay.Height / 2));
+                            }
+                        }
+                    }
+                }
+            }
+
+            new PointsMarker(new [] { center }, Color.Blue).ApplyInPlace(intermediateImage);
+            new PointsMarker(new [] { left }, Color.Green).ApplyInPlace(intermediateImage);
+            new PointsMarker(new [] { right }, Color.Purple).ApplyInPlace(intermediateImage);
+
+            return true;
         }
 
         /// <summary>
@@ -190,6 +249,13 @@ namespace RightpointLabs.Pourcast.Infrastructure.Services
                 (int)((tag.Center.Y - tag.Height / 2) * image.Height / 100),
                 (int)(tag.Width * image.Width / 100),
                 (int)(tag.Height * image.Height / 100));
+        }
+
+        private IntPoint ConvertPoint(Point point, Bitmap image)
+        {
+            return new IntPoint(
+                (int)(point.X * image.Width / 100),
+                (int)(point.Y * image.Height / 100));
         }
 
         private byte[] GetDataFromUrl(string dataUrl, out string contentType)
