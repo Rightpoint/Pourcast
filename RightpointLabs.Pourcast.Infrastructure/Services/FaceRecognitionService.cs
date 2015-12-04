@@ -136,9 +136,10 @@ namespace RightpointLabs.Pourcast.Infrastructure.Services
                 return false;
             }
 
-            if (null != _overlayImageProvider)
+            var overlay = null == _overlayImageProvider ? null : _overlayImageProvider.GetRandomOverlayImage();
+            if (null != overlay)
             {
-                using (var overlay = _overlayImageProvider.GetRandomOverlayImage())
+                using (overlay)
                 {
                     var targetWidth = (left.DistanceTo(center) + right.DistanceTo(center)) / 2 * 4;
                     var bmOverlay = new Bitmap(overlay);

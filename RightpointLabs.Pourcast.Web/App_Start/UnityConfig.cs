@@ -143,7 +143,15 @@ namespace RightpointLabs.Pourcast.Web
         public Image GetRandomOverlayImage()
         {
             var dir = HttpContext.Current.Server.MapPath("~/OverlayImages");
+            if (!Directory.Exists(dir))
+            {
+                return null;
+            }
             var files = Directory.GetFiles(dir, "*");
+            if (files.Length == 0)
+            {
+                return null;
+            }
             return Image.FromFile(files[_rnd.Next(files.Length)]);
         }
     }
