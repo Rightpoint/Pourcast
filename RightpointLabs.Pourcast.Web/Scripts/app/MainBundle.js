@@ -413,7 +413,11 @@ define('app/camera', ['app/events', 'jquery'], function (events, $) {
                 v.pause();
                 v.src = '';
                 $(v).remove();
-                s.stop();
+                if (s.stop) { // .stop() was deprecated in Chrome 45, removed in Chrome 47
+                    s.stop();
+                } else {
+                    s.getTracks()[0].stop();
+                }
                 return data;
             });
         };
@@ -426,7 +430,6 @@ define('app/camera', ['app/events', 'jquery'], function (events, $) {
                 var v = setupVideo(s);
                 return waitForVideoReady(v, v, 100, 30);
             }).then(function (v) {
-                console.log(v);
                 var data = takeShot(v);
 
                 $(v).remove();
