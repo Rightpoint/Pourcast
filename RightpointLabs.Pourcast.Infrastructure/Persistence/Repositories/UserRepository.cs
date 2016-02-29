@@ -1,4 +1,6 @@
-﻿namespace RightpointLabs.Pourcast.Infrastructure.Persistence.Repositories
+﻿using System;
+
+namespace RightpointLabs.Pourcast.Infrastructure.Persistence.Repositories
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -16,7 +18,8 @@
 
         public User GetByUsername(string username)
         {
-            return Queryable.SingleOrDefault(x => x.Username == username);
+            // TODO: use a Regex so we can drop the ToList() and push the work to Mongo
+            return Queryable.ToList().SingleOrDefault(x => string.Equals(x.Username, username, StringComparison.InvariantCultureIgnoreCase));
         }
 
         public IEnumerable<User> GetUsersInRole(string id)
