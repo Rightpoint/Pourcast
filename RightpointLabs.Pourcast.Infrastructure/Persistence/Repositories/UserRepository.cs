@@ -18,8 +18,8 @@ namespace RightpointLabs.Pourcast.Infrastructure.Persistence.Repositories
 
         public User GetByUsername(string username)
         {
-            // TODO: use a Regex so we can drop the ToList() and push the work to Mongo
-            return Queryable.ToList().SingleOrDefault(x => string.Equals(x.Username, username, StringComparison.InvariantCultureIgnoreCase));
+            // TODO: Update to Mongo 2.0 so we can drop the .ToList() and push the work to Mongo
+            return Queryable.ToList().SingleOrDefault(x => x.Username.Equals(username, StringComparison.InvariantCultureIgnoreCase));
         }
 
         public IEnumerable<User> GetUsersInRole(string id)
