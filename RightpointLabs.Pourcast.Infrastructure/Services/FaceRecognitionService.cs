@@ -84,7 +84,7 @@ namespace RightpointLabs.Pourcast.Infrastructure.Services
 
                 var intermediateImage = new Bitmap(image);
                 var faces = faceTags.Select(i => GetTagBoundingBox(i, image)).ToList();
-                addedOverlay = faceTags.Select(f => ProcessFace(f, intermediateImage, image)).ToList().Any();
+                addedOverlay = faceTags.Select(f => ProcessFace(f, intermediateImage, image)).ToList().Any(_ => _);
 
                 var boundary = Math.Max(40, faces.Max(i => Math.Max(i.Height, i.Width)));
                 var x1 = Math.Max(0, faces.Min(i => i.Left) - boundary);
@@ -161,7 +161,7 @@ namespace RightpointLabs.Pourcast.Infrastructure.Services
             new PointsMarker(new [] { left }, Color.Green).ApplyInPlace(intermediateImage);
             new PointsMarker(new [] { right }, Color.Purple).ApplyInPlace(intermediateImage);
 
-            return true;
+            return null != overlay;
         }
 
         /// <summary>
