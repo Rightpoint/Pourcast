@@ -1,4 +1,6 @@
-﻿namespace RightpointLabs.Pourcast.Infrastructure.Persistence
+﻿using System.Security.Authentication;
+
+namespace RightpointLabs.Pourcast.Infrastructure.Persistence
 {
     using MongoDB.Driver;
 
@@ -8,8 +10,11 @@
 
          public MongoConnectionHandler(string connectionString, string database)
          {
-             MongoServer server = new MongoClient(connectionString).GetServer();
-             _database = server.GetDatabase(database);
+            var settings = MongoClientSettings.FromUrl(new MongoUrl(connectionString));
+            settings.SslSettings = new SslSettings() { EnabledSslProtocols = SslProtocols.Tls12 };
+            MongoServer server = new MongoClient(settings).GetServer();
+
+            _database = server.GetDatabase(database);
          }
 
         public MongoDatabase Database
