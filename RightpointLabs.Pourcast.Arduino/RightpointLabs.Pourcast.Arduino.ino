@@ -29,6 +29,8 @@ static char pass[] = WIFI_PASSWORD;
 static char connectionString[] = IOT_CONNECTIONSTRING;
 static byte sensor1[] = { 0x28, 0x8A, 0x8E, 0x2A, 0x06, 0x00, 0x00, 0xE8 };
 static byte sensor2[] = { 0x28, 0xA9, 0xD2, 0xFA, 0x05, 0x00, 0x00, 0x56 };
+static char kegId1[] = "535c61a951aa0405287989ec";
+static char kegId2[] = "535c61a951aa0405287989ec";
 OneWire oneWire(6);
 Tap* tap1;
 Tap* tap2;
@@ -53,9 +55,9 @@ void setup() {
 
   deviceSetup(connectionString);
 
-  tap1 = new Tap(&oneWire, sensor1, "535c61a951aa0405287989ec", 1);
+  tap1 = new Tap(&oneWire, sensor1, kegId1, 1);
   attachInterrupt(0, tap1Pulse, RISING);
-  tap2 = new Tap(&oneWire, sensor2, "537d28db51aa04289027cde5", 1);
+  tap2 = new Tap(&oneWire, sensor2, kegId2, 1);
   attachInterrupt(1, tap2Pulse, RISING);
 }
 
