@@ -24,10 +24,10 @@ DECLARE_STRUCT(DeviceProperties,
 
 DECLARE_MODEL(KegState,
               /* Event data (temperature, external temperature and humidity) */
-              WITH_DATA(int, TimeSinceLastData),
+              WITH_DATA(long, TimeSinceLastData),
               WITH_DATA(double, Temperature),
-              WITH_DATA(double, Weight),
-              WITH_DATA(int, Pulses),
+              WITH_DATA(int, Weight),
+              WITH_DATA(long, Pulses),
               WITH_DATA(ascii_char_ptr, KegId),
               WITH_DATA(ascii_char_ptr, DeviceId),
 
@@ -273,7 +273,7 @@ void deviceTeardown() {
   serializer_deinit();
 }
 
-void deviceSend(int timeSinceLastData, double temperature, double weight, int pulses, const char* kegId) {
+void deviceSend(long timeSinceLastData, double temperature, int weight, long pulses, const char* kegId) {
   kegState->TimeSinceLastData = timeSinceLastData;
   kegState->Temperature = temperature;
   kegState->Weight = weight;
