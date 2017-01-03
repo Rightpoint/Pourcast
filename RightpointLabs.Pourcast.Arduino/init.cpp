@@ -16,6 +16,10 @@ void initWifi(const char *ssid, const char *pass) {
     }
 
     Serial.println("\r\nConnected to wifi");
+
+    IPAddress ip = WiFi.localIP();
+    Serial.print("IP Address: ");
+    Serial.println(ip);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
