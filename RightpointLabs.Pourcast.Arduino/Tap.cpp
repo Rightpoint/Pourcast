@@ -1,3 +1,4 @@
+#include "Log.h"
 #include "Tap.h"
 #include "TapMonitor.h"
 
@@ -77,10 +78,11 @@ void Tap::Loop(int cycle) {
 
   if(_sendSpeed == 0 && pulses >= _pulsesToGoFast) {
     // speed up
+    Log("Speeding up to 3");
     _sendSpeed = 3;
   }
 
-  if(_lastSent == 0 || _sendSpeed >= 2 || (_sendSpeed == 1 && cycle % 60 == 0) || (cycle % 600 != 0)) {
+  if(_lastSent == 0 || _sendSpeed >= 2 || (_sendSpeed == 1 && cycle % 60 == 0) || (cycle % 600 == 0)) {
     if(_sendSpeed == 0) {
       // only bother reading the temperature if we're in the slowest mode
       _temperature = readTemp(_oneWire, _tempSensorAddress);
@@ -88,17 +90,23 @@ void Tap::Loop(int cycle) {
 
     // measure and send
     unsigned long thisSend = millis();
-    deviceSend(thisSend - _lastSent, _temperature, analogRead(_weightPin), pulses, _kegId);
+    deviceSend(thisSend - _lastSent, _temperature, analogRead(_weightPin), pulses, _kegId, _sendSpeed);
     _lastSent = thisSend;
+
+    // mark off how many we sent, may lose occasional pulses here...
+    _pulsesWaiting -= pulses;
 
     if(pulses <= _pulsesToGoSlow) {
       // slow down
+      Log("Slowing down to 0");
       _sendSpeed = 0;
     }
   }
 
   if(_sendSpeed >= 2) {
     _sendSpeed--;
+    Log("Slowing down to");
+    Log(_sendSpeed);
   }
 }
 

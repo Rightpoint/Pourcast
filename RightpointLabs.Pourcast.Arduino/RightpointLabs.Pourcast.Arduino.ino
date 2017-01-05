@@ -1,5 +1,8 @@
 // starting from https://azure.microsoft.com/en-us/resources/samples/iot-hub-c-m0wifi-getstartedkit/
 
+//#define LOOP_DEBUG
+//#define PULSE_DEBUG
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdint.h>
@@ -55,26 +58,68 @@ void setup() {
 
   deviceSetup(connectionString);
 
-  pinMode(9, INPUT);
+  int pin1 = 9;
+  int int1 = digitalPinToInterrupt(pin1);
+  int pin2 = 10;
+  int int2 = digitalPinToInterrupt(pin2);
+
+
+  pinMode(pin1, INPUT);
   tap1 = new Tap(&oneWire, sensor1, kegId1, 1);
-  attachInterrupt(9, tap1Pulse, RISING);
-  pinMode(10, INPUT);
+  attachInterrupt(int1, tap1Pulse, RISING);
+  
+  pinMode(pin2, INPUT);
   tap2 = new Tap(&oneWire, sensor2, kegId2, 1);
-  attachInterrupt(10, tap2Pulse, RISING);
+  attachInterrupt(int2, tap2Pulse, RISING);
+
+
+  Serial.print("Mapping ");
+  Serial.print(pin1);
+  Serial.print(" to ");
+  Serial.println(int1);
+
+  Serial.print("Mapping ");
+  Serial.print(pin2);
+  Serial.print(" to ");
+  Serial.println(int2);
 }
 
 // handle interrupt pulses from the taps
 void tap1Pulse() {
+#ifdef PULSE_DEBUG
+  Serial.println("Handling 1");
+#endif
   tap1->HandlePulse();
 }
 void tap2Pulse() {
+#ifdef PULSE_DEBUG
+  Serial.println("Handling 2");
+#endif
   tap2->HandlePulse();
 }
 
 
 void loop() {
-  int cycle = 0;  
+  int cycle = 0;
+  
+  const int goal = 100;
+  int offset = 0;
+  int target = goal;
+
   while(true) {
+    int start = millis();
+
+    target = goal;
+    if(offset > goal/2) {
+      target -= goal/2;
+    } else if(offset > 0) {
+      target -= offset;
+    } else if(offset < -goal/2) {
+      target += goal/2;
+    } else if(offset < 0) {
+      target += offset;
+    }
+    
     tap1->Loop(cycle);
     tap2->Loop(cycle);
 
@@ -83,8 +128,25 @@ void loop() {
     }
 
     cycle = (cycle + 1) % 6000;
-    deviceProcess(100);
+
+    deviceProcess(target);
+    int done = millis();
+
+#ifdef LOOP_DEBUG
+    Serial.print(goal);
+    Serial.print(" ");
+    Serial.print(offset);
+    Serial.print(" -> ");
+    Serial.print(target);
+    Serial.print(" = ");
+    Serial.print(done-start);
+#endif
+    
+    offset += (done-start)-goal;
+
+#ifdef LOOP_DEBUG
+    Serial.print(" -> ");
+    Serial.println(offset);
+#endif
   }
 }
-
-

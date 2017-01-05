@@ -28,6 +28,7 @@ DECLARE_MODEL(KegState,
               WITH_DATA(double, Temperature),
               WITH_DATA(int, Weight),
               WITH_DATA(long, Pulses),
+              WITH_DATA(int, ReportingSpeed),
               WITH_DATA(ascii_char_ptr, KegId),
               WITH_DATA(ascii_char_ptr, DeviceId),
 
@@ -168,6 +169,7 @@ static IOTHUBMESSAGE_DISPOSITION_RESULT IoTHubMessage(IOTHUB_MESSAGE_HANDLE mess
 
 IOTHUB_CLIENT_LL_HANDLE iotHubClientHandle;
 KegState* kegState;
+char deviceId[MAX_DEVICE_ID_SIZE];
 
 void deviceSetup(const char* connectionString)
 {
@@ -208,7 +210,6 @@ void deviceSetup(const char* connectionString)
         }
         else
         {
-          char deviceId[MAX_DEVICE_ID_SIZE];
           if (GetDeviceId(connectionString, deviceId, MAX_DEVICE_ID_SIZE) > 0)
           {
             LogInfo("deviceId=%s", deviceId);
@@ -273,23 +274,25 @@ void deviceTeardown() {
   serializer_deinit();
 }
 
-void deviceSend(long timeSinceLastData, double temperature, int weight, long pulses, const char* kegId) {
+void deviceSend(long timeSinceLastData, double temperature, int weight, long pulses, const char* kegId, int reportingSpeed) {
   kegState->TimeSinceLastData = timeSinceLastData;
   kegState->Temperature = temperature;
   kegState->Weight = weight;
   kegState->Pulses = pulses;
   kegState->KegId = kegId;
+  kegState->ReportingSpeed = reportingSpeed;
   
   unsigned char*buffer;
   size_t bufferSize;
 
-  if (SERIALIZE(&buffer, &bufferSize, kegState->DeviceId, kegState->TimeSinceLastData, kegState->Temperature, kegState->Weight, kegState->Pulses, kegState->KegId) != IOT_AGENT_OK)
+  if (SERIALIZE(&buffer, &bufferSize, kegState->DeviceId, kegState->TimeSinceLastData, kegState->Temperature, kegState->Weight, kegState->Pulses, kegState->KegId, kegState->ReportingSpeed) != IOT_AGENT_OK)
   {
-    LogInfo("Failed sending sensor value\r\n");
+    LogInfo("Failed sending sensor value %s %i %f %i %i %s %i\r\n", kegState->DeviceId, kegState->TimeSinceLastData, kegState->Temperature, kegState->Weight, kegState->Pulses, kegState->KegId, kegState->ReportingSpeed);
   }
   else
   {
     sendMessage(iotHubClientHandle, buffer, bufferSize);
+    LogInfo("Succeeded sending sensor value %s %i %f %i %i %s %i\r\n", kegState->DeviceId, kegState->TimeSinceLastData, kegState->Temperature, kegState->Weight, kegState->Pulses, kegState->KegId, kegState->ReportingSpeed);
   }
 }
 
