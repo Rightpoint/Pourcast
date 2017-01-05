@@ -15,7 +15,7 @@
 
 #include <AzureIoTHub.h>
 #include <AzureIoTUtility.h>
-#include <AzureIoTProtocol_MQTT.h>
+#include <AzureIoTProtocol_HTTP.h>
 
 #include <OneWire.h>
 
@@ -55,10 +55,12 @@ void setup() {
 
   deviceSetup(connectionString);
 
+  pinMode(9, INPUT);
   tap1 = new Tap(&oneWire, sensor1, kegId1, 1);
-  attachInterrupt(0, tap1Pulse, RISING);
+  attachInterrupt(9, tap1Pulse, RISING);
+  pinMode(10, INPUT);
   tap2 = new Tap(&oneWire, sensor2, kegId2, 1);
-  attachInterrupt(1, tap2Pulse, RISING);
+  attachInterrupt(10, tap2Pulse, RISING);
 }
 
 // handle interrupt pulses from the taps

@@ -178,7 +178,7 @@ void deviceSetup(const char* connectionString)
   }
   else
   {
-    iotHubClientHandle = IoTHubClient_LL_CreateFromConnectionString(connectionString, MQTT_Protocol);
+    iotHubClientHandle = IoTHubClient_LL_CreateFromConnectionString(connectionString, HTTP_Protocol);
     if (iotHubClientHandle == NULL)
     {
       LogInfo("Failed on IoTHubClient_CreateFromConnectionString\r\n");
