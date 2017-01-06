@@ -30,11 +30,13 @@
 static char ssid[] = WIFI_SSID;
 static char pass[] = WIFI_PASSWORD;
 static char connectionString[] = IOT_CONNECTIONSTRING;
-static byte sensor1[] = { 0x28, 0x8A, 0x8E, 0x2A, 0x06, 0x00, 0x00, 0xE8 };
-static byte sensor2[] = { 0x28, 0xA9, 0xD2, 0xFA, 0x05, 0x00, 0x00, 0x56 };
+//static byte sensor1[] = { 0x28, 0x8A, 0x8E, 0x2A, 0x06, 0x00, 0x00, 0xE8 };
+//static byte sensor2[] = { 0x28, 0xA9, 0xD2, 0xFA, 0x05, 0x00, 0x00, 0x56 };
+static byte *sensor1 = NULL;
+static byte *sensor2 = NULL;
 static char kegId1[] = "535c61a951aa0405287989ec";
 static char kegId2[] = "537d28db51aa04289027cde5";
-OneWire oneWire(6);
+OneWire oneWire(A5);
 Tap* tap1;
 Tap* tap2;
 
@@ -42,6 +44,10 @@ Tap* tap2;
 #define WINC_IRQ  7
 #define WINC_RST  4
 #define WINC_EN   2
+
+#define MAX_TEMP_SENSORS 4
+int num_temp_sensors = 0;
+byte temp_sensors[MAX_TEMP_SENSORS][8];
 
 // Setup the WINC1500 connection with the pins above and the default hardware SPI.
 Adafruit_WINC1500 WiFi(WINC_CS, WINC_IRQ, WINC_RST);
@@ -58,9 +64,38 @@ void setup() {
 
   deviceSetup(connectionString);
 
-  int pin1 = 9;
+  byte addr[8];
+  char buffer[128];
+  oneWire.reset_search();
+  while(oneWire.search(addr)) {
+    sprintf(buffer, "%02x%02x%02x%02x%02x%02x%02x%02x%02x", addr[0], addr[1], addr[2], addr[3], addr[4], addr[5], addr[6], addr[7]);
+    if ( OneWire::crc8( addr, 7) != addr[7]) {
+      Serial.print("CRC is not valid! ");
+      Serial.println(buffer);
+      continue;
+    }
+    Serial.print("Found One-wire device; ");
+    Serial.println(buffer);
+    if(addr[0] == 0x28) {
+      if(num_temp_sensors < MAX_TEMP_SENSORS) {
+        memcpy(temp_sensors[num_temp_sensors], addr, 8);
+        num_temp_sensors++;
+        hasSensor(buffer);
+        Serial.println("Registered");
+      } else {
+        Serial.print("Too many temperature sensors found - only using first ");
+        Serial.println(num_temp_sensors);
+      }
+    } else {
+        Serial.print("Unknown OneWire device family for ");
+        Serial.println(buffer);
+    }
+  }
+
+
+  int pin1 = 10;
   int int1 = digitalPinToInterrupt(pin1);
-  int pin2 = 10;
+  int pin2 = 11;
   int int2 = digitalPinToInterrupt(pin2);
 
 

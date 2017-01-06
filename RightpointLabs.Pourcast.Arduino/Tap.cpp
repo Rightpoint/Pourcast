@@ -6,12 +6,16 @@ const unsigned long _pulsesToGoFast = 50;
 const unsigned long _pulsesToGoSlow = 0;
 
 void requestTempMeasurement(OneWire* oneWire, const byte* sensor) {
+  if(sensor == NULL)
+    return;
   oneWire->reset();
   oneWire->select(sensor);
   oneWire->write(0x44);        // start conversion, no parasite power
 }
 
 float readTemp(OneWire* oneWire, const byte* sensor) {
+  if(sensor == NULL)
+    return 0;
   byte data[12];
   
   oneWire->reset();

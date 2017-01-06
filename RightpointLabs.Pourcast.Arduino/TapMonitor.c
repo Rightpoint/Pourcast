@@ -25,12 +25,14 @@ DECLARE_STRUCT(DeviceProperties,
 DECLARE_MODEL(KegState,
               /* Event data (temperature, external temperature and humidity) */
               WITH_DATA(long, TimeSinceLastData),
-              WITH_DATA(double, Temperature),
               WITH_DATA(int, Weight),
               WITH_DATA(long, Pulses),
               WITH_DATA(int, ReportingSpeed),
               WITH_DATA(ascii_char_ptr, KegId),
               WITH_DATA(ascii_char_ptr, DeviceId),
+              WITH_DATA(double, Temperature),
+              WITH_DATA(ascii_char_ptr, TemperatureSensor),
+              WITH_DATA(ascii_char_ptr, Error),
 
               /* Device Info - This is command metadata + some extra fields */
               WITH_DATA(ascii_char_ptr, ObjectType),
@@ -298,4 +300,37 @@ void deviceSend(long timeSinceLastData, double temperature, int weight, long pul
 
 
 
+void hasSensor(const char* sensor) {
+  kegState->TemperatureSensor = sensor;
+  
+  unsigned char*buffer;
+  size_t bufferSize;
+
+  if (SERIALIZE(&buffer, &bufferSize, kegState->DeviceId, kegState->TemperatureSensor) != IOT_AGENT_OK)
+  {
+    LogInfo("Failed sending sensor value %s %s\r\n", kegState->DeviceId, kegState->TemperatureSensor);
+  }
+  else
+  {
+    sendMessage(iotHubClientHandle, buffer, bufferSize);
+    LogInfo("Succeeded sending sensor value %s %s\r\n", kegState->DeviceId, kegState->TemperatureSensor);
+  }
+}
+
+void sendError(const char* error) {
+  kegState->Error = error;
+  
+  unsigned char*buffer;
+  size_t bufferSize;
+
+  if (SERIALIZE(&buffer, &bufferSize, kegState->DeviceId, kegState->Error) != IOT_AGENT_OK)
+  {
+    LogInfo("Failed sending sensor value %s %s\r\n", kegState->DeviceId, kegState->Error);
+  }
+  else
+  {
+    sendMessage(iotHubClientHandle, buffer, bufferSize);
+    LogInfo("Succeeded sending sensor value %s %s\r\n", kegState->DeviceId, kegState->Error);
+  }
+}
 
