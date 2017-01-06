@@ -228,3 +228,4 @@ RightpointLabs.Pourcast.Repourter/OnBoardFlash.dat*
 
 /RightpointLabs.Pourcast.Tests/FakesAssemblies
 /RightpointLabs.Pourcast.Web/logs
+/RightpointLabs.Pourcast.Arduino/config.h
