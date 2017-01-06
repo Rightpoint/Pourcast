@@ -1,5 +1,8 @@
 #include "AzureIoTHub.h"
 #include "sdk/schemaserializer.h"
+#include <Arduino.h> 
+#include <time.h>
+#include <sys/time.h>
 
 #define MAX_DEVICE_ID_SIZE  20
 
@@ -25,6 +28,7 @@ DECLARE_STRUCT(DeviceProperties,
 DECLARE_MODEL(KegState,
               /* Event data (temperature, external temperature and humidity) */
               WITH_DATA(ascii_char_ptr, DeviceId),
+              WITH_DATA(long, SendTime),
 
               WITH_DATA(int, KegNumber),
               WITH_DATA(long, TimeSinceLastData),
@@ -245,9 +249,10 @@ void deviceSetup(const char* connectionString)
               unsigned char* buffer;
               size_t bufferSize;
               kegState->Commands = (char*)STRING_c_str(commandsMetadata);
+              kegState->SendTime = now();
 
               /* Here is the actual send of the Device Info */
-              if (SERIALIZE(&buffer, &bufferSize, kegState->ObjectType, kegState->Version, kegState->IsSimulatedDevice, kegState->DeviceProperties, kegState->Commands) != IOT_AGENT_OK)
+              if (SERIALIZE(&buffer, &bufferSize, kegState->ObjectType, kegState->Version, kegState->IsSimulatedDevice, kegState->DeviceProperties, kegState->Commands, kegState->SendTime) != IOT_AGENT_OK)
               {
                 LogInfo("Failed serializing\r\n");
               }
@@ -280,6 +285,7 @@ void deviceTeardown() {
 }
 
 void deviceSend(long timeSinceLastData, int weight, long pulses, int kegNumber, int reportingSpeed) {
+  kegState->SendTime = now();
   kegState->TimeSinceLastData = timeSinceLastData;
   kegState->Weight = weight;
   kegState->Pulses = pulses;
@@ -290,8 +296,8 @@ void deviceSend(long timeSinceLastData, int weight, long pulses, int kegNumber, 
   size_t bufferSize;
 
   int serializeResult = weight == -1 ?
-    SERIALIZE(&buffer, &bufferSize, kegState->DeviceId, kegState->TimeSinceLastData, kegState->Pulses, kegState->KegNumber, kegState->ReportingSpeed) :
-    SERIALIZE(&buffer, &bufferSize, kegState->DeviceId, kegState->TimeSinceLastData, kegState->Weight, kegState->Pulses, kegState->KegNumber, kegState->ReportingSpeed);
+    SERIALIZE(&buffer, &bufferSize, kegState->DeviceId, kegState->SendTime, kegState->TimeSinceLastData, kegState->Pulses, kegState->KegNumber, kegState->ReportingSpeed) :
+    SERIALIZE(&buffer, &bufferSize, kegState->DeviceId, kegState->SendTime, kegState->TimeSinceLastData, kegState->Weight, kegState->Pulses, kegState->KegNumber, kegState->ReportingSpeed);
 
   if (serializeResult != IOT_AGENT_OK)
   {
@@ -305,13 +311,14 @@ void deviceSend(long timeSinceLastData, int weight, long pulses, int kegNumber, 
 }
 
 void temperatureSend(const char* sensor, float temperature) {
+  kegState->SendTime = now();
   kegState->TemperatureSensor = sensor;
   kegState->Temperature = temperature;
   
   unsigned char*buffer;
   size_t bufferSize;
 
-  if (SERIALIZE(&buffer, &bufferSize, kegState->DeviceId, kegState->TemperatureSensor, kegState->Temperature) != IOT_AGENT_OK)
+  if (SERIALIZE(&buffer, &bufferSize, kegState->DeviceId, kegState->SendTime, kegState->TemperatureSensor, kegState->Temperature) != IOT_AGENT_OK)
   {
     LogInfo("Failed sending temperature value %s %s %f\r\n", kegState->DeviceId, kegState->TemperatureSensor, kegState->Temperature);
   }
@@ -323,12 +330,13 @@ void temperatureSend(const char* sensor, float temperature) {
 }
 
 void sendError(const char* error) {
+  kegState->SendTime = now();
   kegState->Error = error;
   
   unsigned char*buffer;
   size_t bufferSize;
 
-  if (SERIALIZE(&buffer, &bufferSize, kegState->DeviceId, kegState->Error) != IOT_AGENT_OK)
+  if (SERIALIZE(&buffer, &bufferSize, kegState->DeviceId, kegState->SendTime, kegState->Error) != IOT_AGENT_OK)
   {
     LogInfo("Failed sending error %s %s\r\n", kegState->DeviceId, kegState->Error);
   }
