@@ -1,8 +1,5 @@
 // starting from https://azure.microsoft.com/en-us/resources/samples/iot-hub-c-m0wifi-getstartedkit/
 
-//#define LOOP_DEBUG
-//#define PULSE_DEBUG
-
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdint.h>
@@ -20,8 +17,6 @@
 #include <AzureIoTUtility.h>
 #include <AzureIoTProtocol_HTTP.h>
 
-#include <OneWire.h>
-
 #include "init.h"
 #include "TapMonitor.h"
 #include "Tap.h"
@@ -30,27 +25,57 @@
 static char ssid[] = WIFI_SSID;
 static char pass[] = WIFI_PASSWORD;
 static char connectionString[] = IOT_CONNECTIONSTRING;
-//static byte sensor1[] = { 0x28, 0x8A, 0x8E, 0x2A, 0x06, 0x00, 0x00, 0xE8 };
-//static byte sensor2[] = { 0x28, 0xA9, 0xD2, 0xFA, 0x05, 0x00, 0x00, 0x56 };
-static byte *sensor1 = NULL;
-static byte *sensor2 = NULL;
-static char kegId1[] = "535c61a951aa0405287989ec";
-static char kegId2[] = "537d28db51aa04289027cde5";
-OneWire oneWire(A5);
-Tap* tap1;
-Tap* tap2;
+
+#ifdef ONEWIRE_PIN
+#include <OneWire.h>
+OneWire oneWire(ONEWIRE_PIN);
+#include "temp.h"
+#endif
+
+#ifdef KEG1_PIN
+#ifdef KEG1_WEIGHT_PIN
+Tap tap1(1,KEG1_WEIGHT_PIN);
+#else
+Tap tap1(1);
+#endif
+#endif
+
+#ifdef KEG2_PIN
+#ifdef KEG2_WEIGHT_PIN
+Tap tap2(2,KEG2_WEIGHT_PIN);
+#else
+Tap tap2(2);
+#endif
+#endif
+
+#ifdef KEG3_PIN
+#ifdef KEG3_WEIGHT_PIN
+Tap tap3(3,KEG3_WEIGHT_PIN);
+#else
+Tap tap3(3);
+#endif
+#endif
+
+#ifdef KEG4_PIN
+#ifdef KEG4_WEIGHT_PIN
+Tap tap4(4,KEG4_WEIGHT_PIN);
+#else
+Tap tap4(4);
+#endif
+#endif
 
 #define WINC_CS   8
 #define WINC_IRQ  7
 #define WINC_RST  4
 #define WINC_EN   2
 
-#define MAX_TEMP_SENSORS 4
-int num_temp_sensors = 0;
-byte temp_sensors[MAX_TEMP_SENSORS][8];
-
 // Setup the WINC1500 connection with the pins above and the default hardware SPI.
 Adafruit_WINC1500 WiFi(WINC_CS, WINC_IRQ, WINC_RST);
+
+#ifdef ONEWIRE_PIN
+int num_temp_sensors = 0;
+byte temp_sensors[MAX_TEMP_SENSORS][8];
+#endif
 
 int status = WL_IDLE_STATUS;
 
@@ -64,6 +89,7 @@ void setup() {
 
   deviceSetup(connectionString);
 
+#ifdef ONEWIRE_PIN
   byte addr[8];
   char buffer[128];
   oneWire.reset_search();
@@ -74,14 +100,13 @@ void setup() {
       Serial.println(buffer);
       continue;
     }
-    Serial.print("Found One-wire device; ");
+    Serial.print("Found One-wire device");
     Serial.println(buffer);
     if(addr[0] == 0x28) {
       if(num_temp_sensors < MAX_TEMP_SENSORS) {
         memcpy(temp_sensors[num_temp_sensors], addr, 8);
         num_temp_sensors++;
-        hasSensor(buffer);
-        Serial.println("Registered");
+        Serial.println("... added");
       } else {
         Serial.print("Too many temperature sensors found - only using first ");
         Serial.println(num_temp_sensors);
@@ -91,47 +116,106 @@ void setup() {
         Serial.println(buffer);
     }
   }
+#endif
 
+#ifdef KEG1_PIN
+  pinMode(KEG1_PIN, INPUT);
+  attachInterrupt(digitalPinToInterrupt(KEG1_PIN), tap1Pulse, RISING);
+  Serial.print("Mapping ");
+  Serial.print(KEG1_PIN);
+  Serial.print(" to ");
+  Serial.print(digitalPinToInterrupt(KEG1_PIN));
+  Serial.println(" for 1");
+#endif
 
-  int pin1 = 10;
-  int int1 = digitalPinToInterrupt(pin1);
-  int pin2 = 11;
-  int int2 = digitalPinToInterrupt(pin2);
+#ifdef KEG2_PIN
+  pinMode(KEG2_PIN, INPUT);
+  attachInterrupt(digitalPinToInterrupt(KEG2_PIN), tap2Pulse, RISING);
+  Serial.print("Mapping ");
+  Serial.print(KEG2_PIN);
+  Serial.print(" to ");
+  Serial.print(digitalPinToInterrupt(KEG2_PIN));
+  Serial.println(" for 2");
+#endif
 
+#ifdef KEG3_PIN
+  pinMode(KEG3_PIN, INPUT);
+  attachInterrupt(digitalPinToInterrupt(KEG3_PIN), tap3Pulse, RISING);
+  Serial.print("Mapping ");
+  Serial.print(KEG3_PIN);
+  Serial.print(" to ");
+  Serial.print(digitalPinToInterrupt(KEG3_PIN));
+  Serial.println(" for 3");
+#endif
 
-  pinMode(pin1, INPUT);
-  tap1 = new Tap(&oneWire, sensor1, kegId1, 1);
-  attachInterrupt(int1, tap1Pulse, RISING);
+#ifdef KEG4_PIN
+  pinMode(KEG4_PIN, INPUT);
+  attachInterrupt(digitalPinToInterrupt(KEG4_PIN), tap4Pulse, RISING);
+  Serial.print("Mapping ");
+  Serial.print(KEG4_PIN);
+  Serial.print(" to ");
+  Serial.print(digitalPinToInterrupt(KEG4_PIN));
+  Serial.println(" for 4");
+#endif
+
   
-  pinMode(pin2, INPUT);
-  tap2 = new Tap(&oneWire, sensor2, kegId2, 1);
-  attachInterrupt(int2, tap2Pulse, RISING);
-
-
-  Serial.print("Mapping ");
-  Serial.print(pin1);
-  Serial.print(" to ");
-  Serial.println(int1);
-
-  Serial.print("Mapping ");
-  Serial.print(pin2);
-  Serial.print(" to ");
-  Serial.println(int2);
+  #ifdef ONEWIRE_PIN
+  requestAllTemps();
+  delay(1000);
+  #endif
 }
 
 // handle interrupt pulses from the taps
+#ifdef KEG1_PIN
 void tap1Pulse() {
 #ifdef PULSE_DEBUG
   Serial.println("Handling 1");
 #endif
-  tap1->HandlePulse();
+  tap1.HandlePulse();
 }
+#endif
+#ifdef KEG2_PIN
 void tap2Pulse() {
 #ifdef PULSE_DEBUG
   Serial.println("Handling 2");
 #endif
-  tap2->HandlePulse();
+  tap2.HandlePulse();
 }
+#endif
+#ifdef KEG3_PIN
+void tap3Pulse() {
+#ifdef PULSE_DEBUG
+  Serial.println("Handling 3");
+#endif
+  tap3.HandlePulse();
+}
+#endif
+#ifdef KEG4_PIN
+void tap4Pulse() {
+#ifdef PULSE_DEBUG
+  Serial.println("Handling 4");
+#endif
+  tap4.HandlePulse();
+}
+#endif
+
+#ifdef ONEWIRE_PIN
+void requestAllTemps() {
+  for(int i=0; i<num_temp_sensors; i++) {
+    requestTempMeasurement(&oneWire, temp_sensors[i]);
+  }
+}
+
+void sendAllTemps() {
+  for(int i=0; i<num_temp_sensors; i++) {
+    byte *addr = temp_sensors[i];
+    float temperature = readTemp(&oneWire, addr);
+    char buffer[128];
+    sprintf(buffer, "%02x%02x%02x%02x%02x%02x%02x%02x%02x", addr[0], addr[1], addr[2], addr[3], addr[4], addr[5], addr[6], addr[7]);
+    temperatureSend(buffer, temperature);
+  }
+}
+#endif
 
 
 void loop() {
@@ -154,9 +238,28 @@ void loop() {
     } else if(offset < 0) {
       target += offset;
     }
-    
-    tap1->Loop(cycle);
-    tap2->Loop(cycle);
+
+    #ifdef KEG1_PIN
+    tap1.Loop(cycle);
+    #endif
+    #ifdef KEG2_PIN
+    tap2.Loop(cycle);
+    #endif
+    #ifdef KEG3_PIN
+    tap3.Loop(cycle);
+    #endif
+    #ifdef KEG4_PIN
+    tap4.Loop(cycle);
+    #endif
+
+    #ifdef ONEWIRE_PIN
+    if(cycle % 600 == 590) {
+      requestAllTemps();
+    }
+    if(cycle % 600 == 0) {
+      sendAllTemps();
+    }
+    #endif
 
     if(cycle % 100 == 0) {
       Serial.println("ALIVE");

@@ -1,4 +1,22 @@
+/* copy this file to config.h and modify to suit your configuration */
+
+/* set up your Wifi and IoT Hub details */
 #define WIFI_SSID "Your SSID";
 #define WIFI_PASSWORD "Your PW";
 #define IOT_CONNECTIONSTRING "HostName=<hostname>.azure-devices.net;SharedAccessKeyName=device;SharedAccessKey=<Your key>;DeviceId=<device_id>";
+
+/* supports up to 4 kegs, each optionally with a scale attached */
+#define KEG1_PIN 10
+#define KEG1_WEIGHT_PIN A0
+#define KEG2_PIN 11
+#define KEG2_WEIGHT_PIN A1
+#define KEG3_PIN 11
+
+/* supports temperature sensors connected via OneWire - indicate the max number to support and what pin to find them on */
+#define ONEWIRE_PIN A5
+#define MAX_TEMP_SENSORS 4
+
+/* enable these to debug the loop-time adjustment and pulse-handling respectively (output to Serial) */
+//#define LOOP_DEBUG
+//#define PULSE_DEBUG
 
