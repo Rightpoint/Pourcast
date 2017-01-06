@@ -1,6 +1,7 @@
 #include "Log.h"
 #include "Tap.h"
 #include "TapMonitor.h"
+#include "config.h"
 
 const unsigned long _pulsesToGoFast = 50;
 const unsigned long _pulsesToGoSlow = 0;
@@ -40,7 +41,7 @@ void Tap::Loop(int cycle) {
     _sendSpeed = 3;
   }
 
-  if(_lastSent == 0 || _sendSpeed >= 2 || (_sendSpeed == 1 && cycle % 60 == 0) || (cycle % 600 == 0)) {
+  if(_lastSent == 0 || _sendSpeed >= 2 || (_sendSpeed == 1 && cycle % SEND_TAP_UPDATE_WHILE_POURING_EVERY == 0) || (cycle % SEND_TAP_UPDATE_EVERY == 0)) {
     // measure and send
     unsigned long thisSend = millis();
     deviceSend(thisSend - _lastSent, _weightPin == -1 ? -1 : analogRead(_weightPin), pulses, _kegNum, _sendSpeed);

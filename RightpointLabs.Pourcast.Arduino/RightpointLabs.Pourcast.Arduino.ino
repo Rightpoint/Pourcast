@@ -221,7 +221,8 @@ void sendAllTemps() {
 void loop() {
   int cycle = 0;
   
-  const int goal = 100;
+  const int goal = LOOP_GOAL_MS;
+  const int requestTempsOnLoopNumber = (SEND_TEMPERATURE_EVERY - 1000 / LOOP_GOAL_MS);
   int offset = 0;
   int target = goal;
 
@@ -253,10 +254,10 @@ void loop() {
     #endif
 
     #ifdef ONEWIRE_PIN
-    if(cycle % 600 == 590) {
+    if(cycle % SEND_TEMPERATURE_EVERY == requestTempsOnLoopNumber) {
       requestAllTemps();
     }
-    if(cycle % 600 == 0) {
+    if(cycle % SEND_TEMPERATURE_EVERY == 0) {
       sendAllTemps();
     }
     #endif
@@ -265,7 +266,7 @@ void loop() {
       Serial.println("ALIVE");
     }
 
-    cycle = (cycle + 1) % 6000;
+    cycle = (cycle + 1) % MAX_LOOP_COUNT;
 
     deviceProcess(target);
     int done = millis();

@@ -20,3 +20,9 @@
 //#define LOOP_DEBUG
 //#define PULSE_DEBUG
 
+/* define how long a loop is and how often we force-send an update */
+#define LOOP_GOAL_MS 100
+#define SEND_TEMPERATURE_EVERY 600
+#define SEND_TAP_UPDATE_EVERY 600
+#define SEND_TAP_UPDATE_WHILE_POURING_EVERY 10
+#define MAX_LOOP_COUNT 6000
