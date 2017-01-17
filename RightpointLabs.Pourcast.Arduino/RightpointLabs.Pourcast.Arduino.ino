@@ -17,6 +17,7 @@
 #include <AzureIoTUtility.h>
 #include <AzureIoTProtocol_HTTP.h>
 
+#include <Q2HX711.h>
 #include "init.h"
 #include "TapMonitor.h"
 #include "Tap.h"
@@ -34,7 +35,8 @@ OneWire oneWire(ONEWIRE_PIN);
 
 #ifdef KEG1_PIN
 #ifdef KEG1_WEIGHT_PIN
-Tap tap1(1,KEG1_WEIGHT_PIN);
+Q2HX711 weight1(KEG1_WEIGHT_PIN, KEG1_WEIGHT_CLOCK_PIN);
+Tap tap1(1, &weight1);
 #else
 Tap tap1(1);
 #endif
@@ -42,7 +44,8 @@ Tap tap1(1);
 
 #ifdef KEG2_PIN
 #ifdef KEG2_WEIGHT_PIN
-Tap tap2(2,KEG2_WEIGHT_PIN);
+Q2HX711 weight2(KEG2_WEIGHT_PIN, KEG2_WEIGHT_CLOCK_PIN);
+Tap tap2(2, &weight2);
 #else
 Tap tap2(2);
 #endif
@@ -50,7 +53,8 @@ Tap tap2(2);
 
 #ifdef KEG3_PIN
 #ifdef KEG3_WEIGHT_PIN
-Tap tap3(3,KEG3_WEIGHT_PIN);
+Q2HX711 weight3(KEG3_WEIGHT_PIN, KEG3_WEIGHT_CLOCK_PIN);
+Tap tap3(3, &weight3);
 #else
 Tap tap3(3);
 #endif
@@ -58,7 +62,8 @@ Tap tap3(3);
 
 #ifdef KEG4_PIN
 #ifdef KEG4_WEIGHT_PIN
-Tap tap4(4,KEG4_WEIGHT_PIN);
+Q2HX711 weight4(KEG4_WEIGHT_PIN, KEG4_WEIGHT_CLOCK_PIN);
+Tap tap4(4, &weight4);
 #else
 Tap tap4(4);
 #endif
@@ -126,6 +131,10 @@ void setup() {
   Serial.print(" to ");
   Serial.print(digitalPinToInterrupt(KEG1_PIN));
   Serial.println(" for 1");
+#ifdef KEG1_WEIGHT_PIN
+  pinMode(KEG1_WEIGHT_PIN, INPUT);
+  pinMode(KEG1_WEIGHT_CLOCK_PIN, OUTPUT);
+#endif
 #endif
 
 #ifdef KEG2_PIN
@@ -136,6 +145,10 @@ void setup() {
   Serial.print(" to ");
   Serial.print(digitalPinToInterrupt(KEG2_PIN));
   Serial.println(" for 2");
+#ifdef KEG2_WEIGHT_PIN
+  pinMode(KEG2_WEIGHT_PIN, INPUT);
+  pinMode(KEG2_WEIGHT_CLOCK_PIN, OUTPUT);
+#endif
 #endif
 
 #ifdef KEG3_PIN
@@ -146,6 +159,10 @@ void setup() {
   Serial.print(" to ");
   Serial.print(digitalPinToInterrupt(KEG3_PIN));
   Serial.println(" for 3");
+#ifdef KEG3_WEIGHT_PIN
+  pinMode(KEG3_WEIGHT_PIN, INPUT);
+  pinMode(KEG3_WEIGHT_CLOCK_PIN, OUTPUT);
+#endif
 #endif
 
 #ifdef KEG4_PIN
@@ -156,6 +173,10 @@ void setup() {
   Serial.print(" to ");
   Serial.print(digitalPinToInterrupt(KEG4_PIN));
   Serial.println(" for 4");
+#ifdef KEG4_WEIGHT_PIN
+  pinMode(KEG4_WEIGHT_PIN, INPUT);
+  pinMode(KEG4_WEIGHT_CLOCK_PIN, OUTPUT);
+#endif
 #endif
 
   

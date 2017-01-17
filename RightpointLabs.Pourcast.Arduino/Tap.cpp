@@ -8,14 +8,14 @@ const unsigned long _pulsesToGoSlow = 0;
 
 Tap::Tap(byte kegNum) {
   _kegNum = kegNum;
-  _weightPin = -1;
+  _weight = NULL;
   _pulsesWaiting = 0;
   _lastSent = 0;
   _sendSpeed = 0;
 }
-Tap::Tap(byte kegNum, byte weightPin) {
+Tap::Tap(byte kegNum, Q2HX711 *weight) {
   _kegNum = kegNum;
-  _weightPin = weightPin;
+  _weight = weight;
   _pulsesWaiting = 0;
   _lastSent = 0;
   _sendSpeed = 0;
@@ -44,7 +44,7 @@ void Tap::Loop(int cycle) {
   if(_lastSent == 0 || _sendSpeed >= 2 || (_sendSpeed == 1 && cycle % SEND_TAP_UPDATE_WHILE_POURING_EVERY == 0) || (cycle % SEND_TAP_UPDATE_EVERY == 0)) {
     // measure and send
     unsigned long thisSend = millis();
-    deviceSend(thisSend - _lastSent, _weightPin == -1 ? -1 : analogRead(_weightPin), pulses, _kegNum, _sendSpeed);
+    deviceSend(thisSend - _lastSent, _weight == NULL ? -1 : _weight->read(), pulses, _kegNum, _sendSpeed);
     _lastSent = thisSend;
 
     // mark off how many we sent, may lose occasional pulses here...
