@@ -1,0 +1,14 @@
+﻿{
+  "bindings": [
+    {
+      "type": "serviceBusTrigger",
+      "name": "msg",
+      "topicName": "kegamountupdate",
+      "subscriptionName": "update-keg-state-function",
+      "connection": "Pourcast Service Bus",
+      "accessRights": "Manage",
+      "direction": "in"
+    }
+  ],
+  "disabled": false
+}
