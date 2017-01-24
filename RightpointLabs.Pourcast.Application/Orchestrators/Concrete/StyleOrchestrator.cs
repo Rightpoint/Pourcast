@@ -13,7 +13,7 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
         public StyleOrchestrator(IStyleRepository styleRepository)
         {
             if(null == styleRepository)
-                throw new ArgumentNullException("styleRepository");
+                throw new ArgumentNullException(nameof(styleRepository));
 
             _styleRepository = styleRepository;
         }
@@ -21,17 +21,17 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
         public Style CreateStyle(string name, string color, string glass)
         {
             if(string.IsNullOrEmpty(name))
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
             if(string.IsNullOrEmpty(color))
-                throw new ArgumentNullException("color");
+                throw new ArgumentNullException(nameof(color));
             if(string.IsNullOrEmpty(glass))
-                throw new ArgumentNullException("glass");
+                throw new ArgumentNullException(nameof(glass));
 
             var id = _styleRepository.NextIdentity();
             var style = new Style(id, name);
             style.Color = color;
             style.Glass = glass;
-            _styleRepository.Add(style);
+            _styleRepository.Insert(style);
             return style;
         }
 
@@ -40,19 +40,9 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
             _styleRepository.Update(style);
         }
 
-        public Style GetStyleByColor(string hexValue)
-        {
-            throw new System.NotImplementedException();
-        }
-
         public IEnumerable<Style> GetStyles()
         {
             return _styleRepository.GetAll();
-        }
-
-        public IEnumerable<Style> GetStylesByName(string name)
-        {
-            throw new System.NotImplementedException();
         }
 
         public Style GetStyleById(string id)

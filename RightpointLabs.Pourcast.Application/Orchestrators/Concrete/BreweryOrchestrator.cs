@@ -41,7 +41,7 @@
                 Website = website,
                 Logo = logo
             };
-            _breweryRepository.Add(brewery);
+            _breweryRepository.Insert(brewery);
 
             return id;
         }

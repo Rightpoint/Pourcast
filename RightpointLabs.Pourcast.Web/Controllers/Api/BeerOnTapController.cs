@@ -13,7 +13,7 @@ namespace RightpointLabs.Pourcast.Web.Controllers.Api
 
         public BeerOnTapController(IBeerOrchestrator beerOrchestrator)
         {
-            if (beerOrchestrator == null) throw new ArgumentNullException("beerOrchestrator");
+            if (beerOrchestrator == null) throw new ArgumentNullException(nameof(beerOrchestrator));
 
             _beerOrchestrator = beerOrchestrator;
         }

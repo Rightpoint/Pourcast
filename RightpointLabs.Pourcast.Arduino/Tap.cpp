@@ -39,6 +39,7 @@ void Tap::Loop(int cycle) {
     // speed up
     Log("Speeding up to 3");
     _sendSpeed = 3;
+    
   }
 
   if(_lastSent == 0 || _sendSpeed >= 2 || (_sendSpeed == 1 && cycle % SEND_TAP_UPDATE_WHILE_POURING_EVERY == 0) || (cycle % SEND_TAP_UPDATE_EVERY == 0)) {

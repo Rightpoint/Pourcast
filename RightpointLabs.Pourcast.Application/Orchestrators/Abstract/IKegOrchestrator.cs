@@ -8,18 +8,18 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Abstract
 
     public interface IKegOrchestrator
     {
-        IEnumerable<Keg> GetKegs();
+        //IEnumerable<Keg> GetKegs();
 
-        IEnumerable<Keg> GetKegs(bool isEmpty);
+        //IEnumerable<Keg> GetKegs(bool isEmpty);
             
-        Keg GetKeg(string kegId);
+        Keg GetKeg(string kegId, string organizationId);
         
-        IEnumerable<Keg> GetKegsOnTap();
+        //IEnumerable<Keg> GetKegsOnTap();
             
-        Keg GetKegOnTap(string tapId);
+        //Keg GetKegOnTap(string tapId);
 
-        string CreateKeg(string beerId, double capacity);
+        string CreateKeg(string beerId, string kegTypeId, string organizationId);
         
-        void UpdateCapacityAndPoured(string kegId, double capacity, double amountOfBeerPoured);
+        //void UpdateCapacityAndPoured(string kegId, double capacity, double amountOfBeerPoured);
     }
 }

@@ -35,10 +35,10 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
 
         public HomeController(ITapOrchestrator tapOrchestrator, IKegOrchestrator kegOrchestrator, IBeerOrchestrator beerOrchestrator, IConnectionManager connectionManager)
         {
-            if (tapOrchestrator == null) throw new ArgumentNullException("tapOrchestrator");
-            if (kegOrchestrator == null) throw new ArgumentNullException("kegOrchestrator");
-            if (beerOrchestrator == null) throw new ArgumentNullException("beerOrchestrator");
-            if (connectionManager == null) throw new ArgumentNullException("connectionManager");
+            if (tapOrchestrator == null) throw new ArgumentNullException(nameof(tapOrchestrator));
+            if (kegOrchestrator == null) throw new ArgumentNullException(nameof(kegOrchestrator));
+            if (beerOrchestrator == null) throw new ArgumentNullException(nameof(beerOrchestrator));
+            if (connectionManager == null) throw new ArgumentNullException(nameof(connectionManager));
             _tapOrchestrator = tapOrchestrator;
             _kegOrchestrator = kegOrchestrator;
             _beerOrchestrator = beerOrchestrator;

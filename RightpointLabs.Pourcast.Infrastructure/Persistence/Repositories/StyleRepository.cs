@@ -1,13 +1,13 @@
-﻿namespace RightpointLabs.Pourcast.Infrastructure.Persistence.Repositories
+﻿using Microsoft.WindowsAzure.Storage.Table;
+
+namespace RightpointLabs.Pourcast.Infrastructure.Persistence.Repositories
 {
     using RightpointLabs.Pourcast.Domain.Models;
     using RightpointLabs.Pourcast.Domain.Repositories;
-    using RightpointLabs.Pourcast.Infrastructure.Persistence.Collections;
 
-    public class StyleRepository : EntityRepository<Style>, IStyleRepository
+    public class StyleRepository : TableRepository<Style>, IStyleRepository
     {
-        public StyleRepository(StyleCollectionDefinition collectionDefinition)
-            : base(collectionDefinition)
+        public StyleRepository(CloudTableClient client) : base(client)
         {
         }
     }

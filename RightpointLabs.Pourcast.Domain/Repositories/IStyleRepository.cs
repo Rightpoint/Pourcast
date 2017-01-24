@@ -4,12 +4,11 @@ namespace RightpointLabs.Pourcast.Domain.Repositories
 {
     using RightpointLabs.Pourcast.Domain.Models;
 
-    public interface IStyleRepository
+    public interface IStyleRepository : IRepository
     {
         Style GetById(string id);
         IEnumerable<Style> GetAll();
-        string NextIdentity();
         void Update(Style style);
-        void Add(Style style);
+        void Insert(Style style);
     }
 }

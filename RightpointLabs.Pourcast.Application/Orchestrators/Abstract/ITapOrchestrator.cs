@@ -6,28 +6,28 @@
 
     public interface ITapOrchestrator
     {
-        Tap GetTapById(string id);
+        Tap GetTapById(string id, string organizationId);
 
-        IEnumerable<Tap> GetTaps();
+        IEnumerable<Tap> GetTaps(string organizationId);
 
-        void StartPourFromTap(string tapId);
+        //void StartPourFromTap(string tapId);
 
-        void PouringFromTap(string id, double volume);
+        //void PouringFromTap(string id, double volume);
 
-        void StopPourFromTap(string tapId, double volume);
+        //void StopPourFromTap(string tapId, double volume);
 
-        void RemoveKegFromTap(string tapId);
+        //void RemoveKegFromTap(string tapId);
 
-        void TapKeg(string tapId, string kegId);
+        //void TapKeg(string tapId, string kegId);
 
-        string CreateTap(string name);
+        string CreateTap(string name, string organizationId);
 
-        string CreateTap(string name, string kegId);
+        //string CreateTap(string name, string kegId);
 
-        Tap GetByName(string name);
+        Tap GetByName(string name, string organizationId);
 
         void Save(Tap tap);
 
-        void UpdateTemperature(string id, double temperatureF);
+        //void UpdateTemperature(string id, double temperatureF);
     }
 }

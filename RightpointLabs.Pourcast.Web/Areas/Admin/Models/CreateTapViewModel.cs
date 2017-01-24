@@ -14,7 +14,7 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Models
 
         public CreateTapViewModel(IEnumerable<KegModel> kegs)
         {
-            if (null == kegs) throw new ArgumentNullException("kegs");
+            if (null == kegs) throw new ArgumentNullException(nameof(kegs));
 
             Kegs = kegs.Select(k => new SelectListItem() { Text = k.BeerName, Value = k.Id }).ToList();
             Kegs.Insert(0, new SelectListItem() { Text = Resources.Admin_Tap_Create_Dropdownlist, Value = "", Selected = true});

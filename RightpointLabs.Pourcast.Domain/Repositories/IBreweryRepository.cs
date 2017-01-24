@@ -4,7 +4,7 @@
 
     using RightpointLabs.Pourcast.Domain.Models;
 
-    public interface IBreweryRepository
+    public interface IBreweryRepository : IRepository
     {
         Brewery GetById(string id);
 
@@ -12,10 +12,8 @@
 
         IEnumerable<Brewery> GetAll();
 
-        void Add(Brewery brewery);
+        void Insert(Brewery brewery);
 
         void Update(Brewery brewery);
-
-        string NextIdentity();
     }
 }

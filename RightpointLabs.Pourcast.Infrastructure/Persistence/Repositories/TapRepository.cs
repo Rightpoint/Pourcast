@@ -1,37 +1,21 @@
 using System;
+using System.Linq;
+using Microsoft.WindowsAzure.Storage.Table;
 
 namespace RightpointLabs.Pourcast.Infrastructure.Persistence.Repositories
 {
-    using System.Linq;
-
     using RightpointLabs.Pourcast.Domain.Models;
     using RightpointLabs.Pourcast.Domain.Repositories;
-    using RightpointLabs.Pourcast.Infrastructure.Persistence.Collections;
 
-    public class TapRepository : EntityRepository<Tap>, ITapRepository
+    public class TapRepository : TableByOrganizationRepository<Tap>, ITapRepository
     {
-        public TapRepository(TapCollectionDefinition tapCollectionDefinition)
-            : base(tapCollectionDefinition)
+        public TapRepository(CloudTableClient client) : base(client)
         {
         }
 
-        public Tap GetByKegId(string kegId)
+        public Tap GetByName(string name, string organizationId)
         {
-            return Queryable.Single(t => t.KegId == kegId);
-        }
-
-        public Tap GetByName(string name)
-        {
-            try
-            {
-                return Queryable.Single(t => t.Name == name);
-            }
-            catch (Exception ex)
-            {
-                // Probably blew up cause it didn't find anything. 
-                // Not sure why mongodb doesn't just return null
-                return null;
-            }
+            return this.GetAll(organizationId).SingleOrDefault(i => i.Name == name);
         }
     }
 }

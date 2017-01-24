@@ -20,11 +20,5 @@
         public double BAScore { get; set; }
         public double RPScore { get; set; }
         public string StyleId { get; set; }
-
-        public string Color { get; set; }
-
-        public string Glass { get; set; }
-
-        public string Style { get; set; }
     }
 }

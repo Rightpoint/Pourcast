@@ -4,7 +4,7 @@
 
     using RightpointLabs.Pourcast.Domain.Models;
 
-    public interface IUserRepository
+    public interface IUserRepository : IRepository
     {
         User GetById(string id);
 
@@ -12,9 +12,7 @@
 
         User GetByUsername(string username);
 
-        IEnumerable<User> GetUsersInRole(string id);
-
-        void Add(User user);
+        void Insert(User user);
 
         void Update(User user);
     }

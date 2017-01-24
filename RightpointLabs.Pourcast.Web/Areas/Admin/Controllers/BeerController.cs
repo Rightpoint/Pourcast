@@ -30,9 +30,9 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
 
         public BeerController(IBeerOrchestrator beerOrchestrator, IBreweryOrchestrator breweryOrchestrator, IStyleOrchestrator styleOrchestrator)
         {
-            if (beerOrchestrator == null) throw new ArgumentNullException("beerOrchestrator");
-            if (null == breweryOrchestrator) throw new ArgumentNullException("breweryOrchestrator");
-            if(null == styleOrchestrator) throw new ArgumentNullException("styleOrchestrator");
+            if (beerOrchestrator == null) throw new ArgumentNullException(nameof(beerOrchestrator));
+            if (null == breweryOrchestrator) throw new ArgumentNullException(nameof(breweryOrchestrator));
+            if(null == styleOrchestrator) throw new ArgumentNullException(nameof(styleOrchestrator));
             _beerOrchestrator = beerOrchestrator;
             _breweryOrchestrator = breweryOrchestrator;
             _styleOrchestrator = styleOrchestrator;

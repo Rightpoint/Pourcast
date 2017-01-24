@@ -16,7 +16,7 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Models
 
         public CreateKegViewModel(IEnumerable<Beer> beers)
         {
-            if(beers == null) throw new ArgumentNullException("beers");
+            if(beers == null) throw new ArgumentNullException(nameof(beers));
             Beers = new SelectList(beers.Select(b => new SelectListItem(){Text = b.Name, Value = b.Id}), "Value", "Text");
         }
 

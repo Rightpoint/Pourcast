@@ -6,8 +6,8 @@ namespace RightpointLabs.Pourcast.Application.Payloads.Analytics
     {
         public BeerBeenOnTap(string beerId, string beerName, string[] kegIds, DateTime firstDate, DateTime lastDate)
         {
-            if(string.IsNullOrEmpty(beerId)) throw new ArgumentNullException("beerId");
-            if(string.IsNullOrEmpty(beerName)) throw new ArgumentNullException("beerName");
+            if(string.IsNullOrEmpty(beerId)) throw new ArgumentNullException(nameof(beerId));
+            if(string.IsNullOrEmpty(beerName)) throw new ArgumentNullException(nameof(beerName));
 
             BeerId = beerId;
             BeerName = beerName;

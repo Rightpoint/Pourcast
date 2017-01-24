@@ -9,9 +9,9 @@ namespace RightpointLabs.Pourcast.Application.Payloads.Analytics
     {
         public KegDurationOnTap(string kegId, string beerId, string beerName, IEnumerable<Burndown> burndowns, int interval)
         {
-            if(string.IsNullOrEmpty(kegId)) throw new ArgumentNullException("kegId");
-            if(string.IsNullOrEmpty(beerId)) throw new ArgumentNullException("beerId");
-            if(string.IsNullOrEmpty(beerName)) throw new ArgumentNullException("beerName");
+            if(string.IsNullOrEmpty(kegId)) throw new ArgumentNullException(nameof(kegId));
+            if(string.IsNullOrEmpty(beerId)) throw new ArgumentNullException(nameof(beerId));
+            if(string.IsNullOrEmpty(beerName)) throw new ArgumentNullException(nameof(beerName));
             KegId = kegId;
             BeerId = beerId;
             BeerName = beerName;

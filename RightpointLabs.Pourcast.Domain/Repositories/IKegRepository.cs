@@ -4,18 +4,16 @@
 
     using RightpointLabs.Pourcast.Domain.Models;
 
-    public interface IKegRepository
+    public interface IKegRepository : IRepository
     {
         Keg GetById(string id);
-        
-        IEnumerable<Keg> GetAll();
 
-        IEnumerable<Keg> GetAll(bool isEmpty); 
+        Keg GetById(string id, string organizationId);
+
+        IEnumerable<Keg> GetAll(string organizationId);
 
         void Update(Keg keg);
         
-        string NextIdentity();
-
-        void Add(Keg keg);
+        void Insert(Keg keg);
     }
 }

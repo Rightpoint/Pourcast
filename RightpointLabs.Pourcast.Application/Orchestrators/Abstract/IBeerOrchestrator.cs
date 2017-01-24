@@ -9,9 +9,9 @@
     {
         IEnumerable<Beer> GetBeers();
 
-        IEnumerable<BeerOnTap> GetBeersOnTap();
+        IEnumerable<BeerOnTap> GetBeersOnTap(string organizationId);
 
-        BeerOnTap GetBeerOnTap(string tapId);
+        BeerOnTap GetBeerOnTap(string tapId, string organizationId);
             
         IEnumerable<Beer> GetByName(string name);
 

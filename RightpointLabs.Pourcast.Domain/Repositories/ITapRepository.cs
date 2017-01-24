@@ -4,20 +4,12 @@ namespace RightpointLabs.Pourcast.Domain.Repositories
 
     using RightpointLabs.Pourcast.Domain.Models;
 
-    public interface ITapRepository
+    public interface ITapRepository : IRepository
     {
-        void Add(Tap tap);
-        
-        IEnumerable<Tap> GetAll();
-        
-        Tap GetById(string id);
-
-        Tap GetByKegId(string kegId);
-        
-        string NextIdentity();
-
+        Tap GetById(string id, string organizationId);
+        IEnumerable<Tap> GetAll(string organizationId);
+        Tap GetByName(string name, string organizationId);
+        void Insert(Tap tap);
         void Update(Tap tap);
-
-        Tap GetByName(string name);
     }
 }

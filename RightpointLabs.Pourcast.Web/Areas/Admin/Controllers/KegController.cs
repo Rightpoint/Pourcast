@@ -28,9 +28,9 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
         public KegController(IKegOrchestrator kegOrchestrator, IBeerOrchestrator beerOrchestrator,
             IBreweryOrchestrator breweryOrchestrator)
         {
-            if(null == kegOrchestrator) throw new ArgumentNullException("kegOrchestrator");    
-            if(null == beerOrchestrator) throw new ArgumentNullException("beerOrchestrator");
-            if(null == breweryOrchestrator) throw new ArgumentNullException("breweryOrchestrator");
+            if(null == kegOrchestrator) throw new ArgumentNullException(nameof(kegOrchestrator));    
+            if(null == beerOrchestrator) throw new ArgumentNullException(nameof(beerOrchestrator));
+            if(null == breweryOrchestrator) throw new ArgumentNullException(nameof(breweryOrchestrator));
 
             _kegOrchestrator = kegOrchestrator;
             _beerOrchestrator = beerOrchestrator;

@@ -62,27 +62,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EventHandlers\EventStoreHandler.cs" />
-    <Compile Include="EventHandlers\KegEmptiedNotificationHandler.cs" />
-    <Compile Include="EventHandlers\KegNearingEmptyNotificationHandler.cs" />
-    <Compile Include="EventHandlers\StateTracker.cs" />
     <Compile Include="Orchestrators\Abstract\BaseOrchestrator.cs" />
-    <Compile Include="Orchestrators\Abstract\IAnalyticsOrchestrator.cs" />
     <Compile Include="Orchestrators\Abstract\IBeerOrchestrator.cs" />
     <Compile Include="Orchestrators\Abstract\IBreweryOrchestrator.cs" />
     <Compile Include="Orchestrators\Abstract\IKegOrchestrator.cs" />
-    <Compile Include="Orchestrators\Abstract\IStatusOrchestrator.cs" />
     <Compile Include="Orchestrators\Abstract\IStyleOrchestrator.cs" />
     <Compile Include="Orchestrators\Abstract\ITapOrchestrator.cs" />
-    <Compile Include="Orchestrators\Abstract\IIdentityOrchestrator.cs" />
-    <Compile Include="Orchestrators\Concrete\AnalyticsOrchestrator.cs" />
     <Compile Include="Orchestrators\Concrete\BeerOrchestrator.cs" />
     <Compile Include="Orchestrators\Concrete\BreweryOrchestrator.cs" />
-    <Compile Include="Orchestrators\Concrete\StatusOrchestrator.cs" />
     <Compile Include="Orchestrators\Concrete\KegOrchestrator.cs" />
     <Compile Include="Orchestrators\Concrete\StyleOrchestrator.cs" />
     <Compile Include="Orchestrators\Concrete\TapOrchestrator.cs" />
-    <Compile Include="Orchestrators\Concrete\IdentityOrchestrator.cs" />
     <Compile Include="Payloads\Analytics\Burndown.cs" />
     <Compile Include="Payloads\Analytics\KegDurationOnTap.cs" />
     <Compile Include="Payloads\Analytics\BeerBeenOnTap.cs" />

@@ -24,7 +24,7 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
         public StyleController(IStyleOrchestrator styleOrchestrator)
         {
             if(null == styleOrchestrator)
-                throw new ArgumentNullException("styleOrchestrator");
+                throw new ArgumentNullException(nameof(styleOrchestrator));
 
             _styleOrchestrator = styleOrchestrator;
         }

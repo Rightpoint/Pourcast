@@ -13,70 +13,62 @@
     {
         private readonly IKegRepository _kegRepository;
 
-        private readonly ITapRepository _tapRepository;
-
-        private readonly IBeerRepository _beerRepository;
-
-        public KegOrchestrator(IKegRepository kegRepository, ITapRepository tapRepository, IBeerRepository beerRepository)
+        public KegOrchestrator(IKegRepository kegRepository)
         {
-            if (kegRepository == null) throw new ArgumentNullException("kegRepository");
-            if (tapRepository == null) throw new ArgumentNullException("tapRepository");
-            if (beerRepository == null) throw new ArgumentNullException("beerRepository");
+            if (kegRepository == null) throw new ArgumentNullException(nameof(kegRepository));
 
             _kegRepository = kegRepository;
-            _tapRepository = tapRepository;
-            _beerRepository = beerRepository;
         }
 
-        public IEnumerable<Keg> GetKegs()
+        //public IEnumerable<Keg> GetKegs()
+        //{
+        //    return _kegRepository.GetAll();
+        //}
+
+        //public IEnumerable<Keg> GetKegs(bool isEmpty)
+        //{
+        //    return _kegRepository.GetAll().Where(k => k.IsEmpty == isEmpty);
+        //} 
+
+        public Keg GetKeg(string kegId, string organizationId)
         {
-            return _kegRepository.GetAll();
+            return _kegRepository.GetById(kegId, organizationId);
         }
 
-        public IEnumerable<Keg> GetKegs(bool isEmpty)
-        {
-            return _kegRepository.GetAll().Where(k => k.IsEmpty == isEmpty);
-        } 
+        //public IEnumerable<Keg> GetKegsOnTap()
+        //{
+        //    var taps = _tapRepository.GetAll();
+        //    var kegs = taps.Select(t => _kegRepository.GetById(t.KegId));
 
-        public Keg GetKeg(string kegId)
-        {
-            return _kegRepository.GetById(kegId);
-        }
+        //    return kegs;
+        //}
 
-        public IEnumerable<Keg> GetKegsOnTap()
-        {
-            var taps = _tapRepository.GetAll();
-            var kegs = taps.Select(t => _kegRepository.GetById(t.KegId));
+        //public Keg GetKegOnTap(string tapId)
+        //{
+        //    var tap = _tapRepository.GetById(tapId);
+        //    var keg = _kegRepository.GetById(tap.KegId);
 
-            return kegs;
-        }
-
-        public Keg GetKegOnTap(string tapId)
-        {
-            var tap = _tapRepository.GetById(tapId);
-            var keg = _kegRepository.GetById(tap.KegId);
-
-            return keg;
-        }
+        //    return keg;
+        //}
 
         [Transactional]
-        public string CreateKeg(string beerId, double capacity)
+        public string CreateKeg(string beerId, string kegTypeId, string organizationId)
         {
             var id = _kegRepository.NextIdentity();
-            var beer = _beerRepository.GetById(beerId);
-            var keg = new Keg(id, beer.Id, capacity);
+            var keg = new Keg(id, beerId, kegTypeId);
+            keg.OrganizationId = organizationId;
 
-            _kegRepository.Add(keg);
+            _kegRepository.Insert(keg);
 
             return id;
         }
 
-        [Transactional]
-        public void UpdateCapacityAndPoured(string kegId, double capacity, double amountOfBeerPoured)
-        {
-            var keg = _kegRepository.GetById(kegId);
-            keg.UpdateCapacityAndPoured(capacity, amountOfBeerPoured);
-            _kegRepository.Update(keg);
-        }
+        //[Transactional]
+        //public void UpdateCapacityAndPoured(string kegId, double capacity, double amountOfBeerPoured)
+        //{
+        //    var keg = _kegRepository.GetById(kegId);
+        //    keg.UpdateCapacityAndPoured(capacity, amountOfBeerPoured);
+        //    _kegRepository.Update(keg);
+        //}
     }
 }

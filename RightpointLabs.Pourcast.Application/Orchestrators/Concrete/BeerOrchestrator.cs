@@ -24,11 +24,11 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
 
         public BeerOrchestrator(IBeerRepository beerRepository, IBreweryRepository breweryRepository, ITapRepository tapRepository, IKegRepository kegRepository, IStyleRepository styleRepository)
         {
-            if (beerRepository == null) throw new ArgumentNullException("beerRepository");
-            if(breweryRepository == null) throw new ArgumentNullException("breweryRepository");
-            if (tapRepository == null) throw new ArgumentNullException("tapRepository");
-            if (kegRepository == null) throw new ArgumentNullException("kegRepository");
-            if(null == styleRepository) throw new ArgumentException("styleRepository");
+            if (beerRepository == null) throw new ArgumentNullException(nameof(beerRepository));
+            if (breweryRepository == null) throw new ArgumentNullException(nameof(breweryRepository));
+            if (tapRepository == null) throw new ArgumentNullException(nameof(tapRepository));
+            if (kegRepository == null) throw new ArgumentNullException(nameof(kegRepository));
+            if (styleRepository == null) throw new ArgumentNullException(nameof(styleRepository));
 
             _beerRepository = beerRepository;
             _breweryRepository = breweryRepository;
@@ -42,31 +42,28 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
             return _beerRepository.GetAll();
         }
 
-        public IEnumerable<BeerOnTap> GetBeersOnTap()
+        public IEnumerable<BeerOnTap> GetBeersOnTap(string organizationId)
         {
-            var taps = _tapRepository.GetAll();
+            var taps = _tapRepository.GetAll(organizationId);
 
             return taps.Select(tap => CreateBeerOnTap(tap));
         }
 
-        public BeerOnTap GetBeerOnTap(string tapId)
+        public BeerOnTap GetBeerOnTap(string tapId, string organizationId)
         {
-            var tap = _tapRepository.GetById(tapId);
+            var tap = _tapRepository.GetById(tapId, organizationId);
 
             return CreateBeerOnTap(tap);
         }
 
         private BeerOnTap CreateBeerOnTap(Tap tap)
         {
-            if (tap.HasKeg)
+            if (tap.KegId != null)
             {
                 var keg = _kegRepository.GetById(tap.KegId);
                 var beer = _beerRepository.GetById(keg.BeerId);
                 var brewery = _breweryRepository.GetById(beer.BreweryId);
                 var style = (string.IsNullOrEmpty(beer.StyleId)) ? null : _styleRepository.GetById(beer.StyleId);
-                //TODO Maybe add a default color
-                beer.Color = (null == style) ? string.Empty : style.Color;
-                beer.Style = (null == style) ? string.Empty : style.Name;
                 return new BeerOnTap() { Tap = tap, Keg = keg, Beer = beer, Brewery = brewery, Style = style };
             }
             else
@@ -104,7 +101,7 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
                 RPScore = 0,
                 StyleId = styleId
             };
-            _beerRepository.Add(beer);
+            _beerRepository.Insert(beer);
 
             return id;
         }

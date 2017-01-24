@@ -13,11 +13,11 @@ namespace RightpointLabs.Pourcast.Application.Orchestrators.Concrete
     {
         private readonly IKegRepository _kegRepository;
         private readonly IBeerRepository _beerRepository;
-        private readonly IStoredEventRepository _storedEventRepository;
+        private readonly ISensorRepository _storedEventRepository;
         private readonly ITapRepository _tapRepository;
         private readonly IStyleRepository _styleRepository;
 
-        public AnalyticsOrchestrator(IKegRepository kegRepository, IBeerRepository beerRepository, IStoredEventRepository storedEventRepository, ITapRepository tapRepository, IStyleRepository styleRepository)
+        public AnalyticsOrchestrator(IKegRepository kegRepository, IBeerRepository beerRepository, ISensorRepository storedEventRepository, ITapRepository tapRepository, IStyleRepository styleRepository)
         {
             if (null == kegRepository) throw new ArgumentNullException("kegRepository");
             if (null == beerRepository) throw new ArgumentNullException("beerRepository");

@@ -14,7 +14,7 @@ namespace RightpointLabs.Pourcast.Web.Areas.Analytics.Controllers
 
         public HomeController(IAnalyticsOrchestrator analytics)
         {
-            if(null == analytics) throw new ArgumentNullException("analytics");
+            if(null == analytics) throw new ArgumentNullException(nameof(analytics));
             _analytics = analytics;
         }
 

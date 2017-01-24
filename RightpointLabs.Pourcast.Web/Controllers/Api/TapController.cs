@@ -16,7 +16,7 @@ namespace RightpointLabs.Pourcast.Web.Controllers.Api
 
         public TapController(ITapOrchestrator tapOrchestrator)
         {
-            if (tapOrchestrator == null) throw new ArgumentNullException("tapOrchestrator");
+            if (tapOrchestrator == null) throw new ArgumentNullException(nameof(tapOrchestrator));
 
             _tapOrchestrator = tapOrchestrator;
         }
