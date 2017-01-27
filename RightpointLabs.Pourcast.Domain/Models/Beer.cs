@@ -1,7 +1,5 @@
 ﻿namespace RightpointLabs.Pourcast.Domain.Models
 {
-    using RightpointLabs.Pourcast.Domain.Events;
-
     public class Beer : Entity
     {
         private Beer() { }
@@ -10,8 +8,6 @@
             : base(id)
         {
             Name = name;
-            
-            DomainEvents.Raise(new BeerCreated(id));
         }
 
         public string Name { get; set; }

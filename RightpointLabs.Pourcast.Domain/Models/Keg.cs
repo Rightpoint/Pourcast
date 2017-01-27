@@ -2,8 +2,6 @@
 {
     using System;
 
-    using RightpointLabs.Pourcast.Domain.Events;
-
     public class Keg : Entity, IByOrganizationId
     {
         private Keg() { }
@@ -13,8 +11,6 @@
         {
             BeerId = beerId;
             KegTypeId = kegTypeId;
-
-            DomainEvents.Raise(new KegCreated(id, beerId));
         }
 
         public string BeerId { get; private set; }

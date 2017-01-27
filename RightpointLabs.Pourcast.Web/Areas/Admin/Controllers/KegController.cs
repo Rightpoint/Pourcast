@@ -40,32 +40,34 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
         // GET: /Admin/Keg/
         public ActionResult Index()
         {
-            var kegs = _kegOrchestrator.GetKegs();
-            var kegsOnTap = _kegOrchestrator.GetKegsOnTap();
-            var model = new KegViewModel(){Kegs = new List<KegModel>()};
-            kegs.ForEach((k) =>
-            {
-                var keg = AutoMapper.Mapper.Map<Keg, KegModel>(k);
-                keg.BeerName = _beerOrchestrator.GetById(k.BeerId).Name;
-                model.Kegs.Add(keg);
-                keg.IsOnTap = kegsOnTap.Select(t => t.Id).Contains(keg.Id);
-            });
+            throw new NotImplementedException();
+            //var kegs = _kegOrchestrator.GetKegs();
+            //var kegsOnTap = _kegOrchestrator.GetKegsOnTap();
+            //var model = new KegViewModel(){Kegs = new List<KegModel>()};
+            //kegs.ForEach((k) =>
+            //{
+            //    var keg = AutoMapper.Mapper.Map<Keg, KegModel>(k);
+            //    keg.BeerName = _beerOrchestrator.GetById(k.BeerId).Name;
+            //    model.Kegs.Add(keg);
+            //    keg.IsOnTap = kegsOnTap.Select(t => t.Id).Contains(keg.Id);
+            //});
 
-            return View(model);
+            //return View(model);
         }
 
         public ActionResult Details(string id)
         {
-            var existing = _kegOrchestrator.GetKeg(id);
+            throw new NotImplementedException();
+            //var existing = _kegOrchestrator.GetKeg(id);
 
-            if (null == existing)
-            {
-                ViewBag.Error = "No keg exists with that id";
-                return View();
-            }
-            var model = AutoMapper.Mapper.Map<Keg, KegModel>(existing);
-            model.BeerName = _beerOrchestrator.GetById(existing.BeerId).Name;
-            return View(model);
+            //if (null == existing)
+            //{
+            //    ViewBag.Error = "No keg exists with that id";
+            //    return View();
+            //}
+            //var model = AutoMapper.Mapper.Map<Keg, KegModel>(existing);
+            //model.BeerName = _beerOrchestrator.GetById(existing.BeerId).Name;
+            //return View(model);
         }
 
         public ActionResult Create()
@@ -78,33 +80,36 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Create(CreateKegViewModel model)
         {
+            throw new NotImplementedException();
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
 
-            var id = _kegOrchestrator.CreateKeg(model.BeerId, model.Capacity);
-            return RedirectToAction("Details", new {id = id});
+            //var id = _kegOrchestrator.CreateKeg(model.BeerId, model.Capacity);
+            //return RedirectToAction("Details", new {id = id});
         }
 
         // GET: Admin/Keg/Edit/5
         public ActionResult Edit(string id)
         {
-            var keg = _kegOrchestrator.GetKeg(id);
-            if (null == keg)
-                return RedirectToAction("Index");
+            throw new NotImplementedException();
+            //var keg = _kegOrchestrator.GetKeg(id);
+            //if (null == keg)
+            //    return RedirectToAction("Index");
 
-            var model = AutoMapper.Mapper.Map<Keg, EditKegViewModel>(keg);
-            var beer = _beerOrchestrator.GetById(keg.BeerId);
-            model.BeerName = beer.Name;
-            return View(model);
+            //var model = AutoMapper.Mapper.Map<Keg, EditKegViewModel>(keg);
+            //var beer = _beerOrchestrator.GetById(keg.BeerId);
+            //model.BeerName = beer.Name;
+            //return View(model);
         }
 
         // POST: Admin/Keg/Edit/5
         [HttpPost]
         public ActionResult Edit(EditKegViewModel model)
         {
-            _kegOrchestrator.UpdateCapacityAndPoured(model.Id, model.Capacity, model.AmountOfBeerPoured);
+            throw new NotImplementedException();
+            //_kegOrchestrator.UpdateCapacityAndPoured(model.Id, model.Capacity, model.AmountOfBeerPoured);
             return RedirectToAction("Details", new { id = model.Id });
         }
 	}

@@ -18,12 +18,8 @@ namespace RightpointLabs.Pourcast.Web
     using Microsoft.Practices.ServiceLocation;
     using Microsoft.Practices.Unity.InterceptionExtension;
 
-    using RightpointLabs.Pourcast.Application.EventHandlers;
-    using RightpointLabs.Pourcast.Domain.Events;
     using RightpointLabs.Pourcast.Domain.Services;
-    using RightpointLabs.Pourcast.Infrastructure.Persistence;
     using RightpointLabs.Pourcast.Infrastructure.Services;
-    using RightpointLabs.Pourcast.Web.SignalR;
 
     public static class UnityConfig
     {

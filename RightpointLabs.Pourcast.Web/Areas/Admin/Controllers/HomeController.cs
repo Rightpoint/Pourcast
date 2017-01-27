@@ -4,7 +4,6 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using RightpointLabs.Pourcast.Application.Orchestrators.Abstract;
-using RightpointLabs.Pourcast.Domain.Events;
 using RightpointLabs.Pourcast.Domain.Models;
 using RightpointLabs.Pourcast.Web.Areas.Admin.Models;
 using WebGrease.Css.Extensions;
@@ -49,25 +48,26 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
         // GET: /Admin/Home/
         public ActionResult Index()
         {
-            // TODO Talk about how to figure out which keg is on which tap
-            var taps = _tapOrchestrator.GetTaps();
-            var vm = new List<TapModel>();
-            taps.ForEach(t =>
-            {
-                var tap = AutoMapper.Mapper.Map<Tap, TapModel>(t);
-                if (t.HasKeg)
-                {
-                    var keg = _kegOrchestrator.GetKeg(t.KegId);
-                    tap.Keg = AutoMapper.Mapper.Map<Keg, KegModel>(keg);
-                    if (null != keg)
-                    {
-                        var beer = _beerOrchestrator.GetById(keg.BeerId);
-                        tap.Keg.BeerName = beer.Name;
-                    }
-                }
-                vm.Add(tap);
-            });
-            return View("Index", vm);
+            throw new NotImplementedException();
+            //// TODO Talk about how to figure out which keg is on which tap
+            //var taps = _tapOrchestrator.GetTaps();
+            //var vm = new List<TapModel>();
+            //taps.ForEach(t =>
+            //{
+            //    var tap = AutoMapper.Mapper.Map<Tap, TapModel>(t);
+            //    if (t.HasKeg)
+            //    {
+            //        var keg = _kegOrchestrator.GetKeg(t.KegId);
+            //        tap.Keg = AutoMapper.Mapper.Map<Keg, KegModel>(keg);
+            //        if (null != keg)
+            //        {
+            //            var beer = _beerOrchestrator.GetById(keg.BeerId);
+            //            tap.Keg.BeerName = beer.Name;
+            //        }
+            //    }
+            //    vm.Add(tap);
+            //});
+            //return View("Index", vm);
         }
 
         public ActionResult Refresh()
@@ -79,11 +79,11 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
             return null;
         }
 
-        public ActionResult RequestPicture()
-        {
-            DomainEvents.Raise(new PictureRequested());
+        //public ActionResult RequestPicture()
+        //{
+        //    DomainEvents.Raise(new PictureRequested());
 
-            return null;
-        }
+        //    return null;
+        //}
     }
 }

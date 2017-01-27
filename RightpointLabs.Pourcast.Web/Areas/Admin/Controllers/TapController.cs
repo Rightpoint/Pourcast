@@ -41,7 +41,7 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
             _breweryOrchestrator = breweryOrchestrator;
         }
 
-        string OrganizationId {  get {  return new NotImplementedException();} }
+        string OrganizationId {  get {  throw new NotImplementedException();} }
 
         //
         // GET: /Admin/Tap/
