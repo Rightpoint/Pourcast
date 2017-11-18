@@ -1,3 +1,7 @@
+#include "config.h"
+
+#ifdef USE_IOT
+
 #include "AzureIoTHub.h"
 #include "sdk/schemaserializer.h"
 
@@ -322,7 +326,7 @@ void temperatureSend(const char* sensor, float temperature) {
   }
 }
 
-void sendError(const char* error) {
+void errorSend(const char* error) {
   kegState->Error = error;
   
   unsigned char*buffer;
@@ -339,3 +343,4 @@ void sendError(const char* error) {
   }
 }
 
+#endif

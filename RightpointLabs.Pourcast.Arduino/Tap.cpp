@@ -1,7 +1,13 @@
 #include "Log.h"
 #include "Tap.h"
-#include "TapMonitor.h"
 #include "config.h"
+
+#ifdef USE_IOT
+#include "IotSender.h"
+#endif
+#ifdef USE_HTTPS
+#include "HttpsSender.h"
+#endif
 
 const unsigned long _pulsesToGoFast = 50;
 const unsigned long _pulsesToGoSlow = 0;
@@ -45,7 +51,12 @@ void Tap::Loop(int cycle) {
   if(_lastSent == 0 || _sendSpeed >= 2 || (_sendSpeed == 1 && cycle % SEND_TAP_UPDATE_WHILE_POURING_EVERY == 0) || (cycle % SEND_TAP_UPDATE_EVERY == 0)) {
     // measure and send
     unsigned long thisSend = millis();
+#ifdef USE_IOT
     deviceSend(thisSend - _lastSent, _weight == NULL ? -1 : _weight->read(), pulses, _kegNum, _sendSpeed);
+#endif
+#ifdef USE_HTTPS
+    flowSend(_kegNum, _sendSpeed, pulses);
+#endif
     _lastSent = thisSend;
 
     // mark off how many we sent, may lose occasional pulses here...
@@ -63,7 +74,10 @@ void Tap::Loop(int cycle) {
     Log("Slowing down to");
     Log(_sendSpeed);
   }
+
+#ifdef USE_HTTPS
+  if(_weight != NULL && cycle & SEND_WEIGHT_UPDATE_EVERY == 0) {
+    weightSend(_kegNum, _weight->read());
+  }
+#endif
 }
-
-
-

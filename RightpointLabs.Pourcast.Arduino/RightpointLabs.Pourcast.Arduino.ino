@@ -7,25 +7,29 @@
 #include <sys/time.h>
 #include <SPI.h>
 
-#include <Adafruit_WINC1500.h>
-#include <Adafruit_WINC1500Client.h>
-#include <Adafruit_WINC1500Server.h>
-#include <Adafruit_WINC1500SSLClient.h>
-#include <Adafruit_WINC1500Udp.h>
+#include <WiFi101.h>
 
+#include "config.h"
+
+#ifdef USE_IOT
 #include <AzureIoTHub.h>
 #include <AzureIoTUtility.h>
 #include <AzureIoTProtocol_HTTP.h>
+#include "TapMonitor.h"
+#endif
+#ifdef USE_HTTPS
+#include "HttpsSender.h"
+#endif
 
 #include <Q2HX711.h>
 #include "init.h"
-#include "TapMonitor.h"
 #include "Tap.h"
-#include "config.h"
 
 static char ssid[] = WIFI_SSID;
 static char pass[] = WIFI_PASSWORD;
+#ifdef USE_IOT
 static char connectionString[] = IOT_CONNECTIONSTRING;
+#endif
 
 #ifdef ONEWIRE_PIN
 #include <OneWire.h>
@@ -75,7 +79,7 @@ Tap tap4(4);
 #define WINC_EN   2
 
 // Setup the WINC1500 connection with the pins above and the default hardware SPI.
-Adafruit_WINC1500 WiFi(WINC_CS, WINC_IRQ, WINC_RST);
+//Wifi101 WiFi(WINC_CS, WINC_IRQ, WINC_RST);
 
 #ifdef ONEWIRE_PIN
 int num_temp_sensors = 0;
@@ -92,7 +96,9 @@ void setup() {
   initWifi(ssid, pass);
   initTime();
 
+#ifdef USE_IOT
   deviceSetup(connectionString);
+#endif
 
 #ifdef ONEWIRE_PIN
   byte addr[8];

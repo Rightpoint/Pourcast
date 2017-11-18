@@ -24,9 +24,8 @@ void initWifi(const char *ssid, const char *pass) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 void initTime() {
-    Adafruit_WINC1500UDP     _udp;
-
-
+#if USE_IOT
+    // HTTPS doesn't need time support
     time_t epochTime = (time_t)-1;
 
     NTPClient ntpClient;
@@ -52,6 +51,7 @@ void initTime() {
     tv.tv_usec = 0;
 
     settimeofday(&tv, NULL);
+#endif
 }
 
 

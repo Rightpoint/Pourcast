@@ -1,8 +1,8 @@
 // Copyright (c) Arduino. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-#include <Adafruit_WINC1500.h>
-#include <Adafruit_WINC1500Udp.h>
+#include <WiFi101.h>
+#include <WiFiUdp.h>
 
 #ifndef NTPCLIENT_H
 #define NTPCLIENT_H
@@ -27,7 +27,7 @@ class NTPClient
         uint32_t parseResponse();
 
         char        _buffer[NTP_PACKET_SIZE];
-        Adafruit_WINC1500UDP     _udp;
+        WiFiUDP     _udp;
 
 };
 
