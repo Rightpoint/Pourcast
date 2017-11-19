@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -11,7 +12,7 @@ namespace DataGenerator
     {
         static async Task Main(string[] args)
         {
-            var uri = new Uri("http://localhost:7071/api/PostEvent");
+            var uri = new Uri(ConfigurationManager.AppSettings["PostEventUrl"]);
             while (true)
             {
                 var c = new HttpClient();

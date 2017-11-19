@@ -6,9 +6,15 @@ void postEvent(const char* content)
 {
   if (client.connect(HTTPS_HOST, HTTPS_PORT)) {
     char buffer[192];
-    snprintf(buffer, 192, "%s=%s&DeviceId=%s&%s", HTTPS_CODE_KEY, HTTPS_CODE_VALUE, HTTPS_DEVICE_ID, content);
+    snprintf(buffer, 192, "DeviceId=%s&%s", HTTPS_DEVICE_ID, content);
     client.print("POST ");
     client.print(HTTPS_URL);
+#ifdef HTTPS_CODE_KEY
+    client.print("?");
+    client.print(HTTPS_CODE_KEY);
+    client.print("=");
+    client.print(HTTPS_CODE_VALUE);
+#endif
     client.println(" HTTP/1.1");
     client.print("Host: ");
     client.println(HTTPS_HOST);
