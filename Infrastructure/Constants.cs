@@ -5,6 +5,7 @@
         public static class QueueNames
         {
             public const string Logging = nameof(Logging);
+            public const string SignalR = nameof(SignalR);
         }
 
         public static class TopicNames

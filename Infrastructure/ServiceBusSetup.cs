@@ -26,6 +26,7 @@ namespace RightpointLabs.Pourcast.Infrastructure
                 : await mgr.CreateTopicAsync(Constants.TopicNames.EventSource);
 
             await ConfigureEventSourceLogger(mgr, eventSource);
+            await ConfigureEventSourceSignalR(mgr, eventSource);
         }
 
         private async Task ConfigureEventSourceLogger(NamespaceManager mgr, TopicDescription eventSource)
@@ -34,12 +35,27 @@ namespace RightpointLabs.Pourcast.Infrastructure
                 ? await mgr.GetQueueAsync(Constants.QueueNames.Logging)
                 : await mgr.CreateQueueAsync(Constants.QueueNames.Logging);
 
-            var eventSourceLogger = await mgr.SubscriptionExistsAsync(eventSource.Path, Constants.QueueNames.Logging)
-                ? await mgr.GetSubscriptionAsync(eventSource.Path, Constants.QueueNames.Logging)
-                : await mgr.CreateSubscriptionAsync(eventSource.Path, Constants.QueueNames.Logging);
+            var eventSourceLogger = await mgr.SubscriptionExistsAsync(eventSource.Path, logger.Path)
+                ? await mgr.GetSubscriptionAsync(eventSource.Path, logger.Path)
+                : await mgr.CreateSubscriptionAsync(eventSource.Path, logger.Path);
 
             eventSourceLogger.ForwardTo = logger.Path;
             await mgr.UpdateSubscriptionAsync(eventSourceLogger);
+            // no filters needed
+        }
+
+        private async Task ConfigureEventSourceSignalR(NamespaceManager mgr, TopicDescription eventSource)
+        {
+            var signalR = await mgr.QueueExistsAsync(Constants.QueueNames.SignalR)
+                ? await mgr.GetQueueAsync(Constants.QueueNames.SignalR)
+                : await mgr.CreateQueueAsync(Constants.QueueNames.SignalR);
+
+            var signalRLogger = await mgr.SubscriptionExistsAsync(eventSource.Path, signalR.Path)
+                ? await mgr.GetSubscriptionAsync(eventSource.Path, signalR.Path)
+                : await mgr.CreateSubscriptionAsync(eventSource.Path, signalR.Path);
+
+            signalRLogger.ForwardTo = signalR.Path;
+            await mgr.UpdateSubscriptionAsync(signalRLogger);
             // no filters needed
         }
     }

@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net47</TargetFramework>
+    <ApplicationInsightsResourceId>/subscriptions/76d210f9-5d7b-4875-b92a-1267ab071303/resourcegroups/Pourcast/providers/microsoft.insights/components/pourcast</ApplicationInsightsResourceId>
+    <ApplicationInsightsAnnotationResourceId>/subscriptions/76d210f9-5d7b-4875-b92a-1267ab071303/resourcegroups/Pourcast/providers/microsoft.insights/components/pourcast</ApplicationInsightsAnnotationResourceId>
+    <AssemblyName>RightpointLabs.Pourcast.Web</AssemblyName>
+    <RootNamespace>RightpointLabs.Pourcast.Web</RootNamespace>
+    <UserSecretsId>bb75ec51-94d6-4d41-8e81-3122415de5a7</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore" Version="2.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.0.0-alpha2-final" />
+    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services" />
+    <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Domain\Domain.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,3 +1,6 @@
 <appSettings>
+  <!--
   <add key="PostEventUrl" value="http://localhost:7071/api/PostEvent"/>
+  -->
+  <add key="PostEventUrl" value="https://pourcast-func.azurewebsites.net/api/PostEvent?code=w1c30rjyO5OveZDkqlXjkCO51qbL8yuyxqXPIoqwh/aB5ziT4DBDNw=="/>
 </appSettings>
