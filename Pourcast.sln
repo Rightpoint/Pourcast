@@ -3,10 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2002
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RightpointLabs.Pourcast.Web", "RightpointLabs.Pourcast.Web\RightpointLabs.Pourcast.Web.csproj", "{F114F2A6-3380-41E8-B957-5FA4A5CC4762}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RightpointLabs.Pourcast.Tests", "RightpointLabs.Pourcast.Tests\RightpointLabs.Pourcast.Tests.csproj", "{85E756AA-2F6A-49D9-B024-C866020B4119}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{F4C9301C-CC77-475E-A457-7B14636A5A1C}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\NuGet.Config = .nuget\NuGet.Config
@@ -14,17 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{F4C930
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RightpointLabs.Pourcast.Infrastructure", "RightpointLabs.Pourcast.Infrastructure\RightpointLabs.Pourcast.Infrastructure.csproj", "{D0B87DD1-9300-4D6F-BE99-75386826CBBD}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RightpointLabs.Pourcast.Domain", "RightpointLabs.Pourcast.Domain\RightpointLabs.Pourcast.Domain.csproj", "{86A90834-4FDA-40E7-810F-F1AB0ADE8FE0}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RightpointLabs.Pourcast.Application", "RightpointLabs.Pourcast.Application\RightpointLabs.Pourcast.Application.csproj", "{15F3381D-CF8B-46E5-A323-6454A4E7D2C3}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RightpointLabs.Pourcast.PhotoLoader", "RightpointLabs.Pourcast.PhotoLoader\RightpointLabs.Pourcast.PhotoLoader.csproj", "{60356C5B-2217-4AD8-A5A1-103CC02C750E}"
-EndProject
-Project("{33AD0EE8-D99B-4E14-8CD9-3F56ABEF97A2}") = "RightpointLabs.Pourcast.Functions", "RightpointLabs.Pourcast.Functions\RightpointLabs.Pourcast.Functions.funproj", "{7555B917-794C-4133-B576-7A1B323759D8}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Functions", "Functions\Functions.csproj", "{5376307D-2141-4F1D-B69B-395710AFAA19}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Functions", "Functions\Functions.csproj", "{5376307D-2141-4F1D-B69B-395710AFAA19}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{1CA81085-E056-4A08-8802-2A9235210EB3}"
 EndProject
@@ -34,7 +20,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastru
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataGenerator", "DataGenerator\DataGenerator.csproj", "{9FFDFBEB-DC80-45B3-BE17-9832A33B3C0D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web", "Web\Web.csproj", "{80420E6A-30FB-4449-895D-9785D338F13F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web", "Web\Web.csproj", "{80420E6A-30FB-4449-895D-9785D338F13F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,76 +31,6 @@ Global
 		Wifi|Any CPU = Wifi|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F114F2A6-3380-41E8-B957-5FA4A5CC4762}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F114F2A6-3380-41E8-B957-5FA4A5CC4762}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F114F2A6-3380-41E8-B957-5FA4A5CC4762}.Ethernet|Any CPU.ActiveCfg = Release|Any CPU
-		{F114F2A6-3380-41E8-B957-5FA4A5CC4762}.Ethernet|Any CPU.Build.0 = Release|Any CPU
-		{F114F2A6-3380-41E8-B957-5FA4A5CC4762}.NoNetworking|Any CPU.ActiveCfg = Release|Any CPU
-		{F114F2A6-3380-41E8-B957-5FA4A5CC4762}.NoNetworking|Any CPU.Build.0 = Release|Any CPU
-		{F114F2A6-3380-41E8-B957-5FA4A5CC4762}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F114F2A6-3380-41E8-B957-5FA4A5CC4762}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F114F2A6-3380-41E8-B957-5FA4A5CC4762}.Wifi|Any CPU.ActiveCfg = Release|Any CPU
-		{F114F2A6-3380-41E8-B957-5FA4A5CC4762}.Wifi|Any CPU.Build.0 = Release|Any CPU
-		{85E756AA-2F6A-49D9-B024-C866020B4119}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{85E756AA-2F6A-49D9-B024-C866020B4119}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{85E756AA-2F6A-49D9-B024-C866020B4119}.Ethernet|Any CPU.ActiveCfg = Release|Any CPU
-		{85E756AA-2F6A-49D9-B024-C866020B4119}.Ethernet|Any CPU.Build.0 = Release|Any CPU
-		{85E756AA-2F6A-49D9-B024-C866020B4119}.NoNetworking|Any CPU.ActiveCfg = Release|Any CPU
-		{85E756AA-2F6A-49D9-B024-C866020B4119}.NoNetworking|Any CPU.Build.0 = Release|Any CPU
-		{85E756AA-2F6A-49D9-B024-C866020B4119}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{85E756AA-2F6A-49D9-B024-C866020B4119}.Release|Any CPU.Build.0 = Release|Any CPU
-		{85E756AA-2F6A-49D9-B024-C866020B4119}.Wifi|Any CPU.ActiveCfg = Release|Any CPU
-		{85E756AA-2F6A-49D9-B024-C866020B4119}.Wifi|Any CPU.Build.0 = Release|Any CPU
-		{D0B87DD1-9300-4D6F-BE99-75386826CBBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D0B87DD1-9300-4D6F-BE99-75386826CBBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D0B87DD1-9300-4D6F-BE99-75386826CBBD}.Ethernet|Any CPU.ActiveCfg = Release|Any CPU
-		{D0B87DD1-9300-4D6F-BE99-75386826CBBD}.Ethernet|Any CPU.Build.0 = Release|Any CPU
-		{D0B87DD1-9300-4D6F-BE99-75386826CBBD}.NoNetworking|Any CPU.ActiveCfg = Release|Any CPU
-		{D0B87DD1-9300-4D6F-BE99-75386826CBBD}.NoNetworking|Any CPU.Build.0 = Release|Any CPU
-		{D0B87DD1-9300-4D6F-BE99-75386826CBBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D0B87DD1-9300-4D6F-BE99-75386826CBBD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D0B87DD1-9300-4D6F-BE99-75386826CBBD}.Wifi|Any CPU.ActiveCfg = Release|Any CPU
-		{D0B87DD1-9300-4D6F-BE99-75386826CBBD}.Wifi|Any CPU.Build.0 = Release|Any CPU
-		{86A90834-4FDA-40E7-810F-F1AB0ADE8FE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{86A90834-4FDA-40E7-810F-F1AB0ADE8FE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{86A90834-4FDA-40E7-810F-F1AB0ADE8FE0}.Ethernet|Any CPU.ActiveCfg = Release|Any CPU
-		{86A90834-4FDA-40E7-810F-F1AB0ADE8FE0}.Ethernet|Any CPU.Build.0 = Release|Any CPU
-		{86A90834-4FDA-40E7-810F-F1AB0ADE8FE0}.NoNetworking|Any CPU.ActiveCfg = Release|Any CPU
-		{86A90834-4FDA-40E7-810F-F1AB0ADE8FE0}.NoNetworking|Any CPU.Build.0 = Release|Any CPU
-		{86A90834-4FDA-40E7-810F-F1AB0ADE8FE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{86A90834-4FDA-40E7-810F-F1AB0ADE8FE0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{86A90834-4FDA-40E7-810F-F1AB0ADE8FE0}.Wifi|Any CPU.ActiveCfg = Release|Any CPU
-		{86A90834-4FDA-40E7-810F-F1AB0ADE8FE0}.Wifi|Any CPU.Build.0 = Release|Any CPU
-		{15F3381D-CF8B-46E5-A323-6454A4E7D2C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{15F3381D-CF8B-46E5-A323-6454A4E7D2C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{15F3381D-CF8B-46E5-A323-6454A4E7D2C3}.Ethernet|Any CPU.ActiveCfg = Release|Any CPU
-		{15F3381D-CF8B-46E5-A323-6454A4E7D2C3}.Ethernet|Any CPU.Build.0 = Release|Any CPU
-		{15F3381D-CF8B-46E5-A323-6454A4E7D2C3}.NoNetworking|Any CPU.ActiveCfg = Release|Any CPU
-		{15F3381D-CF8B-46E5-A323-6454A4E7D2C3}.NoNetworking|Any CPU.Build.0 = Release|Any CPU
-		{15F3381D-CF8B-46E5-A323-6454A4E7D2C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{15F3381D-CF8B-46E5-A323-6454A4E7D2C3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{15F3381D-CF8B-46E5-A323-6454A4E7D2C3}.Wifi|Any CPU.ActiveCfg = Release|Any CPU
-		{15F3381D-CF8B-46E5-A323-6454A4E7D2C3}.Wifi|Any CPU.Build.0 = Release|Any CPU
-		{60356C5B-2217-4AD8-A5A1-103CC02C750E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{60356C5B-2217-4AD8-A5A1-103CC02C750E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{60356C5B-2217-4AD8-A5A1-103CC02C750E}.Ethernet|Any CPU.ActiveCfg = Release|Any CPU
-		{60356C5B-2217-4AD8-A5A1-103CC02C750E}.Ethernet|Any CPU.Build.0 = Release|Any CPU
-		{60356C5B-2217-4AD8-A5A1-103CC02C750E}.NoNetworking|Any CPU.ActiveCfg = Release|Any CPU
-		{60356C5B-2217-4AD8-A5A1-103CC02C750E}.NoNetworking|Any CPU.Build.0 = Release|Any CPU
-		{60356C5B-2217-4AD8-A5A1-103CC02C750E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{60356C5B-2217-4AD8-A5A1-103CC02C750E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{60356C5B-2217-4AD8-A5A1-103CC02C750E}.Wifi|Any CPU.ActiveCfg = Release|Any CPU
-		{60356C5B-2217-4AD8-A5A1-103CC02C750E}.Wifi|Any CPU.Build.0 = Release|Any CPU
-		{7555B917-794C-4133-B576-7A1B323759D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7555B917-794C-4133-B576-7A1B323759D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7555B917-794C-4133-B576-7A1B323759D8}.Ethernet|Any CPU.ActiveCfg = Debug|Any CPU
-		{7555B917-794C-4133-B576-7A1B323759D8}.Ethernet|Any CPU.Build.0 = Debug|Any CPU
-		{7555B917-794C-4133-B576-7A1B323759D8}.NoNetworking|Any CPU.ActiveCfg = Debug|Any CPU
-		{7555B917-794C-4133-B576-7A1B323759D8}.NoNetworking|Any CPU.Build.0 = Debug|Any CPU
-		{7555B917-794C-4133-B576-7A1B323759D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7555B917-794C-4133-B576-7A1B323759D8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7555B917-794C-4133-B576-7A1B323759D8}.Wifi|Any CPU.ActiveCfg = Debug|Any CPU
-		{7555B917-794C-4133-B576-7A1B323759D8}.Wifi|Any CPU.Build.0 = Debug|Any CPU
 		{5376307D-2141-4F1D-B69B-395710AFAA19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5376307D-2141-4F1D-B69B-395710AFAA19}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5376307D-2141-4F1D-B69B-395710AFAA19}.Ethernet|Any CPU.ActiveCfg = Debug|Any CPU
