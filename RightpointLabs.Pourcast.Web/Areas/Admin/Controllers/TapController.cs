@@ -12,6 +12,7 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
     using System.Web.Mvc;
     using RightpointLabs.Pourcast.Web.Areas.Admin.Models;
 
+    [Authorize(Roles = "Administrators")]
     public class TapController : Controller
     {
         private readonly ITapOrchestrator _tapOrchestrator;

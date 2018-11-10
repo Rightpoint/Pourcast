@@ -12,6 +12,7 @@ namespace RightpointLabs.Pourcast.Web.Areas.Admin.Controllers
     using System.Web;
     using System.Web.Mvc;
 
+    [Authorize(Roles = "Administrators")]
     public class KegController : Controller
     {
         private readonly IKegOrchestrator _kegOrchestrator;
